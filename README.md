@@ -2,5 +2,3 @@ DynaFocus
 =========
 
 DynaFocus
-
-eee
