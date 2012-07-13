@@ -21,6 +21,7 @@
 		4496252B15ACDDA4007FD7A3 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4496252A15ACDDA4007FD7A3 /* SecondViewController.m */; };
 		4496252D15ACDDA4007FD7A3 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 4496252C15ACDDA4007FD7A3 /* second.png */; };
 		4496252F15ACDDA4007FD7A3 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4496252E15ACDDA4007FD7A3 /* second@2x.png */; };
+		44EFFD5915B0B3B600D5BD12 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFFD5815B0B3B600D5BD12 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		4496252A15ACDDA4007FD7A3 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		4496252C15ACDDA4007FD7A3 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		4496252E15ACDDA4007FD7A3 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		44EFFD5815B0B3B600D5BD12 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44EFFD5915B0B3B600D5BD12 /* AVFoundation.framework in Frameworks */,
 				4496250B15ACDDA4007FD7A3 /* UIKit.framework in Frameworks */,
 				4496250D15ACDDA4007FD7A3 /* Foundation.framework in Frameworks */,
 				4496250F15ACDDA4007FD7A3 /* CoreGraphics.framework in Frameworks */,
@@ -63,6 +66,7 @@
 		449624FB15ACDDA4007FD7A3 = {
 			isa = PBXGroup;
 			children = (
+				44EFFD5815B0B3B600D5BD12 /* AVFoundation.framework */,
 				4496251015ACDDA4007FD7A3 /* DynaFocus */,
 				4496250915ACDDA4007FD7A3 /* Frameworks */,
 				4496250715ACDDA4007FD7A3 /* Products */,
@@ -243,6 +247,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -274,7 +279,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DynaFocus/DynaFocus-Prefix.pch";
 				INFOPLIST_FILE = "DynaFocus/DynaFocus-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -285,7 +292,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DynaFocus/DynaFocus-Prefix.pch";
 				INFOPLIST_FILE = "DynaFocus/DynaFocus-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -309,6 +318,7 @@
 				4496253415ACDDA4007FD7A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
