@@ -73,6 +73,10 @@
         
     }
     
+    // Set observer to CaptureDevice
+    int flags = NSKeyValueObservingOptionNew;
+    [captureDevice addObserver:self forKeyPath:@"adjustingFocus" options:flags context:nil];
+    
     
     // Create and add DeviceInput to Session
     NSError *error = nil;
@@ -84,34 +88,35 @@
     
     
     // Create/add StillImageOutput, get connection and add handler
-    AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+    mStillImageOutput = [[AVCaptureStillImageOutput alloc] init];
     NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
     
-    [stillImageOutput setOutputSettings:outputSettings];
+    [mStillImageOutput setOutputSettings:outputSettings];
     
-    [captureSession addOutput:stillImageOutput];
+    [captureSession addOutput:mStillImageOutput];
     
     //Get connection
-    AVCaptureConnection *videoConnection = nil;
+    mVideoConnection = nil;
     
-    for (AVCaptureConnection *connection in stillImageOutput.connections) {
+    for (AVCaptureConnection *connection in mStillImageOutput.connections) {
         
         for (AVCaptureInputPort *port in [connection inputPorts]) {
             
             if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
-                videoConnection = connection;
+                mVideoConnection = connection;
                 break;
             }
         }
         
-        if (videoConnection) {break;}
+        if (mVideoConnection) {break;}
     }
     
     [captureSession startRunning];
     
-    // Add handler
+    /*
+    // Capture with handler
     NSLog(@"hi ");
-    [stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler:
+    [mStillImageOutput captureStillImageAsynchronouslyFromConnection:mVideoConnection completionHandler:
      ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
          
         CFDictionaryRef exifAttachments = CMGetAttachment(imageDataSampleBuffer, kCGImagePropertyExifDictionary, NULL);
@@ -122,23 +127,62 @@
             NSLog(@"hello ");
         }
          
-     }];
+         
+         //CHANGE FOCUS POINT
+         //if (!isLastPoint) {
+         // CALL NEW PICTURE
+         //} else {
+         // finish it
+         //}
+         
+     }];*/
     
     
     // Showing preview layer
     AVCaptureVideoPreviewLayer *layer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
+    layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     layer.frame = self.view.frame;
     [self.view.layer addSublayer:layer];
     
     
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"adjustingFocus"]) {
+        BOOL adjustingFocus = [[change objectForKey:NSKeyValueChangeNewKey] isEqualToNumber:[NSNumber numberWithInt:1]];
+        
+        NSLog(@"FOCUS IS GOOD");
+        
+        if(!adjustingFocus) {
+            // Capture with handler
+            NSLog(@"TAKING PICTURE...");
+            [mStillImageOutput captureStillImageAsynchronouslyFromConnection:mVideoConnection completionHandler:
+             ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+                 
+                 CFDictionaryRef exifAttachments = CMGetAttachment(imageDataSampleBuffer, kCGImagePropertyExifDictionary, NULL);
+                 
+                 
+                 if (exifAttachments) {
+                     NSLog(@"DONE! ");
+                 }
+                 
+                 
+                 //CHANGE FOCUS POINT
+                 //if (!isLastPoint) {
+                 // CALL NEW PICTURE
+                 //} else {
+                 // finish it
+                 //}
+                 
+             }];
+        }
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self doTakePicture];
-    
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated

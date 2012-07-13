@@ -11,6 +11,8 @@
 #import <ImageIO/ImageIO.h>
 
 
-@interface FirstViewController : UIViewController 
-
+@interface FirstViewController : UIViewController {
+	AVCaptureStillImageOutput *mStillImageOutput;
+    AVCaptureConnection *mVideoConnection;
+}
 @end
