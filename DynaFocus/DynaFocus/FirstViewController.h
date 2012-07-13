@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <ImageIO/ImageIO.h>
+
 
 @interface FirstViewController : UIViewController 
 

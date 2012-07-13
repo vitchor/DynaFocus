@@ -22,6 +22,8 @@
 		4496252D15ACDDA4007FD7A3 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 4496252C15ACDDA4007FD7A3 /* second.png */; };
 		4496252F15ACDDA4007FD7A3 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4496252E15ACDDA4007FD7A3 /* second@2x.png */; };
 		44EFFD5915B0B3B600D5BD12 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFFD5815B0B3B600D5BD12 /* AVFoundation.framework */; };
+		44EFFD6315B0C06100D5BD12 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFFD6215B0C06100D5BD12 /* ImageIO.framework */; };
+		44EFFD6615B0C1ED00D5BD12 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFFD6515B0C1ED00D5BD12 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		4496252C15ACDDA4007FD7A3 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		4496252E15ACDDA4007FD7A3 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		44EFFD5815B0B3B600D5BD12 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		44EFFD6215B0C06100D5BD12 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		44EFFD6515B0C1ED00D5BD12 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44EFFD6615B0C1ED00D5BD12 /* CoreMedia.framework in Frameworks */,
+				44EFFD6315B0C06100D5BD12 /* ImageIO.framework in Frameworks */,
 				44EFFD5915B0B3B600D5BD12 /* AVFoundation.framework in Frameworks */,
 				4496250B15ACDDA4007FD7A3 /* UIKit.framework in Frameworks */,
 				4496250D15ACDDA4007FD7A3 /* Foundation.framework in Frameworks */,
@@ -66,6 +72,8 @@
 		449624FB15ACDDA4007FD7A3 = {
 			isa = PBXGroup;
 			children = (
+				44EFFD6515B0C1ED00D5BD12 /* CoreMedia.framework */,
+				44EFFD6215B0C06100D5BD12 /* ImageIO.framework */,
 				44EFFD5815B0B3B600D5BD12 /* AVFoundation.framework */,
 				4496251015ACDDA4007FD7A3 /* DynaFocus */,
 				4496250915ACDDA4007FD7A3 /* Frameworks */,

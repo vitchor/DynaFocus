@@ -50,6 +50,11 @@
     // Create Session
     AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
     
+    if ([captureSession canSetSessionPreset: AVCaptureSessionPresetPhoto]) {
+        
+        [captureSession setSessionPreset:AVCaptureSessionPresetPhoto];
+    }
+    
     
     // Find CaptureDevice
     AVCaptureDevice *captureDevice;
@@ -78,7 +83,7 @@
     }
     
     
-    // Create and add StillImageOutput
+    // Create/add StillImageOutput, get connection and add handler
     AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
     NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
     
@@ -86,14 +91,45 @@
     
     [captureSession addOutput:stillImageOutput];
     
+    //Get connection
+    AVCaptureConnection *videoConnection = nil;
+    
+    for (AVCaptureConnection *connection in stillImageOutput.connections) {
+        
+        for (AVCaptureInputPort *port in [connection inputPorts]) {
+            
+            if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
+                videoConnection = connection;
+                break;
+            }
+        }
+        
+        if (videoConnection) {break;}
+    }
+    
+    [captureSession startRunning];
+    
+    // Add handler
+    NSLog(@"hi ");
+    [stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler:
+     ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+         
+        CFDictionaryRef exifAttachments = CMGetAttachment(imageDataSampleBuffer, kCGImagePropertyExifDictionary, NULL);
+         
+        NSLog(@"hey ");
+        
+        if (exifAttachments) {
+            NSLog(@"hello ");
+        }
+         
+     }];
+    
     
     // Showing preview layer
     AVCaptureVideoPreviewLayer *layer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
     layer.frame = self.view.frame;
     [self.view.layer addSublayer:layer];
-
     
-    [captureSession startRunning];
     
 }
 
