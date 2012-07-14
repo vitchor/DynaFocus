@@ -22,6 +22,7 @@
 		441BFFD915B1339900E204D7 /* GalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFD715B1339800E204D7 /* GalleryView.xib */; };
 		44BEFED715B14404004358C9 /* FOFPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEFED515B14404004358C9 /* FOFPreview.m */; };
 		44BEFED815B14404004358C9 /* FOFPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BEFED615B14404004358C9 /* FOFPreview.xib */; };
+		44C8DA4215B1FF80000D2947 /* PathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8DA4115B1FF80000D2947 /* PathView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		44BEFED415B14404004358C9 /* FOFPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFPreview.h; sourceTree = "<group>"; };
 		44BEFED515B14404004358C9 /* FOFPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFPreview.m; sourceTree = "<group>"; };
 		44BEFED615B14404004358C9 /* FOFPreview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview.xib; sourceTree = "<group>"; };
+		44C8DA4015B1FF80000D2947 /* PathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathView.h; sourceTree = "<group>"; };
+		44C8DA4115B1FF80000D2947 /* PathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +102,7 @@
 		441BFFB515B131D200E204D7 /* DyFocus */ = {
 			isa = PBXGroup;
 			children = (
+				44C8DA4D15B20FEC000D2947 /* Views */,
 				441BFFBE15B131D200E204D7 /* AppDelegate.h */,
 				441BFFBF15B131D200E204D7 /* AppDelegate.m */,
 				441BFFC615B1324700E204D7 /* CameraView.h */,
@@ -124,6 +128,15 @@
 				441BFFBD15B131D200E204D7 /* DyFocus-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		44C8DA4D15B20FEC000D2947 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				44C8DA4015B1FF80000D2947 /* PathView.h */,
+				44C8DA4115B1FF80000D2947 /* PathView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,6 +209,7 @@
 				441BFFC915B1324700E204D7 /* CameraView.m in Sources */,
 				441BFFD815B1339900E204D7 /* GalleryView.m in Sources */,
 				44BEFED715B14404004358C9 /* FOFPreview.m in Sources */,
+				44C8DA4215B1FF80000D2947 /* PathView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

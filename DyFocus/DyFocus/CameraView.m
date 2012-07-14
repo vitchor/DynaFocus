@@ -8,9 +8,11 @@
 
 #import "CameraView.h"
 #import "FOFPreview.h"
+#import "PathView.h"
+
 @implementation CameraView
 
-@synthesize cameraView, shootButton;
+@synthesize cameraView, pathView, shootButton, clearButton;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
@@ -46,7 +48,6 @@
                 break;
             }
         }
-        
     }
     
     // Set initial focus point
@@ -91,8 +92,10 @@
     // Showing preview layer
     AVCaptureVideoPreviewLayer *layer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
     layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    layer.frame = self.view.frame;
+    layer.frame = self.cameraView.frame;
+    
     [self.cameraView.layer addSublayer:layer];
+    
     
 }
 
@@ -127,7 +130,6 @@
                      } else {
                          NSLog(@" FINISHED PICTURE");
                          [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
-                         
                          
                          FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
                          
@@ -164,6 +166,9 @@
     [mFocalPoints addObject:[NSValue valueWithCGPoint:point2]];
     [mFocalPoints addObject:[NSValue valueWithCGPoint:point3]];    
     //
+    
+    //[pathView addTarget:self action:@selector(touchEvent:) forControlEvents:UIControlEventTouchDown];
+    
     
     [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
     
