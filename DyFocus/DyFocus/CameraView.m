@@ -167,15 +167,18 @@
     [mFocalPoints addObject:[NSValue valueWithCGPoint:point3]];    
     //
     
-    //[pathView addTarget:self action:@selector(touchEvent:) forControlEvents:UIControlEventTouchDown];
-    
-    
     [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
+    [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
     
     [self startCaptureSession];
     
     [super viewDidLoad];
     
+}
+
+-(void)clearPoints
+{
+    [pathView clearPoints];
 }
 
 -(void)addObserverToFocus
