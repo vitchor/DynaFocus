@@ -7,8 +7,10 @@
 //
 
 #import "CameraView.h"
-
+#import "FOFPreview.h"
 @implementation CameraView
+
+@synthesize cameraView, shootButton;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
@@ -48,12 +50,7 @@
     }
     
     // Set initial focus point
-    
     [self updateFocusPoint];
-    
-    // Set observer to CaptureDevice
-    int flags = NSKeyValueObservingOptionNew;
-    [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:flags context:nil];
     
     
     // Create and add DeviceInput to Session
@@ -95,7 +92,7 @@
     AVCaptureVideoPreviewLayer *layer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
     layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     layer.frame = self.view.frame;
-    [self.view.layer addSublayer:layer];
+    [self.cameraView.layer addSublayer:layer];
     
 }
 
@@ -117,7 +114,9 @@
                  
                  if (exifAttachments) {
                      
-                     // UIImage *image = [self imageFromSampleBuffer:imageDataSampleBuffer];
+                     NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+                     UIImage *image = [[UIImage alloc] initWithData:imageData];
+                     [mFrames addObject:image];
                      
                      NSLog(@"DONE! ");
                      
@@ -128,6 +127,13 @@
                      } else {
                          NSLog(@" FINISHED PICTURE");
                          [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
+                         
+                         
+                         FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
+                         
+                         FOFpreview.frames = mFrames;
+                         
+                         [self.navigationController pushViewController:FOFpreview animated:false];
                      }
                      
                      
@@ -148,6 +154,7 @@
     // Hardcoding focal points 
     // TODO: Get from class that is responsible for modeling the logic entity path.
     mFocalPoints = [[NSMutableArray alloc] init];
+    mFrames = [[NSMutableArray alloc] init];
     
     CGPoint point1 = {0,0};//top right
     CGPoint point2 = {0.5f,0.5f};// center
@@ -158,10 +165,18 @@
     [mFocalPoints addObject:[NSValue valueWithCGPoint:point3]];    
     //
     
+    [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
+    
     [self startCaptureSession];
     
     [super viewDidLoad];
     
+}
+
+-(void)addObserverToFocus
+{
+
+    [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewDidUnload
@@ -173,6 +188,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    mFOFIndex = 0;
+    [self updateFocusPoint];
     [super viewWillAppear:animated];
 }
 

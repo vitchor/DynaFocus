@@ -20,6 +20,8 @@
 		441BFFD015B132A900E204D7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFCF15B132A900E204D7 /* ImageIO.framework */; };
 		441BFFD815B1339900E204D7 /* GalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 441BFFD615B1339800E204D7 /* GalleryView.m */; };
 		441BFFD915B1339900E204D7 /* GalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFD715B1339800E204D7 /* GalleryView.xib */; };
+		44BEFED715B14404004358C9 /* FOFPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEFED515B14404004358C9 /* FOFPreview.m */; };
+		44BEFED815B14404004358C9 /* FOFPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BEFED615B14404004358C9 /* FOFPreview.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,9 @@
 		441BFFD515B1339800E204D7 /* GalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryView.h; sourceTree = "<group>"; };
 		441BFFD615B1339800E204D7 /* GalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryView.m; sourceTree = "<group>"; };
 		441BFFD715B1339800E204D7 /* GalleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryView.xib; sourceTree = "<group>"; };
+		44BEFED415B14404004358C9 /* FOFPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFPreview.h; sourceTree = "<group>"; };
+		44BEFED515B14404004358C9 /* FOFPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFPreview.m; sourceTree = "<group>"; };
+		44BEFED615B14404004358C9 /* FOFPreview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +108,9 @@
 				441BFFD515B1339800E204D7 /* GalleryView.h */,
 				441BFFD615B1339800E204D7 /* GalleryView.m */,
 				441BFFD715B1339800E204D7 /* GalleryView.xib */,
+				44BEFED415B14404004358C9 /* FOFPreview.h */,
+				44BEFED515B14404004358C9 /* FOFPreview.m */,
+				44BEFED615B14404004358C9 /* FOFPreview.xib */,
 			);
 			path = DyFocus;
 			sourceTree = "<group>";
@@ -172,6 +180,7 @@
 				441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */,
 				441BFFCA15B1324700E204D7 /* CameraView.xib in Resources */,
 				441BFFD915B1339900E204D7 /* GalleryView.xib in Resources */,
+				44BEFED815B14404004358C9 /* FOFPreview.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +195,7 @@
 				441BFFC015B131D200E204D7 /* AppDelegate.m in Sources */,
 				441BFFC915B1324700E204D7 /* CameraView.m in Sources */,
 				441BFFD815B1339900E204D7 /* GalleryView.m in Sources */,
+				44BEFED715B14404004358C9 /* FOFPreview.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
