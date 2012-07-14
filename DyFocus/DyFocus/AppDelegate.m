@@ -25,13 +25,13 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
     // Create Start view controller.
-    CameraView *startController = [[CameraView alloc] init];
+    CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
     UINavigationController *startViewNavigationController = [[UINavigationController alloc] initWithRootViewController:startController];
     [startController release];
     
-    GalleryView *galleryController = [[GalleryView alloc] init];
+    GalleryView *galleryController = [[GalleryView alloc] initWithNibName:@"GalleryView" bundle:nil];
     UINavigationController *galeryViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
-    [galleryController release];
+
     
     // Similarly create for photos, videos and social...
     
@@ -39,17 +39,17 @@
     NSArray* controllers = [NSArray arrayWithObjects:startViewNavigationController, galeryViewNavigationController, nil];
     
     // Create our tab bar controller.
-    _tabBarController = [[[UITabBarController alloc] init] autorelease];
+    self.tabBarController = [[[UITabBarController alloc] init] autorelease];
     
     // Set the view controllers of the tab bar controller.
-    _tabBarController.viewControllers = controllers;
+    self.tabBarController.viewControllers = controllers;
     
     // Release the startViewNavigationController, photosViewNavigationController, videosViewNavigationController, socialViewNavigationController...
     
     // I don't know what this does.
     
     // Add the tab bar controller to the window.
-    [self.window addSubview:_tabBarController.view];
+    [self.window addSubview:self.tabBarController.view];
     
     [self.window makeKeyAndVisible];
     
