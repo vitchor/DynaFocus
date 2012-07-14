@@ -10,41 +10,6 @@
 
 @implementation FirstViewController
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
-}
-
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-/*- (void)doTakePicture {
-	UIImagePickerController *imagePicker = [[[UIImagePickerController alloc] init] autorelease];
-	imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-	imagePicker.allowsEditing = NO;
-	imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
-	imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-	//UIImage *faceImage = [UIImage imageNamed:@"FaceOverlay.png"];
-	//UIImageView *overlay = [[[UIImageView alloc] initWithImage:faceImage] autorelease];
-	//overlay.frame = CGRectMake(0, 0, faceImage.size.width, faceImage.size.height);
-	//imagePicker.cameraOverlayView = overlay;
-	imagePicker.delegate = self;
-	[self presentModalViewController:imagePicker animated:YES];
-}*/
-
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
     NSError *error = nil;
@@ -55,7 +20,7 @@
         [mCaptureDevice unlockForConfiguration];
     }
 }
-- (void)doTakePicture {
+- (void)startCaptureSession {
 	
     // Create Session
     AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
@@ -126,31 +91,6 @@
     
     [captureSession startRunning];
     
-    /*
-    // Capture with handler
-    NSLog(@"hi ");
-    [mStillImageOutput captureStillImageAsynchronouslyFromConnection:mVideoConnection completionHandler:
-     ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-         
-        CFDictionaryRef exifAttachments = CMGetAttachment(imageDataSampleBuffer, kCGImagePropertyExifDictionary, NULL);
-         
-        NSLog(@"hey ");
-        
-        if (exifAttachments) {
-            NSLog(@"hello ");
-        }
-         
-         
-         //CHANGE FOCUS POINT
-         //if (!isLastPoint) {
-         // CALL NEW PICTURE
-         //} else {
-         // finish it
-         //}
-         
-     }];*/
-    
-    
     // Showing preview layer
     AVCaptureVideoPreviewLayer *layer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
     layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
@@ -180,7 +120,7 @@
                      
                      mFOFIndex = mFOFIndex + 1;
                      
-                     if (mFOFIndex < 2) {
+                     if (mFOFIndex < [mFocalPoints count]) {
                         [self updateFocusPoint];
                      } else {
                          NSLog(@" FINISHED PICTURE");
@@ -189,38 +129,45 @@
 
                  }
                  
-                 
-                 //CHANGE FOCUS POINT
-                 //if (!isLastPoint) {
-                 // CALL NEW PICTURE
-                 //} else {
-                 // finish it
-                 //}
-                 
              }];
         }
     }
 }
 
+#pragma mark - View lifecycle
+- (void)viewDidLoad
+{
+    mFOFIndex = 0;
+    
+    // Hardcoding focal points 
+    // TODO: Get from class that is responsible for modeling the logic entity path.
+    mFocalPoints = [[NSMutableArray alloc] init];
+    
+    CGPoint point1 = {0,0};//top right
+    CGPoint point2 = {0.5f,0.5f};// center
+    CGPoint point3 = {1,1};// bottom left
+    
+    [mFocalPoints addObject:[NSValue valueWithCGPoint:point1]];
+    [mFocalPoints addObject:[NSValue valueWithCGPoint:point2]];
+    [mFocalPoints addObject:[NSValue valueWithCGPoint:point3]];    
+    //
+    
+    [self startCaptureSession];
+    
+    [super viewDidLoad];
+    
+}
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    mFOFIndex = 0;
-    
-    // Hardcoding focal points
-    mFocalPoints = [[NSMutableArray alloc] init];
-    
-    CGPoint point1 = {0,0};
-    CGPoint point2 = {1, 1};
-    
-    [mFocalPoints addObject:[NSValue valueWithCGPoint:point1]];
-    [mFocalPoints addObject:[NSValue valueWithCGPoint:point2]];
-
-    
-    [self doTakePicture];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -238,6 +185,7 @@
 	[super viewDidDisappear:animated];
 }
 
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -246,6 +194,12 @@
     } else {
         return YES;
     }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Release any cached data, images, etc that aren't in use.
 }
 
 @end
