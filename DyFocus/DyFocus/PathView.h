@@ -20,5 +20,6 @@
 @property(nonatomic,readwrite)CGColorRef ref;
 
 -(void)clearPoints;
+-(NSMutableArray *)getPoints;
 
 @end

@@ -104,15 +104,7 @@
 			children = (
 				441BFFBE15B131D200E204D7 /* AppDelegate.h */,
 				441BFFBF15B131D200E204D7 /* AppDelegate.m */,
-				441BFFC615B1324700E204D7 /* CameraView.h */,
-				441BFFC715B1324700E204D7 /* CameraView.m */,
-				441BFFC815B1324700E204D7 /* CameraView.xib */,
-				441BFFD515B1339800E204D7 /* GalleryView.h */,
-				441BFFD615B1339800E204D7 /* GalleryView.m */,
-				441BFFD715B1339800E204D7 /* GalleryView.xib */,
-				44BEFED415B14404004358C9 /* FOFPreview.h */,
-				44BEFED515B14404004358C9 /* FOFPreview.m */,
-				44BEFED615B14404004358C9 /* FOFPreview.xib */,
+				442B552315B2238800C952D1 /* Controllers */,
 				44C8DA4D15B20FEC000D2947 /* Views */,
 				441BFFB615B131D200E204D7 /* Supporting Files */,
 			);
@@ -128,6 +120,22 @@
 				441BFFBD15B131D200E204D7 /* DyFocus-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		442B552315B2238800C952D1 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				441BFFC615B1324700E204D7 /* CameraView.h */,
+				441BFFC715B1324700E204D7 /* CameraView.m */,
+				441BFFC815B1324700E204D7 /* CameraView.xib */,
+				441BFFD515B1339800E204D7 /* GalleryView.h */,
+				441BFFD615B1339800E204D7 /* GalleryView.m */,
+				441BFFD715B1339800E204D7 /* GalleryView.xib */,
+				44BEFED415B14404004358C9 /* FOFPreview.h */,
+				44BEFED515B14404004358C9 /* FOFPreview.m */,
+				44BEFED615B14404004358C9 /* FOFPreview.xib */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		44C8DA4D15B20FEC000D2947 /* Views */ = {

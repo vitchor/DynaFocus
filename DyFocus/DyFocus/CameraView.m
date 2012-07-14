@@ -183,7 +183,8 @@
 
 -(void)addObserverToFocus
 {
-
+    mFocalPoints = [pathView getPoints];
+    [self updateFocusPoint];
     [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
 }
 

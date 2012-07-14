@@ -63,13 +63,6 @@
 -(void)clearPoints{
 	
 	if(touchPoints!=nil){
-		//dealocating NSFStrings
-		for (NSObject *point in touchPoints) {		
-			if([point isKindOfClass:[NSString class]]){
-				[point release];
-			}
-		}
-		
 		[touchPoints removeAllObjects];
         [self setNeedsDisplay];
 	}
@@ -85,6 +78,20 @@
 	[touchPoints addObject:value];
 	
 }
+
+- (NSMutableArray *)getPoints {
+	
+    NSMutableArray *focusPoints = [[NSMutableArray alloc] init];
+    
+    for (NSObject *point in touchPoints) {
+        CGPoint touchPoint = [(NSValue *)point CGPointValue];
+        
+        [focusPoints addObject:[NSValue valueWithCGPoint:CGPointMake(1 - touchPoint.x / self.frame.size.width, touchPoint.y / self.frame.size.height)]];
+    }
+    
+    return focusPoints;
+}
+
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint touchPoint = [[touches anyObject] locationInView:self];
