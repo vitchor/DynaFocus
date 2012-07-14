@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		441BFF9915B12AEC00E204D7 /* GalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 441BFF9715B12AEC00E204D7 /* GalleryController.m */; };
+		441BFF9A15B12AEC00E204D7 /* GalleryController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 441BFF9815B12AEC00E204D7 /* GalleryController.xib */; };
 		4496250B15ACDDA4007FD7A3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4496250A15ACDDA4007FD7A3 /* UIKit.framework */; };
 		4496250D15ACDDA4007FD7A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4496250C15ACDDA4007FD7A3 /* Foundation.framework */; };
 		4496250F15ACDDA4007FD7A3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4496250E15ACDDA4007FD7A3 /* CoreGraphics.framework */; };
@@ -27,6 +29,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		441BFF9615B12AEC00E204D7 /* GalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryController.h; sourceTree = "<group>"; };
+		441BFF9715B12AEC00E204D7 /* GalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryController.m; sourceTree = "<group>"; };
+		441BFF9815B12AEC00E204D7 /* GalleryController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryController.xib; sourceTree = "<group>"; };
 		4496250615ACDDA4007FD7A3 /* DynaFocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynaFocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4496250A15ACDDA4007FD7A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4496250C15ACDDA4007FD7A3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -115,6 +120,9 @@
 				4496252C15ACDDA4007FD7A3 /* second.png */,
 				4496252E15ACDDA4007FD7A3 /* second@2x.png */,
 				4496251115ACDDA4007FD7A3 /* Supporting Files */,
+				441BFF9615B12AEC00E204D7 /* GalleryController.h */,
+				441BFF9715B12AEC00E204D7 /* GalleryController.m */,
+				441BFF9815B12AEC00E204D7 /* GalleryController.xib */,
 			);
 			path = DynaFocus;
 			sourceTree = "<group>";
@@ -188,6 +196,7 @@
 				4496252815ACDDA4007FD7A3 /* first@2x.png in Resources */,
 				4496252D15ACDDA4007FD7A3 /* second.png in Resources */,
 				4496252F15ACDDA4007FD7A3 /* second@2x.png in Resources */,
+				441BFF9A15B12AEC00E204D7 /* GalleryController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +211,7 @@
 				4496251B15ACDDA4007FD7A3 /* AppDelegate.m in Sources */,
 				4496252415ACDDA4007FD7A3 /* FirstViewController.m in Sources */,
 				4496252B15ACDDA4007FD7A3 /* SecondViewController.m in Sources */,
+				441BFF9915B12AEC00E204D7 /* GalleryController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

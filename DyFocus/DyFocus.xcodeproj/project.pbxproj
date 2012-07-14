@@ -1,0 +1,297 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
+		441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFB115B131D200E204D7 /* Foundation.framework */; };
+		441BFFB415B131D200E204D7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFB315B131D200E204D7 /* CoreGraphics.framework */; };
+		441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFB815B131D200E204D7 /* InfoPlist.strings */; };
+		441BFFBC15B131D200E204D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 441BFFBB15B131D200E204D7 /* main.m */; };
+		441BFFC015B131D200E204D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 441BFFBF15B131D200E204D7 /* AppDelegate.m */; };
+		441BFFC915B1324700E204D7 /* CameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 441BFFC715B1324700E204D7 /* CameraView.m */; };
+		441BFFCA15B1324700E204D7 /* CameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFC815B1324700E204D7 /* CameraView.xib */; };
+		441BFFCC15B1328300E204D7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFCB15B1328300E204D7 /* AVFoundation.framework */; };
+		441BFFCE15B1329B00E204D7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFCD15B1329B00E204D7 /* CoreMedia.framework */; };
+		441BFFD015B132A900E204D7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFCF15B132A900E204D7 /* ImageIO.framework */; };
+		441BFFD815B1339900E204D7 /* GalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 441BFFD615B1339800E204D7 /* GalleryView.m */; };
+		441BFFD915B1339900E204D7 /* GalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFD715B1339800E204D7 /* GalleryView.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		441BFFAB15B131D200E204D7 /* DyFocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DyFocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		441BFFAF15B131D200E204D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		441BFFB115B131D200E204D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		441BFFB315B131D200E204D7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		441BFFB715B131D200E204D7 /* DyFocus-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DyFocus-Info.plist"; sourceTree = "<group>"; };
+		441BFFB915B131D200E204D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		441BFFBB15B131D200E204D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		441BFFBD15B131D200E204D7 /* DyFocus-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DyFocus-Prefix.pch"; sourceTree = "<group>"; };
+		441BFFBE15B131D200E204D7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		441BFFBF15B131D200E204D7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		441BFFC615B1324700E204D7 /* CameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraView.h; sourceTree = "<group>"; };
+		441BFFC715B1324700E204D7 /* CameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraView.m; sourceTree = "<group>"; };
+		441BFFC815B1324700E204D7 /* CameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraView.xib; sourceTree = "<group>"; };
+		441BFFCB15B1328300E204D7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		441BFFCD15B1329B00E204D7 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		441BFFCF15B132A900E204D7 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		441BFFD515B1339800E204D7 /* GalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryView.h; sourceTree = "<group>"; };
+		441BFFD615B1339800E204D7 /* GalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryView.m; sourceTree = "<group>"; };
+		441BFFD715B1339800E204D7 /* GalleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryView.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		441BFFA815B131D200E204D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				441BFFD015B132A900E204D7 /* ImageIO.framework in Frameworks */,
+				441BFFCE15B1329B00E204D7 /* CoreMedia.framework in Frameworks */,
+				441BFFCC15B1328300E204D7 /* AVFoundation.framework in Frameworks */,
+				441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */,
+				441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */,
+				441BFFB415B131D200E204D7 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		441BFFA015B131D200E204D7 = {
+			isa = PBXGroup;
+			children = (
+				441BFFCF15B132A900E204D7 /* ImageIO.framework */,
+				441BFFCD15B1329B00E204D7 /* CoreMedia.framework */,
+				441BFFCB15B1328300E204D7 /* AVFoundation.framework */,
+				441BFFB515B131D200E204D7 /* DyFocus */,
+				441BFFAE15B131D200E204D7 /* Frameworks */,
+				441BFFAC15B131D200E204D7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		441BFFAC15B131D200E204D7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				441BFFAB15B131D200E204D7 /* DyFocus.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		441BFFAE15B131D200E204D7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				441BFFAF15B131D200E204D7 /* UIKit.framework */,
+				441BFFB115B131D200E204D7 /* Foundation.framework */,
+				441BFFB315B131D200E204D7 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		441BFFB515B131D200E204D7 /* DyFocus */ = {
+			isa = PBXGroup;
+			children = (
+				441BFFBE15B131D200E204D7 /* AppDelegate.h */,
+				441BFFBF15B131D200E204D7 /* AppDelegate.m */,
+				441BFFB615B131D200E204D7 /* Supporting Files */,
+				441BFFC615B1324700E204D7 /* CameraView.h */,
+				441BFFC715B1324700E204D7 /* CameraView.m */,
+				441BFFC815B1324700E204D7 /* CameraView.xib */,
+				441BFFD515B1339800E204D7 /* GalleryView.h */,
+				441BFFD615B1339800E204D7 /* GalleryView.m */,
+				441BFFD715B1339800E204D7 /* GalleryView.xib */,
+			);
+			path = DyFocus;
+			sourceTree = "<group>";
+		};
+		441BFFB615B131D200E204D7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				441BFFB715B131D200E204D7 /* DyFocus-Info.plist */,
+				441BFFB815B131D200E204D7 /* InfoPlist.strings */,
+				441BFFBB15B131D200E204D7 /* main.m */,
+				441BFFBD15B131D200E204D7 /* DyFocus-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		441BFFAA15B131D200E204D7 /* DyFocus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 441BFFC315B131D200E204D7 /* Build configuration list for PBXNativeTarget "DyFocus" */;
+			buildPhases = (
+				441BFFA715B131D200E204D7 /* Sources */,
+				441BFFA815B131D200E204D7 /* Frameworks */,
+				441BFFA915B131D200E204D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DyFocus;
+			productName = DyFocus;
+			productReference = 441BFFAB15B131D200E204D7 /* DyFocus.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		441BFFA215B131D200E204D7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = Ufscar;
+			};
+			buildConfigurationList = 441BFFA515B131D200E204D7 /* Build configuration list for PBXProject "DyFocus" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 441BFFA015B131D200E204D7;
+			productRefGroup = 441BFFAC15B131D200E204D7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				441BFFAA15B131D200E204D7 /* DyFocus */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		441BFFA915B131D200E204D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */,
+				441BFFCA15B1324700E204D7 /* CameraView.xib in Resources */,
+				441BFFD915B1339900E204D7 /* GalleryView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		441BFFA715B131D200E204D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				441BFFBC15B131D200E204D7 /* main.m in Sources */,
+				441BFFC015B131D200E204D7 /* AppDelegate.m in Sources */,
+				441BFFC915B1324700E204D7 /* CameraView.m in Sources */,
+				441BFFD815B1339900E204D7 /* GalleryView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		441BFFB815B131D200E204D7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				441BFFB915B131D200E204D7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		441BFFC115B131D200E204D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		441BFFC215B131D200E204D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		441BFFC415B131D200E204D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
+				INFOPLIST_FILE = "DyFocus/DyFocus-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		441BFFC515B131D200E204D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
+				INFOPLIST_FILE = "DyFocus/DyFocus-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		441BFFA515B131D200E204D7 /* Build configuration list for PBXProject "DyFocus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				441BFFC115B131D200E204D7 /* Debug */,
+				441BFFC215B131D200E204D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		441BFFC315B131D200E204D7 /* Build configuration list for PBXNativeTarget "DyFocus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				441BFFC415B131D200E204D7 /* Debug */,
+				441BFFC515B131D200E204D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 441BFFA215B131D200E204D7 /* Project object */;
+}

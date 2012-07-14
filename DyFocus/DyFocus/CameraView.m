@@ -6,11 +6,9 @@
 //  Copyright (c) 2012 Ufscar. All rights reserved.
 //
 
-#import "FirstViewController.h"
-#import "AppDelegate.h"
-#import "GalleryController.h"
+#import "CameraView.h"
 
-@implementation FirstViewController
+@implementation CameraView
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
@@ -36,7 +34,7 @@
     // Find CaptureDevice
     
     NSArray *devices = [AVCaptureDevice devices];
-   
+    
     for (AVCaptureDevice *device in devices){
         
         if ([device hasMediaType:AVMediaTypeVideo]){
@@ -52,7 +50,7 @@
     // Set initial focus point
     
     [self updateFocusPoint];
-           
+    
     // Set observer to CaptureDevice
     int flags = NSKeyValueObservingOptionNew;
     [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:flags context:nil];
@@ -119,24 +117,24 @@
                  
                  if (exifAttachments) {
                      
-                    // UIImage *image = [self imageFromSampleBuffer:imageDataSampleBuffer];
+                     // UIImage *image = [self imageFromSampleBuffer:imageDataSampleBuffer];
                      
                      NSLog(@"DONE! ");
                      
                      mFOFIndex = mFOFIndex + 1;
                      
                      if (mFOFIndex < [mFocalPoints count]) {
-                        [self updateFocusPoint];
+                         [self updateFocusPoint];
                      } else {
                          NSLog(@" FINISHED PICTURE");
                          [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
                      }
                      
                      
-
+                     
                  }
                  
-                            
+                 
              }];
         }
     }
