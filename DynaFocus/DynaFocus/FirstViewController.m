@@ -22,19 +22,6 @@
 {
     [super viewDidLoad];
     
-    mFOFIndex = 0;
-    
-    // Hardcoding focal points
-    mFocalPoints = [[NSMutableArray alloc] init];
-    
-    CGPoint point1 = {0,0};
-    CGPoint point2 = {1, 1};
-    
-    mFocalPoints = [NSMutableArray array];
-    [mFocalPoints addObject:[NSValue valueWithCGPoint:point1]];
-    [mFocalPoints addObject:[NSValue valueWithCGPoint:point2]];
-
-    
 }
 
 - (void)viewDidUnload
@@ -58,6 +45,16 @@
 	[self presentModalViewController:imagePicker animated:YES];
 }*/
 
+- (void)updateFocusPoint {
+    NSLog(@"UPDATE POINT: %d", mFOFIndex);
+    NSError *error = nil;
+    if ([mCaptureDevice lockForConfiguration:&error]) {
+        NSLog(@"UPDATE POINT, DONE");
+        [mCaptureDevice setFocusPointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
+        [mCaptureDevice setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+        [mCaptureDevice unlockForConfiguration];
+    }
+}
 - (void)doTakePicture {
 	
     // Create Session
@@ -70,7 +67,6 @@
     
     
     // Find CaptureDevice
-    AVCaptureDevice *captureDevice;
     
     NSArray *devices = [AVCaptureDevice devices];
    
@@ -79,7 +75,7 @@
         if ([device hasMediaType:AVMediaTypeVideo]){
             
             if ([device position] == AVCaptureDevicePositionBack) {
-                captureDevice = device;
+                mCaptureDevice = device;
                 break;
             }
         }
@@ -87,19 +83,17 @@
     }
     
     // Set initial focus point
-    NSError *error = nil;
-    if ([captureDevice lockForConfiguration:&error]) {
-        [captureDevice setFocusPointOfInterest:[[mFocalPoints objectAtIndex:0] CGPointValue]];
-        [captureDevice unlockForConfiguration];
-    }
+    
+    [self updateFocusPoint];
            
     // Set observer to CaptureDevice
     int flags = NSKeyValueObservingOptionNew;
-    [captureDevice addObserver:self forKeyPath:@"adjustingFocus" options:flags context:nil];
+    [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:flags context:nil];
     
     
     // Create and add DeviceInput to Session
-    AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
+    NSError *error = nil;
+    AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:mCaptureDevice error:&error];
     
     if ([captureSession canAddInput:deviceInput]) {
         [captureSession addInput:deviceInput];
@@ -169,9 +163,10 @@
     if ([keyPath isEqualToString:@"adjustingFocus"]) {
         BOOL adjustingFocus = [[change objectForKey:NSKeyValueChangeNewKey] isEqualToNumber:[NSNumber numberWithInt:1]];
         
-        NSLog(@"FOCUS IS GOOD");
-        
         if(!adjustingFocus) {
+            
+            NSLog(@"FOCUS IS GOOD");
+            
             // Capture with handler
             NSLog(@"TAKING PICTURE...");
             [mStillImageOutput captureStillImageAsynchronouslyFromConnection:mVideoConnection completionHandler:
@@ -182,6 +177,16 @@
                  
                  if (exifAttachments) {
                      NSLog(@"DONE! ");
+                     
+                     mFOFIndex = mFOFIndex + 1;
+                     
+                     if (mFOFIndex < 2) {
+                        [self updateFocusPoint];
+                     } else {
+                         NSLog(@" FINISHED PICTURE");
+                         [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
+                     }
+
                  }
                  
                  
@@ -197,9 +202,24 @@
     }
 }
 
+
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    mFOFIndex = 0;
+    
+    // Hardcoding focal points
+    mFocalPoints = [[NSMutableArray alloc] init];
+    
+    CGPoint point1 = {0,0};
+    CGPoint point2 = {1, 1};
+    
+    [mFocalPoints addObject:[NSValue valueWithCGPoint:point1]];
+    [mFocalPoints addObject:[NSValue valueWithCGPoint:point2]];
+
+    
     [self doTakePicture];
 }
 

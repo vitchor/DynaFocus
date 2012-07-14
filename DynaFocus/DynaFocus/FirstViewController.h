@@ -15,7 +15,10 @@
     
 	AVCaptureStillImageOutput *mStillImageOutput;
     AVCaptureConnection *mVideoConnection;
+    AVCaptureDevice *mCaptureDevice;
+    
     NSMutableArray *mFocalPoints;
     int mFOFIndex;
+    
 }
 @end
