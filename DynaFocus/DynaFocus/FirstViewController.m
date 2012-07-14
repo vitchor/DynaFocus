@@ -21,7 +21,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    mFOFIndex = 0;
+    
+    // Hardcoding focal points
+    mFocalPoints = [[NSMutableArray alloc] init];
+    
+    CGPoint point1 = {0,0};
+    CGPoint point2 = {1, 1};
+    
+    mFocalPoints = [NSMutableArray array];
+    [mFocalPoints addObject:[NSValue valueWithCGPoint:point1]];
+    [mFocalPoints addObject:[NSValue valueWithCGPoint:point2]];
+
+    
 }
 
 - (void)viewDidUnload
@@ -73,13 +86,19 @@
         
     }
     
+    // Set initial focus point
+    NSError *error = nil;
+    if ([captureDevice lockForConfiguration:&error]) {
+        [captureDevice setFocusPointOfInterest:[[mFocalPoints objectAtIndex:0] CGPointValue]];
+        [captureDevice unlockForConfiguration];
+    }
+           
     // Set observer to CaptureDevice
     int flags = NSKeyValueObservingOptionNew;
     [captureDevice addObserver:self forKeyPath:@"adjustingFocus" options:flags context:nil];
     
     
     // Create and add DeviceInput to Session
-    NSError *error = nil;
     AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
     
     if ([captureSession canAddInput:deviceInput]) {
@@ -143,7 +162,6 @@
     layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     layer.frame = self.view.frame;
     [self.view.layer addSublayer:layer];
-    
     
 }
 

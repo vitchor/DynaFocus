@@ -12,7 +12,10 @@
 
 
 @interface FirstViewController : UIViewController {
+    
 	AVCaptureStillImageOutput *mStillImageOutput;
     AVCaptureConnection *mVideoConnection;
+    NSMutableArray *mFocalPoints;
+    int mFOFIndex;
 }
 @end
