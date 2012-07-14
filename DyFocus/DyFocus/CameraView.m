@@ -190,6 +190,8 @@
 {
     mFOFIndex = 0;
     [self updateFocusPoint];
+    [mFrames removeAllObjects];
+    
     [super viewWillAppear:animated];
 }
 
