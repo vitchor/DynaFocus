@@ -23,36 +23,38 @@
 
 - (void)drawRect:(CGRect)rect {
 	
-	BOOL isPointDiscontinued = FALSE;
-	
 	context = UIGraphicsGetCurrentContext();
 	
 	ref =  [[UIColor redColor] CGColor];
 	
-	if([touchPoints count]>1){
-		CGContextSetLineWidth(context, 25);
+	if ([touchPoints count] >= 1) {
 		
+        CGContextSetLineWidth(context, 10);
 		CGContextSetStrokeColorWithColor(context, ref);
         
-		CGPoint firstPoint = [[touchPoints objectAtIndex:0] CGPointValue];
+        CGPoint firstPoint = [[touchPoints objectAtIndex:0] CGPointValue];
 		
-		CGContextMoveToPoint(context, firstPoint.x, firstPoint.y);
 		
-		for (NSObject *point in touchPoints) {
-			
-			if([point isKindOfClass:[NSString class]])
-			{
-				isPointDiscontinued=TRUE;
-			}else if(isPointDiscontinued && ![point isKindOfClass:[NSString class]]){
-				CGPoint cgPoint = [(NSValue *)point CGPointValue];
-				CGContextMoveToPoint(context, cgPoint.x, cgPoint.y);
-				isPointDiscontinued=FALSE;
-			}else if(!isPointDiscontinued){
-				
-				CGPoint cgPoint = [(NSValue *)point CGPointValue];
-				CGContextAddLineToPoint(context, cgPoint.x, cgPoint.y);
-			}
-		}
+        if ([touchPoints count] == 1) {
+            CGContextStrokeEllipseInRect(context, CGRectMake(firstPoint.x - 10, firstPoint.y - 10, 20, 20));
+        } else {
+            CGPoint lastPoint;
+            for (NSObject *point in touchPoints) {
+                CGPoint cgPoint = [(NSValue *)point CGPointValue];
+                CGContextStrokeEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
+                
+                
+                CGContextMoveToPoint(context, lastPoint.x, lastPoint.y);
+                
+                if ([touchPoints indexOfObject:point] != 0) {
+                    CGContextAddLineToPoint(context, cgPoint.x, cgPoint.y);
+                    CGContextStrokePath(context);
+                }
+                lastPoint = cgPoint;
+            }
+        }
+		
+        
 		CGContextStrokePath(context);
 	}
 	
@@ -69,6 +71,7 @@
 		}
 		
 		[touchPoints removeAllObjects];
+        [self setNeedsDisplay];
 	}
 }
 
