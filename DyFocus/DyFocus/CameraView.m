@@ -19,8 +19,15 @@
     NSError *error = nil;
     if ([mCaptureDevice lockForConfiguration:&error]) {
         NSLog(@"UPDATE POINT, DONE");
+        // adjusts exposure first
+        [mCaptureDevice setExposurePointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
+        [mCaptureDevice setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
+        
+        // then the focus
         [mCaptureDevice setFocusPointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
         [mCaptureDevice setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+        
+        // releases the lock
         [mCaptureDevice unlockForConfiguration];
     }
 }
