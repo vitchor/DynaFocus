@@ -9,6 +9,7 @@
 #import "CameraView.h"
 #import "FOFPreview.h"
 #import "PathView.h"
+#import "ASIFormDataRequest.h"
 
 @implementation CameraView
 
@@ -126,6 +127,29 @@
                      
                      NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                      UIImage *image = [[UIImage alloc] initWithData:imageData];
+                     
+                  
+                     
+                     
+                     NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
+                     
+                     
+                     // Write a UIImage to JPEG with minimum compression (best quality)
+                     [UIImageJPEGRepresentation(image, 0.5) writeToFile:jpgPath atomically:YES];
+                     
+                     NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
+                     
+                     NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
+                     
+                     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
+                     [request setPostValue:@"image.jpg" forKey:@"data"];
+                     [request setFile:photoPath forKey:@"apiupload"];
+                     [request startSynchronous];
+                     
+                     NSLog(@"%@",[request responseString]);
+                     
+                     
+                     
                      [mFrames addObject:image];
                      
                      NSLog(@"DONE! ");

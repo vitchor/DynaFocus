@@ -24,33 +24,36 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
-    // Create Start view controller.
+    
+    // Camera Controller
     CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
     UINavigationController *startViewNavigationController = [[UINavigationController alloc] initWithRootViewController:startController];
+    UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:2];
+    [startViewNavigationController setTabBarItem:cameraTab];
     [startController release];
     
+    
+    // Gallery Controller
     GalleryView *galleryController = [[GalleryView alloc] initWithNibName:@"GalleryView" bundle:nil];
     UINavigationController *galeryViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
-
+    UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:2];
+    [galeryViewNavigationController setTabBarItem:galleryTab];
+    [galleryController release];
+        
     
-    // Similarly create for photos, videos and social...
-    
-    // Create an array of view controllers.
-    NSArray* controllers = [NSArray arrayWithObjects:startViewNavigationController, galeryViewNavigationController, nil];
-    
-    // Create our tab bar controller.
+    // Configure TabBarController
     self.tabBarController = [[[UITabBarController alloc] init] autorelease];
     
-    // Set the view controllers of the tab bar controller.
+    
+    
+    NSArray* controllers = [NSArray arrayWithObjects:startViewNavigationController, galeryViewNavigationController, nil];
+    
     self.tabBarController.viewControllers = controllers;
     
-    // Release the startViewNavigationController, photosViewNavigationController, videosViewNavigationController, socialViewNavigationController...
     
-    // I don't know what this does.
-    
-    // Add the tab bar controller to the window.
+
+    // Configure window
     [self.window addSubview:self.tabBarController.view];
-    
     [self.window makeKeyAndVisible];
     
     return YES;
