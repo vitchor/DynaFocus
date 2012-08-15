@@ -128,12 +128,8 @@
                      NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                      UIImage *image = [[UIImage alloc] initWithData:imageData];
                      
-                  
-                     
-                     
                      NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
-                     
-                     
+                    
                      // Write a UIImage to JPEG with minimum compression (best quality)
                      [UIImageJPEGRepresentation(image, 0.5) writeToFile:jpgPath atomically:YES];
                      
@@ -142,13 +138,30 @@
                      NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
                      
                      ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
-                     [request setPostValue:@"image.jpg" forKey:@"data"];
+                     
+                     // Add all the post values
+                     NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[[pathView getPoints] count]];
+                     NSString *frame_index = [[NSString alloc] initWithFormat:@"%d",mFOFIndex];
+                     NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
+
+                     CFUUIDRef theUUID = CFUUIDCreate(NULL); //Gets the device ID
+                     NSString *device_id = (NSString *)CFUUIDCreateString(NULL, theUUID);
+                     CFRelease(theUUID);
+                     
+                     [request setPostValue:device_id forKey:@"device_id"];
+                     [request setPostValue:frame_index forKey:@"frame_index"];
+                     [request setPostValue:fof_name forKey:@"fof_name"];
+                     [request setPostValue:fof_size forKey:@"fof_size"];
+                     
+                     
+                     // Add the image file to the request
                      [request setFile:photoPath forKey:@"apiupload"];
+                     
+                     
                      [request startSynchronous];
                      
+                     
                      NSLog(@"%@",[request responseString]);
-                     
-                     
                      
                      [mFrames addObject:image];
                      

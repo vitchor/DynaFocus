@@ -28,25 +28,45 @@
     // Camera Controller
     CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
     UINavigationController *startViewNavigationController = [[UINavigationController alloc] initWithRootViewController:startController];
-    UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:2];
+    UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:3];
     [startViewNavigationController setTabBarItem:cameraTab];
     [startController release];
     
     
-    // Gallery Controller
-    GalleryView *galleryController = [[GalleryView alloc] initWithNibName:@"GalleryView" bundle:nil];
-    UINavigationController *galeryViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
-    UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:2];
-    [galeryViewNavigationController setTabBarItem:galleryTab];
+    // "Featured" Controller
+    GalleryView *galleryController = [[GalleryView alloc] initWithNibName:@"Featured" bundle:nil];
+    UINavigationController *galleryViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
+    UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:1];
+    [galleryViewNavigationController setTabBarItem:galleryTab];
     [galleryController release];
-        
     
+    // Feed Controller
+    GalleryView *feedController = [[GalleryView alloc] initWithNibName:@"Feed" bundle:nil];
+    UINavigationController *feedViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
+    UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed_bw"] tag:2];
+    [feedViewNavigationController setTabBarItem:feedTab];
+    [feedController release];
+    
+    // Friends Controller
+    GalleryView *friendsController = [[GalleryView alloc] initWithNibName:@"Friends" bundle:nil];
+    UINavigationController *friendsViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
+    UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
+    [friendsViewNavigationController setTabBarItem:friendsTab];
+    [friendsController release];
+        
+    // Profile Controller
+    GalleryView *profileController = [[GalleryView alloc] initWithNibName:@"Profile" bundle:nil];
+    UINavigationController *profileViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
+    UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"df_profile_bw"] tag:5];
+    [profileViewNavigationController setTabBarItem:profileTab];
+    [profileController release];
     // Configure TabBarController
+    
     self.tabBarController = [[[UITabBarController alloc] init] autorelease];
     
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:startViewNavigationController, galeryViewNavigationController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:galleryViewNavigationController, feedViewNavigationController, startViewNavigationController, friendsViewNavigationController, profileViewNavigationController, nil];
     
     self.tabBarController.viewControllers = controllers;
     
