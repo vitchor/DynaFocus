@@ -1,4 +1,4 @@
-//
+
 //  FOFPreview.m
 //  DyFocus
 //
@@ -7,6 +7,7 @@
 //
 
 #import "FOFPreview.h"
+#import "ASIFormDataRequest.h"
 
 @implementation FOFPreview
 
@@ -75,4 +76,10 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+
+   
+  
+}
 @end
