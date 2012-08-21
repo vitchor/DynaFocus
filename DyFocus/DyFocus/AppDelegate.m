@@ -45,10 +45,10 @@
     WebViewController *webViewController = [[WebViewController alloc] init];
     [webViewController loadUrl: [[NSString alloc] initWithFormat: @"http://54.245.121.15/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
-    UINavigationController *feedViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
+    UINavigationController *feedViewNavigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
     UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed_bw"] tag:2];
     [feedViewNavigationController setTabBarItem:feedTab];
-    [feedController release];
+    [webViewController release];
     
     // Friends Controller
     GalleryView *friendsController = [[GalleryView alloc] initWithNibName:@"Friends" bundle:nil];
