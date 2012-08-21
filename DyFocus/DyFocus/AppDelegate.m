@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "CameraView.h"
 #import "GalleryView.h"
+#import "WebViewController.h"
 
 @implementation AppDelegate
 
@@ -41,7 +42,9 @@
     [galleryController release];
     
     // Feed Controller
-    GalleryView *feedController = [[GalleryView alloc] initWithNibName:@"Feed" bundle:nil];
+    WebViewController *webViewController = [[WebViewController alloc] init];
+    [webViewController loadUrl: [[NSString alloc] initWithFormat: @"http://54.245.121.15/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
+    
     UINavigationController *feedViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
     UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed_bw"] tag:2];
     [feedViewNavigationController setTabBarItem:feedTab];

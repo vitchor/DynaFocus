@@ -127,35 +127,6 @@
                      
                      NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                      UIImage *image = [[UIImage alloc] initWithData:imageData];
-                     /*
-                     NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
-                    
-                     // Write a UIImage to JPEG with minimum compression (best quality)
-                     [UIImageJPEGRepresentation(image, 0.5) writeToFile:jpgPath atomically:YES];
-                     
-                     NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
-                     
-                     NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
-                     
-                     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
-                     
-                     // Add all the post values
-                     NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[[pathView getPoints] count]];
-                     NSString *frame_index = [[NSString alloc] initWithFormat:@"%d",mFOFIndex];
-                     NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
-                     
-                     [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
-                     [request setPostValue:frame_index forKey:@"frame_index"];
-                     [request setPostValue:fof_name forKey:@"fof_name"];
-                     [request setPostValue:fof_size forKey:@"fof_size"];
-                     
-                     
-                     // Add the image file to the request
-                     [request setFile:photoPath withFileName:@"image.jpeg" andContentType:@"Image/jpeg" forKey:@"apiupload"];
-                     
-                     
-                     [request startSynchronous];
-                     NSLog(@"%@",[request responseString]);*/
                      
                      [mFrames addObject:image];
                      
@@ -183,7 +154,8 @@
                              
                              NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
                              
-                             NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
+                             //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
+                             NSURL *webServiceUrl = [NSURL URLWithString:@"http://54.245.121.15//uploader/image/"];
                              
                              ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
                              
@@ -210,6 +182,8 @@
                          [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
                          
                          FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
+                         
+                         //UIWebView *webView = UIWebViewNavigationTypeBackForward
                          
                          FOFpreview.frames = mFrames;
                          

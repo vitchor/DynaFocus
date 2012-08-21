@@ -18,6 +18,9 @@
 		441BFFD015B132A900E204D7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFCF15B132A900E204D7 /* ImageIO.framework */; };
 		441BFFD815B1339900E204D7 /* GalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 441BFFD615B1339800E204D7 /* GalleryView.m */; };
 		441BFFD915B1339900E204D7 /* GalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFD715B1339800E204D7 /* GalleryView.xib */; };
+		44798EAE15E433B700D5BC53 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EAD15E433B700D5BC53 /* WebViewController.m */; };
+		44798EB215E4355100D5BC53 /* LoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB115E4355100D5BC53 /* LoadView.m */; };
+		44798EB515E4362000D5BC53 /* ActivityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB415E4362000D5BC53 /* ActivityLabel.m */; };
 		44BEFED715B14404004358C9 /* FOFPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEFED515B14404004358C9 /* FOFPreview.m */; };
 		44BEFED815B14404004358C9 /* FOFPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BEFED615B14404004358C9 /* FOFPreview.xib */; };
 		44C8DA4215B1FF80000D2947 /* PathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8DA4115B1FF80000D2947 /* PathView.m */; };
@@ -88,6 +91,12 @@
 		441BFFD515B1339800E204D7 /* GalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryView.h; sourceTree = "<group>"; };
 		441BFFD615B1339800E204D7 /* GalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryView.m; sourceTree = "<group>"; };
 		441BFFD715B1339800E204D7 /* GalleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryView.xib; sourceTree = "<group>"; };
+		44798EAC15E433B700D5BC53 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		44798EAD15E433B700D5BC53 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		44798EB015E4355100D5BC53 /* LoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadView.h; sourceTree = "<group>"; };
+		44798EB115E4355100D5BC53 /* LoadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadView.m; sourceTree = "<group>"; };
+		44798EB315E4361100D5BC53 /* ActivityLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityLabel.h; sourceTree = "<group>"; };
+		44798EB415E4362000D5BC53 /* ActivityLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityLabel.m; sourceTree = "<group>"; };
 		44BEFED415B14404004358C9 /* FOFPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFPreview.h; sourceTree = "<group>"; };
 		44BEFED515B14404004358C9 /* FOFPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFPreview.m; sourceTree = "<group>"; };
 		44BEFED615B14404004358C9 /* FOFPreview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview.xib; sourceTree = "<group>"; };
@@ -241,6 +250,8 @@
 				44BEFED415B14404004358C9 /* FOFPreview.h */,
 				44BEFED515B14404004358C9 /* FOFPreview.m */,
 				44BEFED615B14404004358C9 /* FOFPreview.xib */,
+				44798EAC15E433B700D5BC53 /* WebViewController.h */,
+				44798EAD15E433B700D5BC53 /* WebViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -248,8 +259,12 @@
 		44C8DA4D15B20FEC000D2947 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				44798EB415E4362000D5BC53 /* ActivityLabel.m */,
+				44798EB315E4361100D5BC53 /* ActivityLabel.h */,
 				44C8DA4015B1FF80000D2947 /* PathView.h */,
 				44C8DA4115B1FF80000D2947 /* PathView.m */,
+				44798EB015E4355100D5BC53 /* LoadView.h */,
+				44798EB115E4355100D5BC53 /* LoadView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -410,6 +425,9 @@
 				44BEFED715B14404004358C9 /* FOFPreview.m in Sources */,
 				44C8DA4215B1FF80000D2947 /* PathView.m in Sources */,
 				AC606B6915DC4912008FDF8F /* CameraView.m in Sources */,
+				44798EAE15E433B700D5BC53 /* WebViewController.m in Sources */,
+				44798EB215E4355100D5BC53 /* LoadView.m in Sources */,
+				44798EB515E4362000D5BC53 /* ActivityLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,12 +493,12 @@
 		441BFFC415B131D200E204D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
 				INFOPLIST_FILE = "DyFocus/DyFocus-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "668EADD4-A018-473E-826B-5EF13B507996";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
