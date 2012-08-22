@@ -154,7 +154,7 @@
                              
                              NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
                              
-                             //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
+                             //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.100.107:8000/uploader/image/"];
                              NSURL *webServiceUrl = [NSURL URLWithString:@"http://54.245.121.15//uploader/image/"];
                              
                              ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
@@ -163,10 +163,17 @@
                              NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[[pathView getPoints] count]];
                              NSString *frame_index = [[NSString alloc] initWithFormat:@"%d",i];
                              
+                             CGPoint touchPoint = [(NSValue *)[[pathView getPoints] objectAtIndex:i] CGPointValue];
+                             
                              [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
                              [request setPostValue:frame_index forKey:@"frame_index"];
+                             [request setPostValue:[[NSNumber alloc] initWithInt:touchPoint.x*100] forKey:@"frame_focal_point_x"];
+                             [request setPostValue:[[NSNumber alloc] initWithInt:touchPoint.y*100] forKey:@"frame_focal_point_y"];
+                             
                              [request setPostValue:fof_name forKey:@"fof_name"];
                              [request setPostValue:fof_size forKey:@"fof_size"];
+                             
+
                              
                              
                              // Add the image file to the request
@@ -175,7 +182,7 @@
                              
                              [request startSynchronous];
                              
-                             NSLog(@"MESSAGE %@",[request responseStatusMessage]);
+                             NSLog(@"MESSAGE %@",[request responseString]);
                              
                          }
                          
