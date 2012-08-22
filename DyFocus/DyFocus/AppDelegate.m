@@ -34,32 +34,36 @@
     [startController release];
     
     
-    // "Featured" Controller
-    GalleryView *galleryController = [[GalleryView alloc] initWithNibName:@"Featured" bundle:nil];
-    UINavigationController *galleryViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
+    // Featured Controller
+    WebViewController *featuredWebViewController = [[WebViewController alloc] init];
+    //[featuredWebViewController loadUrl: @"http://192.168.100.107:8000/uploader/0/featured_fof/"];
+    [featuredWebViewController loadUrl: @"http://54.245.121.15/uploader/0/featured_fof/"];
+    
+    UINavigationController *galleryViewNavigationController = [[UINavigationController alloc] initWithRootViewController:featuredWebViewController];
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:1];
     [galleryViewNavigationController setTabBarItem:galleryTab];
-    [galleryController release];
+    [featuredWebViewController release];
     
     // Feed Controller
-    WebViewController *webViewController = [[WebViewController alloc] init];
-    [webViewController loadUrl: [[NSString alloc] initWithFormat: @"http://54.245.121.15/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
+    WebViewController *feedWebViewController = [[WebViewController alloc] init];
+    [feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://54.245.121.15/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
+    //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.107:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
-    UINavigationController *feedViewNavigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+    UINavigationController *feedViewNavigationController = [[UINavigationController alloc] initWithRootViewController:feedWebViewController];
     UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed_bw"] tag:2];
     [feedViewNavigationController setTabBarItem:feedTab];
-    [webViewController release];
+    [feedWebViewController release];
     
     // Friends Controller
     GalleryView *friendsController = [[GalleryView alloc] initWithNibName:@"Friends" bundle:nil];
-    UINavigationController *friendsViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
+    UINavigationController *friendsViewNavigationController = [[UINavigationController alloc] initWithRootViewController:friendsController];
     UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
     [friendsViewNavigationController setTabBarItem:friendsTab];
     [friendsController release];
         
     // Profile Controller
     GalleryView *profileController = [[GalleryView alloc] initWithNibName:@"Profile" bundle:nil];
-    UINavigationController *profileViewNavigationController = [[UINavigationController alloc] initWithRootViewController:galleryController];
+    UINavigationController *profileViewNavigationController = [[UINavigationController alloc] initWithRootViewController:profileController];
     UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"df_profile_bw"] tag:5];
     [profileViewNavigationController setTabBarItem:profileTab];
     [profileController release];
