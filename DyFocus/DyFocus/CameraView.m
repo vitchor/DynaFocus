@@ -128,7 +128,14 @@
                      NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                      UIImage *image = [[UIImage alloc] initWithData:imageData];
                      
-                     [mFrames addObject:image];
+                     CGRect cropRect = CGRectMake((image.size.width-3000)/2,(image.size.width-3000)/2, 3000, 3000);
+                     
+                     CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
+                     
+
+                     UIImage *correctImage = [UIImage imageWithCGImage:imageRef scale:1.0 orientation:image.imageOrientation];
+                     
+                     [mFrames addObject:[correctImage retain]];
                      
                      NSLog(@"DONE! ");
                      
@@ -189,15 +196,12 @@
                          
                          FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
                          
-                         //UIWebView *webView = UIWebViewNavigationTypeBackForward
                          
                          FOFpreview.frames = mFrames;
                          
                          for (UIImage *frame in mFrames) {
                              [frame release];
                          }
-                         
-                         //[mFrames release];
                          
                          [self.navigationController pushViewController:FOFpreview animated:false];
                          
