@@ -173,7 +173,6 @@
                              [request setPostValue:fof_name forKey:@"fof_name"];
                              [request setPostValue:fof_size forKey:@"fof_size"];
                              
-
                              
                              
                              // Add the image file to the request
@@ -194,15 +193,18 @@
                          
                          FOFpreview.frames = mFrames;
                          
-                         [mFrames release];
+                         for (UIImage *frame in mFrames) {
+                             [frame release];
+                         }
+                         
+                         //[mFrames release];
                          
                          [self.navigationController pushViewController:FOFpreview animated:false];
-                     }
-                     
-                     
+                         
+                         [FOFpreview release];
+                     }   
                      
                  }
-                 
                  
              }];
         }
@@ -243,11 +245,22 @@
     
     // Hardcoding focal points
     // TODO: Get from class that is responsible for modeling the logic entity path.
+    
+    if (mFrames){
+        
+        [mFrames release];
+        mFrames = nil;
+    }
+
+    if (mFocalPoints) {
+        [mFocalPoints release];
+        mFocalPoints = nil;
+    }
+    
     mFocalPoints = [[NSMutableArray alloc] init];
     mFrames = [[NSMutableArray alloc] init];
     
     CGPoint centerPoint = {0.5f,0.5f};// center
-    
     
     [mFocalPoints addObject:[NSValue valueWithCGPoint:centerPoint]];
     

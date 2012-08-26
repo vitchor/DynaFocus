@@ -101,10 +101,8 @@
 
 - (void)viewDidUnload
 {
-    for (UIImage *frame in self.frames) {
-        [frame release];
-    }
 
+    [self dealloc];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -118,8 +116,30 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-
    
-  
+    [super viewDidAppear:animated];
+}
+
+- (void) dealloc
+{
+    for (UIImage *frame in self.frames) {
+        [frame release];
+    }
+    
+    //[self.frames release];
+    
+    [self.firstImageView release];
+    [self.secondImageView release];
+    NSLog(@"YEAAAH");
+    
+    [super dealloc];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [timer invalidate];
+    timer = nil;
+    [super viewWillDisappear:animated];
+    
 }
 @end
