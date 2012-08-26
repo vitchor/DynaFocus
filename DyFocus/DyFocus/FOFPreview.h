@@ -10,16 +10,19 @@
 
 @interface FOFPreview : UIViewController {
     
-    IBOutlet UIImageView *imageView;
+    IBOutlet UIImageView *firstImageView;
+    IBOutlet UIImageView *secondImageView;
     IBOutlet NSMutableArray *frames;
-    IBOutlet UISlider *slider;
+    NSTimer *timer;
     
-    int frameIndex;
+    int oldFrameIndex;
+    int timerPause;
 }
 
-@property(nonatomic,retain) IBOutlet UIImageView *imageView;
+@property(nonatomic,retain) IBOutlet UIImageView *firstImageView;
+@property(nonatomic,retain) IBOutlet UIImageView *secondImageView;
 @property(nonatomic,retain) IBOutlet NSMutableArray *frames;
-@property(nonatomic,retain) IBOutlet UISlider *slider;
+@property(nonatomic,retain) NSTimer *timer;
 
 -(IBAction)changeSlider:(id)sender;
 

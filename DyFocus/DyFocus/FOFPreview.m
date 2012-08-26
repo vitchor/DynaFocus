@@ -11,32 +11,11 @@
 
 @implementation FOFPreview
 
-@synthesize imageView, frames, slider;
+@synthesize firstImageView,secondImageView, frames, timer;
 
--(IBAction)changeSlider:(id)sender 
-{
-    
-    float share = 100 / [frames count];
-    
-    for (int i = 1; i <= [frames count]; i++) {
-        if (round(slider.value)  < i*share ) {
+#define TIMER_INTERVAL 0.1;
+#define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
 
-
-            NSLog(@"Slider Value: %f", slider.value);
-            
-            if (frameIndex != i - 1) {
-                frameIndex = i - 1;
-                
-                NSLog(@"FRAME INDEX: %d", frameIndex);
-                
-                [imageView setImage: [frames objectAtIndex:frameIndex]];
-                
-            }
-            break;
-
-        }
-    }
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,11 +39,72 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.imageView setImage: [self.frames objectAtIndex:0]];
+    
+    [self.firstImageView setImage: [self.frames objectAtIndex:0]];
+    
+    if ([self.frames count] > 1) {
+        [self.secondImageView setImage: [self.frames objectAtIndex:1]];
+    }
+    
+    oldFrameIndex = 0;
+    timerPause = TIMER_INTERVAL;
+    
+    //TODO start fade out timer
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+    [timer fire];
+}
+
+- (void)fadeImages
+{
+    NSLog(@"lala");
+    
+    if (self.firstImageView.alpha >= 1.0) {
+        
+        if (timerPause > 0) {
+            timerPause -= 1;
+            
+        } else {
+            
+            timerPause = TIMER_PAUSE;
+            
+            if (oldFrameIndex >= [self.frames count] - 1) {
+                oldFrameIndex = 0;
+            } else {
+                oldFrameIndex += 1;
+            }
+            
+            
+            [self.secondImageView setImage:[self.frames objectAtIndex:oldFrameIndex]];
+
+            [self.secondImageView setNeedsDisplay];
+            
+            [self.firstImageView setAlpha:0.0];
+            
+            [self.firstImageView setNeedsDisplay];
+            
+            int newIndex;
+            if (oldFrameIndex == [self.frames count] - 1) {
+                newIndex = 0;
+            } else {
+                newIndex = oldFrameIndex + 1;
+            }
+            
+            [self.firstImageView setImage: [self.frames objectAtIndex: newIndex]];
+        
+        }
+            
+    } else {
+        [self.firstImageView setAlpha:self.firstImageView.alpha + 0.01];
+    }
+    
 }
 
 - (void)viewDidUnload
 {
+    for (UIImage *frame in self.frames) {
+        [frame release];
+    }
+
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

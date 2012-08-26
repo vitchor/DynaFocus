@@ -138,7 +138,7 @@
                          [self updateFocusPoint];
                      } else {
                          NSLog(@" FINISHED PICTURE");
-                         
+                         /*
                          
                          NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
                          
@@ -154,8 +154,8 @@
                              
                              NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
                              
-                             //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.100.107:8000/uploader/image/"];
-                             NSURL *webServiceUrl = [NSURL URLWithString:@"http://54.245.121.15//uploader/image/"];
+                             NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.100.107:8000/uploader/image/"];
+                             //NSURL *webServiceUrl = [NSURL URLWithString:@"http://54.245.121.15//uploader/image/"];
                              
                              ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
                              
@@ -184,7 +184,7 @@
                              
                              NSLog(@"MESSAGE %@",[request responseString]);
                              
-                         }
+                         }*/
                          
                          [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
                          
@@ -194,6 +194,7 @@
                          
                          FOFpreview.frames = mFrames;
                          
+                         [mFrames release];
                          
                          [self.navigationController pushViewController:FOFpreview animated:false];
                      }
@@ -211,26 +212,6 @@
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
-    mFOFIndex = 0;
-    
-    // Hardcoding focal points 
-    // TODO: Get from class that is responsible for modeling the logic entity path.
-    mFocalPoints = [[NSMutableArray alloc] init];
-    mFrames = [[NSMutableArray alloc] init];
-    
-    CGPoint point1 = {0,0};//top right
-    CGPoint point2 = {0.5f,0.5f};// center
-    CGPoint point3 = {1,1};// bottom left
-    
-    [mFocalPoints addObject:[NSValue valueWithCGPoint:point1]];
-    [mFocalPoints addObject:[NSValue valueWithCGPoint:point2]];
-    [mFocalPoints addObject:[NSValue valueWithCGPoint:point3]];    
-    //
-    
-    [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
-    [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
-    
-    [self startCaptureSession];
     
     [super viewDidLoad];
     
@@ -257,9 +238,23 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
     mFOFIndex = 0;
-    [self updateFocusPoint];
-    [mFrames removeAllObjects];
+    
+    // Hardcoding focal points
+    // TODO: Get from class that is responsible for modeling the logic entity path.
+    mFocalPoints = [[NSMutableArray alloc] init];
+    mFrames = [[NSMutableArray alloc] init];
+    
+    CGPoint centerPoint = {0.5f,0.5f};// center
+    
+    
+    [mFocalPoints addObject:[NSValue valueWithCGPoint:centerPoint]];
+    
+    [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
+    [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
+    
+    [self startCaptureSession];
     
     [super viewWillAppear:animated];
 }
