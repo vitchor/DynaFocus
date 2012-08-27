@@ -36,8 +36,8 @@
     
     // Featured Controller
     WebViewController *featuredWebViewController = [[WebViewController alloc] init];
-    [featuredWebViewController loadUrl: @"http://192.168.100.107:8000/uploader/0/featured_fof/"];
-    //[featuredWebViewController loadUrl: @"http://54.245.121.15/uploader/0/featured_fof/"];
+    //[featuredWebViewController loadUrl: @"http://192.168.100.107:8000/uploader/0/featured_fof/"];
+    [featuredWebViewController loadUrl: @"http://dyfoc.us/uploader/0/featured_fof/"];
     
     UINavigationController *galleryViewNavigationController = [[UINavigationController alloc] initWithRootViewController:featuredWebViewController];
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:1];
@@ -46,8 +46,8 @@
     
     // Feed Controller
     WebViewController *feedWebViewController = [[WebViewController alloc] init];
-    //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://54.245.121.15/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
-    [feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.107:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
+    [feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
+    //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.107:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
     UINavigationController *feedViewNavigationController = [[UINavigationController alloc] initWithRootViewController:feedWebViewController];
     UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed_bw"] tag:2];
