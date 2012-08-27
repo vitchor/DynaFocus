@@ -36,23 +36,22 @@
     
     // Featured Controller
     WebViewController *featuredWebViewController = [[WebViewController alloc] init];
-    //[featuredWebViewController loadUrl: @"http://192.168.100.107:8000/uploader/0/featured_fof/"];
+    //[featuredWebViewController loadUrl: @"http://192.168.100.108:8000/uploader/0/featured_fof/"];
     [featuredWebViewController loadUrl: @"http://dyfoc.us/uploader/0/featured_fof/"];
     
-    UINavigationController *galleryViewNavigationController = [[UINavigationController alloc] initWithRootViewController:featuredWebViewController];
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:1];
-    [galleryViewNavigationController setTabBarItem:galleryTab];
-    [featuredWebViewController release];
+    [featuredWebViewController setTabBarItem:galleryTab];
+
     
     // Feed Controller
     WebViewController *feedWebViewController = [[WebViewController alloc] init];
     [feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
-    //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.107:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
+    //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
-    UINavigationController *feedViewNavigationController = [[UINavigationController alloc] initWithRootViewController:feedWebViewController];
+  
     UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed_bw"] tag:2];
-    [feedViewNavigationController setTabBarItem:feedTab];
-    [feedWebViewController release];
+    [feedWebViewController setTabBarItem:feedTab];
+
     
     // Friends Controller
     GalleryView *friendsController = [[GalleryView alloc] initWithNibName:@"Friends" bundle:nil];
@@ -73,7 +72,7 @@
     
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:galleryViewNavigationController, feedViewNavigationController, startViewNavigationController, friendsViewNavigationController, profileViewNavigationController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, startViewNavigationController, friendsViewNavigationController, profileViewNavigationController, nil];
     
     self.tabBarController.viewControllers = controllers;
     

@@ -10,6 +10,7 @@
 #import "FOFPreview.h"
 #import "PathView.h"
 #import "ASIFormDataRequest.h"
+#import "UIImage+fixOrientation.h"
 
 @implementation CameraView
 
@@ -128,7 +129,7 @@
                      NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                      UIImage *image = [[UIImage alloc] initWithData:imageData];
                      
-                     CGRect cropRect = CGRectMake((image.size.width-3000)/2,(image.size.width-3000)/2, 3000, 3000);
+                     /*CGRect cropRect = CGRectMake((image.size.width-3000)/2,(image.size.width-3000)/2, 3000, 3000);
                      
                      CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
                      
@@ -136,6 +137,12 @@
                      UIImage *correctImage = [UIImage imageWithCGImage:imageRef scale:1.0 orientation:image.imageOrientation];
                      
                      [mFrames addObject:[correctImage retain]];
+                     */
+                     
+                     UIImage *correctImage = [[image fixOrientation] retain];
+                     //UIImage *correctImage = [UIImage imageWithCGImage:[image CGImage] scale:1.0 orientation:image.imageOrientation];
+                     
+                     [mFrames addObject:correctImage];
                      
                      NSLog(@"DONE! ");
                      
@@ -145,7 +152,7 @@
                          [self updateFocusPoint];
                      } else {
                          NSLog(@" FINISHED PICTURE");
-                         /*
+                         
                          
                          NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
                          
@@ -161,8 +168,8 @@
                              
                              NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
                              
-                             NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.100.107:8000/uploader/image/"];
-                             //NSURL *webServiceUrl = [NSURL URLWithString:@"http://54.245.121.15//uploader/image/"];
+                             //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.100.107:8000/uploader/image/"];
+                             NSURL *webServiceUrl = [NSURL URLWithString:@"http://54.245.121.15//uploader/image/"];
                              
                              ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
                              
@@ -190,7 +197,7 @@
                              
                              NSLog(@"MESSAGE %@",[request responseString]);
                              
-                         }*/
+                         }
                          
                          [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
                          

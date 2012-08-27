@@ -20,7 +20,7 @@
 - (void)loadUrl:(NSString *)url {
 	self.wantsFullScreenLayout = YES;
 	m_webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
-	m_webView.scalesPageToFit = YES;
+	//m_webView.scalesPageToFit = YES;
     m_webView.delegate = self;
 	[m_webView setBackgroundColor:[UIColor whiteColor]];
 	NSURL *nsUrl = [NSURL URLWithString:url];
