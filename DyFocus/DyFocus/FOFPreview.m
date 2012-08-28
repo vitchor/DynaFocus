@@ -11,7 +11,7 @@
 
 @implementation FOFPreview
 
-@synthesize firstImageView,secondImageView, frames, timer;
+@synthesize firstImageView,secondImageView, frames, focalPoints, timer;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -38,6 +38,14 @@
 
 - (void)viewDidLoad
 {
+    
+    NSString *doneString = @"Upload";
+	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
+									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(upload)];
+	self.navigationItem.rightBarButtonItem = continueButton;
+	[continueButton release];
+	[doneString release];
+    
     [super viewDidLoad];
     
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
@@ -52,6 +60,58 @@
     //TODO start fade out timer
     timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
     [timer fire];
+}
+
+- (void) upload
+{
+    
+     
+     NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
+     
+     for (int i = 0; i < [self.frames count]; i++)
+     {
+     NSLog(@"Uploading image %d",i);
+     UIImage *image = [self.frames objectAtIndex:i];
+     
+     NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
+     
+     // Write a UIImage to JPEG with minimum compression (best quality)
+     [UIImageJPEGRepresentation(image, 0.5) writeToFile:jpgPath atomically:YES];
+     
+     NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
+     
+     //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.100.107:8000/uploader/image/"];
+     NSURL *webServiceUrl = [NSURL URLWithString:@"http://54.245.121.15//uploader/image/"];
+     
+     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
+     
+     // Add all the post values
+     NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[self.frames count]];
+     NSString *frame_index = [[NSString alloc] initWithFormat:@"%d",i];
+     
+     CGPoint touchPoint = [(NSValue *)[focalPoints objectAtIndex:i] CGPointValue];
+     
+     [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+     [request setPostValue:frame_index forKey:@"frame_index"];
+     [request setPostValue:[[NSNumber alloc] initWithInt:touchPoint.x*100] forKey:@"frame_focal_point_x"];
+     [request setPostValue:[[NSNumber alloc] initWithInt:touchPoint.y*100] forKey:@"frame_focal_point_y"];
+     
+     [request setPostValue:fof_name forKey:@"fof_name"];
+     [request setPostValue:fof_size forKey:@"fof_size"];
+     
+     
+     
+     // Add the image file to the request
+     [request setFile:photoPath withFileName:@"image.jpeg" andContentType:@"Image/jpeg" forKey:@"apiupload"];
+     
+     
+     [request startSynchronous];
+     
+     NSLog(@"MESSAGE %@",[request responseString]);
+     
+     }
+    
+	[self.navigationController popViewControllerAnimated:NO];
 }
 
 - (void)fadeImages

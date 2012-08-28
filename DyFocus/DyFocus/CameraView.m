@@ -140,6 +140,9 @@
                      */
                      
                      UIImage *correctImage = [[image fixOrientation] retain];
+                     
+                     [image release];
+                     image = nil;
                      //UIImage *correctImage = [UIImage imageWithCGImage:[image CGImage] scale:1.0 orientation:image.imageOrientation];
                      
                      [mFrames addObject:correctImage];
@@ -153,58 +156,12 @@
                      } else {
                          NSLog(@" FINISHED PICTURE");
                          
-                         
-                         NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
-                         
-                         for (int i = 0; i < [mFrames count]; i++)
-                         {
-                             NSLog(@"Uploading image %d",i);
-                             UIImage *image = [mFrames objectAtIndex:i];
-                             
-                             NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
-                             
-                             // Write a UIImage to JPEG with minimum compression (best quality)
-                             [UIImageJPEGRepresentation(image, 0.5) writeToFile:jpgPath atomically:YES];
-                             
-                             NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
-                             
-                             //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.100.107:8000/uploader/image/"];
-                             NSURL *webServiceUrl = [NSURL URLWithString:@"http://54.245.121.15//uploader/image/"];
-                             
-                             ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
-                             
-                             // Add all the post values
-                             NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[[pathView getPoints] count]];
-                             NSString *frame_index = [[NSString alloc] initWithFormat:@"%d",i];
-                             
-                             CGPoint touchPoint = [(NSValue *)[[pathView getPoints] objectAtIndex:i] CGPointValue];
-                             
-                             [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
-                             [request setPostValue:frame_index forKey:@"frame_index"];
-                             [request setPostValue:[[NSNumber alloc] initWithInt:touchPoint.x*100] forKey:@"frame_focal_point_x"];
-                             [request setPostValue:[[NSNumber alloc] initWithInt:touchPoint.y*100] forKey:@"frame_focal_point_y"];
-                             
-                             [request setPostValue:fof_name forKey:@"fof_name"];
-                             [request setPostValue:fof_size forKey:@"fof_size"];
-                             
-                             
-                             
-                             // Add the image file to the request
-                             [request setFile:photoPath withFileName:@"image.jpeg" andContentType:@"Image/jpeg" forKey:@"apiupload"];
-                             
-                             
-                             [request startSynchronous];
-                             
-                             NSLog(@"MESSAGE %@",[request responseString]);
-                             
-                         }
-                         
                          [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
                          
                          FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
                          
-                         
                          FOFpreview.frames = mFrames;
+                         FOFpreview.focalPoints = [pathView getPoints];
                          
                          for (UIImage *frame in mFrames) {
                              [frame release];

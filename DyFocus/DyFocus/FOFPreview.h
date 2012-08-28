@@ -13,6 +13,8 @@
     IBOutlet UIImageView *firstImageView;
     IBOutlet UIImageView *secondImageView;
     IBOutlet NSMutableArray *frames;
+    IBOutlet NSMutableArray *focalPoints;
+    
     NSTimer *timer;
     
     int oldFrameIndex;
@@ -22,6 +24,7 @@
 @property(nonatomic,retain) IBOutlet UIImageView *firstImageView;
 @property(nonatomic,retain) IBOutlet UIImageView *secondImageView;
 @property(nonatomic,retain) IBOutlet NSMutableArray *frames;
+@property(nonatomic,retain) IBOutlet NSMutableArray *focalPoints;
 @property(nonatomic,retain) NSTimer *timer;
 
 -(IBAction)changeSlider:(id)sender;
