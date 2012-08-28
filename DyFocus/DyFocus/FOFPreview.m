@@ -93,13 +93,20 @@
      
      [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
      [request setPostValue:frame_index forKey:@"frame_index"];
-     [request setPostValue:[[NSNumber alloc] initWithInt:touchPoint.x*100] forKey:@"frame_focal_point_x"];
-     [request setPostValue:[[NSNumber alloc] initWithInt:touchPoint.y*100] forKey:@"frame_focal_point_y"];
+         
+     NSNumber *pointX = [[NSNumber alloc] initWithInt:touchPoint.x*100];
+     NSNumber *pointY = [[NSNumber alloc] initWithInt:touchPoint.y*100];
+         
+     [request setPostValue:pointX forKey:@"frame_focal_point_x"];
+     [request setPostValue:pointY forKey:@"frame_focal_point_y"];
+         
+     [pointX release];
+     [pointY release];
      
      [request setPostValue:fof_name forKey:@"fof_name"];
      [request setPostValue:fof_size forKey:@"fof_size"];
      
-     
+     [fof_name release];
      
      // Add the image file to the request
      [request setFile:photoPath withFileName:@"image.jpeg" andContentType:@"Image/jpeg" forKey:@"apiupload"];
@@ -186,7 +193,10 @@
         [frame release];
     }
     
-    //[self.frames release];
+    for (NSValue *point in self.focalPoints) {
+        [point release];
+    }
+         
     
     [self.firstImageView release];
     [self.secondImageView release];

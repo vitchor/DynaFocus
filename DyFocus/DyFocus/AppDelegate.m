@@ -45,7 +45,13 @@
     
     // Feed Controller
     WebViewController *feedWebViewController = [[WebViewController alloc] init];
-    [feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
+    
+    NSString *stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]];
+    
+    [feedWebViewController loadUrl: stringUrl];
+    
+    [stringUrl release];
+    
     //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
   

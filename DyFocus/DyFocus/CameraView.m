@@ -272,4 +272,12 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void) dealloc
+{
+    [mFocalPoints release];
+    [mFrames release];
+    
+    [super dealloc];
+}
+
 @end

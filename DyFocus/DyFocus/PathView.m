@@ -86,7 +86,8 @@
     for (NSObject *point in touchPoints) {
         CGPoint touchPoint = [(NSValue *)point CGPointValue];
         
-        [focusPoints addObject:[NSValue valueWithCGPoint:CGPointMake(1 - touchPoint.x / self.frame.size.width, touchPoint.y / self.frame.size.height)]];
+        NSValue *pointValue = [NSValue valueWithCGPoint:CGPointMake(1 - touchPoint.x / self.frame.size.width, touchPoint.y / self.frame.size.height)];
+        [focusPoints addObject:pointValue];
     }
     
     return focusPoints;
