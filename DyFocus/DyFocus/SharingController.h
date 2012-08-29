@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface SharingController : UIViewController {
 
     IBOutlet UISwitch *facebookSwitch;
+    FBSession *facebook;
 }
 
 

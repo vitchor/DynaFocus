@@ -166,7 +166,7 @@
                              [frame release];
                          }
                          
-                         [self.navigationController pushViewController:FOFpreview animated:false];
+                         [self.navigationController pushViewController:FOFpreview animated:true];
                          
                          [FOFpreview release];
                      }   
@@ -190,7 +190,7 @@
     
     NSString *removePoints = @"Clear";
 	UIBarButtonItem *removePointsButton = [[UIBarButtonItem alloc]
-									   initWithTitle:removePoints style:UIBarButtonItemStylePlain target:self action:@selector(clearPoints)];
+									   initWithTitle:removePoints style:UIBarButtonItemStyleBordered target:self action:@selector(clearPoints)];
 	self.navigationItem.leftBarButtonItem = removePointsButton;
 	[removePointsButton release];
 	[removePoints release];

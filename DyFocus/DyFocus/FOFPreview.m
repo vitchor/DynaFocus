@@ -8,6 +8,7 @@
 
 #import "FOFPreview.h"
 #import "ASIFormDataRequest.h"
+#import "SharingController.h"
 
 @implementation FOFPreview
 
@@ -117,7 +118,15 @@
     
     [fof_name release];
     
-	[self.navigationController popViewControllerAnimated:NO];
+    
+    
+    SharingController *sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
+    
+    
+    [self.navigationController pushViewController:sharingController animated:true];
+    
+    [sharingController release];
+    
 }
 
 - (void)fadeImages
