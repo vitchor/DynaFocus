@@ -105,7 +105,6 @@
     
     [self.cameraView.layer addSublayer:layer];
     
-    
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -209,10 +208,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     
+    [[UIDevice currentDevice] performSelector:NSSelectorFromString(@"setOrientation:") withObject:(id)UIInterfaceOrientationPortrait];
     mFOFIndex = 0;
     
     // Hardcoding focal points
     // TODO: Get from class that is responsible for modeling the logic entity path.
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight];
     
     if (mFrames){
         
@@ -235,20 +238,25 @@
     [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
     [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
     
-    if (!captureSession) {
-        [self startCaptureSession];
-    }
-    
+
     [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    if (!captureSession) {
+        [self startCaptureSession];
+    }
+    
+    
+
     [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [self.view setNeedsDisplay];
+
 	[super viewWillDisappear:animated];
 }
 

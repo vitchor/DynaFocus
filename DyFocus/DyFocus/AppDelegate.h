@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DyfocusUITabBarController.h"
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     
-    UITabBarController *tabBarController;
+    DyfocusUITabBarController *tabBarController;
 }
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UITabBarController *tabBarController;
+@property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
 
 
 @end

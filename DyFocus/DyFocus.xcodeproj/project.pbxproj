@@ -19,6 +19,7 @@
 		441BFFD815B1339900E204D7 /* GalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 441BFFD615B1339800E204D7 /* GalleryView.m */; };
 		441BFFD915B1339900E204D7 /* GalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFD715B1339800E204D7 /* GalleryView.xib */; };
 		444ACAFE15EC22E400A5D581 /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 444ACAFD15EC22E400A5D581 /* UIImage+fixOrientation.m */; };
+		444ACB0A15EDB38D00A5D581 /* DyfocusUITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 444ACB0915EDB38C00A5D581 /* DyfocusUITabBarController.m */; };
 		44798EAE15E433B700D5BC53 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EAD15E433B700D5BC53 /* WebViewController.m */; };
 		44798EB215E4355100D5BC53 /* LoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB115E4355100D5BC53 /* LoadView.m */; };
 		44798EB515E4362000D5BC53 /* ActivityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB415E4362000D5BC53 /* ActivityLabel.m */; };
@@ -94,6 +95,8 @@
 		441BFFD715B1339800E204D7 /* GalleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryView.xib; sourceTree = "<group>"; };
 		444ACAFC15EC22E400A5D581 /* UIImage+fixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+fixOrientation.h"; sourceTree = "<group>"; };
 		444ACAFD15EC22E400A5D581 /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
+		444ACB0815EDB38C00A5D581 /* DyfocusUITabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DyfocusUITabBarController.h; sourceTree = "<group>"; };
+		444ACB0915EDB38C00A5D581 /* DyfocusUITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DyfocusUITabBarController.m; sourceTree = "<group>"; };
 		44798EAC15E433B700D5BC53 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		44798EAD15E433B700D5BC53 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		44798EB015E4355100D5BC53 /* LoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadView.h; sourceTree = "<group>"; };
@@ -255,6 +258,8 @@
 				44BEFED615B14404004358C9 /* FOFPreview.xib */,
 				44798EAC15E433B700D5BC53 /* WebViewController.h */,
 				44798EAD15E433B700D5BC53 /* WebViewController.m */,
+				444ACB0815EDB38C00A5D581 /* DyfocusUITabBarController.h */,
+				444ACB0915EDB38C00A5D581 /* DyfocusUITabBarController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -434,6 +439,7 @@
 				44798EB215E4355100D5BC53 /* LoadView.m in Sources */,
 				44798EB515E4362000D5BC53 /* ActivityLabel.m in Sources */,
 				444ACAFE15EC22E400A5D581 /* UIImage+fixOrientation.m in Sources */,
+				444ACB0A15EDB38D00A5D581 /* DyfocusUITabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

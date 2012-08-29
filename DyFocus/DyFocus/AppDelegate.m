@@ -10,6 +10,7 @@
 #import "CameraView.h"
 #import "GalleryView.h"
 #import "WebViewController.h"
+#import "DyfocusUITabBarController.h"
 
 @implementation AppDelegate
 
@@ -41,7 +42,6 @@
     
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:1];
     [featuredWebViewController setTabBarItem:galleryTab];
-
     
     // Feed Controller
     WebViewController *feedWebViewController = [[WebViewController alloc] init];
@@ -74,7 +74,7 @@
     [profileController release];
     // Configure TabBarController
     
-    self.tabBarController = [[[UITabBarController alloc] init] autorelease];
+    self.tabBarController = [[[DyfocusUITabBarController alloc] init] autorelease];
     
     
     
@@ -82,6 +82,8 @@
     
     self.tabBarController.viewControllers = controllers;
     
+    self.tabBarController.featuredWebController = featuredWebViewController;
+    self.tabBarController.feedWebController = feedWebViewController;
     
 
     // Configure window

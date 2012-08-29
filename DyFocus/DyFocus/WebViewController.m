@@ -18,12 +18,28 @@
 }
 
 - (void)loadUrl:(NSString *)url {
+    
+    mUrl = url;
+    
 	self.wantsFullScreenLayout = YES;
 	m_webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
 	//m_webView.scalesPageToFit = YES;
     m_webView.delegate = self;
 	[m_webView setBackgroundColor:[UIColor whiteColor]];
 	NSURL *nsUrl = [NSURL URLWithString:url];
+	NSURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:nsUrl] autorelease];
+	[m_webView loadRequest:request];
+	self.view = m_webView;
+	[m_webView release];
+}
+
+- (void)reloadUrl {
+	self.wantsFullScreenLayout = YES;
+	m_webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
+	//m_webView.scalesPageToFit = YES;
+    m_webView.delegate = self;
+	[m_webView setBackgroundColor:[UIColor whiteColor]];
+	NSURL *nsUrl = [NSURL URLWithString:mUrl];
 	NSURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:nsUrl] autorelease];
 	[m_webView loadRequest:request];
 	self.view = m_webView;
@@ -40,6 +56,10 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
 	//[LoadView loadViewOnView:_app.window withText:@"Loading..."];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
 }
 
 @end
