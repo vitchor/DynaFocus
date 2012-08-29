@@ -1,18 +1,20 @@
 //
-//  DyfocusUINavigationController.m
+//  SharingController.m
 //  DyFocus
 //
 //  Created by Victor Oliveira on 8/29/12.
 //  Copyright (c) 2012 Ufscar. All rights reserved.
 //
 
-#import "DyfocusUINavigationController.h"
+#import "SharingController.h"
 
-@interface DyfocusUINavigationController ()
+@interface SharingController ()
 
 @end
 
-@implementation DyfocusUINavigationController
+@implementation SharingController
+
+@synthesize facebookSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,21 +28,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    self.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    // Do any additional setup after loading the view from its nib.
 }
-
--(void)viewWillAppear:(BOOL)animated{
-    
-    [super viewWillAppear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
-}
-
 
 - (void)didReceiveMemoryWarning
 {

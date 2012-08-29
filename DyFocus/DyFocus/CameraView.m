@@ -180,7 +180,21 @@
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad
-{    
+{   
+    NSString *doneString = @"Shoot";
+	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
+									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(addObserverToFocus)];
+	self.navigationItem.rightBarButtonItem = continueButton;
+	[continueButton release];
+	[doneString release];
+    
+    NSString *removePoints = @"Clear";
+	UIBarButtonItem *removePointsButton = [[UIBarButtonItem alloc]
+									   initWithTitle:removePoints style:UIBarButtonItemStylePlain target:self action:@selector(clearPoints)];
+	self.navigationItem.leftBarButtonItem = removePointsButton;
+	[removePointsButton release];
+	[removePoints release];
+    
     [super viewDidLoad];
 }
 
