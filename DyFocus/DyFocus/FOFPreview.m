@@ -40,7 +40,7 @@
 - (void)viewDidLoad
 {
     
-    NSString *doneString = @"Upload";
+    NSString *doneString = @"Share";
 	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
 									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(upload)];
 	self.navigationItem.rightBarButtonItem = continueButton;

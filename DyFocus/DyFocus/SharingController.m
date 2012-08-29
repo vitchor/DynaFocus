@@ -69,25 +69,6 @@
          [self sessionStateChanged:session state:state error:error];
      }];
 }
-- (void)showLoginView
-{
-    UIViewController *topViewController = [self.navigationController topViewController];
-    UIViewController *modalViewController = [topViewController modalViewController];
-    
-    // If the login screen is not already displayed, display it. If the login screen is
-    // displayed, then getting back here means the login in progress did not successfully
-    // complete. In that case, notify the login view so it can update its UI appropriately.
-    if (![modalViewController isKindOfClass:[SharingController class]]) {
-        SharingController* loginViewController = [[SharingController alloc]
-                                                      initWithNibName:@"SCLoginViewController"
-                                                      bundle:nil];
-        [topViewController presentModalViewController:loginViewController animated:NO];
-    } else {
-        SharingController* loginViewController = (SharingController*)modalViewController;
-        //[loginViewController loginFailed];
-    }
-}
-
 
 -(void)share
 {
