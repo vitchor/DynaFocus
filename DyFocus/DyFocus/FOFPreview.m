@@ -106,17 +106,16 @@
      [request setPostValue:fof_name forKey:@"fof_name"];
      [request setPostValue:fof_size forKey:@"fof_size"];
      
-     [fof_name release];
-     
      // Add the image file to the request
      [request setFile:photoPath withFileName:@"image.jpeg" andContentType:@"Image/jpeg" forKey:@"apiupload"];
-     
      
      [request startSynchronous];
      
      NSLog(@"MESSAGE %@",[request responseString]);
      
      }
+    
+    [fof_name release];
     
 	[self.navigationController popViewControllerAnimated:NO];
 }

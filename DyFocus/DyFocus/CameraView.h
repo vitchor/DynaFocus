@@ -14,6 +14,7 @@
     IBOutlet UIButton *clearButton;    
     IBOutlet UIView *cameraView;
     IBOutlet PathView *pathView;
+    AVCaptureSession *captureSession;
     
     NSMutableArray *mFocalPoints;
     NSMutableArray *mFrames;

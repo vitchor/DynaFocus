@@ -36,7 +36,7 @@
 - (void)startCaptureSession {
 	
     // Create Session
-    AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
+    captureSession = [[AVCaptureSession alloc] init];
     
     if ([captureSession canSetSessionPreset: AVCaptureSessionPresetPhoto]) {
         
@@ -235,7 +235,9 @@
     [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
     [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
     
-    [self startCaptureSession];
+    if (!captureSession) {
+        [self startCaptureSession];
+    }
     
     [super viewWillAppear:animated];
 }
