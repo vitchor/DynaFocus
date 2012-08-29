@@ -32,12 +32,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    
-    if ([UIViewController respondsToSelector:@selector(attemptRotationToDeviceOrientation)]) {
-        // this ensures that the view will be presented in the orientation of the device
-        // This method is only supported on iOS 5.0.  iOS 4.3 users may get a little dizzy.
-        [UIViewController attemptRotationToDeviceOrientation];
-    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

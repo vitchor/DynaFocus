@@ -66,7 +66,7 @@
 }
 
 -(void) tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    if (!(viewController == feedWebController || viewController == featuredWebController)) {
+    if (!(viewController == feedWebController )) {
         
         int orientation = [[UIDevice currentDevice] orientation];
 
