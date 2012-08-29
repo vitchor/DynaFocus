@@ -10,12 +10,14 @@
 
 #import "DyfocusUITabBarController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "DyfocusUINavigationController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     
     DyfocusUITabBarController *tabBarController;
+    DyfocusUINavigationController *navController;
 }
-
+- (void)openSession;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
 

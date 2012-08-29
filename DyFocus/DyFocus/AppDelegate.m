@@ -30,9 +30,9 @@
     
     // Camera Controller
     CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
-    DyfocusUINavigationController *startViewNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:startController];
+    navController = [[DyfocusUINavigationController alloc] initWithRootViewController:startController];
     UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:3];
-    [startViewNavigationController setTabBarItem:cameraTab];
+    [navController setTabBarItem:cameraTab];
     [startController release];
     
     
@@ -79,7 +79,7 @@
     
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, startViewNavigationController, friendsViewNavigationController, profileViewNavigationController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, navController, friendsViewNavigationController, profileViewNavigationController, nil];
     
     self.tabBarController.viewControllers = controllers;
     
@@ -92,6 +92,88 @@
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState) state
+                      error:(NSError *)error
+{
+    NSLog(@"as");
+    switch (state) {
+        case FBSessionStateOpen: {
+            
+            
+            /*UIViewController *topViewController =
+            [navController topViewController];
+            if ([[topViewController modalViewController]
+                 isKindOfClass:[SCLoginViewController class]]) {
+                [topViewController dismissModalViewControllerAnimated:YES];
+            }*/
+            NSLog(@"Sweet, let it flow..");
+            
+            
+        }
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+            /*
+            
+            // Once the user has logged in, we want them to
+            // be looking at the root view.
+            [navController popToRootViewControllerAnimated:NO];
+            
+            [FBSession.activeSession closeAndClearTokenInformation];
+            
+            [self showLoginView];
+             */
+            NSLog(@"Error message at sharing controller");
+            break;
+            
+            
+        default:
+            break;
+    }
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Error"
+                                  message:error.localizedDescription
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+- (void)openSession
+{
+    /*
+    [FBSession openActiveSessionWithPermissions:nil
+                                   allowLoginUI:YES
+                              completionHandler:
+     ^(FBSession *session,
+       FBSessionState state, NSError *error) {
+         [self sessionStateChanged:session state:state error:error];
+     }];*/
+    [self openSesh];
+}
+
+- (void)openSesh {
+    [FBSession openActiveSessionWithPermissions:nil allowLoginUI:YES
+                              completionHandler:^(FBSession *session,
+                                                  FBSessionState status,
+                                                  NSError *error) {
+                                  // session might now be open.
+                              }];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    NSLog(@"ANN?");
+    return [FBSession.activeSession handleOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -119,6 +201,12 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    // this means the user switched back to this app without completing
+    // a login in Safari/Facebook App
+    [FBSession setDefaultAppID:@"417476174956036"];
+    if (FBSession.activeSession.state == FBSessionStateCreatedOpening) {
+        [FBSession.activeSession close]; // so we close our session and start over
+    }
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */

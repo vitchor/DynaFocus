@@ -8,6 +8,7 @@
 
 #import "SharingController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import"AppDelegate.h"
 
 @interface SharingController ()
 
@@ -47,29 +48,43 @@
     
     UISwitch *fbSwitch = (UISwitch *)sender;
     
-    [FBSession setDefaultAppID:@"417476174956036"];
+    
     if (fbSwitch.on) {
         if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
             // To-do, show logged in view
         } else {
             // No, display the login page.
-            [self openSession];
+            AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate openSession];
             
         }
     }
 }
 
-- (void)openSession
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState) state
+                      error:(NSError *)error
 {
-    [FBSession openActiveSessionWithPermissions:nil
-                                   allowLoginUI:YES
-                              completionHandler:
-     ^(FBSession *session,
-       FBSessionState state, NSError *error) {
-         [self sessionStateChanged:session state:state error:error];
-     }];
+                NSLog(@"BANANA");
+    switch (state)         {
+        case FBSessionStateOpen:
+            if (!error)         {
+                // We have a valid session
+                NSLog(@"User session found");
+            }
+            NSLog(@"Aee");
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+            [session closeAndClearTokenInformation];
+            
+            
+            //[self createNewSession];
+            break;
+        default:
+            break;
+    }
 }
-
 -(void)share
 {
     

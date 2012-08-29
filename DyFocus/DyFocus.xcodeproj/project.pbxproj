@@ -28,6 +28,7 @@
 		4495E69515EEB368009C2B9F /* SharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495E69315EEB368009C2B9F /* SharingController.m */; };
 		4495E69615EEB368009C2B9F /* SharingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4495E69415EEB368009C2B9F /* SharingController.xib */; };
 		4495E69A15EEBCC7009C2B9F /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495E69915EEBCC7009C2B9F /* libsqlite3.0.dylib */; };
+		4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */; };
 		44BEFED715B14404004358C9 /* FOFPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEFED515B14404004358C9 /* FOFPreview.m */; };
 		44BEFED815B14404004358C9 /* FOFPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BEFED615B14404004358C9 /* FOFPreview.xib */; };
 		44C8DA4215B1FF80000D2947 /* PathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8DA4115B1FF80000D2947 /* PathView.m */; };
@@ -116,6 +117,7 @@
 		4495E69415EEB368009C2B9F /* SharingController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SharingController.xib; sourceTree = "<group>"; };
 		4495E69715EEBC9F009C2B9F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		4495E69915EEBCC7009C2B9F /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		44BEFED415B14404004358C9 /* FOFPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFPreview.h; sourceTree = "<group>"; };
 		44BEFED515B14404004358C9 /* FOFPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFPreview.m; sourceTree = "<group>"; };
 		44BEFED615B14404004358C9 /* FOFPreview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview.xib; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 		441BFFAE15B131D200E204D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */,
 				441BFFCF15B132A900E204D7 /* ImageIO.framework */,
 				441BFFCD15B1329B00E204D7 /* CoreMedia.framework */,
 				441BFFCB15B1328300E204D7 /* AVFoundation.framework */,
@@ -421,6 +424,7 @@
 				AC606B6615DBF24B008FDF8F /* df_featured_bw@2x.png in Resources */,
 				AC606B6715DBF24B008FDF8F /* df_friends_bw@2x.png in Resources */,
 				4495E69615EEB368009C2B9F /* SharingController.xib in Resources */,
+				4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,7 +507,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				SDKROOT = iphoneos6.0;
+				SDKROOT = iphoneos5.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -522,7 +526,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				SDKROOT = iphoneos6.0;
+				SDKROOT = iphoneos5.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -540,6 +544,7 @@
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
 				INFOPLIST_FILE = "DyFocus/DyFocus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "668EADD4-A018-473E-826B-5EF13B507996";
 				SDKROOT = iphoneos5.1;
@@ -558,6 +563,7 @@
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
 				INFOPLIST_FILE = "DyFocus/DyFocus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos5.1;
 				WRAPPER_EXTENSION = app;
