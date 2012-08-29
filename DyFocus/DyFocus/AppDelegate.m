@@ -11,6 +11,7 @@
 #import "GalleryView.h"
 #import "WebViewController.h"
 #import "DyfocusUITabBarController.h"
+#import "DyfocusUINavigationController.h"
 
 @implementation AppDelegate
 
@@ -29,7 +30,7 @@
     
     // Camera Controller
     CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
-    UINavigationController *startViewNavigationController = [[UINavigationController alloc] initWithRootViewController:startController];
+    DyfocusUINavigationController *startViewNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:startController];
     UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:3];
     [startViewNavigationController setTabBarItem:cameraTab];
     [startController release];

@@ -180,10 +180,8 @@
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad
-{
-    
+{    
     [super viewDidLoad];
-    
 }
 
 -(void)clearPoints
@@ -207,15 +205,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     
-    [[UIDevice currentDevice] performSelector:NSSelectorFromString(@"setOrientation:") withObject:(id)UIInterfaceOrientationPortrait];
     mFOFIndex = 0;
-    
-    // Hardcoding focal points
-    // TODO: Get from class that is responsible for modeling the logic entity path.
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight];
     
     if (mFrames){
         
@@ -237,17 +229,16 @@
     
     [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
     [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
-    
 
-    [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     if (!captureSession) {
         [self startCaptureSession];
+    } else {
+        [captureSession startRunning];
     }
-    
     
 
     [super viewDidAppear:animated];
@@ -255,9 +246,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self.view setNeedsDisplay];
-
 	[super viewWillDisappear:animated];
+    [captureSession stopRunning];    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -268,12 +258,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    } else {
-        return YES;
-    }
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning

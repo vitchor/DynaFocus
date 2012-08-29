@@ -1,0 +1,55 @@
+//
+//  DyfocusUINavigationController.m
+//  DyFocus
+//
+//  Created by Victor Oliveira on 8/29/12.
+//  Copyright (c) 2012 Ufscar. All rights reserved.
+//
+
+#import "DyfocusUINavigationController.h"
+
+@interface DyfocusUINavigationController ()
+
+@end
+
+@implementation DyfocusUINavigationController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    if ([UIViewController respondsToSelector:@selector(attemptRotationToDeviceOrientation)]) {
+        // this ensures that the view will be presented in the orientation of the device
+        // This method is only supported on iOS 5.0.  iOS 4.3 users may get a little dizzy.
+        [UIViewController attemptRotationToDeviceOrientation];
+    }
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end
