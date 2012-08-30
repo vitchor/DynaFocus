@@ -86,7 +86,7 @@
     for (NSObject *point in touchPoints) {
         CGPoint touchPoint = [(NSValue *)point CGPointValue];
         
-        NSValue *pointValue = [NSValue valueWithCGPoint:CGPointMake(1 - touchPoint.x / self.frame.size.width, touchPoint.y / self.frame.size.height)];
+        NSValue *pointValue = [NSValue valueWithCGPoint:CGPointMake(touchPoint.y / self.frame.size.height, 1 - touchPoint.x / self.frame.size.width)];
         [focusPoints addObject:pointValue];
     }
     
@@ -97,7 +97,6 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint touchPoint = [[touches anyObject] locationInView:self];
     [self addPoint:touchPoint];
-    
     
     [self setNeedsDisplay];
     

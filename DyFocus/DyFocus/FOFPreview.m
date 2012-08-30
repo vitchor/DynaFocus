@@ -40,9 +40,9 @@
 - (void)viewDidLoad
 {
     
-    NSString *doneString = @"Share";
+    NSString *doneString = @"Next";
 	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
-									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(upload)];
+									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(next)];
 	self.navigationItem.rightBarButtonItem = continueButton;
 	[continueButton release];
 	[doneString release];
@@ -63,9 +63,19 @@
     [timer fire];
 }
 
+- (void) next {
+    SharingController *sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
+    
+    sharingController.focalPoints = focalPoints;
+    sharingController.frames = frames;
+    
+    [self.navigationController pushViewController:sharingController animated:true];
+    
+    [sharingController release];
+}
+
 - (void) upload
 {
-    
     
     NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/image/"];
     //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
@@ -126,10 +136,10 @@
     
     [fof_name release];
     
-    
-    
     SharingController *sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
     
+    sharingController.focalPoints = focalPoints;
+    sharingController.frames = frames;
     
     [self.navigationController pushViewController:sharingController animated:true];
     
