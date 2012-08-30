@@ -17,6 +17,7 @@
 @implementation SharingController
 
 @synthesize facebookSwitch;
+@synthesize activityIndicator;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,10 +31,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [activityIndicator setHidden:YES];
 
     NSString *share = @"Share";
-	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
-                                           initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(share)];
+	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(share)];
 	self.navigationItem.rightBarButtonItem = shareButton;
 	[shareButton release];
 	[share release];
@@ -48,7 +49,6 @@
     
     UISwitch *fbSwitch = (UISwitch *)sender;
     
-    
     if (fbSwitch.on) {
         if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
             // To-do, show logged in view
@@ -56,10 +56,11 @@
             // No, display the login page.
             AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
             [appDelegate openSession];
-            
         }
     }
+
 }
+
 
 - (void)sessionStateChanged:(FBSession *)session
                       state:(FBSessionState) state
@@ -87,7 +88,16 @@
 }
 -(void)share
 {
-    
+    [activityIndicator setHidden:NO];
+    //[self performSelector:@selector(shareWithFacebook)
+    //     withObject:nil
+    //     afterDelay:0];
+    return;
+}
+
+-(void)shareWithFacebook {
+    // do sharing stuff
+    [activityIndicator setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning

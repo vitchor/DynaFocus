@@ -13,9 +13,11 @@
 
     IBOutlet UISwitch *facebookSwitch;
     FBSession *facebook;
+    IBOutlet UIView *activityIndicator;
 }
 
 
 @property(nonatomic,retain) IBOutlet UISwitch *facebookSwitch;
+@property(nonatomic,retain) IBOutlet UIView *activityIndicator;
 
 @end
