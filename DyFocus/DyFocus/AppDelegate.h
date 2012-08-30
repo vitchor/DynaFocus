@@ -11,6 +11,7 @@
 #import "DyfocusUITabBarController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "DyfocusUINavigationController.h"
+#import "SharingController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     

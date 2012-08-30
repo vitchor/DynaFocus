@@ -91,8 +91,14 @@
     [self.view bringSubviewToFront:activityIndicator];
     [spinner startAnimating];
     
-    [self upload];
-    
+    //[self upload];
+    /*
+    NSString *message = [NSString stringWithFormat:@"%@ is reading this news : \n %@",
+                         self.loggedInUser.first_name,[[dataList objectAtIndex:index] objectForKey:@"NewsURL"]];
+    [FBRequestConnection startForPostStatusUpdate:message completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        //                    [self showAlert:message result:result error:error];
+    }];
+    */
     if (facebookSwitch.on) {
         [self shareWithFacebook];
     }
@@ -213,4 +219,21 @@
     }
 }
 
+
+-(void)requestUserInfo:(FBSession *)session {
+    NSLog(@"aaadssd");
+    
+        [[FBRequest requestForMe] startWithCompletionHandler:
+         ^(FBRequestConnection *connection,
+           NSDictionary<FBGraphUser> *user,
+           NSError *error) {
+             if (!error) {
+                 NSLog(@"USERNAME: %@", user.name);
+                 NSLog(@"USERID: %@", user.id);
+             }
+                 NSLog(@"aOOOOo");
+         }];      
+    
+    
+}
 @end

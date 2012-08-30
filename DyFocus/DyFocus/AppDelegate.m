@@ -89,6 +89,15 @@
     // Configure window
     [self.window addSubview:self.tabBarController.view];
     [self.window makeKeyAndVisible];
+    NSLog(@"aaa");
+    
+    // See if we have a valid token for the current state.
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        // To-do, show logged in view
+    } else {
+        // No, display the login page.
+    }
+    
     
     return YES;
 }
@@ -145,11 +154,38 @@
 }
 
 - (void)openSession {
-    [FBSession openActiveSessionWithPermissions:[NSArray arrayWithObject:@"publish_actions"] allowLoginUI:YES
-                              completionHandler:^(FBSession *session,
+    
+    NSArray *permissions =  [[NSArray arrayWithObjects:
+                     @"publish_actions", @"user_about_me", @"friends_about_me", nil] retain];
+    
+    [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session,
                                                   FBSessionState status,
                                                   NSError *error) {
-                                  // session might now be open.
+                                  switch (status) {
+                                      case FBSessionStateOpen: {
+                                          SharingController *sharingController = (SharingController *)[navController topViewController];
+                                          [sharingController requestUserInfo:session];
+                                          NSLog(@"Sweet, let it flow..");
+                                      }
+                                          break;
+                                      case FBSessionStateClosed:
+                                      case FBSessionStateClosedLoginFailed:
+                                          NSLog(@"Error message at sharing controller");
+                                          break;
+                                          
+                                      default:
+                                          break;
+                                  }
+                                  
+                                  if (error) {
+                                      UIAlertView *alertView = [[UIAlertView alloc]
+                                                                initWithTitle:@"Error"
+                                                                message:error.localizedDescription
+                                                                delegate:nil
+                                                                cancelButtonTitle:@"OK"
+                                                                otherButtonTitles:nil];
+                                      [alertView show];
+                                  }
                               }];
 }
 
@@ -158,7 +194,6 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    NSLog(@"ANN?");
     return [FBSession.activeSession handleOpenURL:url];
 }
 
@@ -200,11 +235,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [FBSession.activeSession closeAndClearTokenInformation];
     /*
      Called when the application is about to terminate.
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
 }
+
 
 @end

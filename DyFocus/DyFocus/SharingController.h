@@ -21,6 +21,7 @@
     ASIFormDataRequest *request;
 }
 
+-(void) requestUserInfo:(FBSession *)session;
 
 @property(nonatomic,retain) IBOutlet UISwitch *facebookSwitch;
 @property(nonatomic,retain) IBOutlet UIView *activityIndicator;
