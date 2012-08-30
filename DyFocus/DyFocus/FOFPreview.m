@@ -66,60 +66,68 @@
 - (void) upload
 {
     
-     /*
-     NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
-     
+    
+    NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/image/"];
+    //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
+    
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
+    
+    NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
+    NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[self.frames count]];
+    
+    [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+    [request setPostValue:fof_name forKey:@"fof_name"];
+    [request setPostValue:fof_size forKey:@"fof_size"];
+    
      for (int i = 0; i < [self.frames count]; i++)
      {
          NSLog(@"Uploading image %d",i);
          UIImage *image = [self.frames objectAtIndex:i];
          
-         NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
+         NSString *imagePath = [[NSString alloc] initWithFormat:@"Documents/image_%d.jpg", i];
+         
+         NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:imagePath];
          
          // Write a UIImage to JPEG with minimum compression (best quality)
          [UIImageJPEGRepresentation(image, 0.5) writeToFile:jpgPath atomically:YES];
          
-         NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/image.jpg"];
-         
-         //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.100.107:8000/uploader/image/"];
-         NSURL *webServiceUrl = [NSURL URLWithString:@"http://54.245.121.15//uploader/image/"];
-         
-         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
+         NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:imagePath];
+
+    
          
          // Add all the post values
-         NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[self.frames count]];
-         NSString *frame_index = [[NSString alloc] initWithFormat:@"%d",i];
          
          CGPoint touchPoint = [(NSValue *)[focalPoints objectAtIndex:i] CGPointValue];
-         
-         [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
-         [request setPostValue:frame_index forKey:@"frame_index"];
              
          NSNumber *pointX = [[NSNumber alloc] initWithInt:touchPoint.x*100];
          NSNumber *pointY = [[NSNumber alloc] initWithInt:touchPoint.y*100];
-             
-         [request setPostValue:pointX forKey:@"frame_focal_point_x"];
-         [request setPostValue:pointY forKey:@"frame_focal_point_y"];
+        
+         NSString *frameFocalPointX = [[NSString alloc] initWithFormat:@"frame_focal_point_x_%d", i];
+         NSString *frameFocalPointY = [[NSString alloc] initWithFormat:@"frame_focal_point_y_%d", i];
+         
+         [request setPostValue:pointX forKey:frameFocalPointX];
+         [request setPostValue:pointY forKey:frameFocalPointY];
              
          [pointX release];
          [pointY release];
          
-         [request setPostValue:fof_name forKey:@"fof_name"];
-         [request setPostValue:fof_size forKey:@"fof_size"];
+         NSString *fileName = [[NSString alloc] initWithFormat:@"image_%d.jpeg", i];
+         NSString *keyName = [[NSString alloc] initWithFormat:@"apiupload_%d", i];
          
          // Add the image file to the request
-         [request setFile:photoPath withFileName:@"image.jpeg" andContentType:@"Image/jpeg" forKey:@"apiupload"];
+         [request setFile:photoPath withFileName:fileName andContentType:@"Image/jpeg" forKey:keyName];
          
-         [request startSynchronous];
          
-         NSLog(@"MESSAGE %@",[request responseString]);
      
      }
+        
+    [request startSynchronous];
+    NSLog(@"MESSAGE %@",[request responseString]);
     
     [fof_name release];
     
     
-    */
+    
     SharingController *sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
     
     
