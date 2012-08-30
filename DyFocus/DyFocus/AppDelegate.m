@@ -144,21 +144,8 @@
     }
 }
 
-- (void)openSession
-{
-    /*
-    [FBSession openActiveSessionWithPermissions:nil
-                                   allowLoginUI:YES
-                              completionHandler:
-     ^(FBSession *session,
-       FBSessionState state, NSError *error) {
-         [self sessionStateChanged:session state:state error:error];
-     }];*/
-    [self openSesh];
-}
-
-- (void)openSesh {
-    [FBSession openActiveSessionWithPermissions:nil allowLoginUI:YES
+- (void)openSession {
+    [FBSession openActiveSessionWithPermissions:[NSArray arrayWithObject:@"publish_actions"] allowLoginUI:YES
                               completionHandler:^(FBSession *session,
                                                   FBSessionState status,
                                                   NSError *error) {

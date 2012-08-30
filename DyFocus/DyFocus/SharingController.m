@@ -34,7 +34,7 @@
     [super viewDidLoad];
     [activityIndicator removeFromSuperview];
 
-    NSString *share = @"Share";
+    NSString *share = @"Upload";
 	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(share)];
 	self.navigationItem.rightBarButtonItem = shareButton;
 	[shareButton release];
