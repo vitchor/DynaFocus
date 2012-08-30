@@ -12,6 +12,8 @@
 #import "WebViewController.h"
 #import "DyfocusUITabBarController.h"
 #import "DyfocusUINavigationController.h"
+#import "FriendsController.h"
+#import "ProfileController.h"
 
 @implementation AppDelegate
 
@@ -61,25 +63,22 @@
 
     
     // Friends Controller
-    GalleryView *friendsController = [[GalleryView alloc] initWithNibName:@"Friends" bundle:nil];
-    UINavigationController *friendsViewNavigationController = [[UINavigationController alloc] initWithRootViewController:friendsController];
+    FriendsController *friendsController = [[FriendsController alloc] initWithNibName:@"FriendsController" bundle:nil];
     UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
-    [friendsViewNavigationController setTabBarItem:friendsTab];
-    [friendsController release];
+    [friendsController setTabBarItem:friendsTab];
         
     // Profile Controller
-    GalleryView *profileController = [[GalleryView alloc] initWithNibName:@"Profile" bundle:nil];
-    UINavigationController *profileViewNavigationController = [[UINavigationController alloc] initWithRootViewController:profileController];
+    ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
     UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"df_profile_bw"] tag:5];
-    [profileViewNavigationController setTabBarItem:profileTab];
-    [profileController release];
+    [profileController setTabBarItem:profileTab];
+    
     // Configure TabBarController
     
     self.tabBarController = [[[DyfocusUITabBarController alloc] init] autorelease];
     
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, navController, friendsViewNavigationController, profileViewNavigationController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, navController, friendsController, profileController, nil];
     
     self.tabBarController.viewControllers = controllers;
     
