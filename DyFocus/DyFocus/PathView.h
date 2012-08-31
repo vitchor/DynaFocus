@@ -13,11 +13,13 @@
     NSMutableArray *touchPoints;
 	CGContextRef context;
     CGColorRef ref;
+    bool enabled;
 }
 
 @property(nonatomic,retain) NSMutableArray *touchPoints;
 @property(nonatomic,readwrite)CGContextRef context;
 @property(nonatomic,readwrite)CGColorRef ref;
+@property(nonatomic,readwrite)bool enabled;
 
 -(void)clearPoints;
 -(NSMutableArray *)getPoints;

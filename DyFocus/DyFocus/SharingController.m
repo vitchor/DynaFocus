@@ -97,13 +97,17 @@
 
 -(void)shareWithFacebook {
     
-    NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/user/%@/fof_name/", [[UIDevice currentDevice] uniqueIdentifier], fofName];
+    NSString *deviceIdentifier =[[UIDevice currentDevice] uniqueIdentifier];
+    NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/user/%@/fof_name/", deviceIdentifier, fofName];
     
     NSString *message = @"I've just posted a cool new picture format using dyfocus, check it out.";
+    
+    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg",deviceIdentifier, fofName];
     
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    urlLink, @"link",
                                    message,@"message",
+                                   imageUrl,@"picture",
                                    nil];
     
     [FBRequestConnection startWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {

@@ -156,6 +156,8 @@
                          NSLog(@" FINISHED PICTURE");
                          
                          [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
+
+                         pathView.enabled = true;
                          
                          FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
                          
@@ -180,7 +182,9 @@
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad
-{   
+{
+    pathView.enabled = true;
+    
     NSString *doneString = @"Shoot";
 	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
 									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(addObserverToFocus)];
@@ -206,6 +210,10 @@
 -(void)addObserverToFocus
 {
     mFocalPoints = [pathView getPoints];
+    
+    [self.navigationItem.rightBarButtonItem setEnabled:false];
+    pathView.enabled = false;
+    
     if ([mFocalPoints count] > 0) {
         [self updateFocusPoint];
         [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
@@ -229,6 +237,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.navigationItem.rightBarButtonItem setEnabled:true];
     
     mFOFIndex = 0;
     

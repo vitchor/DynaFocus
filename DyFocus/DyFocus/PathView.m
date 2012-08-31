@@ -10,10 +10,11 @@
 
 @implementation PathView
 
-@synthesize touchPoints, ref, context;
+@synthesize touchPoints, ref, context, enabled;
 
 - (id)initWithFrame:(CGRect)frame
 {
+    enabled = true;
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
@@ -95,12 +96,15 @@
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    CGPoint touchPoint = [[touches anyObject] locationInView:self];
-    [self addPoint:touchPoint];
-    
-    [self setNeedsDisplay];
-    
-    NSLog(@"TOUUUCH (%f, %f)", 1 - touchPoint.x / self.frame.size.width, touchPoint.y / self.frame.size.height);    
+
+    if (enabled) {
+        CGPoint touchPoint = [[touches anyObject] locationInView:self];
+        [self addPoint:touchPoint];
+        
+        [self setNeedsDisplay];
+        
+        NSLog(@"TOUUUCH (%f, %f)", 1 - touchPoint.x / self.frame.size.width, touchPoint.y / self.frame.size.height);
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -114,5 +118,6 @@
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     
 }
+
 
 @end
