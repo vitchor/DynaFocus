@@ -51,7 +51,7 @@
     if (fbSwitch.on) {
         if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
             // To-do, show logged in view
-        } else {
+        } else if (FBSession.activeSession.state != FBSessionStateOpen) {
             // No, display the login page.
             AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
             [appDelegate openSession];
