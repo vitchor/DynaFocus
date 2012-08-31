@@ -211,11 +211,13 @@
 {
     mFocalPoints = [pathView getPoints];
     
-    [self.navigationItem.rightBarButtonItem setEnabled:false];
-    pathView.enabled = false;
-    
     if ([mFocalPoints count] > 0) {
+        
+        [self.navigationItem.rightBarButtonItem setEnabled:false];
+        pathView.enabled = false;
+        
         [self updateFocusPoint];
+        
         [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
     } else {
         NSString *alertTitle = @"No Focus Points";

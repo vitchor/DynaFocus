@@ -156,19 +156,21 @@
     NSArray *permissions =  [[NSArray arrayWithObjects:
                      @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
     
+     SharingController *sharingController = (SharingController *)[navController topViewController];
+    
     [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session,
                                                   FBSessionState status,
                                                   NSError *error) {
                                   switch (status) {
                                       case FBSessionStateOpen: {
-                                          SharingController *sharingController = (SharingController *)[navController topViewController];
+                                         
                                           [sharingController requestUserInfo:session];
                                           NSLog(@"Sweet, let it flow..");
                                       }
                                           break;
                                       case FBSessionStateClosed:
                                       case FBSessionStateClosedLoginFailed:
-                                          NSLog(@"Error message at sharing controller");
+                                          [sharingController facebookError];
                                           [FBSession.activeSession closeAndClearTokenInformation];
                                           break;
                                           
@@ -177,13 +179,7 @@
                                   }
                                   
                                   if (error) {
-                                      UIAlertView *alertView = [[UIAlertView alloc]
-                                                                initWithTitle:@"Error"
-                                                                message:error.localizedDescription
-                                                                delegate:nil
-                                                                cancelButtonTitle:@"OK"
-                                                                otherButtonTitles:nil];
-                                      [alertView show];
+                                      [sharingController facebookError];
                                   }
                               }];
 }

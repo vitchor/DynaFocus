@@ -117,8 +117,9 @@
         if (!error) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
+            facebookSwitch.on = false;
             NSString *alertTitle = @"Connection Error";
-            NSString *alertMsg = @"Failed to share picture on FB.";
+            NSString *alertMsg = @"Failed to share link on your Facebook wall.";
             NSString *alertButton = @"OK";
             
             UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
@@ -269,7 +270,17 @@
                  NSLog(@"HTTP Status code: %d", statusCode);
              }
          }];
-    
-    
 }
+
+-(void) facebookError
+{
+    facebookSwitch.on = false;
+    NSString *alertTitle = @"Connection Error";
+    NSString *alertMsg = @"Failed to connect to Facebook.";
+    NSString *alertButton = @"OK";
+    
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+    [alert show];
+}
+
 @end

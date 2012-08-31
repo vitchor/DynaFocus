@@ -23,6 +23,7 @@
 }
 
 -(void) requestUserInfo:(FBSession *)session;
+-(void) facebookError;
 
 @property(nonatomic,retain) IBOutlet UISwitch *facebookSwitch;
 @property(nonatomic,retain) IBOutlet UIView *activityIndicator;
