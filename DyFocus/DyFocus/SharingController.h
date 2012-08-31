@@ -19,6 +19,7 @@
     NSMutableArray *frames;
     NSMutableArray *focalPoints;
     ASIFormDataRequest *request;
+    NSString *fofName;
 }
 
 -(void) requestUserInfo:(FBSession *)session;

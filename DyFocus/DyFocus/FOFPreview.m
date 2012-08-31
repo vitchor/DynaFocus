@@ -74,83 +74,9 @@
     [sharingController release];
 }
 
-- (void) upload
-{
-    
-    NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/image/"];
-    //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:webServiceUrl];
-    
-    NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
-    NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[self.frames count]];
-    
-    [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
-    [request setPostValue:fof_name forKey:@"fof_name"];
-    [request setPostValue:fof_size forKey:@"fof_size"];
-    
-     for (int i = 0; i < [self.frames count]; i++)
-     {
-         NSLog(@"Uploading image %d",i);
-         UIImage *image = [self.frames objectAtIndex:i];
-         
-         NSString *imagePath = [[NSString alloc] initWithFormat:@"Documents/image_%d.jpg", i];
-         
-         NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:imagePath];
-         
-         // Write a UIImage to JPEG with minimum compression (best quality)
-         [UIImageJPEGRepresentation(image, 0.5) writeToFile:jpgPath atomically:YES];
-         
-         NSString *photoPath = [NSHomeDirectory() stringByAppendingPathComponent:imagePath];
-
-    
-         
-         // Add all the post values
-         
-         CGPoint touchPoint = [(NSValue *)[focalPoints objectAtIndex:i] CGPointValue];
-             
-         NSNumber *pointX = [[NSNumber alloc] initWithInt:touchPoint.x*100];
-         NSNumber *pointY = [[NSNumber alloc] initWithInt:touchPoint.y*100];
-        
-         NSString *frameFocalPointX = [[NSString alloc] initWithFormat:@"frame_focal_point_x_%d", i];
-         NSString *frameFocalPointY = [[NSString alloc] initWithFormat:@"frame_focal_point_y_%d", i];
-         
-         [request setPostValue:pointX forKey:frameFocalPointX];
-         [request setPostValue:pointY forKey:frameFocalPointY];
-             
-         [pointX release];
-         [pointY release];
-         
-         NSString *fileName = [[NSString alloc] initWithFormat:@"image_%d.jpeg", i];
-         NSString *keyName = [[NSString alloc] initWithFormat:@"apiupload_%d", i];
-         
-         // Add the image file to the request
-         [request setFile:photoPath withFileName:fileName andContentType:@"Image/jpeg" forKey:keyName];
-         
-         
-     
-     }
-        
-    [request startSynchronous];
-    NSLog(@"MESSAGE %@",[request responseString]);
-    
-    [fof_name release];
-    
-    SharingController *sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
-    
-    sharingController.focalPoints = focalPoints;
-    sharingController.frames = frames;
-    
-    [self.navigationController pushViewController:sharingController animated:true];
-    
-    [sharingController release];
-    
-}
 
 - (void)fadeImages
 {
-    NSLog(@"lala");
-    
     if (self.firstImageView.alpha >= 1.0) {
         
         if (timerPause > 0) {

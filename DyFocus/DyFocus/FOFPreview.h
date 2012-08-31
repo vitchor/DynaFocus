@@ -14,6 +14,7 @@
     IBOutlet UIImageView *secondImageView;
     IBOutlet NSMutableArray *frames;
     IBOutlet NSMutableArray *focalPoints;
+    NSString *fofName;
     
     NSTimer *timer;
     

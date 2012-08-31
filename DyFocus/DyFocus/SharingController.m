@@ -57,7 +57,6 @@
             [appDelegate openSession];
         }
     }
-
 }
 
 
@@ -91,28 +90,41 @@
     [self.view bringSubviewToFront:activityIndicator];
     [spinner startAnimating];
     
-    //[self upload];
-    /*
-    NSString *message = [NSString stringWithFormat:@"%@ is reading this news : \n %@",
-                         self.loggedInUser.first_name,[[dataList objectAtIndex:index] objectForKey:@"NewsURL"]];
-    [FBRequestConnection startForPostStatusUpdate:message completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        //                    [self showAlert:message result:result error:error];
-    }];
-    */
-    if (facebookSwitch.on) {
-        [self shareWithFacebook];
-    }
-    
-    //[activityIndicator setHidden:YES];
-    
-
+    [self upload];
     
     return;
 }
 
 -(void)shareWithFacebook {
-    // do sharing stuff
-    //[activityIndicator setHidden:YES];
+    
+    NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/user/%@/fof_name/", [[UIDevice currentDevice] uniqueIdentifier], fofName];
+    
+    NSString *message = @"I've just posted a cool new picture format using dyfocus, check it out.";
+    
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   urlLink, @"link",
+                                   message,@"message",
+                                   nil];
+    
+    [FBRequestConnection startWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        
+        [activityIndicator removeFromSuperview];
+        
+        if (!error) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            NSString *alertTitle = @"Connection Error";
+            NSString *alertMsg = @"Failed to share picture on FB.";
+            NSString *alertButton = @"OK";
+            
+            UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+            [alert show];
+        }
+    }];
+    
+   
+
+    //[FBSession requestWithGraphPath:@"me/links" andParams:params andHttpMethod:@"POST" andDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -123,6 +135,7 @@
 
 - (void) upload
 {
+    NSLog(@"aaa");
     
     NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/image/"];
     //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
@@ -130,11 +143,11 @@
     request = [[ASIFormDataRequest requestWithURL:webServiceUrl] retain];
     [request setDelegate:self];
     
-    NSString *fof_name = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
+    fofName = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
     NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[self.frames count]];
     
     [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
-    [request setPostValue:fof_name forKey:@"fof_name"];
+    [request setPostValue:fofName forKey:@"fof_name"];
     [request setPostValue:fof_size forKey:@"fof_size"];
     
     for (int i = 0; i < [self.frames count]; i++)
@@ -179,14 +192,13 @@
     [request startAsynchronous];
     NSLog(@"MESSAGE %@",[request responseString]);
     
-    [fof_name release];
     
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request {
     NSLog(@"REQUEST FINISHED");
-    [activityIndicator removeFromSuperview];
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self shareWithFacebook];
     
 }
 
@@ -221,7 +233,6 @@
 
 
 -(void)requestUserInfo:(FBSession *)session {
-    NSLog(@"aaadssd");
     
         [[FBRequest requestForMe] startWithCompletionHandler:
          ^(FBRequestConnection *connection,
