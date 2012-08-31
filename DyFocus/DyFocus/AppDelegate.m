@@ -91,11 +91,9 @@
     [self.window makeKeyAndVisible];
     NSLog(@"aaa");
     
-    // See if we have a valid token for the current state.
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-        // To-do, show logged in view
-    } else {
-        // No, display the login page.
+        // Yes, so just open the session (this won't display any UX).
+        [self reopenSession];
     }
     
     
@@ -171,6 +169,7 @@
                                       case FBSessionStateClosed:
                                       case FBSessionStateClosedLoginFailed:
                                           NSLog(@"Error message at sharing controller");
+                                          [FBSession.activeSession closeAndClearTokenInformation];
                                           break;
                                           
                                       default:
@@ -187,6 +186,41 @@
                                       [alertView show];
                                   }
                               }];
+}
+
+- (void)reopenSession {
+    
+    NSArray *permissions =  [[NSArray arrayWithObjects:
+                              @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
+    
+    [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session,
+                                                                                                 FBSessionState status,
+                                                                                                 NSError *error) {
+        switch (status) {
+            case FBSessionStateOpen: {
+                NSLog(@"Sweet, let it flow..");
+            }
+                break;
+            case FBSessionStateClosed:
+            case FBSessionStateClosedLoginFailed:
+                NSLog(@"Error message at sharing controller");
+                [FBSession.activeSession closeAndClearTokenInformation];
+                break;
+                
+            default:
+                break;
+        }
+        
+        if (error) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"Error"
+                                      message:error.localizedDescription
+                                      delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+            [alertView show];
+        }
+    }];
 }
 
 - (BOOL)application:(UIApplication *)application
