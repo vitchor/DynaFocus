@@ -156,7 +156,7 @@
 - (void)openSession {
     
     NSArray *permissions =  [[NSArray arrayWithObjects:
-                     @"publish_actions", @"user_about_me", @"friends_about_me", nil] retain];
+                     @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
     
     [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session,
                                                   FBSessionState status,

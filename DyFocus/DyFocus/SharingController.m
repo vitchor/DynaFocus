@@ -228,11 +228,32 @@
            NSDictionary<FBGraphUser> *user,
            NSError *error) {
              if (!error) {
-                 NSLog(@"USERNAME: %@", user.name);
-                 NSLog(@"USERID: %@", user.id);
+                 NSError *error;
+                 NSURLResponse *response;
+                 NSHTTPURLResponse *httpResponse;
+                 NSData *dataReply;
+                 id stringReply;
+             
+                 NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/user_fb_info/"];
+               
+                 NSString *postString = [[NSString alloc] initWithFormat:@"facebook_id=%@&name=%@&email=%@&device_id=%@", user.id, user.name, [user objectForKey:@"email"], [[UIDevice currentDevice] uniqueIdentifier]];
+                 
+                 NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:webServiceUrl];
+                 
+                 [postRequest setHTTPMethod:@"POST"];
+
+                 [postRequest setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+                 
+                 dataReply = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:&response error:&error];
+                 stringReply = (NSString *)[[NSString alloc] initWithData:dataReply encoding:NSUTF8StringEncoding];
+                 // Some debug code, etc.
+                 NSLog(@"reply from server: %@", stringReply);
+                 httpResponse = (NSHTTPURLResponse *)response;
+                 int statusCode = [httpResponse statusCode];
+                 NSLog(@"HTTP Response Headers %@", [httpResponse allHeaderFields]);
+                 NSLog(@"HTTP Status code: %d", statusCode);
              }
-                 NSLog(@"aOOOOo");
-         }];      
+         }];
     
     
 }
