@@ -18,6 +18,7 @@
     
     NSMutableArray *mFocalPoints;
     NSMutableArray *mFrames;
+
     
     int mFOFIndex;
     

@@ -14,6 +14,7 @@
 	CGContextRef context;
     CGColorRef ref;
     bool enabled;
+    NSMutableArray *focusPoints;
 }
 
 @property(nonatomic,retain) NSMutableArray *touchPoints;

@@ -82,7 +82,11 @@
 
 - (NSMutableArray *)getPoints {
 	
-    NSMutableArray *focusPoints = [[NSMutableArray alloc] init];
+    if(!focusPoints){
+        focusPoints = [[NSMutableArray alloc] init];
+    } else {
+        [focusPoints removeAllObjects];
+    }
     
     for (NSObject *point in touchPoints) {
         CGPoint touchPoint = [(NSValue *)point CGPointValue];
