@@ -162,7 +162,11 @@
                          FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
                          
                          FOFpreview.frames = mFrames;
-                         FOFpreview.focalPoints = [pathView getPoints];
+                         FOFpreview.focalPoints = mFocalPoints;
+                         
+                         
+                         //[mFrames release];
+                         //[mFocalPoints release];
                          
                          for (UIImage *frame in mFrames) {
                              [frame release];
@@ -209,6 +213,7 @@
 
 -(void)addObserverToFocus
 {
+    
     mFocalPoints = [pathView getPoints];
     
     if ([mFocalPoints count] > 0) {
@@ -226,6 +231,10 @@
         
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
         [alert show];
+        
+        [alertTitle release];
+        [alertMsg release];
+        [alertButton release];
     }
 }
 
@@ -244,23 +253,23 @@
     
     mFOFIndex = 0;
     
-    if (mFrames){
-        
-        [mFrames release];
-        mFrames = nil;
+    if (!mFocalPoints){
+       // mFocalPoints = [[NSMutableArray alloc] init];
+    } else {
+        [mFocalPoints removeAllObjects];
     }
+    
+    if (!mFrames) {
+        mFrames = [[NSMutableArray alloc] init];
+    } else {
+        [mFrames removeAllObjects];
+    }
+    
+    //CGPoint centerPoint = {0.5f,0.5f};// center
 
-    if (mFocalPoints) {
-        [mFocalPoints release];
-        mFocalPoints = nil;
-    }
-    
-    mFocalPoints = [[NSMutableArray alloc] init];
-    mFrames = [[NSMutableArray alloc] init];
-    
-    CGPoint centerPoint = {0.5f,0.5f};// center
-    
-    [mFocalPoints addObject:[NSValue valueWithCGPoint:centerPoint]];
+    //NSValue *point = [NSValue valueWithCGPoint:centerPoint];
+    //[mFocalPoints addObject:point];
+    //[point release];
     
     [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
     [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
@@ -302,11 +311,10 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void) dealloc
+-(void)dealloc
 {
     [mFocalPoints release];
     [mFrames release];
-    
     [super dealloc];
 }
 

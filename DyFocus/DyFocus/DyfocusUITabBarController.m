@@ -75,7 +75,9 @@
             UIViewController *c = [[UIViewController alloc]init];
             [viewController presentModalViewController:c animated:NO];
             [viewController dismissModalViewControllerAnimated:NO];
+            
             [c release];
+            c = nil;
             
             if ([UIViewController respondsToSelector:@selector(attemptRotationToDeviceOrientation)]) {
                 // this ensures that the view will be presented in the orientation of the device

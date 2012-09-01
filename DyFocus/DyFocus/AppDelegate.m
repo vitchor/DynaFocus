@@ -153,40 +153,41 @@
 
 - (void)openSession {
     
-    NSArray *permissions =  [[NSArray arrayWithObjects:
+    permissions =  [[NSArray arrayWithObjects:
                      @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
     
      SharingController *sharingController = (SharingController *)[navController topViewController];
     
-    [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session,
-                                                  FBSessionState status,
-                                                  NSError *error) {
-                                  switch (status) {
-                                      case FBSessionStateOpen: {
-                                         
-                                          [sharingController requestUserInfo:session];
-                                          NSLog(@"Sweet, let it flow..");
-                                      }
-                                          break;
-                                      case FBSessionStateClosed:
-                                      case FBSessionStateClosedLoginFailed:
-                                          [sharingController facebookError];
-                                          [FBSession.activeSession closeAndClearTokenInformation];
-                                          break;
-                                          
-                                      default:
-                                          break;
-                                  }
-                                  
-                                  if (error) {
-                                      [sharingController facebookError];
-                                  }
-                              }];
+    [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+        
+          switch (status) {
+              case FBSessionStateOpen: {
+                 
+                  [sharingController requestUserInfo:session];
+                  NSLog(@"Sweet, let it flow..");
+              }
+                  break;
+              case FBSessionStateClosed:
+              case FBSessionStateClosedLoginFailed:
+                  [sharingController facebookError];
+                  [FBSession.activeSession closeAndClearTokenInformation];
+                  break;
+                  
+              default:
+                  break;
+          }
+          
+          if (error) {
+              [sharingController facebookError];
+          }
+          [permissions release];        
+      }];
+    
 }
 
 - (void)reopenSession {
     
-    NSArray *permissions =  [[NSArray arrayWithObjects:
+    permissions =  [[NSArray arrayWithObjects:
                               @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
     
     [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session,
@@ -215,7 +216,9 @@
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
             [alertView show];
+            
         }
+        [permissions release];
     }];
 }
 

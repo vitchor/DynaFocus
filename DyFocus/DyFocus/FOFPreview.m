@@ -141,15 +141,16 @@
 
 - (void) dealloc
 {
-    for (UIImage *frame in self.frames) {
-        [frame release];
-    }
+    //for (UIImage *frame in self.frames) {
+    //    [frame release];
+    //}
     
-    for (NSValue *point in self.focalPoints) {
-        [point release];
-    }
+    //for (NSValue *point in self.focalPoints) {
+    //    [point release];
+    //}
          
-    
+    [self.frames release];
+    [self.focalPoints release];
     [self.firstImageView release];
     [self.secondImageView release];
     NSLog(@"YEAAAH");

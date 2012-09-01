@@ -34,7 +34,7 @@
     [super viewDidLoad];
     [activityIndicator removeFromSuperview];
 
-    NSString *share = @"Upload";
+    NSString *share = @"Publish";
 	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(share)];
 	self.navigationItem.rightBarButtonItem = shareButton;
 	[shareButton release];
@@ -109,6 +109,8 @@
                                    message,@"message",
                                    imageUrl,@"picture",
                                    nil];
+    [urlLink release];
+    [imageUrl release];
     
     [FBRequestConnection startWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         
@@ -124,6 +126,11 @@
             
             UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
             [alert show];
+            
+            [alertTitle release];
+            [alertMsg release];
+            [alertButton release];
+            
         }
     }];
     
@@ -149,7 +156,7 @@
     [request setDelegate:self];
     
     fofName = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
-    NSString *fof_size = [[NSString alloc] initWithFormat:@"%d",[self.frames count]];
+    NSString *fof_size = [[[NSString alloc] initWithFormat:@"%d",[self.frames count]] autorelease];
     
     [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
     [request setPostValue:fofName forKey:@"fof_name"];
@@ -192,7 +199,16 @@
         // Add the image file to the request
         [request setFile:photoPath withFileName:fileName andContentType:@"Image/jpeg" forKey:keyName];
         
+        [fileName release];
+        [keyName release];
+        [frameFocalPointX release];
+        [frameFocalPointY release];
+        [imagePath release];
+        //[fof_size release];
+
     }
+    
+
     
     [request startAsynchronous];
     NSLog(@"MESSAGE %@",[request responseString]);
@@ -203,7 +219,11 @@
 - (void)requestFinished:(ASIHTTPRequest *)request {
     NSLog(@"REQUEST FINISHED");
     
-    [self shareWithFacebook];
+    if (facebookSwitch.on) {
+        [self shareWithFacebook];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
 }
 
@@ -219,6 +239,10 @@
     
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
     [alert show];
+    
+    [alertTitle release];
+    [alertMsg release];
+    [alertButton release];
 }
 
 - (void)requestRedirected:(ASIHTTPRequest *)request {
@@ -268,6 +292,9 @@
                  int statusCode = [httpResponse statusCode];
                  NSLog(@"HTTP Response Headers %@", [httpResponse allHeaderFields]);
                  NSLog(@"HTTP Status code: %d", statusCode);
+                 
+                 
+                 [postString release];
              }
          }];
 }
@@ -281,6 +308,19 @@
     
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
     [alert show];
+    
+    [alertTitle release];
+    [alertMsg release];
+    [alertButton release];
+    
+}
+
+-(void)dealloc
+{
+    [frames release];
+    [focalPoints release];
+    [fofName release];
+    [super dealloc];
 }
 
 @end

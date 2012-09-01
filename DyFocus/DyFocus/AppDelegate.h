@@ -17,6 +17,7 @@
     
     DyfocusUITabBarController *tabBarController;
     DyfocusUINavigationController *navController;
+    NSArray *permissions;
 }
 - (void)openSession;
 @property (strong, nonatomic) UIWindow *window;
