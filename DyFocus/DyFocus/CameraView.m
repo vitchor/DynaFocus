@@ -11,6 +11,7 @@
 #import "PathView.h"
 #import "ASIFormDataRequest.h"
 #import "UIImage+fixOrientation.h"
+#import "TestFlight.h"
 
 @implementation CameraView
 
@@ -31,6 +32,8 @@
         
         // releases the lock
         [mCaptureDevice unlockForConfiguration];
+    } else {
+        [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - mCaptureDevice couldn't be locked"];
     }
 }
 - (void)startCaptureSession {
@@ -39,25 +42,29 @@
     captureSession = [[AVCaptureSession alloc] init];
     
     if ([captureSession canSetSessionPreset: AVCaptureSessionPresetPhoto]) {
-        
         [captureSession setSessionPreset:AVCaptureSessionPresetPhoto];
+        
+    } else {
+        [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - captureSession can't set preset AVCaptureSessionPresetPhoto"];
     }
     
     
     // Find CaptureDevice
-    
     NSArray *devices = [AVCaptureDevice devices];
     
     for (AVCaptureDevice *device in devices){
-        
         if ([device hasMediaType:AVMediaTypeVideo]){
-            
             if ([device position] == AVCaptureDevicePositionBack) {
                 mCaptureDevice = device;
                 break;
             }
         }
+        
     }
+    if (!mCaptureDevice) {
+        [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - couldn't find an AVCaptureDevice with AVMediaTypeVideo and AVCaptureDevicePositionBack"];
+    }
+    
     
     // Set initial focus point
     [self updateFocusPoint];
@@ -69,24 +76,24 @@
     
     if ([captureSession canAddInput:deviceInput]) {
         [captureSession addInput:deviceInput];
+    } else {
+        [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - couldn't add the device input to the actual AVCaptureSession"];
     }
     
     
     // Create/add StillImageOutput, get connection and add handler
-    mStillImageOutput = [[AVCaptureStillImageOutput alloc] init];
     NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
     
+    mStillImageOutput = [[AVCaptureStillImageOutput alloc] init];
     [mStillImageOutput setOutputSettings:outputSettings];
-    
     [captureSession addOutput:mStillImageOutput];
+    
     
     //Get connection
     mVideoConnection = nil;
     
     for (AVCaptureConnection *connection in mStillImageOutput.connections) {
-        
         for (AVCaptureInputPort *port in [connection inputPorts]) {
-            
             if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
                 mVideoConnection = connection;
                 break;
@@ -94,6 +101,10 @@
         }
         
         if (mVideoConnection) {break;}
+    }
+    
+    if (!mVideoConnection) {
+         [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - couldn't get a AVCaptureConnection with a port that is equal to AVMediaTypeVideo"];
     }
     
     [captureSession startRunning];
@@ -112,74 +123,75 @@
         BOOL adjustingFocus = [[change objectForKey:NSKeyValueChangeNewKey] isEqualToNumber:[NSNumber numberWithInt:1]];
         
         if(!adjustingFocus) {
-            
             NSLog(@"FOCUS IS GOOD");
             
             // Capture with handler
             NSLog(@"TAKING PICTURE...");
-            [mStillImageOutput captureStillImageAsynchronouslyFromConnection:mVideoConnection completionHandler:
-             ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-                 
-                 CFDictionaryRef exifAttachments = CMGetAttachment(imageDataSampleBuffer, kCGImagePropertyExifDictionary, NULL);
-                 
-                 
-                 if (exifAttachments) {
+            
+            if (mStillImageOutput) {
+            
+                [mStillImageOutput captureStillImageAsynchronouslyFromConnection:mVideoConnection completionHandler:
+                 ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
                      
-                     NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-                     UIImage *image = [[UIImage alloc] initWithData:imageData];
-                     
-                     /*CGRect cropRect = CGRectMake((image.size.width-3000)/2,(image.size.width-3000)/2, 3000, 3000);
-                     
-                     CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
-                     
-
-                     UIImage *correctImage = [UIImage imageWithCGImage:imageRef scale:1.0 orientation:image.imageOrientation];
-                     
-                     [mFrames addObject:[correctImage retain]];
-                     */
-                     
-                     UIImage *correctImage = [[image fixOrientation] retain];
-                     
-                     [image release];
-                     image = nil;
-                     //UIImage *correctImage = [UIImage imageWithCGImage:[image CGImage] scale:1.0 orientation:image.imageOrientation];
-                     
-                     [mFrames addObject:correctImage];
-                     
-                     NSLog(@"DONE! ");
-                     
-                     mFOFIndex = mFOFIndex + 1;
-                     
-                     if (mFOFIndex < [mFocalPoints count]) {
-                         [self updateFocusPoint];
+                     if (error) {
+                         [self sendErrorReportWithMessage:error.localizedDescription];
+                         [self showOkAlertWithMessage:@"The app is not ready to take pictures on your device yet, we're releasing an update soon. Please excuse us :( " andTitle:@"Sorry"];
+                         
                      } else {
-                         NSLog(@" FINISHED PICTURE");
+                         CFDictionaryRef exifAttachments = CMGetAttachment(imageDataSampleBuffer, kCGImagePropertyExifDictionary, NULL);
                          
-                         [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
+                         if (exifAttachments) {
+                             
+                             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+                             UIImage *image = [[UIImage alloc] initWithData:imageData];
+                             
+                             /*CGRect cropRect = CGRectMake((image.size.width-3000)/2,(image.size.width-3000)/2, 3000, 3000);
+                             CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
+                             UIImage *correctImage = [UIImage imageWithCGImage:imageRef scale:1.0 orientation:image.imageOrientation];
+                             [mFrames addObject:[correctImage retain]];*/
+                             
+                             UIImage *correctImage = [[image fixOrientation] retain];
+                             
+                             [image release];
+                             image = nil;
+                             //UIImage *correctImage = [UIImage imageWithCGImage:[image CGImage] scale:1.0 orientation:image.imageOrientation];
+                             
+                             [mFrames addObject:correctImage];
+                             
+                             NSLog(@"DONE! ");
+                             
+                             mFOFIndex = mFOFIndex + 1;
+                             
+                             if (mFOFIndex < [mFocalPoints count]) {
+                                 [self updateFocusPoint];
+                             } else {
+                                 NSLog(@" FINISHED PICTURE");
+                                 
+                                 [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
 
-                         pathView.enabled = true;
-                         
-                         FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
-                         
-                         FOFpreview.frames = mFrames;
-                         FOFpreview.focalPoints = mFocalPoints;
-                         
-                         
-                         //[mFrames release];
-                         //[mFocalPoints release];
-                         
-                         for (UIImage *frame in mFrames) {
-                             [frame release];
+                                 pathView.enabled = true;
+                                 
+                                 FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
+                                 
+                                 FOFpreview.frames = mFrames;
+                                 FOFpreview.focalPoints = mFocalPoints;
+                                 
+                                 for (UIImage *frame in mFrames) {
+                                     [frame release];
+                                 }
+                                 
+                                 [self.navigationController pushViewController:FOFpreview animated:true];
+                                 
+                                 [FOFpreview release];
+                             }   
+                             
                          }
-                         
-                         [self.navigationController pushViewController:FOFpreview animated:true];
-                         
-                         [FOFpreview release];
-                     }   
+                     }
                      
-                 }
-                 
-             }];
+                 }];
+            } else {
+                [self sendErrorReportWithMessage:@"CameraView.observeValueForKeyPath - the ImageOutput was null when using it to capture."];
+            }
         }
     }
 }
@@ -213,7 +225,6 @@
 
 -(void)addObserverToFocus
 {
-    
     mFocalPoints = [pathView getPoints];
     
     if ([mFocalPoints count] > 0) {
@@ -238,6 +249,16 @@
     }
 }
 
+-(void)showOkAlertWithMessage:(NSString *)message andTitle:(NSString *)title
+{
+    NSString *alertButton = @"OK";
+    
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+    [alert show];
+
+    [alertButton release];
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -253,10 +274,8 @@
     
     mFOFIndex = 0;
     
-    if (!mFocalPoints){
-       // mFocalPoints = [[NSMutableArray alloc] init];
-    } else {
-        [mFocalPoints removeAllObjects];
+    if (mFocalPoints){
+       [mFocalPoints removeAllObjects];
     }
     
     if (!mFrames) {
@@ -264,12 +283,6 @@
     } else {
         [mFrames removeAllObjects];
     }
-    
-    //CGPoint centerPoint = {0.5f,0.5f};// center
-
-    //NSValue *point = [NSValue valueWithCGPoint:centerPoint];
-    //[mFocalPoints addObject:point];
-    //[point release];
     
     [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
     [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
@@ -284,7 +297,8 @@
         [captureSession startRunning];
     }
     
-
+    [TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
+    
     [super viewDidAppear:animated];
 }
 
@@ -309,6 +323,13 @@
 {
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)sendErrorReportWithMessage:(NSString *)message
+{
+    NSString *error = [[NSString alloc] initWithFormat:@"Error: %@.", message];
+    [TestFlight passCheckpoint:error];
+    [error release];
 }
 
 -(void)dealloc

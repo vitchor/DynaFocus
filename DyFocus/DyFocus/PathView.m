@@ -101,7 +101,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
-    if (enabled) {
+    if (enabled && [touchPoints count] < 4) {
         CGPoint touchPoint = [[touches anyObject] locationInView:self];
         [self addPoint:touchPoint];
         

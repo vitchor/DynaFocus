@@ -14,6 +14,7 @@
 #import "DyfocusUINavigationController.h"
 #import "FriendsController.h"
 #import "ProfileController.h"
+#import "TestFlight.h"
 
 @implementation AppDelegate
 
@@ -28,7 +29,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    
+
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];    
+    [TestFlight takeOff:@"d230aea85b05dd961643635056dfa4cb_MTI4NTM3MjAxMi0wOS0wOCAxNjoxMjowMS4zOTA3MzE"];
+
     
     // Camera Controller
     CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
