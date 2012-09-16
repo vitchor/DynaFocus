@@ -22,13 +22,41 @@
     NSError *error = nil;
     if ([mCaptureDevice lockForConfiguration:&error]) {
         NSLog(@"UPDATE POINT, DONE");
-        // adjusts exposure first
-        [mCaptureDevice setExposurePointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
-        [mCaptureDevice setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
         
-        // then the focus
-        [mCaptureDevice setFocusPointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
-        [mCaptureDevice setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+    
+        if ([mCaptureDevice isExposurePointOfInterestSupported]) {
+            [mCaptureDevice setExposurePointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
+            
+        } else {
+            [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - exposure point is not supported!!"];
+        }
+        
+        if ([mCaptureDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+            [mCaptureDevice setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
+            
+        } else if ([mCaptureDevice isExposureModeSupported:AVCaptureExposureModeAutoExpose]) {
+            [mCaptureDevice setFocusMode:AVCaptureExposureModeAutoExpose];
+            
+        } else {
+            [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - exposure mode is not supported!!"];
+        }
+        
+
+        if ([mCaptureDevice isFocusPointOfInterestSupported]) {
+            [mCaptureDevice setFocusPointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
+            
+        } else {
+            [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - focus point is not supported!!"];
+        }
+        if ([mCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+            [mCaptureDevice setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+            
+        } else if ([mCaptureDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+            [mCaptureDevice setFocusMode:AVCaptureFocusModeAutoFocus];
+            
+        } else {
+            [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - focus mode is not supported!!"];
+        }
         
         // releases the lock
         [mCaptureDevice unlockForConfiguration];
@@ -62,13 +90,12 @@
         
     }
     if (!mCaptureDevice) {
-        [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - couldn't find an AVCaptureDevice with AVMediaTypeVideo and AVCaptureDevicePositionBack"];
+        [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - couldn't find an AVCaptureDevice with AVMediaTypeVideo, AVCaptureDevicePositionBack"];
     }
     
     
     // Set initial focus point
     [self updateFocusPoint];
-    
     
     // Create and add DeviceInput to Session
     NSError *error = nil;
@@ -80,21 +107,27 @@
         [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - couldn't add the device input to the actual AVCaptureSession"];
     }
     
-    
     // Create/add StillImageOutput, get connection and add handler
     NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
     
+
     mStillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+
     [mStillImageOutput setOutputSettings:outputSettings];
+
     [captureSession addOutput:mStillImageOutput];
+
     
     
     //Get connection
     mVideoConnection = nil;
-    
+
     for (AVCaptureConnection *connection in mStillImageOutput.connections) {
+
         for (AVCaptureInputPort *port in [connection inputPorts]) {
+
             if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
+
                 mVideoConnection = connection;
                 break;
             }
@@ -106,15 +139,18 @@
     if (!mVideoConnection) {
          [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - couldn't get a AVCaptureConnection with a port that is equal to AVMediaTypeVideo"];
     }
-    
+
     [captureSession startRunning];
-    
+
     // Showing preview layer
     AVCaptureVideoPreviewLayer *layer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
+
     layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+
     layer.frame = self.cameraView.frame;
-    
+
     [self.cameraView.layer addSublayer:layer];
+
     
 }
 
@@ -235,6 +271,7 @@
         [self updateFocusPoint];
         
         [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
+        
     } else {
         NSString *alertTitle = @"No Focus Points";
         NSString *alertMsg = @"Tap the screen to add focus points.";
