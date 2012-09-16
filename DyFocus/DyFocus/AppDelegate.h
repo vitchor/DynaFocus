@@ -20,8 +20,11 @@
     NSArray *permissions;
 }
 - (void)openSession;
+- (void)resetCameraUINavigationController;
+
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
+
 
 
 @end

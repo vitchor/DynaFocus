@@ -117,7 +117,9 @@
         [activityIndicator removeFromSuperview];
         
         if (!error) {
-            [self.navigationController popViewControllerAnimated:YES];
+            //[self.navigationController popViewControllerAnimated:YES];
+            AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate resetCameraUINavigationController];
         } else {
             facebookSwitch.on = false;
             NSString *alertTitle = @"Connection Error";
@@ -222,7 +224,9 @@
     if (facebookSwitch.on) {
         [self shareWithFacebook];
     } else {
-        [self.navigationController popViewControllerAnimated:YES];
+        //[self.navigationController popViewControllerAnimated:YES];
+        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate resetCameraUINavigationController];
     }
     
 }

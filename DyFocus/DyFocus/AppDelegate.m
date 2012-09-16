@@ -104,6 +104,13 @@
     return YES;
 }
 
+- (void)resetCameraUINavigationController {
+    NSArray *viewControllers = navController.viewControllers;
+    UIViewController *rootViewController = [viewControllers objectAtIndex:0];
+    
+    [navController setViewControllers:[NSArray arrayWithObject:rootViewController] animated:YES];
+}
+
 - (void)sessionStateChanged:(FBSession *)session
                       state:(FBSessionState) state
                       error:(NSError *)error
