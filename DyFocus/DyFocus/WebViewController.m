@@ -6,7 +6,6 @@
 @implementation WebViewController
 
 - (id)init {
-    isFirstTime = true;
 	if (self = [super init]) {
 		self.title = @"dyfocus";
 		self.navigationItem.hidesBackButton = NO;
@@ -44,14 +43,11 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    if (!isFirstTime) {
-        [super viewDidAppear:animated];
-        UIWebView *webView = (UIWebView *)self.view;
-        [webView reload];
-        [webView setNeedsDisplay];
-    } else {
-        isFirstTime = false;
-    }
+    [super viewDidAppear:animated];
+    UIWebView *webView = (UIWebView *)self.view;
+    [webView reload];
+    [webView setNeedsDisplay];
+
 }
 
 
