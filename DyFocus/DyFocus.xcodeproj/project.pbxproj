@@ -33,6 +33,10 @@
 		4496A0DF15FBDF56003C8439 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4496A0DB15FBDF56003C8439 /* release_notes.txt */; };
 		44BEFED715B14404004358C9 /* FOFPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEFED515B14404004358C9 /* FOFPreview.m */; };
 		44BEFED815B14404004358C9 /* FOFPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BEFED615B14404004358C9 /* FOFPreview.xib */; };
+		44C7B1D51607440000221C12 /* iToast.h in Resources */ = {isa = PBXBuildFile; fileRef = 44C7B1D21607433D00221C12 /* iToast.h */; };
+		44C7B1D61607440000221C12 /* iToast.m in Resources */ = {isa = PBXBuildFile; fileRef = 44C7B1D31607433D00221C12 /* iToast.m */; };
+		44C7B1D71607444200221C12 /* iToast.h in Sources */ = {isa = PBXBuildFile; fileRef = 44C7B1D21607433D00221C12 /* iToast.h */; };
+		44C7B1D81607444200221C12 /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C7B1D31607433D00221C12 /* iToast.m */; };
 		44C8DA4215B1FF80000D2947 /* PathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8DA4115B1FF80000D2947 /* PathView.m */; };
 		AC07F47915B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */; };
 		AC07F47C15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */; };
@@ -131,6 +135,8 @@
 		44BEFED415B14404004358C9 /* FOFPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFPreview.h; sourceTree = "<group>"; };
 		44BEFED515B14404004358C9 /* FOFPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFPreview.m; sourceTree = "<group>"; };
 		44BEFED615B14404004358C9 /* FOFPreview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview.xib; sourceTree = "<group>"; };
+		44C7B1D21607433D00221C12 /* iToast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
+		44C7B1D31607433D00221C12 /* iToast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iToast.m; sourceTree = "<group>"; };
 		44C8DA4015B1FF80000D2947 /* PathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathView.h; sourceTree = "<group>"; };
 		44C8DA4115B1FF80000D2947 /* PathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathView.m; sourceTree = "<group>"; };
 		AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dynafocus_icon_beta1_orange_nofill_72x72.png; sourceTree = "<group>"; };
@@ -275,6 +281,8 @@
 			isa = PBXGroup;
 			children = (
 				AC8D7B2F15DB311000058949 /* Lib */,
+				44C7B1D21607433D00221C12 /* iToast.h */,
+				44C7B1D31607433D00221C12 /* iToast.m */,
 				AC8C262915DAA9D30093FFD2 /* df_featured_bw.png */,
 				441BFFB715B131D200E204D7 /* DyFocus-Info.plist */,
 				441BFFB815B131D200E204D7 /* InfoPlist.strings */,
@@ -438,6 +446,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44C7B1D51607440000221C12 /* iToast.h in Resources */,
+				44C7B1D61607440000221C12 /* iToast.m in Resources */,
 				441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */,
 				441BFFCA15B1324700E204D7 /* CameraView.xib in Resources */,
 				441BFFD915B1339900E204D7 /* GalleryView.xib in Resources */,
@@ -475,6 +485,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44C7B1D71607444200221C12 /* iToast.h in Sources */,
+				44C7B1D81607444200221C12 /* iToast.m in Sources */,
 				AC8D7B6015DB348600058949 /* ASIDataCompressor.h in Sources */,
 				AC8D7B6115DB348600058949 /* ASIDataCompressor.m in Sources */,
 				AC8D7B5C15DB345900058949 /* ASIDataDecompressor.h in Sources */,
@@ -535,7 +547,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bragiel";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bragiel";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -551,6 +563,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2DF802D7-7F0A-43DA-B8CB-442A81842C10";
 				SDKROOT = iphoneos5.1;
 				STRIP_INSTALLED_PRODUCT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -584,7 +597,7 @@
 		441BFFC415B131D200E204D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bragiel";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -601,7 +614,7 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2DF802D7-7F0A-43DA-B8CB-442A81842C10";
+				PROVISIONING_PROFILE = "FE20F6AE-2299-4148-847A-F8A2986ED723";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE20F6AE-2299-4148-847A-F8A2986ED723";
 				SDKROOT = iphoneos5.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -612,8 +625,8 @@
 		441BFFC515B131D200E204D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bragiel";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bragiel";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -629,8 +642,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2DF802D7-7F0A-43DA-B8CB-442A81842C10";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2DF802D7-7F0A-43DA-B8CB-442A81842C10";
+				PROVISIONING_PROFILE = "FE20F6AE-2299-4148-847A-F8A2986ED723";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE20F6AE-2299-4148-847A-F8A2986ED723";
 				SDKROOT = iphoneos5.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

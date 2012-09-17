@@ -47,7 +47,6 @@
     UIWebView *webView = (UIWebView *)self.view;
     [webView reload];
     [webView setNeedsDisplay];
-
 }
 
 

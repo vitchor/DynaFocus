@@ -12,6 +12,7 @@
 #import "ASIFormDataRequest.h"
 #import "UIImage+fixOrientation.h"
 #import "TestFlight.h"
+#import "iToast.h"
 
 @implementation CameraView
 
@@ -47,6 +48,7 @@
             
         } else {
             [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - focus point is not supported!!"];
+            //[self disablePictureTaking];
         }
         if ([mCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
             [mCaptureDevice setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
@@ -323,24 +325,33 @@
     
     [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
     [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
-
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
+    
     if (!captureSession) {
         [self startCaptureSession];
     } else {
         [captureSession startRunning];
     }
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     
     [TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
+    
+    mToastMessage = [iToast makeText:NSLocalizedString(@"Hold your phone still while taking the picture.", @"")];
+    [[mToastMessage setDuration:iToastDurationNormal] show];
     
     [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    if (mToastMessage) {
+        [mToastMessage removeToast:nil];
+        mToastMessage = nil;
+    }
+    
 	[super viewWillDisappear:animated];
     [captureSession stopRunning];    
 }

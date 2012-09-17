@@ -3,6 +3,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <ImageIO/ImageIO.h>
 #import "PathView.h"
+#import "iToast.h"
 
 @interface CameraView : UIViewController {
     
@@ -19,6 +20,7 @@
     NSMutableArray *mFocalPoints;
     NSMutableArray *mFrames;
 
+    iToast *mToastMessage;
     
     int mFOFIndex;
     
