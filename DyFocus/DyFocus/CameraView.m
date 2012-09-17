@@ -352,7 +352,7 @@
     
     [TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
     
-    mToastMessage = [iToast makeText:NSLocalizedString(@"Hold your phone still while taking the picture.", @"")];
+    mToastMessage = [iToast makeText:NSLocalizedString(@"Hold your phone still while taking pictures.", @"")];
     [[mToastMessage setDuration:iToastDurationNormal] show];
     
     [super viewDidAppear:animated];
