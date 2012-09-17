@@ -48,24 +48,31 @@
             
         } else {
             [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - focus point is not supported!!"];
-            //[self disablePictureTaking];
+            [self disablePictureTaking];
         }
         if ([mCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
             [mCaptureDevice setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
             
-        } else if ([mCaptureDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-            [mCaptureDevice setFocusMode:AVCaptureFocusModeAutoFocus];
-            
         } else {
             [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - focus mode is not supported!!"];
+            [self disablePictureTaking];
         }
         
-        // releases the lock
+        // Releases the lock
         [mCaptureDevice unlockForConfiguration];
     } else {
         [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - mCaptureDevice couldn't be locked"];
     }
 }
+
+- (void)disablePictureTaking {
+    if (self.navigationItem.rightBarButtonItem.enabled) {
+        [self.navigationItem.rightBarButtonItem setEnabled:false];
+        [self showOkAlertWithMessage:@"Your device does not support focus point settings." andTitle:@"Sorry"];
+    }
+}
+
+
 - (void)startCaptureSession {
 	
     // Create Session
@@ -330,6 +337,12 @@
         [self startCaptureSession];
     } else {
         [captureSession startRunning];
+        
+        if (mCaptureDevice) {
+            if (![mCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus] || ![mCaptureDevice isFocusPointOfInterestSupported]) {
+                [self disablePictureTaking];
+            }
+        }
     }
 
 }
