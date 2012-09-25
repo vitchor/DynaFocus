@@ -350,7 +350,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     
-    [TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
+    //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
     
     mToastMessage = [iToast makeText:NSLocalizedString(@"Hold your phone still while taking pictures.", @"")];
     [[mToastMessage setDuration:iToastDurationNormal] show];
@@ -388,9 +388,9 @@
 
 - (void)sendErrorReportWithMessage:(NSString *)message
 {
-    NSString *error = [[NSString alloc] initWithFormat:@"Error: %@.", message];
-    [TestFlight passCheckpoint:error];
-    [error release];
+    //NSString *error = [[NSString alloc] initWithFormat:@"Error: %@.", message];
+    //[TestFlight passCheckpoint:error];
+    //[error release];
 }
 
 -(void)dealloc
