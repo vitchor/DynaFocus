@@ -114,8 +114,6 @@
         [self addPoint:touchPoint];
         
         [self setNeedsDisplay];
-        
-        NSLog(@"TOUUUCH (%f, %f)", 1 - touchPoint.x / self.frame.size.width, touchPoint.y / self.frame.size.height);
     }
 }
 

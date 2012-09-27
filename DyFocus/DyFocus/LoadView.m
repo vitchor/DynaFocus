@@ -30,7 +30,7 @@
         self.tag = LOAD_VIEW_TAG;
         [view addSubview:self];
         
-        m_activityLabel = [[ActivityLabel alloc] initWithFrame:CGRectMake(0, (frame.size.height - 30) / 4, frame.size.width, 30)];
+        m_activityLabel = [[ActivityLabel alloc] initWithFrame:CGRectMake(0, (frame.size.height - 30) / 2, frame.size.width, 30)];
         m_activityLabel.backgroundColor = [UIColor clearColor];
         [self setText:text showSpinner:YES];
         [self addSubview:m_activityLabel];
