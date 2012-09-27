@@ -14,7 +14,6 @@
 #import "DyfocusUINavigationController.h"
 #import "FriendsController.h"
 #import "ProfileController.h"
-#import "TestFlight.h"
 
 @implementation AppDelegate
 

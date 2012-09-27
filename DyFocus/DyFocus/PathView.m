@@ -26,23 +26,25 @@
 	
 	context = UIGraphicsGetCurrentContext();
 	
-	ref =  [[UIColor redColor] CGColor];
+	ref =  [[UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.5] CGColor];
 	
 	if ([touchPoints count] >= 1) {
 		
-        CGContextSetLineWidth(context, 10);
+        CGContextSetLineWidth(context, 8);
 		CGContextSetStrokeColorWithColor(context, ref);
+        CGContextSetFillColor(context, CGColorGetComponents([UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.9].CGColor));
         
-        CGPoint firstPoint = [[touchPoints objectAtIndex:0] CGPointValue];
-		
+		CGPoint firstPoint = [[touchPoints objectAtIndex:0] CGPointValue];
 		
         if ([touchPoints count] == 1) {
-            CGContextStrokeEllipseInRect(context, CGRectMake(firstPoint.x - 10, firstPoint.y - 10, 20, 20));
+            CGContextFillEllipseInRect(context, CGRectMake(firstPoint.x - 10, firstPoint.y - 10, 20, 20));
+            
         } else {
+            
             CGPoint lastPoint;
             for (NSObject *point in touchPoints) {
                 CGPoint cgPoint = [(NSValue *)point CGPointValue];
-                CGContextStrokeEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
+                //CGContextStrokeEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
                 
                 
                 CGContextMoveToPoint(context, lastPoint.x, lastPoint.y);
@@ -52,9 +54,15 @@
                     CGContextStrokePath(context);
                 }
                 lastPoint = cgPoint;
+                
             }
+            
+            for (NSObject *point in touchPoints) {
+                CGPoint cgPoint = [(NSValue *)point CGPointValue];
+                CGContextFillEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
+            }
+            
         }
-		
         
 		CGContextStrokePath(context);
 	}

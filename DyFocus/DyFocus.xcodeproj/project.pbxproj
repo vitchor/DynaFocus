@@ -28,9 +28,6 @@
 		4495E69615EEB368009C2B9F /* SharingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4495E69415EEB368009C2B9F /* SharingController.xib */; };
 		4495E69A15EEBCC7009C2B9F /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495E69915EEBCC7009C2B9F /* libsqlite3.0.dylib */; };
 		4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */; };
-		4496A0DD15FBDF56003C8439 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4496A0D915FBDF56003C8439 /* libTestFlight.a */; };
-		4496A0DE15FBDF56003C8439 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4496A0DA15FBDF56003C8439 /* README.txt */; };
-		4496A0DF15FBDF56003C8439 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4496A0DB15FBDF56003C8439 /* release_notes.txt */; };
 		44BEFED715B14404004358C9 /* FOFPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEFED515B14404004358C9 /* FOFPreview.m */; };
 		44BEFED815B14404004358C9 /* FOFPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BEFED615B14404004358C9 /* FOFPreview.xib */; };
 		44C7B1D51607440000221C12 /* iToast.h in Resources */ = {isa = PBXBuildFile; fileRef = 44C7B1D21607433D00221C12 /* iToast.h */; };
@@ -43,7 +40,6 @@
 		AC606B5415DBED1C008FDF8F /* dyfocus_icon_square_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = AC606B5315DBED1C008FDF8F /* dyfocus_icon_square_57x57.png */; };
 		AC606B5715DBED28008FDF8F /* dyfocus_icon_square_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = AC606B5615DBED28008FDF8F /* dyfocus_icon_square_114x114.png */; };
 		AC606B6015DBF24B008FDF8F /* df_friends_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = AC606B5815DBF24B008FDF8F /* df_friends_bw.png */; };
-		AC606B6115DBF24B008FDF8F /* df_featured_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = AC606B5915DBF24B008FDF8F /* df_featured_bw.png */; };
 		AC606B6215DBF24B008FDF8F /* df_feed_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = AC606B5A15DBF24B008FDF8F /* df_feed_bw.png */; };
 		AC606B6315DBF24B008FDF8F /* df_profile_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = AC606B5B15DBF24B008FDF8F /* df_profile_bw.png */; };
 		AC606B6415DBF24B008FDF8F /* df_profile_bw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC606B5C15DBF24B008FDF8F /* df_profile_bw@2x.png */; };
@@ -128,10 +124,6 @@
 		4495E69715EEBC9F009C2B9F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		4495E69915EEBCC7009C2B9F /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
-		4496A0D915FBDF56003C8439 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		4496A0DA15FBDF56003C8439 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		4496A0DB15FBDF56003C8439 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
-		4496A0DC15FBDF56003C8439 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		44BEFED415B14404004358C9 /* FOFPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFPreview.h; sourceTree = "<group>"; };
 		44BEFED515B14404004358C9 /* FOFPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFPreview.m; sourceTree = "<group>"; };
 		44BEFED615B14404004358C9 /* FOFPreview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview.xib; sourceTree = "<group>"; };
@@ -211,7 +203,6 @@
 				441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */,
 				441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */,
 				ACA63D2E15EFE30D00314025 /* FacebookSDK.framework in Frameworks */,
-				4496A0DD15FBDF56003C8439 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +257,6 @@
 		441BFFB515B131D200E204D7 /* DyFocus */ = {
 			isa = PBXGroup;
 			children = (
-				4496A0D815FBDF56003C8439 /* TestFlightSDK1.0 */,
 				441BFFBE15B131D200E204D7 /* AppDelegate.h */,
 				441BFFBF15B131D200E204D7 /* AppDelegate.m */,
 				AC8C262215DAA9BC0093FFD2 /* Resources */,
@@ -321,17 +311,6 @@
 				ACA63D3A15EFED4B00314025 /* ProfileController.xib */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		4496A0D815FBDF56003C8439 /* TestFlightSDK1.0 */ = {
-			isa = PBXGroup;
-			children = (
-				4496A0D915FBDF56003C8439 /* libTestFlight.a */,
-				4496A0DA15FBDF56003C8439 /* README.txt */,
-				4496A0DB15FBDF56003C8439 /* release_notes.txt */,
-				4496A0DC15FBDF56003C8439 /* TestFlight.h */,
-			);
-			path = TestFlightSDK1.0;
 			sourceTree = "<group>";
 		};
 		44C8DA4D15B20FEC000D2947 /* Views */ = {
@@ -462,7 +441,6 @@
 				AC606B5415DBED1C008FDF8F /* dyfocus_icon_square_57x57.png in Resources */,
 				AC606B5715DBED28008FDF8F /* dyfocus_icon_square_114x114.png in Resources */,
 				AC606B6015DBF24B008FDF8F /* df_friends_bw.png in Resources */,
-				AC606B6115DBF24B008FDF8F /* df_featured_bw.png in Resources */,
 				AC606B6215DBF24B008FDF8F /* df_feed_bw.png in Resources */,
 				AC606B6315DBF24B008FDF8F /* df_profile_bw.png in Resources */,
 				AC606B6415DBF24B008FDF8F /* df_profile_bw@2x.png in Resources */,
@@ -473,8 +451,6 @@
 				4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */,
 				ACA63D3715EFE68900314025 /* FriendsController.xib in Resources */,
 				ACA63D3C15EFED4B00314025 /* ProfileController.xib in Resources */,
-				4496A0DE15FBDF56003C8439 /* README.txt in Resources */,
-				4496A0DF15FBDF56003C8439 /* release_notes.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,12 +537,14 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2DF802D7-7F0A-43DA-B8CB-442A81842C10";
-				SDKROOT = iphoneos6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PROVISIONING_PROFILE = "043FFAA6-472E-4250-9380-2862B67A77B6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "043FFAA6-472E-4250-9380-2862B67A77B6";
+				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -583,22 +561,23 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos6.0;
+				PROVISIONING_PROFILE = "043FFAA6-472E-4250-9380-2862B67A77B6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "043FFAA6-472E-4250-9380-2862B67A77B6";
+				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
 		441BFFC415B131D200E204D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bragiel";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bragiel";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -607,17 +586,18 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
 				INFOPLIST_FILE = "DyFocus/DyFocus-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/DyFocus/TestFlightSDK1.0\"",
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FE20F6AE-2299-4148-847A-F8A2986ED723";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE20F6AE-2299-4148-847A-F8A2986ED723";
-				SDKROOT = iphoneos6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "043FFAA6-472E-4250-9380-2862B67A77B6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "043FFAA6-472E-4250-9380-2862B67A77B6";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -625,8 +605,9 @@
 		441BFFC515B131D200E204D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bragiel";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bragiel";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -635,17 +616,18 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
 				INFOPLIST_FILE = "DyFocus/DyFocus-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/DyFocus/TestFlightSDK1.0\"",
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FE20F6AE-2299-4148-847A-F8A2986ED723";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE20F6AE-2299-4148-847A-F8A2986ED723";
-				SDKROOT = iphoneos6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "043FFAA6-472E-4250-9380-2862B67A77B6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "043FFAA6-472E-4250-9380-2862B67A77B6";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -11,7 +11,6 @@
 #import "PathView.h"
 #import "ASIFormDataRequest.h"
 #import "UIImage+fixOrientation.h"
-#import "TestFlight.h"
 #import "iToast.h"
 
 @implementation CameraView
