@@ -21,6 +21,7 @@
 }
 - (void)openSession;
 - (void)resetCameraUINavigationController;
+- (void)goBackToLastController;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;

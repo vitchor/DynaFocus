@@ -15,13 +15,13 @@
 
 @implementation DyfocusUITabBarController
 
-@synthesize feedWebController, featuredWebController;
+@synthesize feedWebController, featuredWebController, lastControllerIndex, actualControllerIndex;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -40,7 +40,9 @@
     //                                           object:nil];
   
     
-    
+    self.actualControllerIndex = -1;
+    self.lastControllerIndex = -1;
+    NSLog(@"Updating lastControllerIndex: %d", lastControllerIndex);
     
     [super viewDidLoad];
 
@@ -66,6 +68,7 @@
 }
 
 -(void) tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    
     if (!(viewController == feedWebController )) {
         
         int orientation = [[UIDevice currentDevice] orientation];
@@ -86,5 +89,13 @@
             }
         }
     }
+    
+    if (actualControllerIndex != -1) {
+        self.lastControllerIndex = actualControllerIndex;
+        NSLog(@"Updating lastControllerIndex: %d", lastControllerIndex);
+    }
+    
+    self.actualControllerIndex = [self.viewControllers indexOfObject:viewController];
+    NSLog(@"Updating actualControllerIndex: %d", actualControllerIndex);
 }
 @end

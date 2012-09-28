@@ -13,10 +13,14 @@
     WebViewController *feedWebController;
     WebViewController *featuredWebController;
     int lastOrientation;
+    int lastControllerIndex;
+    int actualControllerIndex;    
 }
 
 
 @property(nonatomic,retain) WebViewController *feedWebController;
 @property(nonatomic,retain) WebViewController *featuredWebController;
+@property(nonatomic,readwrite) int lastControllerIndex;
+@property(nonatomic,readwrite) int actualControllerIndex;
 
 @end

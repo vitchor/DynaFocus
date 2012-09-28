@@ -12,10 +12,11 @@
 #import "ASIFormDataRequest.h"
 #import "UIImage+fixOrientation.h"
 #import "iToast.h"
+#import "AppDelegate.h"
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, clearButton;
+@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
@@ -245,6 +246,18 @@
 {
     pathView.enabled = true;
     
+    shootButton.target = self;
+    [shootButton setAction:@selector(addObserverToFocus)];
+    
+    
+    clearButton.target = self;
+    [clearButton setAction:@selector(clearPoints)];
+    
+    
+    cancelButton.target = self;
+    [cancelButton setAction:@selector(goBackToLastController)];
+    
+    /*
     NSString *doneString = @"Shoot";
 	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
 									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(addObserverToFocus)];
@@ -258,8 +271,14 @@
 	self.navigationItem.leftBarButtonItem = removePointsButton;
 	[removePointsButton release];
 	[removePoints release];
-    
+    */
     [super viewDidLoad];
+}
+
+-(void)goBackToLastController
+{
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate goBackToLastController];
 }
 
 -(void)clearPoints
@@ -313,6 +332,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     [super viewWillAppear:animated];
     
     [self.navigationItem.rightBarButtonItem setEnabled:true];
@@ -328,9 +348,6 @@
     } else {
         [mFrames removeAllObjects];
     }
-    
-    [shootButton addTarget:self action:@selector(addObserverToFocus)forControlEvents:UIControlEventTouchDown];
-    [clearButton addTarget:self action:@selector(clearPoints)forControlEvents:UIControlEventTouchDown];
     
     if (!captureSession) {
         [self startCaptureSession];
@@ -348,6 +365,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+
+    [super viewWillDisappear:animated];
     
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
     

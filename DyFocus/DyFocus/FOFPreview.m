@@ -158,6 +158,15 @@
     [super dealloc];
 }
 
+    
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillAppear:animated];
+    
+}
+
 - (void) viewWillDisappear:(BOOL)animated
 {
     [timer invalidate];

@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">12A269</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2818</string>
-		<string key="IBDocument.AppKitVersion">1187</string>
-		<string key="IBDocument.HIToolboxVersion">624.00</string>
+		<string key="IBDocument.SystemVersion">12C54</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1900</string>
+			<string key="NS.object.0">1926</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -44,7 +44,7 @@
 							<object class="IBUILabel" id="507634133">
 								<reference key="NSNextResponder" ref="152719649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{0, 185}, {195, 21}}</string>
+								<string key="NSFrame">{{0, 207}, {195, 21}}</string>
 								<reference key="NSSuperview" ref="152719649"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="757965650"/>
@@ -54,17 +54,18 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText">Share on Facebook</string>
+								<object class="NSColor" key="IBUITextColor" id="764136232">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwIDAAA</bytes>
+									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
+								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<object class="NSColor" key="IBUIShadowColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MSAxIDEgMC43NgA</bytes>
 								</object>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<string key="IBUIText">Share on Facebook</string>
-								<object class="NSColor" key="IBUITextColor" id="764136232">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAAA</bytes>
-								</object>
 								<int key="IBUITextAlignment">2</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
@@ -76,12 +77,11 @@
 									<int key="NSfFlags">16</int>
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-								<int key="IBUIAutoshrinkMode">0</int>
 							</object>
 							<object class="IBUISwitch" id="757965650">
 								<reference key="NSNextResponder" ref="152719649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{188, 182}, {94, 27}}</string>
+								<string key="NSFrame">{{188, 204}, {94, 27}}</string>
 								<reference key="NSSuperview" ref="152719649"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -97,7 +97,7 @@
 									<object class="IBUIActivityIndicatorView" id="45697571">
 										<reference key="NSNextResponder" ref="702903814"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{101, 186}, {20, 20}}</string>
+										<string key="NSFrame">{{101, 208}, {20, 20}}</string>
 										<reference key="NSSuperview" ref="702903814"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="763588482"/>
@@ -109,7 +109,7 @@
 									<object class="IBUILabel" id="763588482">
 										<reference key="NSNextResponder" ref="702903814"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{129, 185}, {171, 21}}</string>
+										<string key="NSFrame">{{129, 207}, {171, 21}}</string>
 										<reference key="NSSuperview" ref="702903814"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="507634133"/>
@@ -119,15 +119,15 @@
 										<int key="IBUIContentMode">7</int>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<nil key="IBUIHighlightedColor"/>
-										<reference key="IBUIShadowColor" ref="764136232"/>
-										<string key="IBUIShadowOffset">{0, -2}</string>
-										<int key="IBUIBaselineAdjustment">0</int>
 										<string key="IBUIText">Uploading...</string>
 										<object class="NSColor" key="IBUITextColor">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MQA</bytes>
 										</object>
+										<nil key="IBUIHighlightedColor"/>
+										<reference key="IBUIShadowColor" ref="764136232"/>
+										<string key="IBUIShadowOffset">{0, -2}</string>
+										<int key="IBUIBaselineAdjustment">0</int>
 										<object class="IBUIFontDescription" key="IBUIFontDescription">
 											<int key="type">1</int>
 											<double key="pointSize">17</double>
@@ -138,10 +138,9 @@
 											<int key="NSfFlags">16</int>
 										</object>
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-										<int key="IBUIAutoshrinkMode">0</int>
 									</object>
 								</array>
-								<string key="NSFrameSize">{320, 392}</string>
+								<string key="NSFrameSize">{320, 436}</string>
 								<reference key="NSSuperview" ref="152719649"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="45697571"/>
@@ -153,7 +152,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 392}</string>
+						<string key="NSFrameSize">{320, 436}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="702903814"/>
@@ -165,7 +164,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrame">{{0, 44}, {320, 392}}</string>
+				<string key="NSFrame">{{0, 44}, {320, 436}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="152719649"/>
@@ -179,9 +178,6 @@
 				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
 					<int key="IBUIBarStyle">1</int>
 					<bool key="IBUIPrompted">NO</bool>
-				</object>
-				<object class="IBUISimulatedToolbarMetrics" key="IBUISimulatedBottomBarMetrics">
-					<int key="IBUIBarStyle">1</int>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
@@ -313,6 +309,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SharingController</string>
 					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">changedSwitchValue:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">changedSwitchValue:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">changedSwitchValue:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="activityIndicator">UIView</string>
 						<string key="facebookSwitch">UISwitch</string>
@@ -351,6 +358,6 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<string key="IBCocoaTouchPluginVersion">1900</string>
+		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>

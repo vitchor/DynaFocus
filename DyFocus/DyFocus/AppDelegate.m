@@ -18,7 +18,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController = _tabBarController;
+@synthesize tabBarController;
 - (void)dealloc
 {
     [_window release];
@@ -35,7 +35,9 @@
     
     // Camera Controller
     CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
+    startController.hidesBottomBarWhenPushed = YES;
     navController = [[DyfocusUINavigationController alloc] initWithRootViewController:startController];
+    navController.hidesBottomBarWhenPushed = YES;
     UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:3];
     [navController setTabBarItem:cameraTab];
     [startController release];
@@ -106,8 +108,29 @@
 - (void)resetCameraUINavigationController {
     NSArray *viewControllers = navController.viewControllers;
     UIViewController *rootViewController = [viewControllers objectAtIndex:0];
-    
+    [navController setNavigationBarHidden:YES animated:YES];
     [navController setViewControllers:[NSArray arrayWithObject:rootViewController] animated:YES];
+}
+
+-(void)goBackToLastController {
+    
+    if (tabBarController.lastControllerIndex != -1) {
+        [self.tabBarController setSelectedIndex:tabBarController.lastControllerIndex];
+        tabBarController.selectedIndex =tabBarController.lastControllerIndex;
+        [tabBarController setActualControllerIndex:tabBarController.lastControllerIndex];
+        
+    } else {
+        [self.tabBarController setSelectedIndex:0];
+        tabBarController.selectedIndex =0;
+        [tabBarController setActualControllerIndex:0];
+    }
+    
+    [self.tabBarController setSelectedIndex:tabBarController.lastControllerIndex];
+    tabBarController.selectedIndex =tabBarController.lastControllerIndex;
+    [tabBarController setActualControllerIndex:tabBarController.lastControllerIndex];
+    
+    NSLog(@"Going back to controller %d", tabBarController.lastControllerIndex);
+    NSLog(@"Going back to controller %d", tabBarController.actualControllerIndex);
 }
 
 - (void)sessionStateChanged:(FBSession *)session
