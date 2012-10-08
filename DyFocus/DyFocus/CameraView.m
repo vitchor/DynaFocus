@@ -67,7 +67,11 @@
 
 - (void)disablePictureTaking {
     if (self.navigationItem.rightBarButtonItem.enabled) {
-        [self.navigationItem.rightBarButtonItem setEnabled:false];
+        [shootButton setEnabled:false];
+        [clearButton setEnabled:false];
+        [infoButton setEnabled:false];
+        [cancelButton setEnabled:false];
+        
         [self showOkAlertWithMessage:@"Your device does not support focus point settings." andTitle:@"Sorry"];
     }
 }
@@ -195,11 +199,11 @@
                              UIImage *correctImage = [UIImage imageWithCGImage:imageRef scale:1.0 orientation:image.imageOrientation];
                              [mFrames addObject:[correctImage retain]];*/
                              
-                             UIImage *correctImage = [[image fixOrientation] retain];
+                             //UIImage *correctImage = [[image fixOrientation] retain];
                              
-                             [image release];
-                             image = nil;
-                             //UIImage *correctImage = [UIImage imageWithCGImage:[image CGImage] scale:1.0 orientation:image.imageOrientation];
+                             //[image release];
+                             //image = nil;
+                             UIImage *correctImage = [[UIImage imageWithCGImage:[image CGImage] scale:1.0 orientation:image.imageOrientation] retain];
                              
                              [mFrames addObject:correctImage];
                              
@@ -249,29 +253,12 @@
     shootButton.target = self;
     [shootButton setAction:@selector(addObserverToFocus)];
     
-    
     clearButton.target = self;
-    [clearButton setAction:@selector(clearPoints)];
-    
+    [clearButton setAction:@selector(clearPoints)];    
     
     cancelButton.target = self;
     [cancelButton setAction:@selector(goBackToLastController)];
     
-    /*
-    NSString *doneString = @"Shoot";
-	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
-									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(addObserverToFocus)];
-	self.navigationItem.rightBarButtonItem = continueButton;
-	[continueButton release];
-	[doneString release];
-    
-    NSString *removePoints = @"Clear";
-	UIBarButtonItem *removePointsButton = [[UIBarButtonItem alloc]
-									   initWithTitle:removePoints style:UIBarButtonItemStyleBordered target:self action:@selector(clearPoints)];
-	self.navigationItem.leftBarButtonItem = removePointsButton;
-	[removePointsButton release];
-	[removePoints release];
-    */
     [super viewDidLoad];
 }
 
@@ -292,7 +279,11 @@
     
     if ([mFocalPoints count] > 0) {
         
-        [self.navigationItem.rightBarButtonItem setEnabled:false];
+        [shootButton setEnabled:false];
+        [clearButton setEnabled:false];
+        [infoButton setEnabled:false];
+        [cancelButton setEnabled:false];
+        
         pathView.enabled = false;
         
         [self updateFocusPoint];
@@ -335,7 +326,10 @@
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     [super viewWillAppear:animated];
     
-    [self.navigationItem.rightBarButtonItem setEnabled:true];
+    [shootButton setEnabled:true];
+    [clearButton setEnabled:true];
+    [infoButton setEnabled:true];
+    [cancelButton setEnabled:true];
     
     mFOFIndex = 0;
     
