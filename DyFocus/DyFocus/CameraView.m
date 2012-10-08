@@ -63,6 +63,7 @@
     } else {
         [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - mCaptureDevice couldn't be locked"];
     }
+
 }
 
 - (void)disablePictureTaking {
@@ -161,9 +162,9 @@
     layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
     layer.frame = self.cameraView.frame;
-
+    NSLog(@"CameraView is ready");
     [self.cameraView.layer addSublayer:layer];
-
+    NSLog(@"CameraView is added");
     
 }
 
@@ -359,11 +360,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-
-    [super viewWillDisappear:animated];
-    
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
-    
     mToastMessage = [iToast makeText:NSLocalizedString(@"Hold your phone still while taking pictures.", @"")];
     [[mToastMessage setDuration:iToastDurationNormal] show];
     
@@ -389,7 +386,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -411,5 +408,19 @@
     [mFrames release];
     [super dealloc];
 }
+
+- (NSUInteger) supportedInterfaceOrientations
+{
+    //Because your app is only landscape, your view controller for the view in your
+    // popover needs to support only landscape
+    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+}
+
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+
 
 @end

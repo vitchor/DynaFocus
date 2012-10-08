@@ -231,6 +231,10 @@
     
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
+}
+
 - (void)requestFailed:(ASIHTTPRequest *)request {
     [activityIndicator removeFromSuperview];
     NSLog(@"REQUEST FAILED");

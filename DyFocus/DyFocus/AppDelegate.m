@@ -92,6 +92,9 @@
     
 
     // Configure window
+    
+    self.window.rootViewController  = self.tabBarController;
+    
     [self.window addSubview:self.tabBarController.view];
     [self.window makeKeyAndVisible];
     NSLog(@"aaa");
@@ -263,6 +266,7 @@
     return [FBSession.activeSession handleOpenURL:url];
 }
 
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     /*
@@ -307,6 +311,11 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
 }
 
 

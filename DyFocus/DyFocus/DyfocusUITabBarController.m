@@ -46,7 +46,6 @@
     
     [super viewDidLoad];
 
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,17 +54,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    NSLog(@"vida");
-    if(self.selectedViewController == feedWebController || self.selectedViewController == featuredWebController) {
-    NSLog(@"boa");
-        return YES;
-        
-    } else {
-            NSLog(@"ruin");
-        return NO;
-    }
-}
 
 -(void) tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     
@@ -98,4 +86,21 @@
     self.actualControllerIndex = [self.viewControllers indexOfObject:viewController];
     NSLog(@"Updating actualControllerIndex: %d", actualControllerIndex);
 }
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return [self.selectedViewController supportedInterfaceOrientations];
+}
+
+-(BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
+{
+    
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
 @end
