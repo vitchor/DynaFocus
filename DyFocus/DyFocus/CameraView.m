@@ -16,13 +16,12 @@
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton;
+@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
     NSError *error = nil;
     if ([mCaptureDevice lockForConfiguration:&error]) {
-        NSLog(@"UPDATE POINT, DONE");
         
     
         if ([mCaptureDevice isExposurePointOfInterestSupported]) {
@@ -255,12 +254,31 @@
     [shootButton setAction:@selector(addObserverToFocus)];
     
     clearButton.target = self;
-    [clearButton setAction:@selector(clearPoints)];    
+    [clearButton setAction:@selector(clearPoints)];
+    
+    [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
+    
+    infoButton.target = self;
+    [infoButton setAction:@selector(showInfoView)];
     
     cancelButton.target = self;
     [cancelButton setAction:@selector(goBackToLastController)];
     
     [super viewDidLoad];
+}
+
+-(void)hideInfoView
+{
+    [infoView setHidden:YES];
+}
+
+-(void)showInfoView
+{
+    if (mToastMessage) {
+        [mToastMessage removeToast:nil];
+        mToastMessage = nil;
+    }
+    [infoView setHidden:NO];
 }
 
 -(void)goBackToLastController
