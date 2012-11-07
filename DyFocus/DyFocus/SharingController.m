@@ -11,6 +11,7 @@
 #import"AppDelegate.h"
 #import "ASIFormDataRequest.h"
 #import "LoadView.h"
+#import "UIImage+fixOrientation.h"
 
 @interface SharingController ()
 
@@ -167,7 +168,7 @@
     for (int i = 0; i < [self.frames count]; i++)
     {
         NSLog(@"Uploading image %d",i);
-        UIImage *image = [self.frames objectAtIndex:i];
+        UIImage *image = [[self.frames objectAtIndex:i] fixOrientation];
         
         NSString *imagePath = [[NSString alloc] initWithFormat:@"Documents/image_%d.jpg", i];
         

@@ -10,7 +10,6 @@
 #import "FOFPreview.h"
 #import "PathView.h"
 #import "ASIFormDataRequest.h"
-#import "UIImage+fixOrientation.h"
 #import "iToast.h"
 #import "AppDelegate.h"
 
@@ -149,6 +148,7 @@
         if (mVideoConnection) {break;}
     }
     
+    
     if (!mVideoConnection) {
          [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - couldn't get a AVCaptureConnection with a port that is equal to AVMediaTypeVideo"];
     }
@@ -177,8 +177,14 @@
             // Capture with handler
             NSLog(@"TAKING PICTURE...");
             
+            if (mVideoConnection && [mVideoConnection isVideoOrientationSupported]){
+                [mVideoConnection setVideoOrientation:[UIDevice currentDevice].orientation];
+            }
+            
             if (mStillImageOutput) {
             
+                UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+                
                 [mStillImageOutput captureStillImageAsynchronouslyFromConnection:mVideoConnection completionHandler:
                  ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
                      
@@ -192,20 +198,9 @@
                          if (exifAttachments) {
                              
                              NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-                             UIImage *image = [[UIImage alloc] initWithData:imageData];
+                             UIImage *image = [[UIImage alloc] initWithData:imageData ];
                              
-                             /*CGRect cropRect = CGRectMake((image.size.width-3000)/2,(image.size.width-3000)/2, 3000, 3000);
-                             CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
-                             UIImage *correctImage = [UIImage imageWithCGImage:imageRef scale:1.0 orientation:image.imageOrientation];
-                             [mFrames addObject:[correctImage retain]];*/
-                             
-                             //UIImage *correctImage = [[image fixOrientation] retain];
-                             
-                             //[image release];
-                             //image = nil;
-                             UIImage *correctImage = [[UIImage imageWithCGImage:[image CGImage] scale:1.0 orientation:image.imageOrientation] retain];
-                             
-                             [mFrames addObject:correctImage];
+                             [mFrames addObject:image];
                              
                              NSLog(@"DONE! ");
                              
@@ -431,14 +426,13 @@
 {
     //Because your app is only landscape, your view controller for the view in your
     // popover needs to support only landscape
-    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait;
 }
 
 
 - (BOOL)shouldAutorotate {
     return YES;
 }
-
 
 
 @end
