@@ -33,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Upload";
+    
     [activityIndicator removeFromSuperview];
 
     NSString *share = @"Publish";

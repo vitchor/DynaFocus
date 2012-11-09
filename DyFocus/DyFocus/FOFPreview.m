@@ -49,6 +49,8 @@
     
     [super viewDidLoad];
     
+    self.title = @"Preview";
+    
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
     
     if ([self.frames count] > 1) {
