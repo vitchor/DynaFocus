@@ -49,7 +49,7 @@
     
     [super viewDidLoad];
     
-    self.title = @"Preview";
+    self.navigationItem.title = @"Preview";
     
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
     

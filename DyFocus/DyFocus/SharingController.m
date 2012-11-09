@@ -33,7 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Upload";
+    self.navigationItem.title = @"Upload";
     
     [activityIndicator removeFromSuperview];
 
