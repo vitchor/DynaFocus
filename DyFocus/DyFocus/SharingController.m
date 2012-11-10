@@ -103,7 +103,7 @@
     NSString *deviceIdentifier =[[UIDevice currentDevice] uniqueIdentifier];
     NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/user/%@/fof_name/", deviceIdentifier, fofName];
     
-    NSString *message = @"I've just posted a cool new picture format using dyfocus, check it out.";
+    NSString *message = @"";
     
     NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg",deviceIdentifier, fofName];
     
