@@ -197,7 +197,7 @@
                          if (exifAttachments) {
                              
                              NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-                             UIImage *image = [[UIImage alloc] initWithData:imageData];
+                             UIImage *image = [[[UIImage alloc] initWithData:imageData] autorelease];
                              
                              double imageMaxArea = 3000000.00;
                              double actualImageArea = image.size.width * image.size.height;
@@ -383,8 +383,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
-    mToastMessage = [iToast makeText:NSLocalizedString(@"Hold your phone still while taking pictures.", @"")];
-    [[mToastMessage setDuration:iToastDurationNormal] show];
+    if(!mToastMessage) {
+        mToastMessage = [iToast makeText:NSLocalizedString(@"Hold your phone still while taking pictures.", @"")];
+        [[mToastMessage setDuration:iToastDurationNormal] show];
+    }
     
     [super viewDidAppear:animated];
 }
@@ -393,8 +395,9 @@
 {
     if (mToastMessage) {
         [mToastMessage removeToast:nil];
-        mToastMessage = nil;
     }
+    
+    [pathView clearPoints];
     
 	[super viewWillDisappear:animated];
     [captureSession stopRunning];    
