@@ -12,6 +12,7 @@
 #import "ASIFormDataRequest.h"
 #import "iToast.h"
 #import "AppDelegate.h"
+#import "ImageUtil.h"
 
 @implementation CameraView
 
@@ -182,8 +183,6 @@
             }
             
             if (mStillImageOutput) {
-            
-                UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
                 
                 [mStillImageOutput captureStillImageAsynchronouslyFromConnection:mVideoConnection completionHandler:
                  ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
@@ -198,7 +197,17 @@
                          if (exifAttachments) {
                              
                              NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-                             UIImage *image = [[UIImage alloc] initWithData:imageData ];
+                             UIImage *image = [[UIImage alloc] initWithData:imageData];
+                             
+                             double imageMaxArea = 3000000.00;
+                             double actualImageArea = image.size.width * image.size.height;
+                             double scale = imageMaxArea / actualImageArea;
+                             
+                             NSLog(@"Image Size: %f, %f .", image.size.width, image.size.height);
+                             NSLog(@"Image Area: %f", actualImageArea);
+                             NSLog(@"Image Scale: %f", scale);
+                             
+                             image = [[ImageUtil imageWithImage:image scaledToSize: CGSizeMake(scale*image.size.width, scale*image.size.height)] retain];
                              
                              [mFrames addObject:image];
                              
