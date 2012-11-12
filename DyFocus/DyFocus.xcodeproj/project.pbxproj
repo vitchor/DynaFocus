@@ -286,30 +286,15 @@
 		442B552315B2238800C952D1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				441BFFC615B1324700E204D7 /* CameraView.h */,
-				AC606B6815DC4912008FDF8F /* CameraView.m */,
-				441BFFC815B1324700E204D7 /* CameraView.xib */,
-				441BFFD515B1339800E204D7 /* GalleryView.h */,
-				441BFFD615B1339800E204D7 /* GalleryView.m */,
-				441BFFD715B1339800E204D7 /* GalleryView.xib */,
-				44BEFED415B14404004358C9 /* FOFPreview.h */,
-				44BEFED515B14404004358C9 /* FOFPreview.m */,
-				44BEFED615B14404004358C9 /* FOFPreview.xib */,
-				44798EAC15E433B700D5BC53 /* WebViewController.h */,
-				44798EAD15E433B700D5BC53 /* WebViewController.m */,
-				444ACB0815EDB38C00A5D581 /* DyfocusUITabBarController.h */,
-				444ACB0915EDB38C00A5D581 /* DyfocusUITabBarController.m */,
-				444ACB1D15EDF1FB00A5D581 /* DyfocusUINavigationController.h */,
-				444ACB1E15EDF1FB00A5D581 /* DyfocusUINavigationController.m */,
-				4495E69215EEB368009C2B9F /* SharingController.h */,
-				4495E69315EEB368009C2B9F /* SharingController.m */,
-				4495E69415EEB368009C2B9F /* SharingController.xib */,
-				ACA63D3315EFE68900314025 /* FriendsController.h */,
-				ACA63D3415EFE68900314025 /* FriendsController.m */,
-				ACA63D3515EFE68900314025 /* FriendsController.xib */,
-				ACA63D3815EFED4A00314025 /* ProfileController.h */,
-				ACA63D3915EFED4A00314025 /* ProfileController.m */,
-				ACA63D3A15EFED4B00314025 /* ProfileController.xib */,
+				44794B271651A9180097824D /* CameraView */,
+				44794B261651A90B0097824D /* GalleryVIew */,
+				44794B251651A9000097824D /* FOFPreview */,
+				44794B241651A8F60097824D /* WebViewController */,
+				44794B231651A8E60097824D /* DyfocusUINavigationController */,
+				44794B221651A8D80097824D /* DyfocusUITabBarController */,
+				44794B211651A8C90097824D /* SharingController */,
+				44794B201651A8BE0097824D /* FriendsController */,
+				44794B1F1651A8660097824D /* ProfileController */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -331,6 +316,93 @@
 				441BFFBF15B131D200E204D7 /* AppDelegate.m */,
 			);
 			name = Delegate;
+			sourceTree = "<group>";
+		};
+		44794B1F1651A8660097824D /* ProfileController */ = {
+			isa = PBXGroup;
+			children = (
+				ACA63D3815EFED4A00314025 /* ProfileController.h */,
+				ACA63D3915EFED4A00314025 /* ProfileController.m */,
+				ACA63D3A15EFED4B00314025 /* ProfileController.xib */,
+			);
+			name = ProfileController;
+			sourceTree = "<group>";
+		};
+		44794B201651A8BE0097824D /* FriendsController */ = {
+			isa = PBXGroup;
+			children = (
+				ACA63D3315EFE68900314025 /* FriendsController.h */,
+				ACA63D3415EFE68900314025 /* FriendsController.m */,
+				ACA63D3515EFE68900314025 /* FriendsController.xib */,
+			);
+			name = FriendsController;
+			sourceTree = "<group>";
+		};
+		44794B211651A8C90097824D /* SharingController */ = {
+			isa = PBXGroup;
+			children = (
+				4495E69215EEB368009C2B9F /* SharingController.h */,
+				4495E69315EEB368009C2B9F /* SharingController.m */,
+				4495E69415EEB368009C2B9F /* SharingController.xib */,
+			);
+			name = SharingController;
+			sourceTree = "<group>";
+		};
+		44794B221651A8D80097824D /* DyfocusUITabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				444ACB0815EDB38C00A5D581 /* DyfocusUITabBarController.h */,
+				444ACB0915EDB38C00A5D581 /* DyfocusUITabBarController.m */,
+			);
+			name = DyfocusUITabBarController;
+			sourceTree = "<group>";
+		};
+		44794B231651A8E60097824D /* DyfocusUINavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				444ACB1D15EDF1FB00A5D581 /* DyfocusUINavigationController.h */,
+				444ACB1E15EDF1FB00A5D581 /* DyfocusUINavigationController.m */,
+			);
+			name = DyfocusUINavigationController;
+			sourceTree = "<group>";
+		};
+		44794B241651A8F60097824D /* WebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				44798EAC15E433B700D5BC53 /* WebViewController.h */,
+				44798EAD15E433B700D5BC53 /* WebViewController.m */,
+			);
+			name = WebViewController;
+			sourceTree = "<group>";
+		};
+		44794B251651A9000097824D /* FOFPreview */ = {
+			isa = PBXGroup;
+			children = (
+				44BEFED415B14404004358C9 /* FOFPreview.h */,
+				44BEFED515B14404004358C9 /* FOFPreview.m */,
+				44BEFED615B14404004358C9 /* FOFPreview.xib */,
+			);
+			name = FOFPreview;
+			sourceTree = "<group>";
+		};
+		44794B261651A90B0097824D /* GalleryVIew */ = {
+			isa = PBXGroup;
+			children = (
+				441BFFD515B1339800E204D7 /* GalleryView.h */,
+				441BFFD615B1339800E204D7 /* GalleryView.m */,
+				441BFFD715B1339800E204D7 /* GalleryView.xib */,
+			);
+			name = GalleryVIew;
+			sourceTree = "<group>";
+		};
+		44794B271651A9180097824D /* CameraView */ = {
+			isa = PBXGroup;
+			children = (
+				441BFFC615B1324700E204D7 /* CameraView.h */,
+				AC606B6815DC4912008FDF8F /* CameraView.m */,
+				441BFFC815B1324700E204D7 /* CameraView.xib */,
+			);
+			name = CameraView;
 			sourceTree = "<group>";
 		};
 		4496800D164D80ED00F76FCF /* Utilities */ = {
