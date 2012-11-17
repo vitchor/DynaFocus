@@ -7,25 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 #import "DyfocusUITabBarController.h"
-#import <FacebookSDK/FacebookSDK.h>
 #import "DyfocusUINavigationController.h"
-#import "SharingController.h"
+
+#import "FacebookController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
-    
     DyfocusUITabBarController *tabBarController;
-    DyfocusUINavigationController *navController;
+    DyfocusUINavigationController *cameraNavigationController;
+    DyfocusUINavigationController *friendsNavigationController;
     NSArray *permissions;
+    FacebookController *friendsController;
 }
-- (void)openSession;
+
+- (void)openFacebookSharingSession;
+- (void)openFacebookFriendsSession;
+
 - (void)resetCameraUINavigationController;
 - (void)goBackToLastController;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
-
-
 
 @end

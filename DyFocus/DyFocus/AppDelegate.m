@@ -12,9 +12,10 @@
 #import "WebViewController.h"
 #import "DyfocusUITabBarController.h"
 #import "DyfocusUINavigationController.h"
-#import "FriendsController.h"
+#import "FacebookController.h"
 #import "ProfileController.h"
 #import "Flurry.h"
+#import "SharingController.h"
 
 @implementation AppDelegate
 
@@ -38,10 +39,10 @@
     // Camera Controller
     CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
     startController.hidesBottomBarWhenPushed = YES;
-    navController = [[DyfocusUINavigationController alloc] initWithRootViewController:startController];
-    navController.hidesBottomBarWhenPushed = YES;
+    cameraNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:startController];
+    cameraNavigationController.hidesBottomBarWhenPushed = YES;
     UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:3];
-    [navController setTabBarItem:cameraTab];
+    [cameraNavigationController setTabBarItem:cameraTab];
     [startController release];
     
     
@@ -70,9 +71,12 @@
 
     
     // Friends Controller
-    FriendsController *friendsController = [[FriendsController alloc] initWithNibName:@"FriendsController" bundle:nil];
+    friendsController = [[FacebookController alloc] init];
+    friendsController.hidesBottomBarWhenPushed = YES;
+    friendsNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:friendsController];
+    friendsNavigationController.hidesBottomBarWhenPushed = YES;
     UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
-    [friendsController setTabBarItem:friendsTab];
+    [friendsNavigationController setTabBarItem:friendsTab];
         
     // Profile Controller
     ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
@@ -85,7 +89,7 @@
     
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, navController, friendsController, profileController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, cameraNavigationController, friendsNavigationController, profileController, nil];
     
     self.tabBarController.viewControllers = controllers;
     
@@ -111,10 +115,10 @@
 }
 
 - (void)resetCameraUINavigationController {
-    NSArray *viewControllers = navController.viewControllers;
+    NSArray *viewControllers = cameraNavigationController.viewControllers;
     UIViewController *rootViewController = [viewControllers objectAtIndex:0];
-    [navController setNavigationBarHidden:YES animated:YES];
-    [navController setViewControllers:[NSArray arrayWithObject:rootViewController] animated:YES];
+    [cameraNavigationController setNavigationBarHidden:YES animated:YES];
+    [cameraNavigationController setViewControllers:[NSArray arrayWithObject:rootViewController] animated:YES];
 }
 
 -(void)goBackToLastController {
@@ -189,12 +193,12 @@
     }
 }
 
-- (void)openSession {
+- (void)openFacebookSharingSession {
     
     permissions =  [[NSArray arrayWithObjects:
                      @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
     
-     SharingController *sharingController = (SharingController *)[navController topViewController];
+    SharingController *sharingController = (SharingController *)[cameraNavigationController topViewController];
     
     [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
         
@@ -221,6 +225,36 @@
           [permissions release];        
       }];
     
+}
+
+- (void)openFacebookFriendsSession {
+    permissions =  [[NSArray arrayWithObjects:
+                     @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
+    
+    [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+        
+        switch (status) {
+            case FBSessionStateOpen: {
+                
+                [friendsController facebookSessionActive:session];
+                NSLog(@"Sweet, let it flow..");
+            }
+                break;
+            case FBSessionStateClosed:
+            case FBSessionStateClosedLoginFailed:
+                [friendsController facebookError];
+                [FBSession.activeSession closeAndClearTokenInformation];
+                break;
+                
+            default:
+                break;
+        }
+        
+        if (error) {
+            [friendsController facebookError];
+        }
+        [permissions release];
+    }];
 }
 
 - (void)reopenSession {

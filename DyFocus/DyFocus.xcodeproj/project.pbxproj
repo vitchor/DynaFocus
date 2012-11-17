@@ -31,6 +31,13 @@
 		4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */; };
 		44968011164D811200F76FCF /* ImageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 44968010164D811200F76FCF /* ImageUtil.m */; };
 		44A0A261164ECDE3005DDCE9 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44A0A260164ECDE3005DDCE9 /* libFlurry.a */; };
+		44AA7BEC1657C43D007D7F27 /* UIStyledLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BEB1657C43D007D7F27 /* UIStyledLabel.m */; };
+		44AA7BF01657C44A007D7F27 /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BEF1657C44A007D7F27 /* FacebookController.m */; };
+		44AA7BF31657C45D007D7F27 /* PeopleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BF21657C45D007D7F27 /* PeopleController.m */; };
+		44AA7BF61657C477007D7F27 /* InvitationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BF51657C477007D7F27 /* InvitationController.m */; };
+		44AA7BFC1657EF75007D7F27 /* NSURLConnectionWithDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BFB1657EF75007D7F27 /* NSURLConnectionWithDelegate.m */; };
+		44AA7C031657FCFC007D7F27 /* AvatarDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 44AA7C021657FCFC007D7F27 /* AvatarDefault.png */; };
+		44AA7C06165803FD007D7F27 /* UITableViewCellWithFlag.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7C05165803FC007D7F27 /* UITableViewCellWithFlag.m */; };
 		44BEFED715B14404004358C9 /* FOFPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEFED515B14404004358C9 /* FOFPreview.m */; };
 		44BEFED815B14404004358C9 /* FOFPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BEFED615B14404004358C9 /* FOFPreview.xib */; };
 		44C7B1D51607440000221C12 /* iToast.h in Resources */ = {isa = PBXBuildFile; fileRef = 44C7B1D21607433D00221C12 /* iToast.h */; };
@@ -132,6 +139,19 @@
 		44968010164D811200F76FCF /* ImageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtil.m; sourceTree = "<group>"; };
 		44A0A25F164ECDE3005DDCE9 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		44A0A260164ECDE3005DDCE9 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
+		44AA7BEA1657C43D007D7F27 /* UIStyledLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIStyledLabel.h; sourceTree = "<group>"; };
+		44AA7BEB1657C43D007D7F27 /* UIStyledLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIStyledLabel.m; sourceTree = "<group>"; };
+		44AA7BEE1657C44A007D7F27 /* FacebookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookController.h; sourceTree = "<group>"; };
+		44AA7BEF1657C44A007D7F27 /* FacebookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookController.m; sourceTree = "<group>"; };
+		44AA7BF11657C45D007D7F27 /* PeopleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleController.h; sourceTree = "<group>"; };
+		44AA7BF21657C45D007D7F27 /* PeopleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleController.m; sourceTree = "<group>"; };
+		44AA7BF41657C477007D7F27 /* InvitationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationController.h; sourceTree = "<group>"; };
+		44AA7BF51657C477007D7F27 /* InvitationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationController.m; sourceTree = "<group>"; };
+		44AA7BFA1657EF74007D7F27 /* NSURLConnectionWithDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLConnectionWithDelegate.h; sourceTree = "<group>"; };
+		44AA7BFB1657EF75007D7F27 /* NSURLConnectionWithDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLConnectionWithDelegate.m; sourceTree = "<group>"; };
+		44AA7C021657FCFC007D7F27 /* AvatarDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AvatarDefault.png; sourceTree = "<group>"; };
+		44AA7C04165803FC007D7F27 /* UITableViewCellWithFlag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewCellWithFlag.h; sourceTree = "<group>"; };
+		44AA7C05165803FC007D7F27 /* UITableViewCellWithFlag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewCellWithFlag.m; sourceTree = "<group>"; };
 		44BEFED415B14404004358C9 /* FOFPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFPreview.h; sourceTree = "<group>"; };
 		44BEFED515B14404004358C9 /* FOFPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFPreview.m; sourceTree = "<group>"; };
 		44BEFED615B14404004358C9 /* FOFPreview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview.xib; sourceTree = "<group>"; };
@@ -408,12 +428,24 @@
 		4496800D164D80ED00F76FCF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				44AA7BF41657C477007D7F27 /* InvitationController.h */,
+				44AA7BF51657C477007D7F27 /* InvitationController.m */,
+				44AA7BF11657C45D007D7F27 /* PeopleController.h */,
+				44AA7BF21657C45D007D7F27 /* PeopleController.m */,
+				44AA7BEE1657C44A007D7F27 /* FacebookController.h */,
+				44AA7BEF1657C44A007D7F27 /* FacebookController.m */,
+				44AA7BEA1657C43D007D7F27 /* UIStyledLabel.h */,
+				44AA7BEB1657C43D007D7F27 /* UIStyledLabel.m */,
 				44C7B1D21607433D00221C12 /* iToast.h */,
 				44C7B1D31607433D00221C12 /* iToast.m */,
 				446AA66F1649D787002FE683 /* UIImage+FixOrientation.h */,
 				446AA6701649D788002FE683 /* UIImage+FixOrientation.m */,
 				4496800F164D811200F76FCF /* ImageUtil.h */,
 				44968010164D811200F76FCF /* ImageUtil.m */,
+				44AA7BFA1657EF74007D7F27 /* NSURLConnectionWithDelegate.h */,
+				44AA7BFB1657EF75007D7F27 /* NSURLConnectionWithDelegate.m */,
+				44AA7C04165803FC007D7F27 /* UITableViewCellWithFlag.h */,
+				44AA7C05165803FC007D7F27 /* UITableViewCellWithFlag.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -444,6 +476,7 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				44AA7C021657FCFC007D7F27 /* AvatarDefault.png */,
 				AC8C262915DAA9D30093FFD2 /* df_featured_bw.png */,
 				AC606B5615DBED28008FDF8F /* dyfocus_icon_square_114x114.png */,
 				AC606B5315DBED1C008FDF8F /* dyfocus_icon_square_57x57.png */,
@@ -572,6 +605,7 @@
 				4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */,
 				ACA63D3715EFE68900314025 /* FriendsController.xib in Resources */,
 				ACA63D3C15EFED4B00314025 /* ProfileController.xib in Resources */,
+				44AA7C031657FCFC007D7F27 /* AvatarDefault.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,6 +656,12 @@
 				ACA63D3B15EFED4B00314025 /* ProfileController.m in Sources */,
 				446AA6711649D788002FE683 /* UIImage+FixOrientation.m in Sources */,
 				44968011164D811200F76FCF /* ImageUtil.m in Sources */,
+				44AA7BEC1657C43D007D7F27 /* UIStyledLabel.m in Sources */,
+				44AA7BF01657C44A007D7F27 /* FacebookController.m in Sources */,
+				44AA7BF31657C45D007D7F27 /* PeopleController.m in Sources */,
+				44AA7BF61657C477007D7F27 /* InvitationController.m in Sources */,
+				44AA7BFC1657EF75007D7F27 /* NSURLConnectionWithDelegate.m in Sources */,
+				44AA7C06165803FD007D7F27 /* UITableViewCellWithFlag.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

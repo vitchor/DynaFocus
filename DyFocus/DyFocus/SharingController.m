@@ -57,7 +57,7 @@
         } else if (FBSession.activeSession.state != FBSessionStateOpen) {
             // No, display the login page.
             AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-            [appDelegate openSession];
+            [appDelegate openFacebookSharingSession];
         }
     }
 }
