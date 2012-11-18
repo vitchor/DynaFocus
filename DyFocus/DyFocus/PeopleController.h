@@ -37,7 +37,8 @@
 	UIToolbar *m_controlToolbar;
 	UISegmentedControl *m_swithSelectedButton;
 	UIStyledLabel *m_customMessageLabel;
-	BOOL m_isTableEmpty;
+	BOOL m_isFacebookTableEmpty;
+	BOOL m_isDyfocusTableEmpty;
 	
 	// Model
 	NSMutableDictionary *m_peopleInfo;

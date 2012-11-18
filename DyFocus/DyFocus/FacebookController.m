@@ -133,7 +133,7 @@
                                        [self setImage:image withId:uid];
                                    }
                                }
-                           }];
+                           }]; 
 }
 
 

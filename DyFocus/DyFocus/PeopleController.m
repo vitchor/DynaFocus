@@ -27,10 +27,10 @@
 }
 
 - (void)dealloc {
-	/*RELEASE_MEMBER(m_name);
-	RELEASE_MEMBER(m_details);
-	RELEASE_MEMBER(m_tag);
-	RELEASE_MEMBER(m_email);*/
+    [m_name release];
+    [m_details release];
+    [m_tag release];
+    [m_email release];
 	[super dealloc];
 }
 
@@ -50,9 +50,9 @@
 
         
 		// Model
-		m_peopleInfo = [[NSMutableDictionary alloc] initWithCapacity:50];
-		m_visiblePeopleList = [[NSMutableArray alloc] initWithCapacity:50];
-		m_imageCache = [[NSMutableDictionary alloc] initWithCapacity:50];
+		m_peopleInfo = [[NSMutableDictionary alloc] initWithCapacity:20];
+		m_visiblePeopleList = [[NSMutableArray alloc] initWithCapacity:20];
+		m_imageCache = [[NSMutableDictionary alloc] initWithCapacity:20];
 		m_viewCount = 0;
 		
 		// UI
@@ -144,74 +144,96 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	int count = [m_visiblePeopleList count];
-	if (count > 0) {
-		m_isTableEmpty = NO;
-		return count;
-	}
-	m_isTableEmpty = YES;
-	return 1;
+    
+    if(section == 0){
+        return 1;
+    } else {
+        int count = [m_visiblePeopleList count];
+        if (count > 0) {
+            m_isFacebookTableEmpty = NO;
+            return count;
+        }
+        m_isFacebookTableEmpty = YES;
+        return 1;
+    }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Friends using the app";
+    } else {
+        return @"Invite friends from Facebook";        
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = nil;
-	if (m_isTableEmpty) {
-		NSString *cellId = @"empty";
-		cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
-		if (cell == nil) {
-			cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
-		}
-		cell.textLabel.text = @"No contacts were found";
-		cell.textLabel.textColor = [UIColor lightGrayColor];
-		cell.textLabel.textAlignment = UITextAlignmentCenter;
-		cell.textLabel.font = [UIFont systemFontOfSize:20];
-		cell.accessoryType = UITableViewCellAccessoryNone;
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.accessoryView = nil;
-		cell.imageView.image = nil;
-	} else {
-		NSString *cellId = [NSString stringWithFormat:@"%d", indexPath.row];
-		cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
-		if (cell == nil) {
-			cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
-		}
-		NSNumber *personIdNumber = [m_visiblePeopleList objectAtIndex:indexPath.row];
-		if (personIdNumber) {
-			long personId = [personIdNumber longValue];
-            
-            NSLog(@"FIRST APPERANCE: %ld", personId);
-			Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:personId]];
-			cell.textLabel.text = person.name;
-			cell.detailTextLabel.text = person.details;
-			cell.tag = personId;
-			UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithLong:personId]];
-			if (image == nil) {
-				image = [UIImage imageNamed:@"AvatarDefault.png"];
-			}
-			cell.imageView.image = image;
-			if (person.selected == NO) {
-				// Not invited yet
-				UISegmentedControl *inviteButton = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Select"]] autorelease];
-				inviteButton.segmentedControlStyle = UISegmentedControlStyleBar;
-				inviteButton.momentary = YES;
-				inviteButton.tintColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:1.0];
-				inviteButton.frame = CGRectMake(0, 10, 65, 30);
-				inviteButton.tag = indexPath.row;
-				[inviteButton addTarget:self action:@selector(inviteButtonClicked:) forControlEvents:UIControlEventValueChanged];
-				cell.accessoryView = inviteButton;
-			} else {
-				// Already invited
-				UISegmentedControl *invitedButton = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Selected"]] autorelease];
-				invitedButton.segmentedControlStyle = UISegmentedControlStyleBar;
-				invitedButton.momentary = YES;
-				invitedButton.tintColor = [UIColor colorWithRed:76.0/255 green:196.0/255 blue:23.0/255 alpha:1.0];
-				invitedButton.frame = CGRectMake(0, 10, 65, 30);
-				invitedButton.tag = indexPath.row;
-				[invitedButton addTarget:self action:@selector(inviteButtonClicked:) forControlEvents:UIControlEventValueChanged];
-				cell.accessoryView = invitedButton;
-			}
-		}
-	}
+    
+    if (indexPath.section == 0) {
+    
+    } else {
+        if (m_isFacebookTableEmpty) {
+            NSString *cellId = @"empty";
+            cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
+            }
+            cell.textLabel.text = @"No contacts were found";
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+            cell.textLabel.textAlignment = UITextAlignmentCenter;
+            cell.textLabel.font = [UIFont systemFontOfSize:20];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryView = nil;
+            cell.imageView.image = nil;
+        } else {
+            NSString *cellId = [NSString stringWithFormat:@"%d", indexPath.row];
+            cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
+            }
+            NSNumber *personIdNumber = [m_visiblePeopleList objectAtIndex:indexPath.row];
+            if (personIdNumber) {
+                long personId = [personIdNumber longValue];
+                
+                NSLog(@"FIRST APPERANCE: %ld", personId);
+                Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:personId]];
+                cell.textLabel.text = person.name;
+                cell.detailTextLabel.text = person.details;
+                cell.tag = personId;
+                UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithLong:personId]];
+                if (image == nil) {
+                    image = [UIImage imageNamed:@"AvatarDefault.png"];
+                }
+                cell.imageView.image = image;
+                if (person.selected == NO) {
+                    // Not invited yet
+                    /*UISegmentedControl *inviteButton = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Select"]] autorelease];
+                    inviteButton.segmentedControlStyle = UISegmentedControlStyleBar;
+                    inviteButton.momentary = YES;
+                    inviteButton.tintColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:1.0];
+                    inviteButton.frame = CGRectMake(0, 10, 65, 30);
+                    inviteButton.tag = indexPath.row;
+                    [inviteButton addTarget:self action:@selector(inviteButtonClicked:) forControlEvents:UIControlEventValueChanged];
+                    cell.accessoryView = inviteButton;
+                } else {
+                    // Already invited
+                    UISegmentedControl *invitedButton = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Selected"]] autorelease];
+                    invitedButton.segmentedControlStyle = UISegmentedControlStyleBar;
+                    invitedButton.momentary = YES;
+                    invitedButton.tintColor = [UIColor colorWithRed:76.0/255 green:196.0/255 blue:23.0/255 alpha:1.0];
+                    invitedButton.frame = CGRectMake(0, 10, 65, 30);
+                    invitedButton.tag = indexPath.row;
+                    [invitedButton addTarget:self action:@selector(inviteButtonClicked:) forControlEvents:UIControlEventValueChanged];
+                    cell.accessoryView = invitedButton;*/
+                }
+            }
+        }
+    }
 	return cell;
 }
 
@@ -235,7 +257,7 @@
 }
 
 - (void)refreshImages {
-	if (!m_isTableEmpty) {
+	if (!m_isFacebookTableEmpty) {
 		NSArray *visibleCells = [self.tableView visibleCells];
 		if (visibleCells) {
 			NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
