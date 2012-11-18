@@ -13,15 +13,20 @@
 #import "DyfocusUINavigationController.h"
 #import "SharingController.h"
 
+#define UPLOADING 0
+#define SHARING 1
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     
     DyfocusUITabBarController *tabBarController;
     DyfocusUINavigationController *navController;
+    WebViewController *feedWebViewController;
     NSArray *permissions;
 }
-- (void)openSession;
+- (void)openSessionWithTag:(int)tag;
 - (void)resetCameraUINavigationController;
 - (void)goBackToLastController;
+- (void)loadFeedUrl:(NSString *)url;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;

@@ -13,21 +13,32 @@
 @interface SharingController : UIViewController {
 
     IBOutlet UISwitch *facebookSwitch;
-    FBSession *facebook;
+    
+    IBOutlet UIView *facebookLoginView;
+    IBOutlet UIButton *continueToFacebookLoginButton;
+    IBOutlet UIButton *cancelFacebookLoginButton;
+    
     IBOutlet UIView *activityIndicator;
     IBOutlet UIActivityIndicatorView *spinner;
+
+    FBSession *facebook;
+    ASIFormDataRequest *request;
+    
     NSMutableArray *frames;
     NSMutableArray *focalPoints;
-    ASIFormDataRequest *request;
     NSString *fofName;
 }
 
--(void) requestUserInfo:(FBSession *)session;
+-(void) requestUserInfo:(FBSession *)session withTag:(int)tag;
 -(void) facebookError;
 
 @property(nonatomic,retain) IBOutlet UISwitch *facebookSwitch;
 @property(nonatomic,retain) IBOutlet UIView *activityIndicator;
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
+
+@property(nonatomic,retain)  IBOutlet UIView *facebookLoginView;
+@property(nonatomic,retain)  IBOutlet UIButton *continueToFacebookLoginButton;
+@property(nonatomic,retain) IBOutlet UIButton *cancelFacebookLoginButton;
 
 @property(nonatomic,retain) NSMutableArray *frames;
 @property(nonatomic,retain) NSMutableArray *focalPoints;
