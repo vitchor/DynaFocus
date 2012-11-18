@@ -174,7 +174,19 @@
 	UITableViewCell *cell = nil;
     
     if (indexPath.section == 0) {
-    
+            NSString *cellId = @"empty";
+            cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
+            }
+            cell.textLabel.text = @"No contacts were found";
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+            cell.textLabel.textAlignment = UITextAlignmentCenter;
+            cell.textLabel.font = [UIFont systemFontOfSize:20];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryView = nil;
+            cell.imageView.image = nil;
     } else {
         if (m_isFacebookTableEmpty) {
             NSString *cellId = @"empty";

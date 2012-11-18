@@ -152,7 +152,6 @@
 
 - (void) upload
 {
-    NSLog(@"aaa");
     
     NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/image/"];
     //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];

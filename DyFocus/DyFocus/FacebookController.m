@@ -5,7 +5,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "LoadView.h"
 #import "AppDelegate.h"
-#import "NSURLConnectionWithDelegate.h"
+#import "JSON.h"
 
 #define FRIENDS_REQUEST 1
 #define PICTURE_REQUEST 2
@@ -63,14 +63,66 @@
                  
                  NSMutableDictionary *people = [[[NSMutableDictionary alloc] initWithCapacity:[friends count]] autorelease];
                  
+                 NSMutableArray *jsonFriends = [[[NSMutableArray alloc] initWithCapacity:[friends count]] autorelease];
+                 
                  NSLog(@"Found: %i friends", friends.count);
                  for (NSDictionary<FBGraphUser>* friend in friends) {
                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
                      Person *person = [[[Person alloc] initWithId:[friend.id longLongValue] andName:friend.name andDetails:@"" andTag:friend.id] autorelease];
                      [people setObject:person forKey:[NSNumber numberWithLong:[friend.id longLongValue]]];
+                     
+                     
+                     //Creates json object and add to the request object
+                      NSMutableDictionary *jsonFriendObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+                     [jsonFriendObject setObject:friend.id forKey:@"facebook_id"];
+                     [jsonFriends addObject:jsonFriendObject];
+                     
                  }
                  
-                 [self setPeople:people];
+                 //Structure that will become the JSON object, in the facebook_friends dyfocus request:
+                 NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:2] autorelease];
+                 [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"user_device_id"];
+                 [jsonRequestObject setObject:jsonFriends forKey:@"friends"];
+                 
+                 NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+                 
+                 NSLog(@"JSON DONE: %@", json);
+                 
+                 
+                 //Let's send the request, then:
+                 NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/user_fb_friends/"];
+                 
+                 NSString *postString = [[NSString alloc] initWithFormat:@"json=%@", json];
+                 
+                 NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:webServiceUrl];
+                 
+                 [postRequest setHTTPMethod:@"POST"];
+                 
+                 [postRequest setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+                 
+                 
+                 NSURLResponse *response;
+                 NSHTTPURLResponse *httpResponse;
+                 NSData *dataReply;
+                 NSString *stringReply;
+                 
+                 dataReply = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:&response error:&error];
+                 stringReply = (NSString *)[[NSString alloc] initWithData:dataReply encoding:NSUTF8StringEncoding];
+                 httpResponse = (NSHTTPURLResponse *)response;
+                 int statusCode = [httpResponse statusCode];
+                 
+                  NSLog(@"JSON RESPONSE: %@",stringReply);
+                 if (statusCode == 200) {
+                     // Let's parse the response:
+                    
+                     
+                 } else {
+                     // Let's deal with the failure:
+                     [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Network Error"];
+                 }
+                 
+
+                 [postString release];
                  
                  //[LoadView fadeAndRemoveFromView:_app.window];
             }
@@ -249,6 +301,16 @@
 	self.message = text;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setObject:text forKey:@"FacebookDefaultMessage"];
+}
+
+-(void)showOkAlertWithMessage:(NSString *)message andTitle:(NSString *)title
+{
+    NSString *alertButton = @"OK";
+    
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+    [alert show];
+    
+    [alertButton release];
 }
 
 @end
