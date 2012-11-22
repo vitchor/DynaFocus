@@ -55,9 +55,19 @@
     [featuredWebViewController setTabBarItem:galleryTab];
     
     // Feed Controller
-    WebViewController *feedWebViewController = [[WebViewController alloc] init];
+    feedWebViewController = [[WebViewController alloc] init];
     
-    NSString *stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *savedFacebookId = [defaults stringForKey:@"UserFacebookId"];
+    
+    NSString *stringUrl;
+    
+    if (savedFacebookId) {
+        stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", savedFacebookId];
+        
+    } else {
+        stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/null/user/0/fof_name/"];
+    }
     
     [feedWebViewController loadUrl: stringUrl];
     
@@ -112,6 +122,14 @@
     
     
     return YES;
+}
+
+
+- (void)loadFeedUrl:(NSString *)userId {
+    
+    NSString *stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", userId];
+    [feedWebViewController loadUrl: stringUrl];
+    [stringUrl release];	
 }
 
 - (void)resetCameraUINavigationController {
@@ -193,7 +211,7 @@
     }
 }
 
-- (void)openFacebookSharingSession {
+- (void)openFacebookSessionWithTag: (int)tag {
     
     permissions =  [[NSArray arrayWithObjects:
                      @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
@@ -204,8 +222,13 @@
         
           switch (status) {
               case FBSessionStateOpen: {
-                 
-                  [sharingController requestUserInfo:session];
+                  if (tag == SHARING || tag == UPLOADING) {
+                      [sharingController requestUserInfo:session withTag:tag];
+                  } else if (tag == FRIENDS) {
+                      [friendsController facebookSessionActive:session];
+
+                  }
+                  
                   NSLog(@"Sweet, let it flow..");
               }
                   break;
@@ -220,7 +243,12 @@
           }
           
           if (error) {
-              [sharingController facebookError];
+              if (tag == SHARING || tag == UPLOADING) {
+                  [sharingController facebookError];
+              } else if (tag == FRIENDS) {
+                  [friendsController facebookError];
+                  
+              }
           }
           [permissions release];        
       }];
@@ -236,8 +264,7 @@
         switch (status) {
             case FBSessionStateOpen: {
                 
-                [friendsController facebookSessionActive:session];
-                NSLog(@"Sweet, let it flow..");
+                                NSLog(@"Sweet, let it flow..");
             }
                 break;
             case FBSessionStateClosed:

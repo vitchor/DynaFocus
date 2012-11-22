@@ -14,16 +14,21 @@
 
 #import "FacebookController.h"
 
+#define UPLOADING 0
+#define SHARING 1
+#define FRIENDS 2
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     DyfocusUITabBarController *tabBarController;
     DyfocusUINavigationController *cameraNavigationController;
     DyfocusUINavigationController *friendsNavigationController;
     NSArray *permissions;
     FacebookController *friendsController;
+    WebViewController *feedWebViewController;
 }
 
-- (void)openFacebookSharingSession;
-- (void)openFacebookFriendsSession;
+- (void)openFacebookSessionWithTag:(int)tag;
+- (void)loadFeedUrl:(NSString *)url;
 
 - (void)resetCameraUINavigationController;
 - (void)goBackToLastController;

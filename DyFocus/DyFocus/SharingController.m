@@ -19,7 +19,7 @@
 
 @implementation SharingController
 
-@synthesize facebookSwitch, activityIndicator, frames, focalPoints, spinner;
+@synthesize facebookSwitch, activityIndicator, frames, focalPoints, spinner, facebookLoginView, cancelFacebookLoginButton, continueToFacebookLoginButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,7 +35,8 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Publish";
     
-    [activityIndicator removeFromSuperview];
+    [cancelFacebookLoginButton addTarget:self action:@selector(cancelFacebookLoginButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [continueToFacebookLoginButton addTarget:self action:@selector(continueToFacebookLoginButtonAction) forControlEvents:UIControlEventTouchUpInside];
 
     NSString *share = @"Publish";
 	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(share)];
@@ -47,6 +48,19 @@
     
 }
 
+- (void) cancelFacebookLoginButtonAction {
+    self.navigationItem.rightBarButtonItem.enabled = true;
+    [facebookLoginView setHidden:YES];
+}
+
+- (void) continueToFacebookLoginButtonAction {
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate openFacebookSessionWithTag:UPLOADING];
+    
+    [facebookLoginView setHidden:YES];
+}
+
+
 - (IBAction) changedSwitchValue: (id) sender {
     
     UISwitch *fbSwitch = (UISwitch *)sender;
@@ -57,7 +71,7 @@
         } else if (FBSession.activeSession.state != FBSessionStateOpen) {
             // No, display the login page.
             AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-            [appDelegate openFacebookSharingSession];
+            [appDelegate openFacebookSessionWithTag:SHARING];
         }
     }
 }
@@ -69,7 +83,7 @@
 {
     switch (state)         {
         case FBSessionStateOpen:
-            if (!error)         {
+            if (!error) {
                 // We have a valid session
                 NSLog(@"User session found");
             }
@@ -84,28 +98,81 @@
             break;
     }
 }
--(void)share
+- (void) share
 {
     self.navigationItem.rightBarButtonItem.enabled = false;
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *savedId = [defaults stringForKey:@"UserFacebookId"];
     
-    [self.view addSubview:activityIndicator];
+    if (savedId) {
+        [self showLoading];
+        
+        [self upload];
+        
+    } else {
+        
+        if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+            
+            [self showLoading];
+            
+            [[FBRequest requestForMe] startWithCompletionHandler:
+             ^(FBRequestConnection *connection,
+               NSDictionary<FBGraphUser> *user,
+               NSError *error) {
+                 
+                 if (!error) {
+                     
+                     [self saveUserDefaults:user];
+                     [self upload];
+                     
+                 } else {
+                     [self facebookError];
+                 }
+             }];
+            
+        } else {
+            
+            //We don't have a session or an ID
+            [facebookLoginView setHidden:NO];
+        }
+    }
+    
+}
+
+- (void) showLoading {
+    [activityIndicator setHidden:NO];
     [self.view bringSubviewToFront:activityIndicator];
     [spinner startAnimating];
-    
-    [self upload];
-    
-    return;
 }
+
+- (void) saveUserDefaults: (NSDictionary<FBGraphUser> *)user {
+    
+    NSLog(@"SAVING DEFAULTS");
+    NSLog(@"NAME: %@", user.name);
+    NSLog(@"ID: %@", user.id);
+    NSLog(@"EMAIl: %@", [user objectForKey:@"email"]);
+    
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[user objectForKey:@"email"] forKey:@"UserFacebookEmail"];
+    [[NSUserDefaults standardUserDefaults] setObject:user.name forKey:@"UserFacebookName"];
+    [[NSUserDefaults standardUserDefaults] setObject:user.id forKey:@"UserFacebookId"];
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate loadFeedUrl:user.id];
+}
+
 
 -(void)shareWithFacebook {
     
-    NSString *deviceIdentifier =[[UIDevice currentDevice] uniqueIdentifier];
-    NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/user/%@/fof_name/", deviceIdentifier, fofName];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *savedFacebookId = [defaults stringForKey:@"UserFacebookId"];
+    
+    NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/user/%@/fof_name/", savedFacebookId, fofName];
     
     NSString *message = @"";
     
-    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg",deviceIdentifier, fofName];
+    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg",savedFacebookId, fofName];
     
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    urlLink, @"link",
@@ -117,7 +184,7 @@
     
     [FBRequestConnection startWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         
-        [activityIndicator removeFromSuperview];
+        [activityIndicator setHidden:YES];
         
         if (!error) {
             //[self.navigationController popViewControllerAnimated:YES];
@@ -138,10 +205,7 @@
             
         }
     }];
-    
-   
 
-    //[FBSession requestWithGraphPath:@"me/links" andParams:params andHttpMethod:@"POST" andDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -156,6 +220,11 @@
     NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/image/"];
     //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *savedFacebookId = [defaults stringForKey:@"UserFacebookId"];
+    NSString *savedFacebookName = [defaults stringForKey:@"UserFacebookName"];
+    NSString *savedFacebookEmail = [defaults stringForKey:@"UserFacebookEmail"];
+    
     request = [[ASIFormDataRequest requestWithURL:webServiceUrl] retain];
     [request setDelegate:self];
     
@@ -165,6 +234,9 @@
     [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
     [request setPostValue:fofName forKey:@"fof_name"];
     [request setPostValue:fof_size forKey:@"fof_size"];
+    [request setPostValue:savedFacebookId forKey:@"facebook_id"];
+    [request setPostValue:savedFacebookName forKey:@"facebook_name"];
+    [request setPostValue:savedFacebookEmail forKey:@"facebook_email"];
     
     for (int i = 0; i < [self.frames count]; i++)
     {
@@ -238,7 +310,7 @@
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request {
-    [activityIndicator removeFromSuperview];
+    [activityIndicator setHidden:YES];
     NSLog(@"REQUEST FAILED");
     
     self.navigationItem.rightBarButtonItem.enabled = true;
@@ -256,7 +328,7 @@
 }
 
 - (void)requestRedirected:(ASIHTTPRequest *)request {
-    [activityIndicator removeFromSuperview];
+    [activityIndicator setHidden:YES];
     NSLog(@"REQUEST REDIRECTED");    
 }
 
@@ -271,42 +343,25 @@
 }
 
 
--(void)requestUserInfo:(FBSession *)session {
+-(void)requestUserInfo:(FBSession *)session withTag:(int)tag {
     
-        [[FBRequest requestForMe] startWithCompletionHandler:
-         ^(FBRequestConnection *connection,
-           NSDictionary<FBGraphUser> *user,
-           NSError *error) {
-             if (!error) {
-                 NSError *error;
-                 NSURLResponse *response;
-                 NSHTTPURLResponse *httpResponse;
-                 NSData *dataReply;
-                 id stringReply;
+    [[FBRequest requestForMe] startWithCompletionHandler:
+     ^(FBRequestConnection *connection,
+       NSDictionary<FBGraphUser> *user,
+       NSError *error) {
+         if (!error) {
              
-                 NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/user_fb_info/"];
-               
-                 NSString *postString = [[NSString alloc] initWithFormat:@"facebook_id=%@&name=%@&email=%@&device_id=%@", user.id, user.name, [user objectForKey:@"email"], [[UIDevice currentDevice] uniqueIdentifier]];
-                 
-                 NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:webServiceUrl];
-                 
-                 [postRequest setHTTPMethod:@"POST"];
-
-                 [postRequest setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
-                 
-                 dataReply = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:&response error:&error];
-                 stringReply = (NSString *)[[NSString alloc] initWithData:dataReply encoding:NSUTF8StringEncoding];
-                 // Some debug code, etc.
-                 NSLog(@"reply from server: %@", stringReply);
-                 httpResponse = (NSHTTPURLResponse *)response;
-                 int statusCode = [httpResponse statusCode];
-                 NSLog(@"HTTP Response Headers %@", [httpResponse allHeaderFields]);
-                 NSLog(@"HTTP Status code: %d", statusCode);
-                 
-                 
-                 [postString release];
+             [self saveUserDefaults:user];
+             
+             if (tag == UPLOADING) {
+                 [self showLoading];
+                 [self upload];
              }
-         }];
+             
+         } else {
+             [self facebookError];
+         }
+     }];
 }
 
 -(void) facebookError
