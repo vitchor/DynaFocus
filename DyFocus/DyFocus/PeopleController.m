@@ -50,10 +50,14 @@
 
         
 		// Model
-		m_peopleInfo = [[NSMutableDictionary alloc] initWithCapacity:20];
-		m_visiblePeopleList = [[NSMutableArray alloc] initWithCapacity:20];
-		m_imageCache = [[NSMutableDictionary alloc] initWithCapacity:20];
-		m_viewCount = 0;
+        m_peopleInfo = [[NSMutableDictionary alloc] initWithCapacity:20];
+        m_friendInfo = [[NSMutableDictionary alloc] initWithCapacity:20];
+		
+        m_visiblePeopleList = [[NSMutableArray alloc] initWithCapacity:20];
+        m_visibleFriendsList = [[NSMutableArray alloc] initWithCapacity:20];
+		
+        m_imageCache = [[NSMutableDictionary alloc] initWithCapacity:20];
+        m_viewCount = 0;
 		
 		// UI
 		m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 326) style:UITableViewStylePlain];
@@ -146,14 +150,28 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if(section == 0){
+        
+        int count = [m_visibleFriendsList count];
+        
+        if (count > 0) {
+            m_isDyfocusTableEmpty = NO;
+            return count;
+        }
+        
+        m_isDyfocusTableEmpty = YES;
+        
         return 1;
+        
     } else {
         int count = [m_visiblePeopleList count];
+        
         if (count > 0) {
             m_isFacebookTableEmpty = NO;
             return count;
         }
+        
         m_isFacebookTableEmpty = YES;
+        
         return 1;
     }
 }
@@ -174,6 +192,7 @@
 	UITableViewCell *cell = nil;
     
     if (indexPath.section == 0) {
+        if (m_isDyfocusTableEmpty) {
             NSString *cellId = @"empty";
             cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
             if (cell == nil) {
@@ -187,6 +206,27 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryView = nil;
             cell.imageView.image = nil;
+        } else {
+            NSString *cellId = [NSString stringWithFormat:@"%d", indexPath.row];
+            cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
+            }
+            NSNumber *personIdNumber = [m_visibleFriendsList objectAtIndex:indexPath.row];
+            if (personIdNumber) {
+                long personId = [personIdNumber longValue];
+                
+                Person *person = [m_friendInfo objectForKey:[NSNumber numberWithLong:personId]];
+                cell.textLabel.text = person.name;
+                cell.detailTextLabel.text = person.details;
+                cell.tag = personId;
+                UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithLong:personId]];
+                if (image == nil) {
+                    image = [UIImage imageNamed:@"AvatarDefault.png"];
+                }
+                cell.imageView.image = image;                
+            }
+        }
     } else {
         if (m_isFacebookTableEmpty) {
             NSString *cellId = @"empty";
@@ -212,7 +252,6 @@
             if (personIdNumber) {
                 long personId = [personIdNumber longValue];
                 
-                NSLog(@"FIRST APPERANCE: %ld", personId);
                 Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:personId]];
                 cell.textLabel.text = person.name;
                 cell.detailTextLabel.text = person.details;
@@ -306,12 +345,21 @@
 - (void)refreshPeople {
 }
 
-- (void)setPeople:(NSMutableDictionary *)people {
+- (void)setPeople:(NSMutableDictionary *)people andFriends:(NSMutableDictionary *)friend {
 	[m_peopleInfo release];
 	m_peopleInfo = [people retain];
+    
 	[m_visiblePeopleList removeAllObjects];
 	[m_visiblePeopleList setArray:[m_peopleInfo allKeys]];
 	[m_visiblePeopleList sortUsingFunction:comparePerson context:m_peopleInfo];
+    
+    [m_friendInfo release];
+    m_friendInfo = [friend retain];
+    
+    [m_visibleFriendsList removeAllObjects];
+    [m_visibleFriendsList setArray:[m_friendInfo allKeys]];
+	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_friendInfo];
+    
 	[m_swithSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];
 	[m_swithSelectedButton setEnabled:NO forSegmentAtIndex:1];
 	[self.tableView reloadData];

@@ -44,12 +44,16 @@
 	NSMutableDictionary *m_peopleInfo;
 	NSMutableArray *m_visiblePeopleList;
 	NSMutableDictionary *m_imageCache;
+    
+	NSMutableDictionary *m_friendInfo;
+	NSMutableArray *m_visibleFriendsList;
+    
 	int m_viewCount;
 }
 
 @property(nonatomic, retain) UITableView *tableView;
 
-- (void)setPeople:(NSDictionary *)people;
+- (void)setPeople:(NSMutableDictionary *)people andFriends:(NSMutableDictionary *)friends;
 - (void)refreshImages;
 - (void)setImage:(UIImage *)image withId:(int)uid;
 - (void)clearImageCache;

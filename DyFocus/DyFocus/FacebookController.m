@@ -66,6 +66,7 @@
                  NSMutableArray *jsonFriends = [[[NSMutableArray alloc] initWithCapacity:[friends count]] autorelease];
                  
                  NSLog(@"Found: %i friends", friends.count);
+                 
                  for (NSDictionary<FBGraphUser>* friend in friends) {
                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
                      Person *person = [[[Person alloc] initWithId:[friend.id longLongValue] andName:friend.name andDetails:@"" andTag:friend.id] autorelease];
@@ -112,8 +113,35 @@
                  int statusCode = [httpResponse statusCode];
                  
                   NSLog(@"JSON RESPONSE: %@",stringReply);
+                 
+                 NSMutableDictionary *friendsDictionary = [[NSMutableDictionary alloc] init];
+                                                 
                  if (statusCode == 200) {
-                     // Let's parse the response:
+                     // Let's parse the response and create a NSMutableDictonary with the friends:
+                     
+                     if (stringReply) {
+                         NSDictionary *jsonValues = [stringReply JSONValue];
+                         
+                         if (jsonValues) {
+                             NSDictionary * jsonFriends = [jsonValues valueForKey:@"friends_list"];
+                             
+                             if (jsonFriends) {
+                                 
+                                 for (int i = 0; i < [jsonFriends count]; i++) {
+                                     
+                                     NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
+                                     NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
+                                     
+                                     Person *person = [people objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                                     
+                                     [friendsDictionary setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                                     [people removeObjectForKey:person.tag];
+                                 }
+                                 
+                                 [self setPeople:people andFriends:friendsDictionary];
+                             }
+                         }
+                     }
                     
                      
                  } else {
