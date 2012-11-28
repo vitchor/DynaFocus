@@ -9,6 +9,7 @@
 #import "PeopleController.h"
 #import "InvitationController.h"
 #import "AppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation Person
 
@@ -44,7 +45,8 @@
 - (id)init {
     if (self = [super init]) {
 		self.navigationItem.hidesBackButton = NO;
-		self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(sendAction)] autorelease];
+		self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Send Invites" style:UIBarButtonItemStyleDone target:self action:@selector(sendAction)] autorelease];
+        self.navigationItem.rightBarButtonItem.enabled = NO;
 		
         self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAction)] autorelease];
 
@@ -60,7 +62,7 @@
         m_viewCount = 0;
 		
 		// UI
-		m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 326) style:UITableViewStylePlain];
+		m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 400) style:UITableViewStylePlain];
 		[m_tableView setRowHeight:50.0];
 		m_tableView.dataSource = self;
 		m_tableView.delegate = self;
@@ -73,8 +75,8 @@
 		[self.view addSubview:m_searchBar];
 		
 		// Init toolbar
-		m_controlToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 366, 320, 50)];
-		m_controlToolbar.tintColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
+		m_controlToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 30, 320, 40)];
+		m_controlToolbar.tintColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:0.9];
 		// Personalize message button
 		UIView *customMessageView = [[[UIView alloc] initWithFrame:CGRectMake(10, 0, 135, 35)] autorelease];
 		UIButton *customMessageButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -91,7 +93,7 @@
 		m_customMessageLabel.shadowColor = [UIColor whiteColor];
 		m_customMessageLabel.font = [UIFont systemFontOfSize:13];
 		m_customMessageLabel.backgroundColor = [UIColor colorWithWhite:0.0/255 alpha:0.0];
-		m_customMessageLabel.text = @"Custom message";
+		m_customMessageLabel.text = @"Invitation message";
 		[customMessageView addSubview:m_customMessageLabel];
 		UIBarButtonItem *customMessageViewItem = [[[UIBarButtonItem alloc] initWithCustomView:customMessageView] autorelease];
 		// Flex space
@@ -106,7 +108,8 @@
 		UIBarButtonItem *switchSelected = [[[UIBarButtonItem alloc] initWithCustomView:m_swithSelectedButton] autorelease];
 		// Set items on toolbar
 		[m_controlToolbar setItems:[NSArray arrayWithObjects:customMessageViewItem, flex, switchSelected, nil]];
-		[self.view addSubview:m_controlToolbar];
+        m_controlToolbar.alpha = 0.9;
+		//[self.view addSubview:m_controlToolbar];
 	}
 	return self;
 }
@@ -149,10 +152,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if(section == 0){
+    if (section == 0) {
         
         int count = [m_visibleFriendsList count];
-        
         if (count > 0) {
             m_isDyfocusTableEmpty = NO;
             return count;
@@ -163,8 +165,8 @@
         return 1;
         
     } else {
-        int count = [m_visiblePeopleList count];
         
+        int count = [m_visiblePeopleList count];
         if (count > 0) {
             m_isFacebookTableEmpty = NO;
             return count;
@@ -180,13 +182,111 @@
     return 2;
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
     if (section == 0) {
-        return @"Friends using the app";
+        return 30;
+        
     } else {
-        return @"Invite friends from Facebook";        
+        return 30 + m_controlToolbar.frame.size.height;
+        
     }
 }
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Friends Using dyfocus";
+    } else {
+        return @"Invite Friends From Facebook";        
+    }
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+   if (section == 0) {
+        CGRect aFrame =CGRectMake(0, 0, tableView.contentSize.width, 30);
+        UIView * aView = [[UIView alloc] initWithFrame:aFrame];
+        aView.backgroundColor = UIColor.clearColor;
+        
+        // Create a stretchable image for the background that emulates the default gradient, only in green
+        UIImage *viewBackgroundImage = [[UIImage imageNamed:@"gray_background.png"] stretchableImageWithLeftCapWidth:12 topCapHeight:0];
+        
+        // Cannot set this image directly as the background of the cell because
+        // the background needs to be offset by 1pix at the top to cover the previous cell border (Alex Deplov's requirement ^_^)
+        CALayer *backgroungLayer = [CALayer layer];
+        
+        backgroungLayer.frame = CGRectMake(0, -1, tableView.contentSize.width, 30 + 1);
+        backgroungLayer.contents = (id) viewBackgroundImage.CGImage;
+        backgroungLayer.masksToBounds = NO;
+        backgroungLayer.opacity = 0.9;
+        [aView.layer addSublayer:backgroungLayer];
+        
+        // Take care of the section title now
+        UILabel *aTitle = [[UILabel alloc] initWithFrame: CGRectMake(10, 0, aView.bounds.size.width-10, aView.bounds.size.height)];
+        aTitle.text = [self tableView:tableView titleForHeaderInSection:section];
+        aTitle.backgroundColor = UIColor.clearColor;
+        aTitle.font = [UIFont boldSystemFontOfSize:18];
+        aTitle.textColor = UIColor.whiteColor;
+        
+        // Text shadow
+        aTitle.layer.shadowOffset = CGSizeMake(0, 1);
+        aTitle.layer.shadowRadius = .2;
+        aTitle.layer.masksToBounds = NO;
+        aTitle.layer.shadowOpacity = 0.5;
+        aTitle.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+        [aView addSubview:aTitle];
+        
+        return aView;
+    } else {
+        CGRect aFrame = CGRectMake(0, 0, tableView.contentSize.width, 30 + m_controlToolbar.frame.size.height);
+        UIView * aView = [[UIView alloc] initWithFrame:aFrame];
+        aView.backgroundColor = UIColor.clearColor;
+        
+        // Create a stretchable image for the background that emulates the default gradient, only in green
+        UIImage *viewBackgroundImage = [[UIImage imageNamed:@"gray_background.png"] stretchableImageWithLeftCapWidth:12 topCapHeight:0];
+        
+        // Cannot set this image directly as the background of the cell because
+        // the background needs to be offset by 1pix at the top to cover the previous cell border (Alex Deplov's requirement ^_^)
+        CALayer *backgroungLayer = [CALayer layer];
+        
+        backgroungLayer.frame = CGRectMake(0, -1, tableView.contentSize.width, 30 + 1);
+        backgroungLayer.contents = (id) viewBackgroundImage.CGImage;
+        backgroungLayer.masksToBounds = NO;
+        backgroungLayer.opacity = 0.9;
+        [aView.layer addSublayer:backgroungLayer];
+        
+        // Take care of the section title now
+        UILabel *aTitle = [[UILabel alloc] initWithFrame: CGRectMake(10, 0, aView.bounds.size.width-10, 30)];
+        aTitle.text = [self tableView:tableView titleForHeaderInSection:section];
+        aTitle.backgroundColor = UIColor.clearColor;
+        aTitle.font = [UIFont boldSystemFontOfSize:18];
+        aTitle.textColor = UIColor.whiteColor;
+        
+        // Text shadow
+        aTitle.layer.shadowOffset = CGSizeMake(0, 1);
+        aTitle.layer.shadowRadius = .2;
+        aTitle.layer.masksToBounds = NO;
+        aTitle.layer.shadowOpacity = 0.5;
+        aTitle.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+        [aView addSubview:aTitle];
+        [aView addSubview:m_controlToolbar];
+        
+        return aView;
+    }
+    
+}
+
+- (CAGradientLayer *) greyGradient {
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.startPoint = CGPointMake(0.5, 0.0);
+    gradient.endPoint = CGPointMake(0.5, 1.0);
+    
+    UIColor *color1 = [UIColor colorWithRed:255.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0];
+    UIColor *color2 = [UIColor colorWithRed:240.0f/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0];
+    
+    [gradient setColors:[NSArray arrayWithObjects:(id)color1.CGColor, (id)color2.CGColor, nil]];
+    return gradient;
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = nil;
@@ -195,9 +295,11 @@
         if (m_isDyfocusTableEmpty) {
             NSString *cellId = @"empty";
             cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
+            
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
             }
+            
             cell.textLabel.text = @"No contacts were found";
             cell.textLabel.textColor = [UIColor lightGrayColor];
             cell.textLabel.textAlignment = UITextAlignmentCenter;
@@ -207,7 +309,8 @@
             cell.accessoryView = nil;
             cell.imageView.image = nil;
         } else {
-            NSString *cellId = [NSString stringWithFormat:@"%d", indexPath.row];
+            
+            NSString *cellId = [NSString stringWithFormat:@"0_%d", indexPath.row];
             cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
@@ -219,21 +322,27 @@
                 Person *person = [m_friendInfo objectForKey:[NSNumber numberWithLong:personId]];
                 cell.textLabel.text = person.name;
                 cell.detailTextLabel.text = person.details;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.tag = personId;
+                
                 UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithLong:personId]];
+                
                 if (image == nil) {
                     image = [UIImage imageNamed:@"AvatarDefault.png"];
                 }
-                cell.imageView.image = image;                
+                
+                cell.imageView.image = image;
             }
         }
     } else {
         if (m_isFacebookTableEmpty) {
             NSString *cellId = @"empty";
             cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
+            
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
             }
+            
             cell.textLabel.text = @"No contacts were found";
             cell.textLabel.textColor = [UIColor lightGrayColor];
             cell.textLabel.textAlignment = UITextAlignmentCenter;
@@ -243,12 +352,28 @@
             cell.accessoryView = nil;
             cell.imageView.image = nil;
         } else {
-            NSString *cellId = [NSString stringWithFormat:@"%d", indexPath.row];
+            
+            NSString *cellId = [NSString stringWithFormat:@"1_%d", indexPath.row];
             cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
+            
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
+                
+                /*
+                 NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"CellView" owner:self options:nil];
+                 
+                 for(id currentObject in topLevelObjects){
+                 if ([currentObject isKindOfClass:[CellView class]]) {
+                 cell = (CellView *)currentObject;
+                 break;
+                 }
+                 }
+                 */
+                
             }
+            
             NSNumber *personIdNumber = [m_visiblePeopleList objectAtIndex:indexPath.row];
+            
             if (personIdNumber) {
                 long personId = [personIdNumber longValue];
                 
@@ -261,26 +386,22 @@
                     image = [UIImage imageNamed:@"AvatarDefault.png"];
                 }
                 cell.imageView.image = image;
+                
+                if (!cell.accessoryView) {
+                    UILabel *inviteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 10, 65, 30)] autorelease];
+                    inviteLabel.text = @"SELECT";
+                    inviteLabel.shadowOffset = CGSizeMake(0.25,0.8);
+                    inviteLabel.shadowColor = [UIColor darkGrayColor];
+                    inviteLabel.textAlignment = UITextAlignmentCenter;
+                    [inviteLabel setFont:[UIFont boldSystemFontOfSize:16]];
+                    cell.accessoryView = inviteLabel;
+                }
+                
                 if (person.selected == NO) {
-                    // Not invited yet
-                    /*UISegmentedControl *inviteButton = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Select"]] autorelease];
-                    inviteButton.segmentedControlStyle = UISegmentedControlStyleBar;
-                    inviteButton.momentary = YES;
-                    inviteButton.tintColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:1.0];
-                    inviteButton.frame = CGRectMake(0, 10, 65, 30);
-                    inviteButton.tag = indexPath.row;
-                    [inviteButton addTarget:self action:@selector(inviteButtonClicked:) forControlEvents:UIControlEventValueChanged];
-                    cell.accessoryView = inviteButton;
-                } else {
-                    // Already invited
-                    UISegmentedControl *invitedButton = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Selected"]] autorelease];
-                    invitedButton.segmentedControlStyle = UISegmentedControlStyleBar;
-                    invitedButton.momentary = YES;
-                    invitedButton.tintColor = [UIColor colorWithRed:76.0/255 green:196.0/255 blue:23.0/255 alpha:1.0];
-                    invitedButton.frame = CGRectMake(0, 10, 65, 30);
-                    invitedButton.tag = indexPath.row;
-                    [invitedButton addTarget:self action:@selector(inviteButtonClicked:) forControlEvents:UIControlEventValueChanged];
-                    cell.accessoryView = invitedButton;*/
+                    ((UILabel *)cell.accessoryView).textColor = [UIColor colorWithRed:8.0/255.0 green:82.0/255.0 blue:190.0/255.0 alpha:1.0];
+                    
+                } else { 
+                    ((UILabel *)cell.accessoryView).textColor = [UIColor colorWithRed:0.04 green:0.7 blue:0.04 alpha:1.0];
                 }
             }
         }
@@ -289,8 +410,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[self switchSelect:indexPath.row];
-	[self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+   
+    if (indexPath.section == 0) {
+        // Show user's page
+    } else {
+        [self switchSelect:indexPath.row];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+	
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -328,9 +455,15 @@
 }
 
 - (void)filterWithText:(NSString*)text {
+    
 	[m_visiblePeopleList removeAllObjects];
-	NSString *lowerText = [text lowercaseString];
+	[m_visibleFriendsList removeAllObjects];
+    
+    NSString *lowerText = [text lowercaseString];
+    
 	NSArray *allPeople = [m_peopleInfo allKeys];
+    NSArray *allFriends = [m_friendInfo allKeys];
+    
 	for (int i = 0; i < [allPeople count]; ++i) {
 		long uid = [[allPeople objectAtIndex:i] longValue];
 		Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:uid]];
@@ -340,6 +473,18 @@
 		}
 	}
 	[m_visiblePeopleList sortUsingFunction:comparePerson context:m_peopleInfo];
+    
+    
+    for (int i = 0; i < [allFriends count]; ++i) {
+		long uid = [[allFriends objectAtIndex:i] longValue];
+		Person *person = [m_friendInfo objectForKey:[NSNumber numberWithLong:uid]];
+		NSString *personName = [person.name lowercaseString];
+		if ([lowerText length] == 0 || [personName rangeOfString:lowerText].location != NSNotFound) {
+			[m_visibleFriendsList addObject:[NSNumber numberWithLong:person.uid]];
+		}
+	}
+   	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_peopleInfo];
+    
 }
 
 - (void)refreshPeople {
@@ -382,6 +527,7 @@
 - (IBAction)inviteButtonClicked:(id)sender {
 	UISegmentedControl *inviteButton = (UISegmentedControl *)sender;
 	[self switchSelect:inviteButton.tag];
+    NSLog(@"CLICK!");
 }
 
 - (void)switchSelect:(int)index {
@@ -428,13 +574,13 @@
 }
 
 - (void)showAll {
-	[UIView beginAnimations:nil context:NULL];
+	/*[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
 	[UIView setAnimationDuration:0.3];
 	m_searchBar.alpha = 1.0;
 	m_searchBar.frame = CGRectMake(0, 0, 320, 40);
 	self.tableView.frame = CGRectMake(0, 40, 320, 326);
-	[UIView commitAnimations];
+	[UIView commitAnimations];*/
 	
 	m_swithSelectedButton.selectedSegmentIndex = 0;
 	[self filterWithText:[m_searchBar text]];
@@ -443,13 +589,13 @@
 }
 
 - (void)showSelected {
-	[UIView beginAnimations:nil context:NULL];
+	/*[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
 	[UIView setAnimationDuration:0.3];
 	m_searchBar.alpha = 0.0;
 	m_searchBar.frame = CGRectMake(0, -40, 320, 40);
 	self.tableView.frame = CGRectMake(0, 0, 320, 366);
-	[UIView commitAnimations];
+	[UIView commitAnimations];*/
 	
 	m_swithSelectedButton.selectedSegmentIndex = 1;
 	[m_visiblePeopleList setArray:[self selectedIds]];

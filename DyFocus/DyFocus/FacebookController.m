@@ -17,7 +17,7 @@
 
 - (id)init {
     if (self = [super init]) {
-		self.title = @"Facebook";
+		self.title = @"Friends";
 		m_permissions =  [[NSArray arrayWithObjects:@"friends_about_me", @"publish_stream", nil] retain];
 		m_invitesLeftToSend = 0;
 		
@@ -135,7 +135,7 @@
                                      Person *person = [people objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                                      
                                      [friendsDictionary setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
-                                     [people removeObjectForKey:person.tag];
+                                     [people removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
                                  }
                                  
                                  [self setPeople:people andFriends:friendsDictionary];
@@ -199,6 +199,10 @@
 - (void)loadImage:(int)uid {
     
     Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:uid]];
+    
+    if (!person) {
+        person = [m_friendInfo objectForKey:[NSNumber numberWithLong:uid]];
+    }
     
     NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",(NSString *)person.tag];
 
@@ -314,11 +318,11 @@
 }*/
 
 - (NSString *)title {
-	return @"Facebook";
+	return @"Friends";
 }
 
 - (NSString *)description {
-	return @"Customize your wall post";
+	return @"Customize your facebook message";
 }
 
 - (NSString *)hintText {

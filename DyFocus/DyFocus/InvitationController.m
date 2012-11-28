@@ -18,7 +18,7 @@
 		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAction)] autorelease];
 		self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveAction)] autorelease];
 		self.view.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
-		self.title = [delegate title];
+		self.title = @"Message";
 		
 		UILabel *description = [[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)] autorelease];
 		description.font = [UIFont systemFontOfSize:14.0];

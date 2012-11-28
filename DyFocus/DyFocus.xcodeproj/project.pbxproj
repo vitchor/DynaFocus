@@ -50,6 +50,7 @@
 		44C7B1D71607444200221C12 /* iToast.h in Sources */ = {isa = PBXBuildFile; fileRef = 44C7B1D21607433D00221C12 /* iToast.h */; };
 		44C7B1D81607444200221C12 /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C7B1D31607433D00221C12 /* iToast.m */; };
 		44C8DA4215B1FF80000D2947 /* PathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8DA4115B1FF80000D2947 /* PathView.m */; };
+		44D8FC8E166676EC00E613DC /* gray_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D8FC8D166676EC00E613DC /* gray_background.png */; };
 		44F07658165E7FE100AE6A84 /* SharingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44F07657165E7FE100AE6A84 /* SharingController.xib */; };
 		AC07F47915B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */; };
 		AC07F47C15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */; };
@@ -177,6 +178,7 @@
 		44C7B1D31607433D00221C12 /* iToast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iToast.m; sourceTree = "<group>"; };
 		44C8DA4015B1FF80000D2947 /* PathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathView.h; sourceTree = "<group>"; };
 		44C8DA4115B1FF80000D2947 /* PathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathView.m; sourceTree = "<group>"; };
+		44D8FC8D166676EC00E613DC /* gray_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray_background.png; sourceTree = "<group>"; };
 		44F07657165E7FE100AE6A84 /* SharingController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SharingController.xib; sourceTree = "<group>"; };
 		AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_72x72.png; path = ../dynafocus_icon_beta1_orange_nofill_72x72.png; sourceTree = "<group>"; };
 		AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_144x144.png; path = ../dynafocus_icon_beta1_orange_nofill_144x144.png; sourceTree = "<group>"; };
@@ -612,6 +614,7 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				44D8FC8D166676EC00E613DC /* gray_background.png */,
 				44AA7C021657FCFC007D7F27 /* AvatarDefault.png */,
 				AC8C262915DAA9D30093FFD2 /* df_featured_bw.png */,
 				AC606B5615DBED28008FDF8F /* dyfocus_icon_square_114x114.png */,
@@ -742,6 +745,7 @@
 				ACA63D3C15EFED4B00314025 /* ProfileController.xib in Resources */,
 				44AA7C031657FCFC007D7F27 /* AvatarDefault.png in Resources */,
 				44F07658165E7FE100AE6A84 /* SharingController.xib in Resources */,
+				44D8FC8E166676EC00E613DC /* gray_background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
