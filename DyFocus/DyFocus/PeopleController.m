@@ -78,7 +78,7 @@
 		m_controlToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 30, 320, 40)];
 		m_controlToolbar.tintColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:0.9];
 		// Personalize message button
-		UIView *customMessageView = [[[UIView alloc] initWithFrame:CGRectMake(10, 0, 135, 35)] autorelease];
+		UIView *customMessageView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 135, 35)] autorelease];
 		UIButton *customMessageButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		customMessageButton.frame = CGRectMake(0, 0, 135, 35);
 		customMessageButton.backgroundColor = [UIColor colorWithWhite:0.0/255 alpha:0.0];
@@ -87,27 +87,30 @@
 		[customMessageButton addTarget:self action:@selector(customMessageButtonTouchUpOutside) forControlEvents:UIControlEventTouchUpOutside];
 		[customMessageView addSubview:customMessageButton];
 		// Personalize message label
-		m_customMessageLabel = [[UIStyledLabel alloc] initWithFrame:CGRectMake(0, 0, 135, 35)];
+		m_customMessageLabel = [[UIStyledLabel alloc] initWithFrame:CGRectMake(4, 0, 135, 35)];
 		m_customMessageLabel.textColor = [UIColor blackColor];
-		m_customMessageLabel.shadowOffset = CGSizeMake(0,1);
-		m_customMessageLabel.shadowColor = [UIColor whiteColor];
-		m_customMessageLabel.font = [UIFont systemFontOfSize:13];
+		m_customMessageLabel.shadowOffset = CGSizeMake(0.45, 1.5);
+		//m_customMessageLabel.shadowColor = [UIColor whiteColor];
+		m_customMessageLabel.font = [UIFont boldSystemFontOfSize:14];
 		m_customMessageLabel.backgroundColor = [UIColor colorWithWhite:0.0/255 alpha:0.0];
-		m_customMessageLabel.text = @"Invitation message";
+		m_customMessageLabel.text = @"Send Invitations >";
+        //m_customMessageLabel.textAlignment = kCTRightTextAlignment;
 		[customMessageView addSubview:m_customMessageLabel];
 		UIBarButtonItem *customMessageViewItem = [[[UIBarButtonItem alloc] initWithCustomView:customMessageView] autorelease];
 		// Flex space
 		UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+        flex.width = 30;
 		// Swith All/Selected buttons
 		m_swithSelectedButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"All", @"Selected", nil]];
 		m_swithSelectedButton.segmentedControlStyle = UISegmentedControlStyleBar;
 		m_swithSelectedButton.selectedSegmentIndex = 0;
 		m_swithSelectedButton.tintColor = [UIColor colorWithRed:100.0/255 green:100.0/255 blue:100.0/255 alpha:1.0];
-		m_swithSelectedButton.frame = CGRectMake(0, 0, 160, 33);
+		m_swithSelectedButton.frame = CGRectMake(35, 0, 170, 33);
 		[m_swithSelectedButton addTarget:self action:@selector(switchSelectedClicked:) forControlEvents:UIControlEventValueChanged];
 		UIBarButtonItem *switchSelected = [[[UIBarButtonItem alloc] initWithCustomView:m_swithSelectedButton] autorelease];
+        
 		// Set items on toolbar
-		[m_controlToolbar setItems:[NSArray arrayWithObjects:customMessageViewItem, flex, switchSelected, nil]];
+		[m_controlToolbar setItems:[NSArray arrayWithObjects: switchSelected, customMessageViewItem, nil]];
         m_controlToolbar.alpha = 0.9;
 		//[self.view addSubview:m_controlToolbar];
 	}
@@ -184,7 +187,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    if (section == 0) {
+    if (section == 0 || [m_searchBar showsCancelButton]) {
         return 30;
         
     } else {
@@ -195,14 +198,14 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"Friends Using dyfocus";
+        return @"Friends using dyfocus";
     } else {
-        return @"Invite Friends From Facebook";        
+        return @"Select friends to invite";
     }
 }
 
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-   if (section == 0) {
+   if (section == 0 || [m_searchBar showsCancelButton]) {
         CGRect aFrame =CGRectMake(0, 0, tableView.contentSize.width, 30);
         UIView * aView = [[UIView alloc] initWithFrame:aFrame];
         aView.backgroundColor = UIColor.clearColor;
@@ -387,6 +390,9 @@
                 }
                 cell.imageView.image = image;
                 
+                
+
+                /*
                 if (!cell.accessoryView) {
                     UILabel *inviteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 10, 65, 30)] autorelease];
                     inviteLabel.text = @"SELECT";
@@ -395,13 +401,15 @@
                     inviteLabel.textAlignment = UITextAlignmentCenter;
                     [inviteLabel setFont:[UIFont boldSystemFontOfSize:16]];
                     cell.accessoryView = inviteLabel;
-                }
+                }*/
                 
                 if (person.selected == NO) {
-                    ((UILabel *)cell.accessoryView).textColor = [UIColor colorWithRed:8.0/255.0 green:82.0/255.0 blue:190.0/255.0 alpha:1.0];
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                    //((UILabel *)cell.accessoryView).textColor = [UIColor colorWithRed:8.0/255.0 green:82.0/255.0 blue:190.0/255.0 alpha:1.0];
                     
-                } else { 
-                    ((UILabel *)cell.accessoryView).textColor = [UIColor colorWithRed:0.04 green:0.7 blue:0.04 alpha:1.0];
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    //((UILabel *)cell.accessoryView).textColor = [UIColor colorWithRed:0.04 green:0.7 blue:0.04 alpha:1.0];
                 }
             }
         }
@@ -640,7 +648,8 @@
 	}
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
 	self.tableView.frame = CGRectMake(0, 40, 320, 420);
-	[m_controlToolbar removeFromSuperview];
+	//[m_controlToolbar removeFromSuperview];
+    [self.tableView reloadData];
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
@@ -702,6 +711,11 @@ static int comparePerson(id personId1, id personId2, void *context) {
 	Person *person1 = [peopleInfo objectForKey:(NSNumber *)personId1];
 	Person *person2 = [peopleInfo objectForKey:(NSNumber *)personId2];
 	return [person1.name compare:person2.name];
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

@@ -25,7 +25,7 @@
 	}
     CGContextBeginPath(c);
     CGContextMoveToPoint(c, 1.0f, 24.0f);
-    CGContextAddLineToPoint(c, 102.0f, 24.0f);
+    CGContextAddLineToPoint(c, 119.0f, 24.0f);
     CGContextStrokePath(c);
 	[super drawRect:rect];
 }

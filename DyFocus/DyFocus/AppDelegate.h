@@ -21,7 +21,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     DyfocusUITabBarController *tabBarController;
     DyfocusUINavigationController *cameraNavigationController;
-    DyfocusUINavigationController *friendsNavigationController;
+
     NSArray *permissions;
     FacebookController *friendsController;
     WebViewController *feedWebViewController;

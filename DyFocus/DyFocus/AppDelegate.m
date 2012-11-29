@@ -82,11 +82,10 @@
     
     // Friends Controller
     friendsController = [[FacebookController alloc] init];
-    friendsController.hidesBottomBarWhenPushed = YES;
-    friendsNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:friendsController];
-    friendsNavigationController.hidesBottomBarWhenPushed = YES;
+    friendsController.hidesBottomBarWhenPushed = NO;
+
     UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
-    [friendsNavigationController setTabBarItem:friendsTab];
+    [friendsController setTabBarItem:friendsTab];
         
     // Profile Controller
     ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
@@ -99,7 +98,7 @@
     
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, cameraNavigationController, friendsNavigationController, profileController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, cameraNavigationController, friendsController, profileController, nil];
     
     self.tabBarController.viewControllers = controllers;
     
@@ -113,7 +112,7 @@
     
     [self.window addSubview:self.tabBarController.view];
     [self.window makeKeyAndVisible];
-    NSLog(@"aaa");
+    
     
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).

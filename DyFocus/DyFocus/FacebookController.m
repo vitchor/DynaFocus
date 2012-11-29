@@ -52,8 +52,8 @@
 - (void)refreshPeople {
  
     if(FBSession.activeSession.state == FBSessionStateOpen){
-        
-        
+        [LoadView loadViewOnView: self.view withText:@"Loading..."];
+
         [[FBRequest requestForMyFriends] startWithCompletionHandler:
          ^(FBRequestConnection *connection,
            NSDictionary* result,
@@ -139,6 +139,7 @@
                                  }
                                  
                                  [self setPeople:people andFriends:friendsDictionary];
+                                 [LoadView fadeAndRemoveFromView:self.view];
                              }
                          }
                      }
