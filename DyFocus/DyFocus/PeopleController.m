@@ -483,7 +483,7 @@
 			[m_visibleFriendsList addObject:[NSNumber numberWithLong:person.uid]];
 		}
 	}
-   	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_peopleInfo];
+   	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_friendInfo];
     
 }
 
@@ -663,7 +663,7 @@
 	[searchBar resignFirstResponder];	
 	[searchBar setShowsCancelButton:NO animated:YES];	
 	[self.navigationController setNavigationBarHidden:NO animated:YES];	
-	self.tableView.frame = CGRectMake(0, 40, 320, 326);
+	self.tableView.frame = CGRectMake(0, 40, 320, 400);
 	[self.view addSubview:m_controlToolbar];
 	[self showAll];
 }
