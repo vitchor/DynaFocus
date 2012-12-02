@@ -13,6 +13,7 @@
 #import "DyfocusUINavigationController.h"
 
 #import "FacebookController.h"
+#import "ProfileController.h"
 
 #define UPLOADING 0
 #define SHARING 1
@@ -26,6 +27,10 @@
     FacebookController *friendsController;
     WebViewController *feedWebViewController;
 }
+
+extern NSString *const FBSessionStateChangedNotification;
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+- (void)closeSession;
 
 - (void)openFacebookSessionWithTag:(int)tag;
 - (void)loadFeedUrl:(NSString *)url;

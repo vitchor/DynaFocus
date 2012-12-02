@@ -30,6 +30,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Flurry startSession:@"QXSZM9GQQVY6RMQQMBQN"];
+    [FBProfilePictureView class];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
 
     //[TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
@@ -281,6 +282,31 @@
         }
         [permissions release];
     }];
+}
+
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
+    permissions = [[NSArray arrayWithObjects:
+                    @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
+    
+    return [FBSession openActiveSessionWithPermissions:permissions
+                                          allowLoginUI:allowLoginUI
+                                     completionHandler:^(FBSession *session,
+                                                         FBSessionState state,
+                                                         NSError *error) {
+                                         [self sessionStateChanged:session
+                                                             state:state
+                                                             error:error];
+                                     }];
+}
+
+- (void)closeSession {
+    //[FBSession.activeSession closeAndClearTokenInformation];
+    if (FBSession.activeSession.isOpen) {
+        [FBSession.activeSession closeAndClearTokenInformation];
+    }
+    else {
+        NSLog(@"FB Session is already closed!");
+    }
 }
 
 - (void)reopenSession {

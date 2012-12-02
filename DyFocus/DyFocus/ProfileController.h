@@ -7,7 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
-@interface ProfileController : UIViewController
+@interface ProfileController : UIViewController {
+    FBSession *facebook;
+    NSString *userName;
+}
+
+- (void)requestUserInfo;
+- (void)logout;
+- (void)facebookError;
+
+@property (strong, nonatomic) IBOutlet FBProfilePictureView *userProfileImage;
+@property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (strong, nonatomic) IBOutlet UIView *facebookLoginView;
+@property (strong, nonatomic) IBOutlet UIView *dyfocusProfileView;
+@property (strong, nonatomic) IBOutlet UIButton *loginButton;
+@property (strong, nonatomic) IBOutlet UIButton *logoutButton;
 
 @end
