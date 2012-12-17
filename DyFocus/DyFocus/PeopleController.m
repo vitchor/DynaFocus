@@ -1,10 +1,3 @@
-//
-//  ContactsController.m
-//  UberClient
-//
-//  Created by Jordan Bonnet on 2/8/11.
-//  Copyright 2011 Ubercab LLC. All rights reserved.
-//
 
 #import "PeopleController.h"
 #import "InvitationController.h"
@@ -62,7 +55,7 @@
         m_viewCount = 0;
 		
 		// UI
-		m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 400) style:UITableViewStylePlain];
+		m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 392) style:UITableViewStylePlain];
 		[m_tableView setRowHeight:50.0];
 		m_tableView.dataSource = self;
 		m_tableView.delegate = self;
@@ -88,12 +81,13 @@
 		[customMessageView addSubview:customMessageButton];
 		// Personalize message label
 		m_customMessageLabel = [[UIStyledLabel alloc] initWithFrame:CGRectMake(4, 0, 135, 35)];
-		m_customMessageLabel.textColor = [UIColor blackColor];
+		m_customMessageLabel.textColor = [UIColor lightGrayColor];
 		m_customMessageLabel.shadowOffset = CGSizeMake(0.45, 1.5);
 		//m_customMessageLabel.shadowColor = [UIColor whiteColor];
 		m_customMessageLabel.font = [UIFont boldSystemFontOfSize:14];
 		m_customMessageLabel.backgroundColor = [UIColor colorWithWhite:0.0/255 alpha:0.0];
 		m_customMessageLabel.text = @"Send Invitations >";
+        
         //m_customMessageLabel.textAlignment = kCTRightTextAlignment;
 		[customMessageView addSubview:m_customMessageLabel];
 		UIBarButtonItem *customMessageViewItem = [[[UIBarButtonItem alloc] initWithCustomView:customMessageView] autorelease];
@@ -515,6 +509,10 @@
     
 	[m_swithSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];
 	[m_swithSelectedButton setEnabled:NO forSegmentAtIndex:1];
+    
+    [m_customMessageLabel setEnabled:NO];
+    [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
+    [m_customMessageLabel invalidateIntrinsicContentSize];
 	[self.tableView reloadData];
 	[self refreshImages];
 }
@@ -544,6 +542,15 @@
 	person.selected = !person.selected;
 	int selectedCount = [[self selectedIds] count];
 	[m_swithSelectedButton setTitle:[NSString stringWithFormat:@"Selected (%d)", selectedCount] forSegmentAtIndex:1];
+    
+    if (selectedCount > 0) {
+        [m_customMessageLabel setEnabled:YES];
+        [m_customMessageLabel setTextColor:[UIColor colorWithRed:23.0f/255.0f green:68.0f/255.0f blue:117.0f/255.0f alpha:1.0]];
+    } else {
+        [m_customMessageLabel setEnabled:NO];
+        [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
+    }
+    
 	[m_swithSelectedButton setEnabled:(selectedCount > 0) forSegmentAtIndex:1];
 	[self.tableView reloadData];
 }
@@ -565,12 +572,19 @@
 
 - (void)clearSelected {
 	NSArray *allPeopleIds = [m_peopleInfo allKeys];
+    
 	for (NSNumber *peopleId in allPeopleIds) {
 		Person *person = [m_peopleInfo objectForKey:peopleId];
 		person.selected = NO;
 	}
+    
 	[m_swithSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];
 	[m_swithSelectedButton setEnabled:NO forSegmentAtIndex:1];
+    
+    [m_customMessageLabel setEnabled:NO];
+    [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
+    [m_customMessageLabel invalidateIntrinsicContentSize];
+    
 	[self showAll];
 }
 
@@ -625,6 +639,24 @@
 
 - (void)personalizeMessage {
 	InvitationController *ctlr = [[[InvitationController alloc] initWithDelegate:self] autorelease];
+    
+    
+    NSArray *selectedIds = [self selectedIds];
+    NSMutableArray *selectedPeople = [[NSMutableArray alloc] init];
+   
+
+    for (int i = 0; i < [selectedIds count]; ++i) {
+		
+        long uid = [[selectedIds objectAtIndex:i] longValue];
+		
+        Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:uid]];
+        
+        [selectedPeople addObject:person];
+
+	}
+    
+    ctlr.selectedPeople = selectedPeople;
+    
 	UINavigationController *navCtlr = [[[UINavigationController alloc] initWithRootViewController:ctlr] autorelease];
 	navCtlr.navigationBar.barStyle = UIBarStyleBlackOpaque;			
 	[self presentModalViewController:navCtlr animated:YES];
@@ -647,7 +679,7 @@
 		}
 	}
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	self.tableView.frame = CGRectMake(0, 40, 320, 420);
+	self.tableView.frame = CGRectMake(0, 40, 320, 392);
 	//[m_controlToolbar removeFromSuperview];
     [self.tableView reloadData];
 }
@@ -672,7 +704,7 @@
 	[searchBar resignFirstResponder];	
 	[searchBar setShowsCancelButton:NO animated:YES];	
 	[self.navigationController setNavigationBarHidden:NO animated:YES];	
-	self.tableView.frame = CGRectMake(0, 40, 320, 400);
+	self.tableView.frame = CGRectMake(0, 40, 320, 392);
 	[self.view addSubview:m_controlToolbar];
 	[self showAll];
 }
@@ -691,16 +723,22 @@
 }
 
 - (void)customMessageButtonClicked {
-	[self personalizeMessage];
-	m_customMessageLabel.textColor = [UIColor blackColor];
+    if (m_customMessageLabel.enabled) {
+        [self personalizeMessage];
+        [m_customMessageLabel setTextColor:[UIColor colorWithRed:23.0f/255.0f green:68.0f/255.0f blue:117.0f/255.0f alpha:1.0]];
+    }
 }
 
 - (void)customMessageButtonTouchDown {
-	m_customMessageLabel.textColor = [UIColor colorWithRed:0.0/255 green:0.0/255 blue:150.0/255 alpha:1.0];
+    if (m_customMessageLabel.enabled) {
+        m_customMessageLabel.textColor = [UIColor colorWithRed:0.0/255 green:0.0/255 blue:150.0/255 alpha:1.0];
+    }
 }
 
 - (void)customMessageButtonTouchUpOutside {
-	m_customMessageLabel.textColor = [UIColor blackColor];
+    if (m_customMessageLabel.enabled) {
+        [m_customMessageLabel setTextColor:[UIColor colorWithRed:23.0f/255.0f green:68.0f/255.0f blue:117.0f/255.0f alpha:1.0]];
+    }
 }
 
 static int comparePerson(id personId1, id personId2, void *context) {

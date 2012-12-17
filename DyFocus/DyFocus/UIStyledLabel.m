@@ -1,10 +1,4 @@
-//
-//  UIStyledLabel.m
-//  UberClient
-//
-//  Created by Jordan Bonnet on 2/16/11.
-//  Copyright 2011 Ubercab LLC. All rights reserved.
-//
+
 
 #import "UIStyledLabel.h"
 
@@ -12,6 +6,7 @@
 @implementation UIStyledLabel
 
 - (void)drawRect:(CGRect)rect {
+    
 	CGContextRef c = UIGraphicsGetCurrentContext();
 	CGColorRef colorRef = self.textColor.CGColor;
 	int numComponents = CGColorGetNumberOfComponents(colorRef);
@@ -20,14 +15,18 @@
 		CGFloat color[4] = {components[0], components[1], components[2], components[3]};
 		CGContextSetStrokeColor(c, color);
 	} else {
-		CGFloat color[4] = {0.0, 0.0, 0.0, 1.0};
-		CGContextSetStrokeColor(c, color);
+        NSLog(@"BULLSHIT");
+		//CGFloat color[4] = {0.0, 0.0, 0.0, 1.0};
+		CGContextSetStrokeColorWithColor(c, self.textColor.CGColor);
 	}
     CGContextBeginPath(c);
     CGContextMoveToPoint(c, 1.0f, 24.0f);
     CGContextAddLineToPoint(c, 119.0f, 24.0f);
     CGContextStrokePath(c);
 	[super drawRect:rect];
+    
+
+
 }
 
 @end

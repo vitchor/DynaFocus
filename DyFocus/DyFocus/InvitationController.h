@@ -1,12 +1,7 @@
-//
-//  InvitationController.h
-//  UberClient
-//
-//  Created by Jordan Bonnet on 2/11/11.
-//  Copyright 2011 Ubercab LLC. All rights reserved.
-//
+
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 @protocol InvitationDelegate
 
@@ -20,9 +15,15 @@
 @end
 
 
-@interface InvitationController : UIViewController <UITextViewDelegate> {
+@interface InvitationController : UIViewController <UITextViewDelegate, MFMailComposeViewControllerDelegate> {
 	UITextView *m_messageView;
 	id m_delegate;
+    NSMutableArray *selectedPeople;
+    UIView *infoView;
 }
+
+
+@property(nonatomic, retain) NSMutableArray *selectedPeople;
+@property(nonatomic, retain) UIView *infoView;
 
 @end

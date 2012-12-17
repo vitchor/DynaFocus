@@ -1,18 +1,20 @@
 //
-//  FriendsController.m
+//  SplashScreenController.m
 //  DyFocus
 //
-//  Created by Alexandre Cordeiro on 8/30/12.
+//  Created by Victor Oliveira on 12/16/12.
 //  Copyright (c) 2012 Ufscar. All rights reserved.
 //
 
-#import "FriendsController.h"
+#import "SplashScreenController.h"
 
-@interface FriendsController ()
+@interface SplashScreenController ()
 
 @end
 
-@implementation FriendsController
+@implementation SplashScreenController
+
+@synthesize spinner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,15 +31,16 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [spinner startAnimating];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
 }
 
 @end

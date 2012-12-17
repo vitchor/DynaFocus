@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "CameraView.h"
-#import "GalleryView.h"
 #import "WebViewController.h"
 #import "DyfocusUITabBarController.h"
 #import "DyfocusUINavigationController.h"
@@ -16,11 +15,15 @@
 #import "ProfileController.h"
 #import "Flurry.h"
 #import "SharingController.h"
+#import "LoginController.h"
+#import "JSON.h"
+#import "LoadView.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController;
+@synthesize tabBarController, friends, myself, dyfocusFriends;
+
 - (void)dealloc
 {
     [_window release];
@@ -35,8 +38,58 @@
 
     //[TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
     //[TestFlight takeOff:@"d230aea85b05dd961643635056dfa4cb_MTI4NTM3MjAxMi0wOS0wOCAxNjoxMjowMS4zOTA3MzE"];
-
     
+
+    [self.window makeKeyAndVisible];
+    
+    
+    
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        
+        /* Steps:
+         - show splash screen
+         - open the session (this won't display any UX)
+         - get the user info
+         - send user info to our servers.
+         - enable the app flow
+         */
+        
+        splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+        
+        [self.window addSubview:splashScreenController.view];
+        
+        [self reopenSession];
+        
+        
+    } else if (FBSession.activeSession.state == FBSessionStateOpen) {
+
+        /* Steps:
+         - show splash screen
+         - get the user info
+         - send user info to our servers.
+         - enable the app flow         
+         */
+        
+        [self showSplashScreen];
+        
+        [self loadModel];
+        
+        
+    } else {
+        
+        // User needs to sign-in/log-in.
+        loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+        self.window.rootViewController  = loginController;
+        
+        [self.window addSubview:loginController.view];
+
+    }
+    
+    
+    return YES;
+}
+
+- (void)setupTabController {
     // Camera Controller
     CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
     startController.hidesBottomBarWhenPushed = YES;
@@ -57,18 +110,9 @@
     
     // Feed Controller
     feedWebViewController = [[WebViewController alloc] init];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *savedFacebookId = [defaults stringForKey:@"UserFacebookId"];
-    
-    NSString *stringUrl;
-    
-    if (savedFacebookId) {
-        stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", savedFacebookId];
-        
-    } else {
-        stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/null/user/0/fof_name/"];
-    }
+
+    NSString *stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", [self.myself objectForKey:@"id"]];
+
     
     [feedWebViewController loadUrl: stringUrl];
     
@@ -76,18 +120,18 @@
     
     //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
-  
+    
     UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed_bw"] tag:2];
     [feedWebViewController setTabBarItem:feedTab];
-
+    
     
     // Friends Controller
     friendsController = [[FacebookController alloc] init];
     friendsController.hidesBottomBarWhenPushed = NO;
-
+    
     UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
     [friendsController setTabBarItem:friendsTab];
-        
+    
     // Profile Controller
     ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
     UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"df_profile_bw"] tag:5];
@@ -106,30 +150,19 @@
     self.tabBarController.featuredWebController = featuredWebViewController;
     self.tabBarController.feedWebController = feedWebViewController;
     
-
+    
     // Configure window
     
     self.window.rootViewController  = self.tabBarController;
     
     [self.window addSubview:self.tabBarController.view];
-    [self.window makeKeyAndVisible];
-    
-    
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-        // Yes, so just open the session (this won't display any UX).
-        [self reopenSession];
-    }
-    
-    
-    return YES;
 }
-
 
 - (void)loadFeedUrl:(NSString *)userId {
     
     NSString *stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", userId];
     [feedWebViewController loadUrl: stringUrl];
-    [stringUrl release];	
+    [stringUrl release];
 }
 
 - (void)resetCameraUINavigationController {
@@ -164,35 +197,15 @@
                       state:(FBSessionState) state
                       error:(NSError *)error
 {
-    NSLog(@"as");
+
     switch (state) {
         case FBSessionStateOpen: {
-            
-            
-            /*UIViewController *topViewController =
-            [navController topViewController];
-            if ([[topViewController modalViewController]
-                 isKindOfClass:[SCLoginViewController class]]) {
-                [topViewController dismissModalViewControllerAnimated:YES];
-            }*/
-            NSLog(@"Sweet, let it flow..");
-            
             
         }
             break;
         case FBSessionStateClosed:
         case FBSessionStateClosedLoginFailed:
-            /*
-            
-            // Once the user has logged in, we want them to
-            // be looking at the root view.
-            [navController popToRootViewControllerAnimated:NO];
-            
-            [FBSession.activeSession closeAndClearTokenInformation];
-            
-            [self showLoginView];
-             */
-            NSLog(@"Error message at sharing controller");
+
             break;
             
             
@@ -211,66 +224,187 @@
     }
 }
 
-- (void)openFacebookSessionWithTag: (int)tag {
-    
-    permissions =  [[NSArray arrayWithObjects:
-                     @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
-    
-    SharingController *sharingController = (SharingController *)[cameraNavigationController topViewController];
-    
-    [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-        
-          switch (status) {
-              case FBSessionStateOpen: {
-                  if (tag == SHARING || tag == UPLOADING) {
-                      [sharingController requestUserInfo:session withTag:tag];
-                  } else if (tag == FRIENDS) {
-                      [friendsController facebookSessionActive:session];
 
-                  }
-                  
-                  NSLog(@"Sweet, let it flow..");
-              }
-                  break;
-              case FBSessionStateClosed:
-              case FBSessionStateClosedLoginFailed:
-                  [sharingController facebookError];
-                  [FBSession.activeSession closeAndClearTokenInformation];
-                  break;
-                  
-              default:
-                  break;
-          }
-          
-          if (error) {
-              if (tag == SHARING || tag == UPLOADING) {
-                  [sharingController facebookError];
-              } else if (tag == FRIENDS) {
-                  [friendsController facebookError];
-                  
-              }
-          }
-          [permissions release];        
-      }];
-    
-}
-
-- (void)openFacebookFriendsSession {
-    permissions =  [[NSArray arrayWithObjects:
-                     @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
+- (void)signin {
+    permissions = [NSArray arrayWithObjects:
+                     @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil];
     
     [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
         
         switch (status) {
             case FBSessionStateOpen: {
                 
-                                NSLog(@"Sweet, let it flow..");
+                [self showSplashScreen];
+                [loginController.view removeFromSuperview];
+                
+             
+                NSString *jsonRequest1 = @"{ \"method\": \"GET\", \"relative_url\": \"me/friends?fields=name,id,username\" }";
+                NSString *jsonRequest2 = @"{ \"method\": \"GET\", \"relative_url\": \"me\" }";
+                NSString *jsonRequestsArray = [NSString stringWithFormat:@"[ %@, %@ ]", jsonRequest1, jsonRequest2];
+                NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:jsonRequestsArray forKey:@"batch"];
+                
+                
+                [[FBRequest requestWithGraphPath:@"me" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:
+                 ^(FBRequestConnection *connection,
+                   id result,
+                   NSError *error) {
+                     
+                     NSArray *allResponses = result;
+                     
+                     // Let's parse the friends information first:
+                     NSDictionary *friendsResponse = [allResponses objectAtIndex:0];
+                     
+                     int httpCode = [[friendsResponse objectForKey:@"code"] intValue];
+                     
+                     
+                     NSDictionary *body = [[friendsResponse objectForKey:@"body"] JSONValue];
+                     
+                     NSArray* friendsArray = [body objectForKey:@"data"];
+                     
+                     NSMutableDictionary *people = [[[NSMutableDictionary alloc] initWithCapacity:[friendsArray count]] autorelease];
+                     
+                     NSMutableArray *jsonFriendsDyfocusRequest = [[[NSMutableArray alloc] initWithCapacity:[friendsArray count]] autorelease];
+                     
+                     if ( httpCode == 200 && !error ) {
+                           
+                         for (NSDictionary* friend in friendsArray) {
+                             
+                             NSString *friendId = [friend objectForKey:@"id"];
+                             NSString *friendName = [friend objectForKey:@"name"];
+                             NSString *friendUsername = [friend objectForKey:@"username"];
+                             
+                             Person *person = [[[Person alloc] initWithId:[friendId longLongValue] andName:friendName andDetails:friendUsername andTag:friendId] autorelease];
+                             
+                             [people setObject:person forKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                             
+                             NSLog(@"I have a friend named %@ with id %@", friendName, friendId);
+
+                             
+                             //Creates json object and add to the request object
+                             NSMutableDictionary *jsonFriendObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+                             
+                             [jsonFriendObject setObject:friendId forKey:@"facebook_id"];
+                             
+                             [jsonFriendsDyfocusRequest addObject:jsonFriendObject];
+                             
+                         }
+                         // Sets the model object friends
+                         self.friends = people;
+                         
+                     
+                     
+                         // Let's parse the user information
+                         NSDictionary *userResponse = [allResponses objectAtIndex:1];
+                         NSMutableDictionary *user = [[userResponse objectForKey:@"body"] JSONValue];
+                         
+                         // Sets the model object myself
+                         self.myself = user;
+                         
+                         NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
+                         
+                         
+                         
+                         // Lets create the json, with all the user info, that will be used in the request
+                         NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
+                         
+                         [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+                         [jsonRequestObject setObject:[user objectForKey:@"id"] forKey:@"facebook_id"];
+                         [jsonRequestObject setObject:[user objectForKey:@"name"] forKey:@"name"];
+                         [jsonRequestObject setObject:[user objectForKey:@"email"] forKey:@"email"];                             
+                         
+                         [jsonRequestObject setObject:jsonFriendsDyfocusRequest forKey:@"friends"];
+                         
+                         NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+                         
+                         
+                         // Lets create the network request
+                         NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/user_info/"];
+                         
+                         NSString *postString = [[NSString alloc] initWithFormat:@"json=%@", json];
+                         NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:webServiceUrl];
+                         [postRequest setHTTPMethod:@"POST"];
+                         [postRequest setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+                         
+                         NSURLResponse *response;
+                         NSHTTPURLResponse *httpResponse;
+                         NSData *dataReply;
+                         NSString *stringReply;
+                         
+                         
+                         // Lets read the response from the server
+                         dataReply = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:&response error:&error];
+                         stringReply = (NSString *)[[NSString alloc] initWithData:dataReply encoding:NSUTF8StringEncoding];
+                         httpResponse = (NSHTTPURLResponse *)response;
+                         int statusCode = [httpResponse statusCode];
+                         
+                         NSLog(@"JSON RESPONSE: %@",stringReply);
+                         
+                         //Lets parse the response to get the dyfocus friends info
+                         NSMutableDictionary *friendsDictionary = [[NSMutableDictionary alloc] init];
+                         
+                         if (statusCode == 200) {
+                             // Let's parse the response and create a NSMutableDictonary with the friends:
+                             
+                             if (stringReply) {
+                                 NSDictionary *jsonValues = [stringReply JSONValue];
+                                 
+                                 if (jsonValues) {
+                                     NSDictionary * jsonFriends = [jsonValues valueForKey:@"friends_list"];
+                                     
+                                     if (jsonFriends) {
+                                         
+                                         for (int i = 0; i < [jsonFriends count]; i++) {
+                                             
+                                             NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
+                                             NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
+                                             
+                                             Person *person = [people objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                                             
+                                             [friendsDictionary setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                                             [people removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                                         }
+                                         
+                                        self.dyfocusFriends = friendsDictionary;
+                                     
+                                        //AWESOME! We have everything we need, time to continue the app flow
+                                        //[LoadView fadeAndRemoveFromView:loginController.view];
+                                        [splashScreenController.view removeFromSuperview];
+                                         
+                                         
+                                        //[loginController.view removeFromSuperview];
+                                
+                                        [self setupTabController];
+                                     
+                                     }
+                                 }
+                             }
+                             
+                             
+                         } else {
+                             [self showConnectionError];
+                             
+                         }
+
+
+                         
+                         
+                     
+                     } else {
+                         [self showConnectionError];
+                     }
+                                            
+                     
+                     
+                 }];
+                
+                
+                
             }
                 break;
             case FBSessionStateClosed:
+                break;
             case FBSessionStateClosedLoginFailed:
-                [friendsController facebookError];
-                [FBSession.activeSession closeAndClearTokenInformation];
+                [self showConnectionError];
                 break;
                 
             default:
@@ -278,35 +412,23 @@
         }
         
         if (error) {
-            [friendsController facebookError];
+            [self showConnectionError];
         }
-        [permissions release];
     }];
-}
-
-- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
-    permissions = [[NSArray arrayWithObjects:
-                    @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
     
-    return [FBSession openActiveSessionWithPermissions:permissions
-                                          allowLoginUI:allowLoginUI
-                                     completionHandler:^(FBSession *session,
-                                                         FBSessionState state,
-                                                         NSError *error) {
-                                         [self sessionStateChanged:session
-                                                             state:state
-                                                             error:error];
-                                     }];
 }
 
 - (void)closeSession {
-    //[FBSession.activeSession closeAndClearTokenInformation];
-    if (FBSession.activeSession.isOpen) {
-        [FBSession.activeSession closeAndClearTokenInformation];
-    }
-    else {
-        NSLog(@"FB Session is already closed!");
-    }
+    [FBSession.activeSession closeAndClearTokenInformation];
+    //[FBSession.activeSession close];
+    [FBSession setActiveSession:nil];
+    
+    //[self.tabBarController removeFromParentViewController];
+    [self.tabBarController.view removeFromSuperview];
+    
+    loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+    
+    [self.window addSubview:loginController.view];
 }
 
 - (void)reopenSession {
@@ -318,13 +440,13 @@
                                                                                                  FBSessionState status,
                                                                                                  NSError *error) {
         switch (status) {
-            case FBSessionStateOpen: {
-                NSLog(@"Sweet, let it flow..");
-            }
+            case FBSessionStateOpen:
+                [self loadModel];
+                
                 break;
             case FBSessionStateClosed:
             case FBSessionStateClosedLoginFailed:
-                NSLog(@"Error message at sharing controller");
+                [self showConnectionError];
                 [FBSession.activeSession closeAndClearTokenInformation];
                 break;
                 
@@ -342,8 +464,158 @@
             [alertView show];
             
         }
-        [permissions release];
+        
     }];
+}
+
+- (void) loadModel {
+    
+    NSString *jsonRequest1 = @"{ \"method\": \"GET\", \"relative_url\": \"me/friends?fields=name,id,username\" }";
+    NSString *jsonRequest2 = @"{ \"method\": \"GET\", \"relative_url\": \"me\" }";
+    NSString *jsonRequestsArray = [NSString stringWithFormat:@"[ %@, %@ ]", jsonRequest1, jsonRequest2];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:jsonRequestsArray forKey:@"batch"];
+    
+    
+    [[FBRequest requestWithGraphPath:@"me" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:
+     ^(FBRequestConnection *connection,
+       id result,
+       NSError *error) {
+         
+         NSArray *allResponses = result;
+         
+         // Let's parse the friends information first:
+         NSDictionary *friendsResponse = [allResponses objectAtIndex:0];
+         
+         int httpCode = [[friendsResponse objectForKey:@"code"] intValue];
+         
+         
+         NSDictionary *body = [[friendsResponse objectForKey:@"body"] JSONValue];
+         
+         NSArray* friendsArray = [body objectForKey:@"data"];
+         
+         NSMutableDictionary *people = [[[NSMutableDictionary alloc] initWithCapacity:[friendsArray count]] autorelease];
+         
+         NSMutableArray *jsonFriendsDyfocusRequest = [[[NSMutableArray alloc] initWithCapacity:[friendsArray count]] autorelease];
+         
+         if ( httpCode == 200 && !error ) {
+             
+             for (NSDictionary* friend in friendsArray) {
+                 
+                 NSString *friendId = [friend objectForKey:@"id"];
+                 NSString *friendName = [friend objectForKey:@"name"];
+                 NSString *friendUsername = [friend objectForKey:@"username"];
+                 
+                 Person *person = [[[Person alloc] initWithId:[friendId longLongValue] andName:friendName andDetails:friendUsername andTag:friendId] autorelease];
+                 
+                 [people setObject:person forKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                 
+                 NSLog(@"I have a friend named %@ with id %@", friendName, friendId);
+                 
+                 
+                 //Creates json object and add to the request object
+                 NSMutableDictionary *jsonFriendObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+                 
+                 [jsonFriendObject setObject:friendId forKey:@"facebook_id"];
+                 
+                 [jsonFriendsDyfocusRequest addObject:jsonFriendObject];
+                 
+             }
+             // Sets the model object friends
+             self.friends = people;
+             
+             
+             
+             // Let's parse the user information
+             NSDictionary *userResponse = [allResponses objectAtIndex:1];
+             NSMutableDictionary *user = [[userResponse objectForKey:@"body"] JSONValue];
+             
+             // Sets the model object myself
+             self.myself = user;
+             
+             NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
+             
+             
+             // Lets create the json, with all the user info, that will be used in the request
+             NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
+             
+             [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+             [jsonRequestObject setObject:[user objectForKey:@"id"] forKey:@"facebook_id"];
+             [jsonRequestObject setObject:[user objectForKey:@"name"] forKey:@"name"];
+             [jsonRequestObject setObject:[user objectForKey:@"email"] forKey:@"email"];
+             
+             [jsonRequestObject setObject:jsonFriendsDyfocusRequest forKey:@"friends"];
+             
+             NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+             
+             
+             // Lets create the network request
+             NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/user_info/"];
+             
+             NSString *postString = [[NSString alloc] initWithFormat:@"json=%@", json];
+             NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:webServiceUrl];
+             [postRequest setHTTPMethod:@"POST"];
+             [postRequest setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+             
+             NSURLResponse *response;
+             NSHTTPURLResponse *httpResponse;
+             NSData *dataReply;
+             NSString *stringReply;
+             
+             
+             // Lets read the response from the server
+             dataReply = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:&response error:&error];
+             stringReply = (NSString *)[[NSString alloc] initWithData:dataReply encoding:NSUTF8StringEncoding];
+             httpResponse = (NSHTTPURLResponse *)response;
+             int statusCode = [httpResponse statusCode];
+             
+             NSLog(@"JSON RESPONSE: %@",stringReply);
+             
+             //Lets parse the response to get the dyfocus friends info
+             NSMutableDictionary *friendsDictionary = [[NSMutableDictionary alloc] init];
+             
+             if (statusCode == 200) {
+                 // Let's parse the response and create a NSMutableDictonary with the friends:
+                 
+                 if (stringReply) {
+                     NSDictionary *jsonValues = [stringReply JSONValue];
+                     
+                     if (jsonValues) {
+                         NSDictionary * jsonFriends = [jsonValues valueForKey:@"friends_list"];
+                         
+                         if (jsonFriends) {
+                             
+                             for (int i = 0; i < [jsonFriends count]; i++) {
+                                 
+                                 NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
+                                 NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
+                                 
+                                 Person *person = [people objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                                 
+                                 [friendsDictionary setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                                 [people removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                             }
+                             
+                             self.dyfocusFriends = friendsDictionary;
+                             
+                             //AWESOME! We have everything we need, time to continue the app flow
+                             
+                             [splashScreenController.view removeFromSuperview];
+                             
+                             [self setupTabController];
+                             
+                         }
+                     }
+                 }
+                 
+                 
+             } else {
+                 [self showConnectionError];
+             }
+         } else {
+             [self showConnectionError];
+         }
+         
+     }];
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -366,7 +638,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
 }
@@ -404,6 +676,38 @@
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+}
+
+-(void)showOkAlertWithMessage:(NSString *)message andTitle:(NSString *)title
+{
+    NSString *alertButton = @"OK";
+    
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+    [alert show];
+    
+    [alertButton release];
+}
+
+- (void) showSplashScreen {
+    splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+    
+    [self.window addSubview:splashScreenController.view];
+}
+
+- (void) showConnectionError {
+    
+    if(!loginController) {
+        loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+    }
+    
+    [self.window addSubview:loginController.view];
+    
+    if (splashScreenController) {
+        [splashScreenController.view removeFromSuperview];
+    }
+    
+    [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
+    
 }
 
 

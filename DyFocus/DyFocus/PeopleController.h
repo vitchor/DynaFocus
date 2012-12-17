@@ -1,10 +1,3 @@
-//
-//  PeopleController.h
-//  UberClient
-//
-//  Created by Jordan Bonnet on 2/8/11.
-//  Copyright 2011 Ubercab LLC. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 #import "UIStyledLabel.h"

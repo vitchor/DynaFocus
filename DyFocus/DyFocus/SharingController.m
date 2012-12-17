@@ -19,7 +19,7 @@
 
 @implementation SharingController
 
-@synthesize facebookSwitch, activityIndicator, frames, focalPoints, spinner, facebookLoginView, cancelFacebookLoginButton, continueToFacebookLoginButton;
+@synthesize facebookSwitch, activityIndicator, frames, focalPoints, spinner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,110 +34,24 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = @"Publish";
-    
-    [cancelFacebookLoginButton addTarget:self action:@selector(cancelFacebookLoginButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [continueToFacebookLoginButton addTarget:self action:@selector(continueToFacebookLoginButtonAction) forControlEvents:UIControlEventTouchUpInside];
-
+ 
     NSString *share = @"Publish";
 	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(share)];
 	self.navigationItem.rightBarButtonItem = shareButton;
 	[shareButton release];
 	[share release];
     
-    [facebookSwitch addTarget: self action: @selector(changedSwitchValue:) forControlEvents:UIControlEventValueChanged];
     
 }
 
-- (void) cancelFacebookLoginButtonAction {
-    self.navigationItem.rightBarButtonItem.enabled = true;
-    [facebookLoginView setHidden:YES];
-}
 
-- (void) continueToFacebookLoginButtonAction {
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate openFacebookSessionWithTag:UPLOADING];
+- (void) share {
     
-    [facebookLoginView setHidden:YES];
-}
-
-
-- (IBAction) changedSwitchValue: (id) sender {
-    
-    UISwitch *fbSwitch = (UISwitch *)sender;
-    
-    if (fbSwitch.on) {
-        if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-            // To-do, show logged in view
-        } else if (FBSession.activeSession.state != FBSessionStateOpen) {
-            // No, display the login page.
-            AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-            [appDelegate openFacebookSessionWithTag:SHARING];
-        }
-    }
-}
-
-
-- (void)sessionStateChanged:(FBSession *)session
-                      state:(FBSessionState) state
-                      error:(NSError *)error
-{
-    switch (state)         {
-        case FBSessionStateOpen:
-            if (!error) {
-                // We have a valid session
-                NSLog(@"User session found");
-            }
-            break;
-        case FBSessionStateClosed:
-        case FBSessionStateClosedLoginFailed:
-            [session closeAndClearTokenInformation];
-            
-            //[self createNewSession];
-            break;
-        default:
-            break;
-    }
-}
-- (void) share
-{
     self.navigationItem.rightBarButtonItem.enabled = false;
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *savedId = [defaults stringForKey:@"UserFacebookId"];
-    
-    if (savedId) {
-        [self showLoading];
+    [self showLoading];
         
-        [self upload];
-        
-    } else {
-        
-        if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-            
-            [self showLoading];
-            
-            [[FBRequest requestForMe] startWithCompletionHandler:
-             ^(FBRequestConnection *connection,
-               NSDictionary<FBGraphUser> *user,
-               NSError *error) {
-                 
-                 if (!error) {
-                     
-                     [self saveUserDefaults:user];
-                     [self upload];
-                     
-                 } else {
-                     [self facebookError];
-                 }
-             }];
-            
-        } else {
-            
-            //We don't have a session or an ID
-            [facebookLoginView setHidden:NO];
-        }
-    }
-    
+    [self upload];
 }
 
 - (void) showLoading {
@@ -146,27 +60,10 @@
     [spinner startAnimating];
 }
 
-- (void) saveUserDefaults: (NSDictionary<FBGraphUser> *)user {
-    
-    NSLog(@"SAVING DEFAULTS");
-    NSLog(@"NAME: %@", user.name);
-    NSLog(@"ID: %@", user.id);
-    NSLog(@"EMAIl: %@", [user objectForKey:@"email"]);
-    
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[user objectForKey:@"email"] forKey:@"UserFacebookEmail"];
-    [[NSUserDefaults standardUserDefaults] setObject:user.name forKey:@"UserFacebookName"];
-    [[NSUserDefaults standardUserDefaults] setObject:user.id forKey:@"UserFacebookId"];
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate loadFeedUrl:user.id];
-}
-
-
 -(void)shareWithFacebook {
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *savedFacebookId = [defaults stringForKey:@"UserFacebookId"];
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    NSString *savedFacebookId = [appDelegate.myself objectForKey:@"id"];
     
     NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/user/%@/fof_name/", savedFacebookId, fofName];
     
@@ -218,12 +115,12 @@
 {
     
     NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/image/"];
-    //NSURL *webServiceUrl = [NSURL URLWithString:@"http://192.168.0.108:8000/uploader/image/"];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *savedFacebookId = [defaults stringForKey:@"UserFacebookId"];
-    NSString *savedFacebookName = [defaults stringForKey:@"UserFacebookName"];
-    NSString *savedFacebookEmail = [defaults stringForKey:@"UserFacebookEmail"];
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    
+    NSString *savedFacebookId = [appDelegate.myself objectForKey:@"id"];
+    NSString *savedFacebookName = [appDelegate.myself objectForKey:@"name"];
+    NSString *savedFacebookEmail = [appDelegate.myself objectForKey:@"email"];
     
     request = [[ASIFormDataRequest requestWithURL:webServiceUrl] retain];
     [request setDelegate:self];
@@ -340,28 +237,6 @@
         [request cancel];
         [request release];
     }
-}
-
-
--(void)requestUserInfo:(FBSession *)session withTag:(int)tag {
-    
-    [[FBRequest requestForMe] startWithCompletionHandler:
-     ^(FBRequestConnection *connection,
-       NSDictionary<FBGraphUser> *user,
-       NSError *error) {
-         if (!error) {
-             
-             [self saveUserDefaults:user];
-             
-             if (tag == UPLOADING) {
-                 [self showLoading];
-                 [self upload];
-             }
-             
-         } else {
-             [self facebookError];
-         }
-     }];
 }
 
 -(void) facebookError

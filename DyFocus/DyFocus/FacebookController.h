@@ -1,10 +1,4 @@
-//
-//  FacebookController.h
-//  UberClient
-//
-//  Created by Jordan Bonnet on 2/8/11.
-//  Copyright 2011 Ubercab LLC. All rights reserved.
-//
+
 
 #import "PeopleController.h"
 #import <FacebookSDK/FacebookSDK.h>

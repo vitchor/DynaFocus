@@ -15,6 +15,9 @@
 #import "FacebookController.h"
 #import "ProfileController.h"
 
+#import "LoginController.h"
+#import "SplashScreenController.h"
+
 #define UPLOADING 0
 #define SHARING 1
 #define FRIENDS 2
@@ -26,6 +29,13 @@
     NSArray *permissions;
     FacebookController *friendsController;
     WebViewController *feedWebViewController;
+    LoginController *loginController;
+    SplashScreenController *splashScreenController;
+    
+    
+    NSMutableDictionary *friends;
+    NSMutableDictionary *dyfocusFriends;    
+    NSMutableDictionary *myself;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -38,7 +48,14 @@ extern NSString *const FBSessionStateChangedNotification;
 - (void)resetCameraUINavigationController;
 - (void)goBackToLastController;
 
+- (void)signin;
+
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
+
+@property (nonatomic, retain)  NSMutableDictionary *friends;
+@property (nonatomic, retain)  NSMutableDictionary *dyfocusFriends;
+@property (nonatomic, retain)  NSMutableDictionary *myself;
+
 
 @end
