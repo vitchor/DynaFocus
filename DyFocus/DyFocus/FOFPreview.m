@@ -10,6 +10,7 @@
 #import "ASIFormDataRequest.h"
 #import "SharingController.h"
 
+#define CANCEL 0
 @implementation FOFPreview
 
 @synthesize firstImageView,secondImageView, frames, focalPoints, timer;
@@ -46,6 +47,12 @@
 	self.navigationItem.rightBarButtonItem = continueButton;
 	[continueButton release];
 	[doneString release];
+    
+
+    NSString *cancelString = @"Cancel";
+	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
+									   initWithTitle:cancelString style:UIBarButtonItemStyleBordered target:self action:@selector(cancel)];
+	self.navigationItem.leftBarButtonItem = cancelButton;
     
     [super viewDidLoad];
     
@@ -158,6 +165,33 @@
     NSLog(@"YEAAAH");
     
     [super dealloc];
+}
+
+- (void) cancel {
+	NSString *alertTitle = @"Cancel?";
+	NSString *alertMsg =@"You'll lose the picture that you've taken. Are you sure?";
+	NSString *alertButton1 = @"Yes";
+	NSString *alertButton2 =@"No";
+	
+	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton1 otherButtonTitles:nil] autorelease];
+    // optional - add more buttons:
+	[alert setTag:CANCEL];
+    [alert addButtonWithTitle:alertButton2];
+    [alert show];
+	
+	[alertTitle release];
+	[alertMsg release];
+	[alertButton1 release];
+	[alertButton2 release];
+	
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if ([alertView tag] == CANCEL) {
+        if (buttonIndex == 0) {
+			[self.navigationController popViewControllerAnimated:YES];
+        }
+    }
 }
 
     

@@ -91,13 +91,13 @@
 
 - (void)setupTabController {
     // Camera Controller
-    CameraView *startController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
-    startController.hidesBottomBarWhenPushed = YES;
-    cameraNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:startController];
+    cameraViewController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
+    cameraViewController.hidesBottomBarWhenPushed = YES;
+    cameraNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:cameraViewController];
     cameraNavigationController.hidesBottomBarWhenPushed = YES;
     UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:3];
     [cameraNavigationController setTabBarItem:cameraTab];
-    [startController release];
+    
     
     
     // Featured Controller
@@ -111,7 +111,7 @@
     // Feed Controller
     feedWebViewController = [[WebViewController alloc] init];
 
-    NSString *stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", [self.myself objectForKey:@"id"]];
+    NSString *stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/m_feed/0/", [self.myself objectForKey:@"id"]];
 
     
     [feedWebViewController loadUrl: stringUrl];
@@ -158,18 +158,14 @@
     [self.window addSubview:self.tabBarController.view];
 }
 
-- (void)loadFeedUrl:(NSString *)userId {
-    
-    NSString *stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/user/0/fof_name/", userId];
-    [feedWebViewController loadUrl: stringUrl];
-    [stringUrl release];
-}
-
 - (void)resetCameraUINavigationController {
     NSArray *viewControllers = cameraNavigationController.viewControllers;
     UIViewController *rootViewController = [viewControllers objectAtIndex:0];
     [cameraNavigationController setNavigationBarHidden:YES animated:YES];
     [cameraNavigationController setViewControllers:[NSArray arrayWithObject:rootViewController] animated:YES];
+    
+    [cameraViewController showToast:@"Upload Complete."];
+    
 }
 
 -(void)goBackToLastController {
@@ -195,8 +191,7 @@
 
 - (void)sessionStateChanged:(FBSession *)session
                       state:(FBSessionState) state
-                      error:(NSError *)error
-{
+                      error:(NSError *)error {
 
     switch (state) {
         case FBSessionStateOpen: {
@@ -237,7 +232,6 @@
                 [self showSplashScreen];
                 [loginController.view removeFromSuperview];
                 
-             
                 NSString *jsonRequest1 = @"{ \"method\": \"GET\", \"relative_url\": \"me/friends?fields=name,id,username\" }";
                 NSString *jsonRequest2 = @"{ \"method\": \"GET\", \"relative_url\": \"me\" }";
                 NSString *jsonRequestsArray = [NSString stringWithFormat:@"[ %@, %@ ]", jsonRequest1, jsonRequest2];
@@ -621,14 +615,12 @@
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation
-{
+         annotation:(id)annotation{
     return [FBSession.activeSession handleOpenURL:url];
 }
 
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
+- (void)applicationWillResignActive:(UIApplication *)application {
     /*
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -657,7 +649,25 @@
     [FBSession setDefaultAppID:@"417476174956036"];
     if (FBSession.activeSession.state == FBSessionStateCreatedOpening) {
         [FBSession.activeSession close]; // so we close our session and start over
+        
+    } else if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        
+        /* Steps:
+         - show splash screen
+         - open the session (this won't display any UX)
+         - get the user info
+         - send user info to our servers.
+         - enable the app flow
+         */
+        
+        splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+        
+        [self.window addSubview:splashScreenController.view];
+        
+        [self reopenSession];
     }
+    
+    
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */

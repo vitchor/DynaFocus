@@ -33,6 +33,7 @@
     int mFOFIndex;
     
 }
+- (void)showToast:(NSString *)text;
 
 @property(nonatomic,retain) IBOutlet UIBarButtonItem *shootButton;
 @property(nonatomic,retain) IBOutlet UIBarButtonItem *clearButton;
@@ -42,4 +43,7 @@
 @property(nonatomic,retain) IBOutlet PathView *pathView;
 @property(nonatomic,retain) IBOutlet UIView *infoView;
 @property(nonatomic,retain) IBOutlet UIButton *getStartedButton;
+
+
+
 @end

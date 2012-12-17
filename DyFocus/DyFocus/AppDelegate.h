@@ -17,6 +17,7 @@
 
 #import "LoginController.h"
 #import "SplashScreenController.h"
+#import "CameraView.h"
 
 #define UPLOADING 0
 #define SHARING 1
@@ -31,6 +32,7 @@
     WebViewController *feedWebViewController;
     LoginController *loginController;
     SplashScreenController *splashScreenController;
+    CameraView *cameraViewController;
     
     
     NSMutableDictionary *friends;

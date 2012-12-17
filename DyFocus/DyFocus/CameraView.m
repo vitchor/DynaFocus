@@ -391,6 +391,13 @@
     [super viewDidAppear:animated];
 }
 
+- (void)showToast:(NSString *)text {
+
+    iToast *toastMessage = [iToast makeText:NSLocalizedString(text, @"")];
+    [[toastMessage setDuration:iToastDurationNormal] show];
+    
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     if (mToastMessage) {
