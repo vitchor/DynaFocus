@@ -199,6 +199,7 @@
         }
             break;
         case FBSessionStateClosed:
+            break;
         case FBSessionStateClosedLoginFailed:
 
             break;
@@ -439,6 +440,7 @@
                 
                 break;
             case FBSessionStateClosed:
+                break;
             case FBSessionStateClosedLoginFailed:
                 [self showConnectionError];
                 [FBSession.activeSession closeAndClearTokenInformation];
@@ -610,6 +612,16 @@
          }
          
      }];
+}
+
+- (void)invitationSentGoBackToFriends {
+    
+    NSArray *controllers = [[[NSArray alloc] initWithObjects:friendsController, nil] autorelease];
+    
+    [friendsController.navigationController setViewControllers:controllers];
+    [friendsController showFriendsWithToast:@"Finished sending invitations."];
+    
+    
 }
 
 - (BOOL)application:(UIApplication *)application

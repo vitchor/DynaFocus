@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIStyledLabel.h"
+#import "InvitationController.h"
 
 @interface Person : NSObject {
 	long m_id;
@@ -40,6 +41,8 @@
     
 	NSMutableDictionary *m_friendInfo;
 	NSMutableArray *m_visibleFriendsList;
+    
+    InvitationController *invitationController;
     
 	int m_viewCount;
 }

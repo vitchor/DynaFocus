@@ -3,6 +3,7 @@
 #import "InvitationController.h"
 #import "AppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DyfocusUINavigationController.h"
 
 @implementation Person
 
@@ -638,7 +639,7 @@
 }
 
 - (void)personalizeMessage {
-	InvitationController *ctlr = [[[InvitationController alloc] initWithDelegate:self] autorelease];
+	invitationController = [[[InvitationController alloc] initWithDelegate:self] autorelease];
     
     
     NSArray *selectedIds = [self selectedIds];
@@ -655,10 +656,10 @@
 
 	}
     
-    ctlr.selectedPeople = selectedPeople;
+    invitationController.selectedPeople = selectedPeople;
     
-	UINavigationController *navCtlr = [[[UINavigationController alloc] initWithRootViewController:ctlr] autorelease];
-	navCtlr.navigationBar.barStyle = UIBarStyleBlackOpaque;			
+	DyfocusUINavigationController *navCtlr = [[[DyfocusUINavigationController alloc] initWithRootViewController:invitationController] autorelease];
+	navCtlr.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[self presentModalViewController:navCtlr animated:YES];
 }
 

@@ -24,6 +24,7 @@
 - (int)cellStyle;
 - (void)loadImage:(int)uid;
 - (void)sendInvite;
+- (void)showFriendsWithToast:(NSString *)message;
 
 
 @end

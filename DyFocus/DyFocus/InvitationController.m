@@ -1,4 +1,4 @@
-
+#import "AppDelegate.h"
 #import "InvitationController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <MessageUI/MFMailComposeViewController.h>
@@ -72,60 +72,58 @@
         infoView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 450)] autorelease];
         infoView.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
     
-    
-    
-    UILabel *titleView = [[[UILabel alloc] initWithFrame: CGRectMake(10, 15, 300, 40)] autorelease];
-    titleView.font = [UIFont boldSystemFontOfSize:21.0];
-    titleView.textColor = [UIColor blackColor];
-    titleView.shadowColor = [UIColor whiteColor];
-    titleView.textAlignment = UITextAlignmentCenter;
-    titleView.numberOfLines = 2;
-    titleView.shadowOffset = CGSizeMake(0,1);
-    titleView.text = @"Invitation Informations";
-    titleView.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
-    
-    UILabel *infoMessageLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 57, 300, 150)] autorelease];
-    infoMessageLabel.font = [UIFont systemFontOfSize:19.0];
-    infoMessageLabel.textColor = [UIColor blackColor];
-    infoMessageLabel.shadowColor = [UIColor whiteColor];
-    infoMessageLabel.textAlignment = UITextAlignmentCenter;
-    infoMessageLabel.numberOfLines = 7;
-    infoMessageLabel.shadowOffset = CGSizeMake(0,1);
-    infoMessageLabel.text = @"The only way to send a facebook direct message from an app is throw your email account. Don't worry, your friends will only receive this invite on their facebook message inbox.";
-    infoMessageLabel.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
-    
-    UILabel *infoMessageObservationLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 214, 300, 100)] autorelease];
-    infoMessageObservationLabel.font = [UIFont systemFontOfSize:18.0];
-    infoMessageObservationLabel.textColor = [UIColor blackColor];
-    infoMessageObservationLabel.shadowColor = [UIColor whiteColor];
-    infoMessageObservationLabel.textAlignment = UITextAlignmentCenter;
-    infoMessageObservationLabel.numberOfLines = 5;
-    infoMessageObservationLabel.shadowOffset = CGSizeMake(0,1);
-    infoMessageObservationLabel.text = @"*You need to select a sender email that's registered on facebook so your invites don't get tagged as spam.";
-    infoMessageObservationLabel.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
-    
-    
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom] ; 
-    
-    
-    backButton.frame = CGRectMake(10, 310, 80, 50);
-    
-    [backButton setTitle:@"< Back" forState:UIControlStateNormal];
-    
-    [backButton setTitleColor: [UIColor colorWithRed:23.0f/255.0f green:68.0f/255.0f blue:117.0f/255.0f alpha:1.0] forState: UIControlStateNormal];
-    
-    [backButton setTitleColor: [UIColor blackColor] forState: UIControlStateSelected];
-    
-    
-    //backButton[backButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    //backButton.backgroundColor = [UIColor blackColor];*/
-    
-    [backButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
-    
-    [infoView addSubview:infoMessageLabel];
-    [infoView addSubview:titleView];
-    [infoView addSubview:infoMessageObservationLabel];
-    [infoView addSubview:backButton];
+        UILabel *titleView = [[[UILabel alloc] initWithFrame: CGRectMake(10, 45, 300, 40)] autorelease];
+        titleView.font = [UIFont boldSystemFontOfSize:21.0];
+        titleView.textColor = [UIColor blackColor];
+        titleView.shadowColor = [UIColor whiteColor];
+        titleView.textAlignment = UITextAlignmentCenter;
+        titleView.numberOfLines = 2;
+        titleView.shadowOffset = CGSizeMake(0,1);
+        titleView.text = @"Invitation Informations";
+        titleView.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
+        
+        UILabel *infoMessageLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 102, 300, 150)] autorelease];
+        infoMessageLabel.font = [UIFont systemFontOfSize:19.0];
+        infoMessageLabel.textColor = [UIColor blackColor];
+        infoMessageLabel.shadowColor = [UIColor whiteColor];
+        infoMessageLabel.textAlignment = UITextAlignmentCenter;
+        infoMessageLabel.numberOfLines = 7;
+        infoMessageLabel.shadowOffset = CGSizeMake(0,1);
+        infoMessageLabel.text = @"The only way to send a facebook direct message from an app is throw your email account. Your friends will only receive this invite on their facebook message inbox.";
+        infoMessageLabel.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
+        
+        UILabel *infoMessageObservationLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 280, 300, 100)] autorelease];
+        infoMessageObservationLabel.font = [UIFont systemFontOfSize:19.0];
+        infoMessageObservationLabel.textColor = [UIColor blackColor];
+        infoMessageObservationLabel.shadowColor = [UIColor whiteColor];
+        infoMessageObservationLabel.textAlignment = UITextAlignmentCenter;
+        infoMessageObservationLabel.numberOfLines = 5;
+        infoMessageObservationLabel.shadowOffset = CGSizeMake(0,1);
+        infoMessageObservationLabel.text = @"*You need to select a sender email that's registered on your facebook account so your invites don't get tagged as spam.";
+        infoMessageObservationLabel.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
+        
+        
+        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom] ; 
+        
+        
+        backButton.frame = CGRectMake(10, 418, 80, 50);
+        
+        [backButton setTitle:@"< Back" forState:UIControlStateNormal];
+        
+        [backButton setTitleColor: [UIColor colorWithRed:23.0f/255.0f green:68.0f/255.0f blue:117.0f/255.0f alpha:1.0] forState: UIControlStateNormal];
+        
+        [backButton setTitleColor: [UIColor blackColor] forState: UIControlStateSelected];
+        
+        
+        //backButton[backButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        //backButton.backgroundColor = [UIColor blackColor];*/
+        
+        [backButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
+        
+        [infoView addSubview:infoMessageLabel];
+        [infoView addSubview:titleView];
+        [infoView addSubview:infoMessageObservationLabel];
+        [infoView addSubview:backButton];
     
     } else {
         [infoView setHidden:NO];
@@ -192,6 +190,12 @@
 {
     if (result == MFMailComposeResultSent) {
         NSLog(@"It's away!");
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        
+        [delegate invitationSentGoBackToFriends];
+
+        
     }
     [self dismissModalViewControllerAnimated:YES];
 }

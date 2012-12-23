@@ -6,6 +6,7 @@
 #import "LoadView.h"
 #import "AppDelegate.h"
 #import "JSON.h"
+#import "iToast.h"
 
 #define FRIENDS_REQUEST 1
 #define PICTURE_REQUEST 2
@@ -119,6 +120,15 @@
     [alert show];
     
     [alertButton release];
+}
+
+- (void)showFriendsWithToast:(NSString *)message {
+
+    iToast *mToastMessage = [iToast makeText:NSLocalizedString(message, @"")];
+    [[mToastMessage setDuration:iToastDurationNormal] show];
+    
+    [invitationController.navigationController dismissModalViewControllerAnimated:NO];
+
 }
 
 @end

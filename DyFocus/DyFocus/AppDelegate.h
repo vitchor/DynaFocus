@@ -50,6 +50,8 @@ extern NSString *const FBSessionStateChangedNotification;
 - (void)resetCameraUINavigationController;
 - (void)goBackToLastController;
 
+- (void)invitationSentGoBackToFriends;
+
 - (void)signin;
 
 @property (strong, nonatomic) UIWindow *window;
