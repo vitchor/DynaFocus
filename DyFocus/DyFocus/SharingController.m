@@ -33,9 +33,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = @"Publish";
+    self.navigationItem.title = @"Upload";
  
-    NSString *share = @"Publish";
+    NSString *share = @"Upload";
 	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(share)];
 	self.navigationItem.rightBarButtonItem = shareButton;
 	[shareButton release];
@@ -65,7 +65,7 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     NSString *savedFacebookId = [appDelegate.myself objectForKey:@"id"];
     
-    NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/user/%@/fof_name/", savedFacebookId, fofName];
+    NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/share_fof/", fofName];
     
     NSString *message = @"";
     
