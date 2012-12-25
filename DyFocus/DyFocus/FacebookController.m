@@ -78,7 +78,7 @@
         person = [m_friendInfo objectForKey:[NSNumber numberWithLong:uid]];
     }
     
-    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",(NSString *)person.tag];
+    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",(NSString *)person.tag] autorelease];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
 

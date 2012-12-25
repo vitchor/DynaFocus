@@ -7,10 +7,11 @@
 //
 
 #import "PathView.h"
+#import "CameraView.h"
 
 @implementation PathView
 
-@synthesize touchPoints, ref, context, enabled;
+@synthesize touchPoints, ref, context, enabled, cameraViewController;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -114,6 +115,11 @@
         [self addPoint:touchPoint];
         
         [self setNeedsDisplay];
+        
+        if ([touchPoints count] == 1) {
+            cameraViewController.mFocalPoints = [self getPoints];
+            [cameraViewController updateFocusPoint];
+        }
     }
 }
 

@@ -219,7 +219,7 @@
         [aView.layer addSublayer:backgroungLayer];
         
         // Take care of the section title now
-        UILabel *aTitle = [[UILabel alloc] initWithFrame: CGRectMake(10, 0, aView.bounds.size.width-10, aView.bounds.size.height)];
+        UILabel *aTitle = [[[UILabel alloc] initWithFrame: CGRectMake(10, 0, aView.bounds.size.width-10, aView.bounds.size.height)] autorelease];
         aTitle.text = [self tableView:tableView titleForHeaderInSection:section];
         aTitle.backgroundColor = UIColor.clearColor;
         aTitle.font = [UIFont boldSystemFontOfSize:18];
@@ -253,7 +253,7 @@
         [aView.layer addSublayer:backgroungLayer];
         
         // Take care of the section title now
-        UILabel *aTitle = [[UILabel alloc] initWithFrame: CGRectMake(10, 0, aView.bounds.size.width-10, 30)];
+        UILabel *aTitle = [[[UILabel alloc] initWithFrame: CGRectMake(10, 0, aView.bounds.size.width-10, 30)] autorelease];
         aTitle.text = [self tableView:tableView titleForHeaderInSection:section];
         aTitle.backgroundColor = UIColor.clearColor;
         aTitle.font = [UIFont boldSystemFontOfSize:18];
