@@ -145,7 +145,9 @@
 - (void)dealloc {
 	//RELEASE_MEMBER(m_messageView);
 	[m_delegate release];
+    [selectedPeople release];
     [super dealloc];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -159,7 +161,7 @@
     
     
     
-    NSMutableArray *emailReceivers = [[NSMutableArray alloc] init];
+    NSMutableArray *emailReceivers = [[[NSMutableArray alloc] init] autorelease];
     
     for (Person *person in selectedPeople) {
         
@@ -171,7 +173,7 @@
         MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
         controller.mailComposeDelegate = self;
         [controller setSubject:@"dyfocus Invitation"];
-        NSString *message = [[NSString alloc] initWithFormat:@"%@ <br/> https://itunes.apple.com/us/app/dyfocus/id557266156", m_messageView.text];
+        NSString *message = [[[NSString alloc] initWithFormat:@"%@ <br/> https://itunes.apple.com/us/app/dyfocus/id557266156", m_messageView.text] autorelease];
         [controller setMessageBody:message isHTML:YES];
         [controller setToRecipients:emailReceivers];
         if (controller) [self presentModalViewController:controller animated:YES];

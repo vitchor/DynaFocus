@@ -202,7 +202,7 @@
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
    if (section == 0 || [m_searchBar showsCancelButton]) {
         CGRect aFrame =CGRectMake(0, 0, tableView.contentSize.width, 30);
-        UIView * aView = [[UIView alloc] initWithFrame:aFrame];
+        UIView * aView = [[[UIView alloc] initWithFrame:aFrame] autorelease];
         aView.backgroundColor = UIColor.clearColor;
         
         // Create a stretchable image for the background that emulates the default gradient, only in green
@@ -236,7 +236,7 @@
         return aView;
     } else {
         CGRect aFrame = CGRectMake(0, 0, tableView.contentSize.width, 30 + m_controlToolbar.frame.size.height);
-        UIView * aView = [[UIView alloc] initWithFrame:aFrame];
+        UIView * aView = [[[UIView alloc] initWithFrame:aFrame] autorelease];
         aView.backgroundColor = UIColor.clearColor;
         
         // Create a stretchable image for the background that emulates the default gradient, only in green
@@ -643,7 +643,7 @@
     
     
     NSArray *selectedIds = [self selectedIds];
-    NSMutableArray *selectedPeople = [[NSMutableArray alloc] init];
+    NSMutableArray *selectedPeople = [[[NSMutableArray alloc] init] autorelease];
    
 
     for (int i = 0; i < [selectedIds count]; ++i) {

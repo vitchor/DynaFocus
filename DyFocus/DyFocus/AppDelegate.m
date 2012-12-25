@@ -33,6 +33,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Flurry startSession:@"QXSZM9GQQVY6RMQQMBQN"];
+    
+    
     [FBProfilePictureView class];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
 
@@ -256,9 +258,15 @@
                      
                      NSArray* friendsArray = [body objectForKey:@"data"];
                      
-                     NSMutableDictionary *people = [[[NSMutableDictionary alloc] initWithCapacity:[friendsArray count]] autorelease];
                      
-                     NSMutableArray *jsonFriendsDyfocusRequest = [[[NSMutableArray alloc] initWithCapacity:[friendsArray count]] autorelease];
+                     if (!self.friends) {
+                         self.friends = [[NSMutableDictionary alloc] initWithCapacity:[friendsArray count]];
+                     } else {
+                         [self.friends removeAllObjects];
+                     }
+                     
+                     
+                     NSMutableArray *jsonFriendsDyfocusRequest = [[NSMutableArray alloc] initWithCapacity:[friendsArray count]] ;
                      
                      if ( httpCode == 200 && !error ) {
                            
@@ -270,7 +278,7 @@
                              
                              Person *person = [[[Person alloc] initWithId:[friendId longLongValue] andName:friendName andDetails:friendUsername andTag:friendId] autorelease];
                              
-                             [people setObject:person forKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                             [self.friends setObject:person forKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                              
                              NSLog(@"I have a friend named %@ with id %@", friendName, friendId);
 
@@ -283,9 +291,7 @@
                              [jsonFriendsDyfocusRequest addObject:jsonFriendObject];
                              
                          }
-                         // Sets the model object friends
-                         self.friends = people;
-                         
+
                      
                      
                          // Let's parse the user information
@@ -311,11 +317,12 @@
                          
                          NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
                          
+                         [jsonFriendsDyfocusRequest release];
                          
                          // Lets create the network request
                          NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/user_info/"];
                          
-                         NSString *postString = [[NSString alloc] initWithFormat:@"json=%@", json];
+                         NSString *postString = [[[NSString alloc] initWithFormat:@"json=%@", json] autorelease];
                          NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:webServiceUrl];
                          [postRequest setHTTPMethod:@"POST"];
                          [postRequest setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
@@ -328,14 +335,18 @@
                          
                          // Lets read the response from the server
                          dataReply = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:&response error:&error];
-                         stringReply = (NSString *)[[NSString alloc] initWithData:dataReply encoding:NSUTF8StringEncoding];
+                         stringReply = [(NSString *)[[NSString alloc] initWithData:dataReply encoding:NSUTF8StringEncoding] autorelease];
                          httpResponse = (NSHTTPURLResponse *)response;
                          int statusCode = [httpResponse statusCode];
                          
                          NSLog(@"JSON RESPONSE: %@",stringReply);
+                        
                          
-                         //Lets parse the response to get the dyfocus friends info
-                         NSMutableDictionary *friendsDictionary = [[NSMutableDictionary alloc] init];
+                         if (!self.dyfocusFriends) {
+                             self.dyfocusFriends = [[NSMutableDictionary alloc] init];
+                         } else {
+                             [self.dyfocusFriends removeAllObjects];
+                         }
                          
                          if (statusCode == 200) {
                              // Let's parse the response and create a NSMutableDictonary with the friends:
@@ -353,13 +364,13 @@
                                              NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
                                              NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
                                              
-                                             Person *person = [people objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                                             Person *person = [self.friends objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                                              
-                                             [friendsDictionary setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
-                                             [people removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                                             [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                                             [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
                                          }
                                          
-                                        self.dyfocusFriends = friendsDictionary;
+    
                                      
                                         //AWESOME! We have everything we need, time to continue the app flow
                                         //[LoadView fadeAndRemoveFromView:loginController.view];
@@ -428,8 +439,8 @@
 
 - (void)reopenSession {
     
-    permissions =  [[NSArray arrayWithObjects:
-                              @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil] retain];
+    permissions = [NSArray arrayWithObjects:
+                              @"publish_actions", @"user_about_me", @"friends_about_me", @"email", nil];
     
     [FBSession openActiveSessionWithPermissions:permissions allowLoginUI:YES completionHandler:^(FBSession *session,
                                                                                                  FBSessionState status,
@@ -484,16 +495,23 @@
          
          int httpCode = [[friendsResponse objectForKey:@"code"] intValue];
          
+         NSString *bodyString = [friendsResponse objectForKey:@"body"];
          
-         NSDictionary *body = [[friendsResponse objectForKey:@"body"] JSONValue];
+         NSDictionary *body = [bodyString JSONValue];
          
          NSArray* friendsArray = [body objectForKey:@"data"];
          
-         NSMutableDictionary *people = [[[NSMutableDictionary alloc] initWithCapacity:[friendsArray count]] autorelease];
+         if (!self.friends) {
+             self.friends = [[NSMutableDictionary alloc] init];
+         } else {
+             [self.friends removeAllObjects];
+         }
+         
+
          
          NSMutableArray *jsonFriendsDyfocusRequest = [[[NSMutableArray alloc] initWithCapacity:[friendsArray count]] autorelease];
          
-         if ( httpCode == 200 && !error ) {
+         if (httpCode == 200 && !error) {
              
              for (NSDictionary* friend in friendsArray) {
                  
@@ -503,7 +521,9 @@
                  
                  Person *person = [[[Person alloc] initWithId:[friendId longLongValue] andName:friendName andDetails:friendUsername andTag:friendId] autorelease];
                  
-                 [people setObject:person forKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                 NSNumber *key = [NSNumber numberWithLong:[friendId longLongValue]];
+                 [self.friends setObject:person forKey:key];
+                 //[key release];
                  
                  NSLog(@"I have a friend named %@ with id %@", friendName, friendId);
                  
@@ -516,9 +536,6 @@
                  [jsonFriendsDyfocusRequest addObject:jsonFriendObject];
                  
              }
-             // Sets the model object friends
-             self.friends = people;
-             
              
              
              // Let's parse the user information
@@ -547,7 +564,7 @@
              // Lets create the network request
              NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/user_info/"];
              
-             NSString *postString = [[NSString alloc] initWithFormat:@"json=%@", json];
+             NSString *postString = [[[NSString alloc] initWithFormat:@"json=%@", json] autorelease];
              NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:webServiceUrl];
              [postRequest setHTTPMethod:@"POST"];
              [postRequest setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
@@ -560,14 +577,19 @@
              
              // Lets read the response from the server
              dataReply = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:&response error:&error];
-             stringReply = (NSString *)[[NSString alloc] initWithData:dataReply encoding:NSUTF8StringEncoding];
+             stringReply = [(NSString *)[[NSString alloc] initWithData:dataReply encoding:NSUTF8StringEncoding] autorelease];
              httpResponse = (NSHTTPURLResponse *)response;
              int statusCode = [httpResponse statusCode];
              
              NSLog(@"JSON RESPONSE: %@",stringReply);
              
              //Lets parse the response to get the dyfocus friends info
-             NSMutableDictionary *friendsDictionary = [[NSMutableDictionary alloc] init];
+             if (!self.dyfocusFriends) {
+                 self.dyfocusFriends = [[NSMutableDictionary alloc] init];
+             } else {
+                 [self.dyfocusFriends removeAllObjects];
+             }
+
              
              if (statusCode == 200) {
                  // Let's parse the response and create a NSMutableDictonary with the friends:
@@ -585,13 +607,11 @@
                                  NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
                                  NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
                                  
-                                 Person *person = [people objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                                 Person *person = [self.friends objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                                  
-                                 [friendsDictionary setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
-                                 [people removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                                 [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                                 [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
                              }
-                             
-                             self.dyfocusFriends = friendsDictionary;
                              
                              //AWESOME! We have everything we need, time to continue the app flow
                              
@@ -603,6 +623,8 @@
                      }
                  }
                  
+                 //[body release];
+    
                  
              } else {
                  [self showConnectionError];
