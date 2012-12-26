@@ -170,8 +170,6 @@
     // Create/add StillImageOutput, get connection and add handler
     NSMutableDictionary *outputSettings = [[NSMutableDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
     
-    
-    //outputSettings setObject:<#(id)#> forKey:<#(id<NSCopying>)#>
 
     mStillImageOutput = [[AVCaptureStillImageOutput alloc] init];
 
