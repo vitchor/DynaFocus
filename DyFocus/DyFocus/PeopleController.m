@@ -320,7 +320,7 @@
                 Person *person = [m_friendInfo objectForKey:[NSNumber numberWithLong:personId]];
                 cell.textLabel.text = person.name;
                 cell.detailTextLabel.text = person.details;
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.tag = personId;
                 
                 UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithLong:personId]];

@@ -34,6 +34,10 @@
     
     bool isObserving;
     
+    IBOutlet UIButton *popupCloseButton;
+    IBOutlet UIView *popupView;
+    IBOutlet UIView *popupDarkView;    
+    
 }
 - (void)showToast:(NSString *)text;
 
@@ -50,7 +54,9 @@
 @property(nonatomic,retain) IBOutlet UIView *infoView;
 @property(nonatomic,retain) IBOutlet UIButton *getStartedButton;
 @property(nonatomic,retain) IBOutlet NSMutableArray *mFocalPoints;
-
+@property(nonatomic,retain) IBOutlet UIButton *popupCloseButton;
+@property(nonatomic,retain) IBOutlet UIView *popupView;
+@property(nonatomic,retain) IBOutlet UIView *popupDarkView;
 
 
 @end

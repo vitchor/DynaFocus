@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04989B721696232F003ECD93 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B711696232F003ECD93 /* close@2x.png */; };
+		04989B7516964E18003ECD93 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B7416964E18003ECD93 /* close.png */; };
 		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
 		441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFB115B131D200E204D7 /* Foundation.framework */; };
 		441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFB815B131D200E204D7 /* InfoPlist.strings */; };
@@ -111,6 +113,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04989B711696232F003ECD93 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		04989B7416964E18003ECD93 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		441BFFAF15B131D200E204D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		441BFFB115B131D200E204D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -628,6 +632,8 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				04989B7416964E18003ECD93 /* close.png */,
+				04989B711696232F003ECD93 /* close@2x.png */,
 				44362AFF167E8E590007944B /* big_logo.png */,
 				44B4A0D0167E4F3500956E0C /* example_fof_0.jpeg */,
 				44B4A0D1167E4F3500956E0C /* example_fof_1.jpeg */,
@@ -770,6 +776,8 @@
 				44B4A0D5167E4F3600956E0C /* example_fof_2.jpeg in Resources */,
 				44362AFE167E8D730007944B /* SplashScreenController.xib in Resources */,
 				44362B00167E8E590007944B /* big_logo.png in Resources */,
+				04989B721696232F003ECD93 /* close@2x.png in Resources */,
+				04989B7516964E18003ECD93 /* close.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
