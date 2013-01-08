@@ -18,10 +18,37 @@
 #import "LoginController.h"
 #import "SplashScreenController.h"
 #import "CameraView.h"
+#import "FOFTableController.h"
 
 #define UPLOADING 0
 #define SHARING 1
 #define FRIENDS 2
+
+#define dyfocus_url @"http://dyfoc.us"
+//#define dyfocus_url @"http://192.168.0.105:8000"
+
+@interface FOF : NSObject {
+	NSString *m_name;
+	NSArray *m_frames;
+	NSArray *m_comments;
+	NSString *m_likes;
+	NSString *m_userName;
+	NSString *m_userNickname;
+	NSString *m_date;
+	NSString *m_userId;
+    
+}
+
+@property (nonatomic, retain) NSArray *m_frames;
+@property (nonatomic, retain) NSArray *m_comments;
+@property (nonatomic, retain) NSString *m_name;
+@property (nonatomic, retain) NSString *m_likes;
+@property (nonatomic, retain) NSString *m_userName;
+@property (nonatomic, retain) NSString *m_userNickname;
+@property (nonatomic, retain) NSString *m_userId;
+@property (nonatomic, retain) NSString *m_date;
+@end
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     DyfocusUITabBarController *tabBarController;
@@ -38,6 +65,7 @@
     NSMutableDictionary *friends;
     NSMutableDictionary *dyfocusFriends;    
     NSMutableDictionary *myself;
+    NSArray *featuredFofArray;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -60,6 +88,7 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSMutableDictionary *friends;
 @property (nonatomic, retain)  NSMutableDictionary *dyfocusFriends;
 @property (nonatomic, retain)  NSMutableDictionary *myself;
+@property (nonatomic, retain)  NSArray *featuredFofArray;
 
 
 @end

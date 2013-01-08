@@ -19,10 +19,30 @@
 #import "JSON.h"
 #import "LoadView.h"
 
+@implementation FOF
+
+
+@synthesize m_name, m_frames, m_comments, m_likes, m_userName, m_userId, m_date, m_userNickname;
+
+- (void)dealloc {
+    [m_name release];
+    [m_frames release];
+    [m_comments release];
+    [m_userName release];
+    [m_date release];
+    [m_userNickname release];
+    [m_likes release];
+    [m_userId release];
+	[super dealloc];
+}
+
+@end
+
+
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friends, myself, dyfocusFriends;
+@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray;
 
 - (void)dealloc
 {
@@ -103,9 +123,41 @@
     
     
     // Featured Controller
-    WebViewController *featuredWebViewController = [[WebViewController alloc] init];
+    FOFTableController *featuredWebViewController = [[FOFTableController alloc] init];
     //[featuredWebViewController loadUrl: @"http://192.168.100.108:8000/uploader/0/featured_fof/"];
-    [featuredWebViewController loadUrl: @"http://dyfoc.us/uploader/0/featured_fof/"];
+    
+    featuredWebViewController.FOFArray = self.featuredFofArray;
+    
+    // TODO: set the foftableController FOFArray
+    
+   /* NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:4];
+    
+    FOF *fof = [FOF alloc];
+    fof.m_comments = nil;
+    fof.m_userId = 1001;
+    
+    [array addObject:fof];
+    
+    fof = [FOF alloc];
+    fof.m_comments = nil;
+    fof.m_userId = 1002;
+    
+    [array addObject:fof];
+    
+    fof = [FOF alloc];
+    fof.m_comments = nil;
+    fof.m_userId = 1003;
+    
+    [array addObject:fof];
+    
+    fof = [FOF alloc];
+    fof.m_comments = nil;
+    fof.m_userId = 1004;
+    
+    [array addObject:fof];*/
+    
+    //featuredWebViewController.FOFArray = array;
+    
     
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:1];
     [featuredWebViewController setTabBarItem:galleryTab];
@@ -113,7 +165,7 @@
     // Feed Controller
     feedWebViewController = [[WebViewController alloc] init];
 
-    NSString *stringUrl = [[NSString alloc] initWithFormat: @"http://dyfoc.us/uploader/%@/m_feed/0/", [self.myself objectForKey:@"id"]];
+    NSString *stringUrl = [[NSString alloc] initWithFormat: @"%@/uploader/%@/m_feed/0/", dyfocus_url, [self.myself objectForKey:@"id"]];
 
     
     [feedWebViewController loadUrl: stringUrl];
@@ -320,7 +372,7 @@
                          [jsonFriendsDyfocusRequest release];
                          
                          // Lets create the network request
-                         NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/user_info/"];
+                         NSURL *webServiceUrl = [NSURL URLWithString: [[[NSString alloc] initWithFormat: @"%@/uploader/login/", dyfocus_url] autorelease]];
                          
                          NSString *postString = [[[NSString alloc] initWithFormat:@"json=%@", json] autorelease];
                          NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:webServiceUrl];
@@ -352,37 +404,18 @@
                              // Let's parse the response and create a NSMutableDictonary with the friends:
                              
                              if (stringReply) {
-                                 NSDictionary *jsonValues = [stringReply JSONValue];
                                  
-                                 if (jsonValues) {
-                                     NSDictionary * jsonFriends = [jsonValues valueForKey:@"friends_list"];
-                                     
-                                     if (jsonFriends) {
-                                         
-                                         for (int i = 0; i < [jsonFriends count]; i++) {
-                                             
-                                             NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
-                                             NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
-                                             
-                                             Person *person = [self.friends objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
-                                             
-                                             [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
-                                             [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
-                                         }
-                                         
-    
-                                     
-                                        //AWESOME! We have everything we need, time to continue the app flow
-                                        //[LoadView fadeAndRemoveFromView:loginController.view];
-                                        [splashScreenController.view removeFromSuperview];
-                                         
-                                         
-                                        //[loginController.view removeFromSuperview];
-                                
-                                        [self setupTabController];
-                                     
-                                     }
-                                 }
+                                 [self parseServerInfo:stringReply];
+                                 
+                                 //AWESOME! We have everything we need, time to continue the app flow
+                                 //[LoadView fadeAndRemoveFromView:loginController.view];
+                                 [splashScreenController.view removeFromSuperview];
+                                 
+                                 
+                                 //[loginController.view removeFromSuperview];
+                                 
+                                 [self setupTabController];
+                                 
                              }
                              
                              
@@ -391,20 +424,13 @@
                              
                          }
 
-
-                         
-                         
                      
                      } else {
                          [self showConnectionError];
-                     }
-                                            
-                     
+                     }             
                      
                  }];
-                
-                
-                
+           
             }
                 break;
             case FBSessionStateClosed:
@@ -562,7 +588,7 @@
              
              
              // Lets create the network request
-             NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/user_info/"];
+             NSURL *webServiceUrl = [NSURL URLWithString:[[[NSString alloc] initWithFormat: @"%@/uploader/login/", dyfocus_url] autorelease]];
              
              NSString *postString = [[[NSString alloc] initWithFormat:@"json=%@", json] autorelease];
              NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:webServiceUrl];
@@ -594,33 +620,15 @@
              if (statusCode == 200) {
                  // Let's parse the response and create a NSMutableDictonary with the friends:
                  
+                 
                  if (stringReply) {
-                     NSDictionary *jsonValues = [stringReply JSONValue];
+     
+                    [self parseServerInfo:stringReply];
+                    //AWESOME! We have everything we need, time to continue the app flow
+                    [splashScreenController.view removeFromSuperview];
                      
-                     if (jsonValues) {
-                         NSDictionary * jsonFriends = [jsonValues valueForKey:@"friends_list"];
-                         
-                         if (jsonFriends) {
-                             
-                             for (int i = 0; i < [jsonFriends count]; i++) {
-                                 
-                                 NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
-                                 NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
-                                 
-                                 Person *person = [self.friends objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
-                                 
-                                 [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
-                                 [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
-                             }
-                             
-                             //AWESOME! We have everything we need, time to continue the app flow
-                             
-                             [splashScreenController.view removeFromSuperview];
-                             
-                             [self setupTabController];
-                             
-                         }
-                     }
+                     [self setupTabController];                         
+                     
                  }
                  
                  //[body release];
@@ -645,6 +653,88 @@
     
     
 }
+
+-(void)parseServerInfo:(NSString *)stringReply {
+    
+    NSDictionary *jsonValues = [stringReply JSONValue];
+    
+    if (jsonValues) {
+        NSDictionary * jsonFriends = [jsonValues valueForKey:@"friends_list"];
+        
+        if (jsonFriends) {
+            
+            for (int i = 0; i < [jsonFriends count]; i++) {
+                
+                NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
+                NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
+                
+                Person *person = [self.friends objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                
+                [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+            }
+            
+        }
+        
+        NSDictionary * featuredFOFList = [jsonValues valueForKey:@"featured_fof_list"];
+        
+        if (featuredFOFList) {
+            
+            NSMutableArray *featuredFOFArray = [[NSMutableArray alloc] init];
+            
+            for (int i = 0; i < [featuredFOFList count]; i++) {
+                NSDictionary *jsonFOF = [featuredFOFList objectAtIndex:i];
+                
+                NSString *facebook_id = [jsonFOF valueForKey:@"user_facebook_id"];
+                NSString *name = [jsonFOF valueForKey:@"user_name"];
+                NSDictionary *frames = [jsonFOF valueForKey:@"frames"];
+                
+                NSString *pudDate = [jsonFOF valueForKey:@"pud_date"];
+                
+                NSArray *comments = nil;
+                if([jsonFOF valueForKey:@"comments"] && [jsonFOF valueForKey:@"comments"] != 0 && ![[jsonFOF valueForKey:@"comments"] isEqual:@"0"] && ![[jsonFOF valueForKey:@"comments"] isEqual:@"null"]) {
+                    comments = [jsonFOF valueForKey:@"comments"];
+                }
+                
+                NSString *likes = [jsonFOF valueForKey:@"likes"];
+                
+                NSMutableArray *framesData = [[NSMutableArray alloc] init];
+                
+                for (int index = 0; index < [frames count]; index++) {
+                    
+                    NSDictionary *jsonFrame = [frames objectAtIndex:index];
+                    
+                    NSMutableDictionary *frameData = [[NSMutableDictionary alloc] init];
+
+                    [frameData setValue:[jsonFrame objectForKey:@"frame_url"] forKey:@"frame_url"];
+                    
+                    [frameData setValue:[jsonFrame objectForKey:@"frame_index"] forKey:@"frame_index"];
+                    
+                    [framesData addObject:frameData];
+                    
+                }
+                
+                FOF *fof = [FOF alloc];
+                fof.m_userName = name;
+                fof.m_userId = facebook_id;
+                fof.m_frames = framesData;
+                fof.m_likes = likes;
+                fof.m_comments = comments;
+                fof.m_date = pudDate;
+                
+                [featuredFOFArray addObject:fof];
+                
+                NSLog(@"Adding FOf %@",fof.m_userName);
+                
+            }
+            NSLog(@"FEATURED FOF COUNT: %d", [featuredFOFArray count]);
+            
+            self.featuredFofArray = featuredFOFArray;
+            
+        }
+    }
+}
+
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url

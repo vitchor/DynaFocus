@@ -65,7 +65,7 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     NSString *savedFacebookId = [appDelegate.myself objectForKey:@"id"];
     
-    NSString *urlLink = [[NSString alloc] initWithFormat:@"http://dyfoc.us/uploader/%@/share_fof/", fofName];
+    NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fofName];
     
     NSString *message = @"";
     
@@ -114,7 +114,7 @@
 - (void) upload
 {
     
-    NSURL *webServiceUrl = [NSURL URLWithString:@"http://dyfoc.us/uploader/image/"];
+    NSURL *webServiceUrl = [NSURL URLWithString:[[[NSString alloc] initWithFormat: @"%@/uploader/image/", dyfocus_url] autorelease]];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
