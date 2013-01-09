@@ -25,7 +25,7 @@
 #define FRIENDS 2
 
 #define dyfocus_url @"http://dyfoc.us"
-//#define dyfocus_url @"http://192.168.0.105:8000"
+//#define dyfocus_url @"http://localhost:8000"
 
 @interface FOF : NSObject {
 	NSString *m_name;
