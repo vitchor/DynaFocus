@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04292BE71699038F009CF50B /* FOFTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04292BE51699038F009CF50B /* FOFTableController.m */; };
+		04292BE81699038F009CF50B /* FOFTableController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BE61699038F009CF50B /* FOFTableController.xib */; };
+		04292BEB169904AD009CF50B /* FOFTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04292BEA169904AD009CF50B /* FOFTableCell.m */; };
+		04292BED169904C4009CF50B /* FOFTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BEC169904C3009CF50B /* FOFTableCell.xib */; };
 		04989B721696232F003ECD93 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B711696232F003ECD93 /* close@2x.png */; };
 		04989B7516964E18003ECD93 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B7416964E18003ECD93 /* close.png */; };
 		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
@@ -113,6 +117,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04292BE41699038F009CF50B /* FOFTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableController.h; sourceTree = "<group>"; };
+		04292BE51699038F009CF50B /* FOFTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFTableController.m; sourceTree = "<group>"; };
+		04292BE61699038F009CF50B /* FOFTableController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFTableController.xib; sourceTree = "<group>"; };
+		04292BE9169904AD009CF50B /* FOFTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableCell.h; sourceTree = "<group>"; };
+		04292BEA169904AD009CF50B /* FOFTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFTableCell.m; sourceTree = "<group>"; };
+		04292BEC169904C3009CF50B /* FOFTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFTableCell.xib; sourceTree = "<group>"; };
 		04989B711696232F003ECD93 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		04989B7416964E18003ECD93 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -277,6 +287,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04292BE2169902B0009CF50B /* FOFTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				04292BE41699038F009CF50B /* FOFTableController.h */,
+				04292BE51699038F009CF50B /* FOFTableController.m */,
+				04292BE61699038F009CF50B /* FOFTableController.xib */,
+				04292BE9169904AD009CF50B /* FOFTableCell.h */,
+				04292BEA169904AD009CF50B /* FOFTableCell.m */,
+				04292BEC169904C3009CF50B /* FOFTableCell.xib */,
+			);
+			name = FOFTableViewController;
+			sourceTree = "<group>";
+		};
 		441BFFA015B131D200E204D7 = {
 			isa = PBXGroup;
 			children = (
@@ -344,6 +367,7 @@
 		442B552315B2238800C952D1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				04292BE2169902B0009CF50B /* FOFTableViewController */,
 				44362AF9167E8D5B0007944B /* SplashScreenController */,
 				44B4A0C7167E4B5600956E0C /* LoginController */,
 				44794B271651A9180097824D /* CameraView */,
@@ -778,6 +802,8 @@
 				44362B00167E8E590007944B /* big_logo.png in Resources */,
 				04989B721696232F003ECD93 /* close@2x.png in Resources */,
 				04989B7516964E18003ECD93 /* close.png in Resources */,
+				04292BE81699038F009CF50B /* FOFTableController.xib in Resources */,
+				04292BED169904C4009CF50B /* FOFTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -840,6 +866,8 @@
 				444C506216593878006C8CD3 /* SBJsonWriter.m in Sources */,
 				44B4A0CC167E4B8700956E0C /* LoginController.m in Sources */,
 				44362AFD167E8D730007944B /* SplashScreenController.m in Sources */,
+				04292BE71699038F009CF50B /* FOFTableController.m in Sources */,
+				04292BEB169904AD009CF50B /* FOFTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
