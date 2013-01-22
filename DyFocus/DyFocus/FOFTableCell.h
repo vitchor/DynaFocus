@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "FOFTableController.h"
 
 @interface FOFTableCell : UITableViewCell {
 
@@ -18,6 +19,8 @@
     IBOutlet UIImageView *imagefrontFrame;
     IBOutlet UIImageView *imagebackFrame;
     IBOutlet UIImageView *imageUserPicture;
+    
+    IBOutlet UIView *whiteView;
     
     IBOutlet UIActivityIndicatorView *spinner;
     
@@ -33,6 +36,10 @@
     
     NSMutableArray *frames;
     
+    FOFTableController *tableView;
+   
+    int row;
+    
 }
 
 -(void) loadImages;
@@ -45,8 +52,12 @@
 @property (nonatomic,retain) IBOutlet UIImageView *imagebackFrame;
 @property (nonatomic,retain) IBOutlet UIImageView *imageUserPicture;
 
+@property (nonatomic,retain) IBOutlet UIView *whiteView;
+
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic,retain) NSTimer *timer;
+@property (nonatomic,retain) FOFTableController *tableView;
+@property (nonatomic,readwrite) int row;
 
 - (void) refreshWithFof:(FOF *)fof;
 

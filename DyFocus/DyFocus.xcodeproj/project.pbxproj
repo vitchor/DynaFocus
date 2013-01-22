@@ -11,6 +11,8 @@
 		04292BE81699038F009CF50B /* FOFTableController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BE61699038F009CF50B /* FOFTableController.xib */; };
 		04292BEB169904AD009CF50B /* FOFTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04292BEA169904AD009CF50B /* FOFTableCell.m */; };
 		04292BED169904C4009CF50B /* FOFTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BEC169904C3009CF50B /* FOFTableCell.xib */; };
+		04733A3E16AF327A00CD2E27 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 04733A3C16AF327A00CD2E27 /* heart.png */; };
+		04733A3F16AF327A00CD2E27 /* message.png in Resources */ = {isa = PBXBuildFile; fileRef = 04733A3D16AF327A00CD2E27 /* message.png */; };
 		04989B721696232F003ECD93 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B711696232F003ECD93 /* close@2x.png */; };
 		04989B7516964E18003ECD93 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B7416964E18003ECD93 /* close.png */; };
 		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
@@ -123,6 +125,8 @@
 		04292BE9169904AD009CF50B /* FOFTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableCell.h; sourceTree = "<group>"; };
 		04292BEA169904AD009CF50B /* FOFTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFTableCell.m; sourceTree = "<group>"; };
 		04292BEC169904C3009CF50B /* FOFTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFTableCell.xib; sourceTree = "<group>"; };
+		04733A3C16AF327A00CD2E27 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		04733A3D16AF327A00CD2E27 /* message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message.png; sourceTree = "<group>"; };
 		04989B711696232F003ECD93 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		04989B7416964E18003ECD93 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -656,6 +660,8 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				04733A3C16AF327A00CD2E27 /* heart.png */,
+				04733A3D16AF327A00CD2E27 /* message.png */,
 				04989B7416964E18003ECD93 /* close.png */,
 				04989B711696232F003ECD93 /* close@2x.png */,
 				44362AFF167E8E590007944B /* big_logo.png */,
@@ -804,6 +810,8 @@
 				04989B7516964E18003ECD93 /* close.png in Resources */,
 				04292BE81699038F009CF50B /* FOFTableController.xib in Resources */,
 				04292BED169904C4009CF50B /* FOFTableCell.xib in Resources */,
+				04733A3E16AF327A00CD2E27 /* heart.png in Resources */,
+				04733A3F16AF327A00CD2E27 /* message.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

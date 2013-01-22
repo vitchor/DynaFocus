@@ -44,7 +44,7 @@
     
     [m_tableView setDataSource:self];
     [m_tableView setDelegate:self];
-    [m_tableView setRowHeight:367];
+
     m_tableView.backgroundColor = [UIColor clearColor];
     
 }
@@ -118,6 +118,10 @@
     
 	cell.backgroundColor = [UIColor redColor];
     
+    cell.tableView = self;
+    
+    cell.row = indexPath.row;
+    
     FOF *fof = (FOF *) [FOFArray objectAtIndex:indexPath.row];
     
     [cell refreshWithFof:fof];
@@ -132,6 +136,25 @@
     cell.backgroundView.backgroundColor = [UIColor redColor];
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *cellId = [NSString stringWithFormat:@"0_%d", indexPath.row];
+    FOFTableCell *cell = [self.m_tableView dequeueReusableCellWithIdentifier:cellId];
+    //cell = (FOFTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    NSNumber *height = (NSNumber *)[cellHeightDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
+
+    NSLog(@"HEIGHT: %d", [height intValue]);
+    
+    if ([height intValue] != 0) {
+        return [height intValue];
+    } else {
+        return 367;
+    }
+    
+    return [height intValue];
 }
 
 #pragma mark -
@@ -152,5 +175,19 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	}
 }
 
+
+-(void) addNewCellHeight:(float)height atRow:(int)row {
+    
+    if(!cellHeightDictionary) {
+        cellHeightDictionary = [[NSMutableDictionary alloc] init];
+    }
+    
+    [cellHeightDictionary setObject:[NSNumber numberWithFloat:height + 183] forKey:[NSNumber numberWithInt:row]];
+
+    NSLog(@"NEWWW CELL HEIGHT! %f", height);
+    
+    [m_tableView beginUpdates];
+    [m_tableView endUpdates];
+}
 
 @end

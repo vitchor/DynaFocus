@@ -7,9 +7,10 @@
 //
 
 #import "FOFTableCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation FOFTableCell
-@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner;
+@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -18,13 +19,16 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+                
     }
     return self;
 }
 
 - (void) refreshWithFof:(FOF *)fof {
-    
+    whiteView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    whiteView.layer.cornerRadius = 3.0f;
+    whiteView.layer.borderWidth = 1.0f;
+
     [labelUserName setText:fof.m_userName];
     [labelDate setText:fof.m_date];
     if (fof.m_comments) {
@@ -75,48 +79,91 @@
 
 -(void)loadImages {
     
-    [spinner startAnimating];
-    
-
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if(!error && data) {
-                                   UIImage *image = [UIImage imageWithData:data];
-                                   if(image) {
-                                       [imageUserPicture setImage:image];
-                                   }
-                               }
-                           }];
-    
-    frames = [[NSMutableArray alloc] init];
-    downloadedFrames = 0;
-    
-    
-
-    for (NSString *frameUrl in fofUrls) {
+    if (!frames || !imageUserPicture.image) {
         
-        request = [NSURLRequest requestWithURL:[NSURL URLWithString:frameUrl]];
         
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   if(!error && data) {
-                                       UIImage *image = [UIImage imageWithData:data];
-                                       if(image) {
-                                           [frames addObject:image];
+        [spinner startAnimating];
+        
+        if (!imageUserPicture.image) {
+
+            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
+            [NSURLConnection sendAsynchronousRequest:request
+                                               queue:[NSOperationQueue mainQueue]
+                                   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                       if(!error && data) {
+                                           UIImage *image = [UIImage imageWithData:data];
+                                           if(image) {
+                                               [imageUserPicture setImage:image];
+                                               
+                                               imageUserPicture.tag = 420;
+                                               
+                                               /*imageUserPicture.frame.
+                                               
+                                               [tableView beginUpdates];
+                                               [tableView endUpdates];*/
+                                               
+                                               
+                                           } else {
+
+                                           }
                                        }
-                                       
-                                       if ([frames count] == [fofUrls count]) {
-                                           [self startTimer];
-                                       }
-                                   }
-                               }];
+                                   }];
+            
+        }
+        
+        if (!frames) {
+        
+            frames = [[NSMutableArray alloc] init];
+            downloadedFrames = 0;
+
+            for (NSString *frameUrl in fofUrls) {
+                
+                 NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:frameUrl]];
+                
+                [NSURLConnection sendAsynchronousRequest:request
+                                                   queue:[NSOperationQueue mainQueue]
+                                       completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                           if(!error && data) {
+                                               UIImage *image = [UIImage imageWithData:data];
+                                               if(image) {
+                                                   [frames addObject:image];
+                                                   
+                                                   float scale = image.size.height / image.size.width;
+                                                   
+                                                   //NSLog(@"HEIGHT: %f", image.size.height);
+                                                   //NSLog(@"WIDTH: %f", image.size.width);
+                                                   //NSLog(@"SCALE: %f", scale);
+                                                   if (scale > 1) {
+                                                       
+                                                       float newHeight = imagebackFrame.frame.size.width * scale;
+                                                       
+                                                       [self.tableView addNewCellHeight:newHeight atRow:self.row];
+                                                       
+                                                        imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
+                                                                                           imagebackFrame.frame.origin.y - (newHeight - imagebackFrame.frame.size.height) / 2, imagebackFrame.frame.size.width, newHeight);
+                                                       
+                                                      
+                                                       //imagebackFrame.clipsToBounds = YES;
+                                                       newHeight = imagefrontFrame.frame.size.width * scale;
+                                                       imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
+                                                                                            imagefrontFrame.frame.origin.y - (newHeight - imagefrontFrame.frame.size.height) / 2, imagefrontFrame.frame.size.width, newHeight);
+                                                                                                              
+                                                     
+                                                   }
+                                                   
+                                                   //imagefrontFrame.clipsToBounds = YES;
+                                               }
+                                               
+                                               if ([frames count] == [fofUrls count]) {
+                                                   [self startTimer];
+                                                   
+                                                   
+                                               }
+                                           }
+                                       }];
+            }
+        }
     }
-    
-
 }
 
 - (void)fadeImages

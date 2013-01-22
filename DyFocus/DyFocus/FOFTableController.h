@@ -12,9 +12,12 @@
 @interface FOFTableController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     IBOutlet UITableView *m_tableView;
     NSArray *FOFArray;
+    NSMutableDictionary *cellHeightDictionary;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *m_tableView;
 @property (nonatomic, retain) IBOutlet NSArray *FOFArray;
+
+-(void) addNewCellHeight:(float)height atRow:(int)row;
 
 @end
