@@ -18,6 +18,7 @@
 #import "LoginController.h"
 #import "JSON.h"
 #import "LoadView.h"
+#import "Flurry.h"
 
 @implementation FOF
 
@@ -881,5 +882,19 @@
     
 }
 
+-(void) logEvent:(NSString *) event withParameters:(NSDictionary *) articleParams {
+    
+
+    if (self.myself) {
+        articleParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                         [self.myself objectForKey:@"id"], @"User ID", // Capture author info
+                         [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()], @"Time", // Capture user status
+                         nil];
+    }
+    
+    
+    [Flurry logEvent:event withParameters:articleParams];
+    
+}
 
 @end

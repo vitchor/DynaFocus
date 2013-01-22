@@ -83,6 +83,8 @@ extern NSString *const FBSessionStateChangedNotification;
 
 - (void)signin;
 
+-(void) logEvent:(NSString *)event;
+
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
 
@@ -91,6 +93,8 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSMutableDictionary *myself;
 @property (nonatomic, retain)  NSArray *featuredFofArray;
 @property (nonatomic, retain)  NSArray *userFofArray;
+
+
 
 
 @end

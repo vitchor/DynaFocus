@@ -8,6 +8,8 @@
 
 #import "PathView.h"
 #import "CameraView.h"
+#import "AppDelegate.h"
+
 
 @implementation PathView
 
@@ -79,6 +81,9 @@
 }
 
 - (void)addPoint:(CGPoint)actualTouchPoint {
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate logEvent:@"Added Point"];
 	
 	if (touchPoints == nil) {
 		touchPoints = [[NSMutableArray alloc] initWithObjects:nil];

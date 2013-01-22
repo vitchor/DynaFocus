@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "ImageUtil.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Flurry.h"
 
 @implementation CameraView
 
@@ -360,6 +361,10 @@
 }
 
 -(void)closePopup {
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate logEvent:@"Close Pop Up"];
+    
     [popupView setHidden:YES];
 }
 
@@ -370,6 +375,10 @@
 
 -(void)showInfoView
 {
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate logEvent:@"Show Info View Button"];
+    
     if (mToastMessage) {
         [mToastMessage removeToast:nil];
         mToastMessage = nil;
@@ -386,10 +395,16 @@
 -(void)clearPoints
 {
     [pathView clearPoints];
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate logEvent:@"Clear Points Button"];
 }
 
 -(void)addObserverToFocus
 {
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate logEvent:@"Capture Button"];
+    
     mFocalPoints = [pathView getPoints];
     
     if ([mFocalPoints count] > 0) {
