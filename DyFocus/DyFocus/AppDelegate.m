@@ -882,18 +882,20 @@
     
 }
 
--(void) logEvent:(NSString *) event withParameters:(NSDictionary *) articleParams {
+-(void) logEvent:(NSString *) event {
     
 
     if (self.myself) {
-        articleParams = [NSDictionary dictionaryWithObjectsAndKeys:
+        NSDictionary *articleParams = [NSDictionary dictionaryWithObjectsAndKeys:
                          [self.myself objectForKey:@"id"], @"User ID", // Capture author info
                          [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()], @"Time", // Capture user status
                          nil];
+        
+        [Flurry logEvent:event withParameters:articleParams];
     }
     
     
-    [Flurry logEvent:event withParameters:articleParams];
+
     
 }
 
