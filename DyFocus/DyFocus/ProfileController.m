@@ -9,6 +9,7 @@
 #import "ProfileController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
+#import "FOFTableController.h"
 
 @interface ProfileController ()
 
@@ -17,7 +18,7 @@
 @implementation ProfileController
 
 
-@synthesize logoutButton;
+@synthesize logoutButton, myPicturesButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,8 +34,27 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+
+    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
+    
+    [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
    
 
+}
+
+-(void) showPictures{
+    
+    FOFTableController *tableController = [[FOFTableController alloc] init];
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    
+    tableController.FOFArray = appDelegate.userFofArray;
+    
+    tableController.navigationItem.title = @"My Pictures";
+    
+    [self.navigationController pushViewController:tableController animated:true];
+    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+    
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -58,6 +78,7 @@
     //self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
 
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    
     
 }
 

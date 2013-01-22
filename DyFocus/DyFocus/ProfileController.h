@@ -12,6 +12,7 @@
 @interface ProfileController : UIViewController {
     FBSession *facebook;
     NSString *userName;
+    IBOutlet UIButton *myPicturesButton;
 }
 
 - (void)logout;
@@ -20,5 +21,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (strong, nonatomic) IBOutlet UIView *dyfocusProfileView;
 @property (strong, nonatomic) IBOutlet UIButton *logoutButton;
+@property (strong, nonatomic) IBOutlet UIButton *myPicturesButton;
 
 @end

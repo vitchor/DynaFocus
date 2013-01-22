@@ -42,7 +42,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray;
+@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray;
 
 - (void)dealloc
 {
@@ -130,34 +130,6 @@
     
     // TODO: set the foftableController FOFArray
     
-   /* NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:4];
-    
-    FOF *fof = [FOF alloc];
-    fof.m_comments = nil;
-    fof.m_userId = 1001;
-    
-    [array addObject:fof];
-    
-    fof = [FOF alloc];
-    fof.m_comments = nil;
-    fof.m_userId = 1002;
-    
-    [array addObject:fof];
-    
-    fof = [FOF alloc];
-    fof.m_comments = nil;
-    fof.m_userId = 1003;
-    
-    [array addObject:fof];
-    
-    fof = [FOF alloc];
-    fof.m_comments = nil;
-    fof.m_userId = 1004;
-    
-    [array addObject:fof];*/
-    
-    //featuredWebViewController.FOFArray = array;
-    
     
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:1];
     [featuredWebViewController setTabBarItem:galleryTab];
@@ -188,8 +160,12 @@
     
     // Profile Controller
     ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
+    
+    DyfocusUINavigationController *profileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:profileController];
+//    profileController.hidesBottomBarWhenPushed = NO;
+    
     UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"df_profile_bw"] tag:5];
-    [profileController setTabBarItem:profileTab];
+    [profileNavigationController setTabBarItem:profileTab];
     
     // Configure TabBarController
     
@@ -197,7 +173,7 @@
     
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, cameraNavigationController, friendsController, profileController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedWebViewController, cameraNavigationController, friendsController, profileNavigationController, nil];
     
     self.tabBarController.viewControllers = controllers;
     
@@ -670,8 +646,11 @@
                 
                 Person *person = [self.friends objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                 
-                [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
-                [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                if (person) {
+                    [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                    [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                }
+
             }
             
         }
@@ -689,7 +668,7 @@
                 NSString *name = [jsonFOF valueForKey:@"user_name"];
                 NSDictionary *frames = [jsonFOF valueForKey:@"frames"];
                 
-                NSString *pudDate = [jsonFOF valueForKey:@"pud_date"];
+                NSString *pubDate = [jsonFOF valueForKey:@"pub_date"];
                 
                 NSArray *comments = nil;
                 if([jsonFOF valueForKey:@"comments"] && [jsonFOF valueForKey:@"comments"] != 0 && ![[jsonFOF valueForKey:@"comments"] isEqual:@"0"] && ![[jsonFOF valueForKey:@"comments"] isEqual:@"null"]) {
@@ -720,7 +699,7 @@
                 fof.m_frames = framesData;
                 fof.m_likes = likes;
                 fof.m_comments = comments;
-                fof.m_date = pudDate;
+                fof.m_date = pubDate;
                 
                 [featuredFOFArray addObject:fof];
                 
@@ -730,6 +709,64 @@
             NSLog(@"FEATURED FOF COUNT: %d", [featuredFOFArray count]);
             
             self.featuredFofArray = featuredFOFArray;
+            
+        }
+        
+        //creating array user fof list
+        NSDictionary * userFOFList = [jsonValues valueForKey:@"user_fof_list"];
+        
+        if (userFOFList) {
+            
+            NSMutableArray *userFOFArray = [[NSMutableArray alloc] init];
+            
+            for (int i = 0; i < [userFOFList count]; i++) {
+                NSDictionary *jsonFOF = [userFOFList objectAtIndex:i];
+                
+                NSString *facebook_id = [jsonFOF valueForKey:@"user_facebook_id"];
+                NSString *name = [jsonFOF valueForKey:@"user_name"];
+                NSDictionary *frames = [jsonFOF valueForKey:@"frames"];
+                
+                NSString *pubDate = [jsonFOF valueForKey:@"pub_date"];
+                
+                NSArray *comments = nil;
+                if([jsonFOF valueForKey:@"comments"] && [jsonFOF valueForKey:@"comments"] != 0 && ![[jsonFOF valueForKey:@"comments"] isEqual:@"0"] && ![[jsonFOF valueForKey:@"comments"] isEqual:@"null"]) {
+                    comments = [jsonFOF valueForKey:@"comments"];
+                }
+                
+                NSString *likes = [jsonFOF valueForKey:@"likes"];
+                
+                NSMutableArray *framesData = [[NSMutableArray alloc] init];
+                
+                for (int index = 0; index < [frames count]; index++) {
+                    
+                    NSDictionary *jsonFrame = [frames objectAtIndex:index];
+                    
+                    NSMutableDictionary *frameData = [[NSMutableDictionary alloc] init];
+                    
+                    [frameData setValue:[jsonFrame objectForKey:@"frame_url"] forKey:@"frame_url"];
+                    
+                    [frameData setValue:[jsonFrame objectForKey:@"frame_index"] forKey:@"frame_index"];
+                    
+                    [framesData addObject:frameData];
+                    
+                }
+                
+                FOF *fof = [FOF alloc];
+                fof.m_userName = name;
+                fof.m_userId = facebook_id;
+                fof.m_frames = framesData;
+                fof.m_likes = likes;
+                fof.m_comments = comments;
+                fof.m_date = pubDate;
+                
+                [userFOFArray addObject:fof];
+                
+                NSLog(@"Adding FOf %@",fof.m_userName);
+                
+            }
+            NSLog(@"USER FOF COUNT: %d", [userFOFArray count]);
+            
+            self.userFofArray = userFOFArray;
             
         }
     }

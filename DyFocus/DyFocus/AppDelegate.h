@@ -66,6 +66,7 @@
     NSMutableDictionary *dyfocusFriends;    
     NSMutableDictionary *myself;
     NSArray *featuredFofArray;
+    NSArray *userFofArray;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -89,6 +90,7 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSMutableDictionary *dyfocusFriends;
 @property (nonatomic, retain)  NSMutableDictionary *myself;
 @property (nonatomic, retain)  NSArray *featuredFofArray;
+@property (nonatomic, retain)  NSArray *userFofArray;
 
 
 @end
