@@ -361,7 +361,6 @@
 								<string key="NSFrame">{{150, 167}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="422916416"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -512,6 +511,22 @@
 						<reference key="destination" ref="934879283"/>
 					</object>
 					<int key="connectionID">269</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">likesCountLabel</string>
+						<reference key="source" ref="323944411"/>
+						<reference key="destination" ref="610770142"/>
+					</object>
+					<int key="connectionID">943</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">commentsCountLabel</string>
+						<reference key="source" ref="323944411"/>
+						<reference key="destination" ref="163750538"/>
+					</object>
+					<int key="connectionID">944</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2438,7 +2453,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">942</int>
+			<int key="maxID">944</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2448,11 +2463,14 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="buttonComment">UIButton</string>
 						<string key="buttonLike">UIButton</string>
+						<string key="buttonShare">UIButton</string>
+						<string key="commentsCountLabel">UILabel</string>
 						<string key="imageUserPicture">UIImageView</string>
 						<string key="imagebackFrame">UIImageView</string>
 						<string key="imagefrontFrame">UIImageView</string>
 						<string key="labelDate">UILabel</string>
 						<string key="labelUserName">UILabel</string>
+						<string key="likesCountLabel">UILabel</string>
 						<string key="spinner">UIActivityIndicatorView</string>
 						<string key="whiteView">UIView</string>
 					</dictionary>
@@ -2464,6 +2482,14 @@
 						<object class="IBToOneOutletInfo" key="buttonLike">
 							<string key="name">buttonLike</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="buttonShare">
+							<string key="name">buttonShare</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="commentsCountLabel">
+							<string key="name">commentsCountLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="imageUserPicture">
 							<string key="name">imageUserPicture</string>
@@ -2483,6 +2509,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="labelUserName">
 							<string key="name">labelUserName</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="likesCountLabel">
+							<string key="name">likesCountLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="spinner">

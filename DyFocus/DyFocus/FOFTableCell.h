@@ -14,11 +14,17 @@
 
     IBOutlet UILabel *labelUserName;
     IBOutlet UILabel *labelDate;
+    
     IBOutlet UIButton *buttonLike;
     IBOutlet UIButton *buttonComment;
+    IBOutlet UIButton *buttonShare;
+    
     IBOutlet UIImageView *imagefrontFrame;
     IBOutlet UIImageView *imagebackFrame;
     IBOutlet UIImageView *imageUserPicture;
+    
+    IBOutlet UILabel *commentsCountLabel;
+    IBOutlet UILabel *likesCountLabel;
     
     IBOutlet UIView *whiteView;
     
@@ -46,11 +52,17 @@
 
 @property (nonatomic,retain) IBOutlet UILabel *labelUserName;
 @property (nonatomic,retain) IBOutlet UILabel *labelDate;
+
 @property (nonatomic,retain) IBOutlet UIButton *buttonLike;
 @property (nonatomic,retain) IBOutlet UIButton *buttonComment;
+@property (nonatomic,retain) IBOutlet UIButton *buttonShare;
+
 @property (nonatomic,retain) IBOutlet UIImageView *imagefrontFrame;
 @property (nonatomic,retain) IBOutlet UIImageView *imagebackFrame;
 @property (nonatomic,retain) IBOutlet UIImageView *imageUserPicture;
+
+@property (nonatomic,retain) IBOutlet UILabel *commentsCountLabel;
+@property (nonatomic,retain) IBOutlet UILabel *likesCountLabel;
 
 @property (nonatomic,retain) IBOutlet UIView *whiteView;
 
