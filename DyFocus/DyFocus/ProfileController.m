@@ -52,6 +52,8 @@
     
     tableController.navigationItem.title = @"My Pictures";
     
+    tableController.hidesBottomBarWhenPushed = YES;
+    
     [self.navigationController pushViewController:tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
     
