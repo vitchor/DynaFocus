@@ -32,11 +32,11 @@
     [labelUserName setText:fof.m_userName];
     [labelDate setText:fof.m_date];
     if (fof.m_comments) {
-        [buttonComment setTitle: [[[NSString alloc] initWithFormat:@"Comment (%d)", [fof.m_comments count]]autorelease] forState:UIControlStateNormal];
+        //[buttonComment setTitle: [[[NSString alloc] initWithFormat:@"Comment (%d)", [fof.m_comments count]]autorelease] forState:UIControlStateNormal];
     } else {
-        [buttonComment setTitle:@"Comment (0)" forState:UIControlStateNormal];
+        //[buttonComment setTitle:@"Comment (0)" forState:UIControlStateNormal];
     }
-    [buttonLike setTitle: [[[NSString alloc] initWithFormat:@"Like (%@)", fof.m_likes]autorelease] forState:UIControlStateNormal];
+    //[buttonLike setTitle: [[[NSString alloc] initWithFormat:@"Like (%@)", fof.m_likes]autorelease] forState:UIControlStateNormal];
     
     
     profilePictureUrl = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",fof.m_userId];
@@ -79,37 +79,24 @@
 
 -(void)loadImages {
     
-    if (!frames || !imageUserPicture.image) {
-        
+    if (!frames) {
         
         [spinner startAnimating];
         
-        if (!imageUserPicture.image) {
 
-            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
-            [NSURLConnection sendAsynchronousRequest:request
-                                               queue:[NSOperationQueue mainQueue]
-                                   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                       if(!error && data) {
-                                           UIImage *image = [UIImage imageWithData:data];
-                                           if(image) {
-                                               [imageUserPicture setImage:image];
-                                               
-                                               imageUserPicture.tag = 420;
-                                               
-                                               /*imageUserPicture.frame.
-                                               
-                                               [tableView beginUpdates];
-                                               [tableView endUpdates];*/
-                                               
-                                               
-                                           } else {
-
-                                           }
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   if(!error && data) {
+                                       UIImage *image = [UIImage imageWithData:data];
+                                       if(image) {
+                                           [imageUserPicture setImage:image];
                                        }
-                                   }];
-            
-        }
+                                   }
+                               }];
+        
+        
         
         if (!frames) {
         
@@ -140,13 +127,13 @@
                                                        [self.tableView addNewCellHeight:newHeight atRow:self.row];
                                                        
                                                         imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
-                                                                                           imagebackFrame.frame.origin.y - (newHeight - imagebackFrame.frame.size.height) / 2, imagebackFrame.frame.size.width, newHeight);
+                                                                                           imagebackFrame.frame.origin.y , imagebackFrame.frame.size.width, newHeight);
                                                        
                                                       
                                                        //imagebackFrame.clipsToBounds = YES;
                                                        newHeight = imagefrontFrame.frame.size.width * scale;
                                                        imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
-                                                                                            imagefrontFrame.frame.origin.y - (newHeight - imagefrontFrame.frame.size.height) / 2, imagefrontFrame.frame.size.width, newHeight);
+                                                                                            imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newHeight);
                                                                                                               
                                                      
                                                    }

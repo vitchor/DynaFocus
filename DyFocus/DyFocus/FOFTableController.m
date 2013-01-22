@@ -31,6 +31,14 @@
 {
     [super viewDidLoad];
     
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectZero];
+    backView.backgroundColor = [UIColor clearColor];
+    m_tableView.backgroundView = backView;
+    
+    self.m_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [backView release];
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -116,6 +124,8 @@
     
     //FOF *fof = (FOF *)[FOFArray objectAtIndex:indexPath.row];
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
 	cell.backgroundColor = [UIColor redColor];
     
     cell.tableView = self;
@@ -139,11 +149,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSString *cellId = [NSString stringWithFormat:@"0_%d", indexPath.row];
-    FOFTableCell *cell = [self.m_tableView dequeueReusableCellWithIdentifier:cellId];
-    //cell = (FOFTableCell *)[tableView cellForRowAtIndexPath:indexPath];
-    
+        
     NSNumber *height = (NSNumber *)[cellHeightDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
 
     NSLog(@"HEIGHT: %d", [height intValue]);
@@ -151,7 +157,7 @@
     if ([height intValue] != 0) {
         return [height intValue];
     } else {
-        return 367;
+        return 334;
     }
     
     return [height intValue];
@@ -182,7 +188,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         cellHeightDictionary = [[NSMutableDictionary alloc] init];
     }
     
-    [cellHeightDictionary setObject:[NSNumber numberWithFloat:height + 183] forKey:[NSNumber numberWithInt:row]];
+    [cellHeightDictionary setObject:[NSNumber numberWithFloat:height + 122] forKey:[NSNumber numberWithInt:row]];
 
     NSLog(@"NEWWW CELL HEIGHT! %f", height);
     
