@@ -56,7 +56,7 @@
 
     NSArray *permissions;
     FacebookController *friendsController;
-    WebViewController *feedWebViewController;
+    FOFTableController *feedViewController;
     LoginController *loginController;
     SplashScreenController *splashScreenController;
     CameraView *cameraViewController;
@@ -67,6 +67,7 @@
     NSMutableDictionary *myself;
     NSArray *featuredFofArray;
     NSArray *userFofArray;
+    NSArray *feedFofArray;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -93,6 +94,7 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSMutableDictionary *myself;
 @property (nonatomic, retain)  NSArray *featuredFofArray;
 @property (nonatomic, retain)  NSArray *userFofArray;
+@property (nonatomic, retain)  NSArray *feedFofArray;
 
 
 
