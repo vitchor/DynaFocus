@@ -24,8 +24,8 @@
 #define SHARING 1
 #define FRIENDS 2
 
-//#define dyfocus_url @"http://dyfoc.us"
-#define dyfocus_url @"http://192.168.100.140:8000"
+#define dyfocus_url @"http://dyfoc.us"
+//#define dyfocus_url @"http://192.168.100.140:8000"
 
 @interface FOF : NSObject {
 	NSString *m_name;
@@ -77,6 +77,7 @@ extern NSString *const FBSessionStateChangedNotification;
 - (void)loadFeedUrl:(NSString *)url;
 
 - (void)resetCameraUINavigationController;
+- (void)loadFeedTab;
 - (void)goBackToLastController;
 
 - (void)invitationSentGoBackToFriends;

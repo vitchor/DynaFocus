@@ -197,7 +197,7 @@
     } else {
         //[self.navigationController popViewControllerAnimated:YES];
         AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-        [appDelegate resetCameraUINavigationController];
+        [appDelegate loadFeedTab];
     }
     
 }

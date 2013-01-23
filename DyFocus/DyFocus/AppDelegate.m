@@ -196,7 +196,20 @@
     [cameraNavigationController setViewControllers:[NSArray arrayWithObject:rootViewController] animated:YES];
     
     [cameraViewController showToast:@"Upload Complete."];
+}
+
+-(void)loadFeedTab{
+    NSLog(@"==== loadFeedTab");
     
+    NSArray *viewControllers = cameraNavigationController.viewControllers;
+    UIViewController *rootViewController = [viewControllers objectAtIndex:0];
+    [cameraNavigationController setNavigationBarHidden:YES animated:NO];
+    [cameraNavigationController setViewControllers:[NSArray arrayWithObject:rootViewController] animated:NO];
+    
+    [cameraViewController showToast:@"Upload Complete."];
+    
+    
+    [tabBarController setSelectedIndex:1];
 }
 
 -(void)goBackToLastController {

@@ -66,10 +66,6 @@
     
     oldFrameIndex = 0;
     timerPause = TIMER_INTERVAL;
-    
-    //TODO start fade out timer
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
-    [timer fire];
 }
 
 - (void) next {
@@ -144,7 +140,6 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-   
     [super viewDidAppear:animated];
 }
 
@@ -162,7 +157,6 @@
     [self.focalPoints release];
     [self.firstImageView release];
     [self.secondImageView release];
-    NSLog(@"YEAAAH");
     
     [super dealloc];
 }
@@ -199,8 +193,10 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    //TODO start fade out timer
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+    [timer fire];
     [super viewWillAppear:animated];
-    
 }
 
 - (void) viewWillDisappear:(BOOL)animated
