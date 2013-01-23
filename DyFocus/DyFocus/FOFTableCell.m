@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @implementation FOFTableCell
-@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row;
+@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel, buttonShare;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -32,11 +32,16 @@
     [labelUserName setText:fof.m_userName];
     [labelDate setText:fof.m_date];
     if (fof.m_comments) {
-        //[buttonComment setTitle: [[[NSString alloc] initWithFormat:@"Comment (%d)", [fof.m_comments count]]autorelease] forState:UIControlStateNormal];
+        
+        [commentsCountLabel setText:[[[NSString alloc] initWithFormat:@"%d", [fof.m_comments count]]autorelease]];
+        
     } else {
-        //[buttonComment setTitle:@"Comment (0)" forState:UIControlStateNormal];
+        [commentsCountLabel setText:@"0"];
     }
+    
     //[buttonLike setTitle: [[[NSString alloc] initWithFormat:@"Like (%@)", fof.m_likes]autorelease] forState:UIControlStateNormal];
+    
+    [likesCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_likes] autorelease]];
     
     
     profilePictureUrl = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",fof.m_userId];
