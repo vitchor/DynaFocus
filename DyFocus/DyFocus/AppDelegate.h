@@ -37,7 +37,8 @@
 	NSString *m_userName;
 	NSString *m_userNickname;
 	NSString *m_date;
-	NSString *m_userId;
+	NSString *m_id;
+    BOOL *m_liked;
     
 }
 
@@ -49,6 +50,8 @@
 @property (nonatomic, retain) NSString *m_userNickname;
 @property (nonatomic, retain) NSString *m_userId;
 @property (nonatomic, retain) NSString *m_date;
+@property (nonatomic, retain) NSString *m_id;
+@property (nonatomic, readwrite) BOOL *m_liked;
 @end
 
 
