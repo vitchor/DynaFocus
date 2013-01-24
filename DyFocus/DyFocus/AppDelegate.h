@@ -14,6 +14,7 @@
 
 #import "FacebookController.h"
 #import "ProfileController.h"
+#import "FriendProfileController.h"
 
 #import "LoginController.h"
 #import "SplashScreenController.h"
@@ -26,6 +27,7 @@
 
 #define dyfocus_url @"http://dyfoc.us"
 //#define dyfocus_url @"http://192.168.100.140:8000"
+//#define dyfocus_url @"http://192.168.0.190:8000"
 
 @interface FOF : NSObject {
 	NSString *m_name;
@@ -69,6 +71,7 @@
     NSArray *userFofArray;
     NSArray *feedFofArray;
     NSArray *friendFofArray;
+    Person *currentFriend;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -98,7 +101,7 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSArray *userFofArray;
 @property (nonatomic, retain)  NSArray *feedFofArray;
 @property (nonatomic, retain)  NSArray *friendFofArray;
-
+@property (nonatomic, retain)  Person *currentFriend;;
 
 
 

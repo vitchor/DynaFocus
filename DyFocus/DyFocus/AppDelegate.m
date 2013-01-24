@@ -13,6 +13,7 @@
 #import "DyfocusUINavigationController.h"
 #import "FacebookController.h"
 #import "ProfileController.h"
+#import "FriendProfileController.h"
 #import "Flurry.h"
 #import "SharingController.h"
 #import "LoginController.h"
@@ -43,7 +44,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray, feedFofArray, friendFofArray;
+@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend;
 
 - (void)dealloc
 {
@@ -159,6 +160,13 @@
     
     UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
     [friendsNavigationController setTabBarItem:friendsTab];
+    
+//    //Friend Profile Controller
+//    friendProfileController = [[FacebookController alloc] init];
+//    friendProfileController.hidesBottomBarWhenPushed = NO;
+//
+//    DyfocusUINavigationController *friendProfileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:friendProfileController];
+    
     
     // Profile Controller
     ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];

@@ -62,10 +62,10 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
-    self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
+//    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
+//    self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
     
 }
 
@@ -74,10 +74,10 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Profile";
     
-    //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    //self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
-    //self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
+    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
+    self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
 
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     
