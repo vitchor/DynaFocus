@@ -76,6 +76,7 @@
 		44C8DA4215B1FF80000D2947 /* PathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8DA4115B1FF80000D2947 /* PathView.m */; };
 		44D8FC8E166676EC00E613DC /* gray_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D8FC8D166676EC00E613DC /* gray_background.png */; };
 		44F07658165E7FE100AE6A84 /* SharingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44F07657165E7FE100AE6A84 /* SharingController.xib */; };
+		7B089F6716B1382900700815 /* dyfocus-instructions-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B089F6616B1382900700815 /* dyfocus-instructions-white.png */; };
 		7B3FEC3D16B10381004C8048 /* FriendProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3C16B10381004C8048 /* FriendProfileController.m */; };
 		7B3FEC3F16B10445004C8048 /* FriendProfileController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3E16B10445004C8048 /* FriendProfileController.xib */; };
 		AC07F47915B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */; };
@@ -231,6 +232,7 @@
 		44C8DA4115B1FF80000D2947 /* PathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathView.m; sourceTree = "<group>"; };
 		44D8FC8D166676EC00E613DC /* gray_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray_background.png; sourceTree = "<group>"; };
 		44F07657165E7FE100AE6A84 /* SharingController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SharingController.xib; sourceTree = "<group>"; };
+		7B089F6616B1382900700815 /* dyfocus-instructions-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-white.png"; sourceTree = "<group>"; };
 		7B3FEC3B16B1036A004C8048 /* FriendProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileController.h; sourceTree = "<group>"; };
 		7B3FEC3C16B10381004C8048 /* FriendProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileController.m; sourceTree = "<group>"; };
 		7B3FEC3E16B10445004C8048 /* FriendProfileController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendProfileController.xib; sourceTree = "<group>"; };
@@ -708,6 +710,7 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7B089F6616B1382900700815 /* dyfocus-instructions-white.png */,
 				4468BFAC16B0D10D000ABF5E /* FOFexamples */,
 				4468BFA716B0C65C000ABF5E /* arrow_left.png */,
 				4468BFA816B0C65C000ABF5E /* arrow_right.png */,
@@ -869,6 +872,7 @@
 				4468BFB716B0D6A2000ABF5E /* fof_example_03_1.jpeg in Resources */,
 				4468BFB816B0D6A2000ABF5E /* fof_example_03_2.jpeg in Resources */,
 				7B3FEC3F16B10445004C8048 /* FriendProfileController.xib in Resources */,
+				7B089F6716B1382900700815 /* dyfocus-instructions-white.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1028,8 +1032,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AFB906EB-1A7D-4E35-8A3A-B2189F22DA16";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFB906EB-1A7D-4E35-8A3A-B2189F22DA16";
+				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1059,8 +1063,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AFB906EB-1A7D-4E35-8A3A-B2189F22DA16";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFB906EB-1A7D-4E35-8A3A-B2189F22DA16";
+				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
