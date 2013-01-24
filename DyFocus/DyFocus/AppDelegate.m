@@ -23,7 +23,7 @@
 @implementation FOF
 
 
-@synthesize m_name, m_frames, m_comments, m_likes, m_userName, m_userId, m_date, m_userNickname;
+@synthesize m_name, m_frames, m_comments, m_likes, m_userName, m_userId, m_date, m_userNickname, m_id, m_liked;
 
 - (void)dealloc {
     [m_name release];
@@ -34,6 +34,7 @@
     [m_userNickname release];
     [m_likes release];
     [m_userId release];
+    [m_id release];    
 	[super dealloc];
 }
 
@@ -163,6 +164,8 @@
     
     DyfocusUINavigationController *profileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:profileController];
 //    profileController.hidesBottomBarWhenPushed = NO;
+    
+    profileNavigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
     UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"df_profile_bw"] tag:5];
     [profileNavigationController setTabBarItem:profileTab];
@@ -679,6 +682,10 @@
                 
                 NSString *facebook_id = [jsonFOF valueForKey:@"user_facebook_id"];
                 NSString *name = [jsonFOF valueForKey:@"user_name"];
+                
+                NSString *fofId = [jsonFOF valueForKey:@"id"];
+                NSString *liked = [jsonFOF valueForKey:@"liked"];
+                
                 NSDictionary *frames = [jsonFOF valueForKey:@"frames"];
                 
                 NSString *pubDate = [jsonFOF valueForKey:@"pub_date"];
@@ -707,6 +714,8 @@
                 }
                 
                 FOF *fof = [FOF alloc];
+                fof.m_id = fofId;
+                fof.m_liked = [liked isEqualToString:@"1"];
                 fof.m_userName = name;
                 fof.m_userId = facebook_id;
                 fof.m_frames = framesData;
@@ -739,6 +748,9 @@
                 NSString *name = [jsonFOF valueForKey:@"user_name"];
                 NSDictionary *frames = [jsonFOF valueForKey:@"frames"];
                 
+                NSString *fofId = [jsonFOF valueForKey:@"id"];
+                NSString *liked = [jsonFOF valueForKey:@"liked"];
+                
                 NSString *pubDate = [jsonFOF valueForKey:@"pub_date"];
                 
                 NSArray *comments = nil;
@@ -765,6 +777,8 @@
                 }
                 
                 FOF *fof = [FOF alloc];
+                fof.m_id = fofId;
+                fof.m_liked = [liked isEqualToString:@"1"];
                 fof.m_userName = name;
                 fof.m_userId = facebook_id;
                 fof.m_frames = framesData;
@@ -797,6 +811,9 @@
                 NSString *name = [jsonFOF valueForKey:@"user_name"];
                 NSDictionary *frames = [jsonFOF valueForKey:@"frames"];
                 
+                NSString *fofId = [jsonFOF valueForKey:@"id"];
+                NSString *liked = [jsonFOF valueForKey:@"liked"];
+                
                 NSString *pubDate = [jsonFOF valueForKey:@"pub_date"];
                 
                 NSArray *comments = nil;
@@ -823,6 +840,8 @@
                 }
                 
                 FOF *fof = [FOF alloc];
+                fof.m_id = fofId;
+                fof.m_liked = [liked isEqualToString:@"1"];
                 fof.m_userName = name;
                 fof.m_userId = facebook_id;
                 fof.m_frames = framesData;

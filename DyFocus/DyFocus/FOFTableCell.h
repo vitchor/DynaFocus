@@ -17,7 +17,6 @@
     
     IBOutlet UIButton *buttonLike;
     IBOutlet UIButton *buttonComment;
-    IBOutlet UIButton *buttonShare;
     
     IBOutlet UIImageView *imagefrontFrame;
     IBOutlet UIImageView *imagebackFrame;
@@ -29,6 +28,8 @@
     IBOutlet UIView *whiteView;
     
     IBOutlet UIActivityIndicatorView *spinner;
+    
+    FOF *fof;
     
     
     NSMutableArray *fofUrls;
@@ -55,7 +56,6 @@
 
 @property (nonatomic,retain) IBOutlet UIButton *buttonLike;
 @property (nonatomic,retain) IBOutlet UIButton *buttonComment;
-@property (nonatomic,retain) IBOutlet UIButton *buttonShare;
 
 @property (nonatomic,retain) IBOutlet UIImageView *imagefrontFrame;
 @property (nonatomic,retain) IBOutlet UIImageView *imagebackFrame;

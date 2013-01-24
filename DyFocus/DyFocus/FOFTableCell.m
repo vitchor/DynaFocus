@@ -8,9 +8,10 @@
 
 #import "FOFTableCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "JSON.h"
 
 @implementation FOFTableCell
-@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel, buttonShare;
+@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -24,15 +25,68 @@
     return self;
 }
 
-- (void) refreshWithFof:(FOF *)fof {
+- (void) commentButtonPressed {
+    NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [commentsCountLabel.text intValue] + 1] autorelease];
+    [commentsCountLabel setText:newCount];
+    
+    
+}
+
+- (void) likeButtonPressed {
+    if (!fof.m_liked) {
+    
+        NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [likesCountLabel.text intValue] + 1] autorelease];
+        [likesCountLabel setText:newCount];
+        
+        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/like/",dyfocus_url] autorelease];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+        
+        NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        
+        [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
+        [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"facebook_id"];
+        
+        NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                              json] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   if(!error && data) {
+                                   }
+                               }];
+
+        [buttonLike setTitle:@"Liked" forState:UIControlStateNormal];
+        fof.m_liked = YES;
+        //buttonLike.titleLabel.font = [UIFont systemFontOfSize:11];
+        
+    } else {
+        //implement liked   
+    }
+}
+
+- (void) refreshWithFof:(FOF *)fofObject {
+    
+    fof = fofObject;
+    
+    [buttonComment addTarget:self action:@selector(commentButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+
+    [buttonLike addTarget:self action:@selector(likeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
     whiteView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     whiteView.layer.cornerRadius = 3.0f;
     whiteView.layer.borderWidth = 1.0f;
 
     [labelUserName setText:fof.m_userName];
     [labelDate setText:fof.m_date];
+    
     if (fof.m_comments) {
-        
         [commentsCountLabel setText:[[[NSString alloc] initWithFormat:@"%d", [fof.m_comments count]]autorelease]];
         
     } else {
@@ -51,6 +105,11 @@
         
         NSLog([frame debugDescription]);
         [fofUrls addObject:[frame objectForKey:@"frame_url"]];
+    }
+    
+    if (fof.m_liked) {
+        [buttonLike setTitle:@"Liked" forState:UIControlStateNormal];
+        //buttonLike.titleLabel.font = [UIFont systemFontOfSize:11];
     }
     
 }
