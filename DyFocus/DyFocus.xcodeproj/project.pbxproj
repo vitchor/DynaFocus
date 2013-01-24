@@ -50,7 +50,6 @@
 		44798EB215E4355100D5BC53 /* LoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB115E4355100D5BC53 /* LoadView.m */; };
 		44798EB515E4362000D5BC53 /* ActivityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB415E4362000D5BC53 /* ActivityLabel.m */; };
 		447D7ED2166E6264002599EE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447D7ED1166E6264002599EE /* MessageUI.framework */; };
-		4488996316B134310099E46A /* InfoInvitationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4488996216B134310099E46A /* InfoInvitationView.xib */; };
 		4495E69515EEB368009C2B9F /* SharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495E69315EEB368009C2B9F /* SharingController.m */; };
 		4495E69A15EEBCC7009C2B9F /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495E69915EEBCC7009C2B9F /* libsqlite3.0.dylib */; };
 		4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */; };
@@ -196,7 +195,6 @@
 		44798EB315E4361100D5BC53 /* ActivityLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityLabel.h; sourceTree = "<group>"; };
 		44798EB415E4362000D5BC53 /* ActivityLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityLabel.m; sourceTree = "<group>"; };
 		447D7ED1166E6264002599EE /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		4488996216B134310099E46A /* InfoInvitationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoInvitationView.xib; sourceTree = "<group>"; };
 		4495E69215EEB368009C2B9F /* SharingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharingController.h; sourceTree = "<group>"; };
 		4495E69315EEB368009C2B9F /* SharingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharingController.m; sourceTree = "<group>"; };
 		4495E69715EEBC9F009C2B9F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -425,7 +423,6 @@
 		444C504016593636006C8CD3 /* InvitationController */ = {
 			isa = PBXGroup;
 			children = (
-				4488996216B134310099E46A /* InfoInvitationView.xib */,
 				44AA7BF41657C477007D7F27 /* InvitationController.h */,
 				44AA7BF51657C477007D7F27 /* InvitationController.m */,
 			);
@@ -872,7 +869,6 @@
 				4468BFB716B0D6A2000ABF5E /* fof_example_03_1.jpeg in Resources */,
 				4468BFB816B0D6A2000ABF5E /* fof_example_03_2.jpeg in Resources */,
 				7B3FEC3F16B10445004C8048 /* FriendProfileController.xib in Resources */,
-				4488996316B134310099E46A /* InfoInvitationView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
