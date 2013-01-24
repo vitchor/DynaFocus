@@ -54,6 +54,7 @@
 		4495E69A15EEBCC7009C2B9F /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495E69915EEBCC7009C2B9F /* libsqlite3.0.dylib */; };
 		4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */; };
 		44968011164D811200F76FCF /* ImageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 44968010164D811200F76FCF /* ImageUtil.m */; };
+		449838D116B13D3C00CFC85D /* InfoInvitationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 449838D016B13D3C00CFC85D /* InfoInvitationView.xib */; };
 		44A0A261164ECDE3005DDCE9 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44A0A260164ECDE3005DDCE9 /* libFlurry.a */; };
 		44AA7BEC1657C43D007D7F27 /* UIStyledLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BEB1657C43D007D7F27 /* UIStyledLabel.m */; };
 		44AA7BF01657C44A007D7F27 /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BEF1657C44A007D7F27 /* FacebookController.m */; };
@@ -203,6 +204,7 @@
 		4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		4496800F164D811200F76FCF /* ImageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtil.h; sourceTree = "<group>"; };
 		44968010164D811200F76FCF /* ImageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtil.m; sourceTree = "<group>"; };
+		449838D016B13D3C00CFC85D /* InfoInvitationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoInvitationView.xib; sourceTree = "<group>"; };
 		44A0A25F164ECDE3005DDCE9 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		44A0A260164ECDE3005DDCE9 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
 		44AA7BEA1657C43D007D7F27 /* UIStyledLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIStyledLabel.h; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 		444C504016593636006C8CD3 /* InvitationController */ = {
 			isa = PBXGroup;
 			children = (
+				449838D016B13D3C00CFC85D /* InfoInvitationView.xib */,
 				44AA7BF41657C477007D7F27 /* InvitationController.h */,
 				44AA7BF51657C477007D7F27 /* InvitationController.m */,
 			);
@@ -873,6 +876,7 @@
 				4468BFB816B0D6A2000ABF5E /* fof_example_03_2.jpeg in Resources */,
 				7B3FEC3F16B10445004C8048 /* FriendProfileController.xib in Resources */,
 				7B089F6716B1382900700815 /* dyfocus-instructions-white.png in Resources */,
+				449838D116B13D3C00CFC85D /* InfoInvitationView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
