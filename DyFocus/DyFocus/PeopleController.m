@@ -4,6 +4,7 @@
 #import "AppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
 #import "DyfocusUINavigationController.h"
+#import "FOFTableController.h"
 
 @implementation Person
 
@@ -133,6 +134,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:TRUE];
+    
 	if (m_viewCount == 0) {
 		[self refreshPeople];
 	}
@@ -198,6 +202,9 @@
         return @"Select friends to invite";
     }
 }
+
+
+
 
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
    if (section == 0 || [m_searchBar showsCancelButton]) {
@@ -320,7 +327,7 @@
                 Person *person = [m_friendInfo objectForKey:[NSNumber numberWithLong:personId]];
                 cell.textLabel.text = person.name;
                 cell.detailTextLabel.text = person.details;
-                //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.tag = personId;
                 
                 UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithLong:personId]];
@@ -415,7 +422,51 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
    
     if (indexPath.section == 0) {
-        // Show user's page
+        
+        NSMutableArray *selectedPersonFofs = [[NSMutableArray alloc] init];
+        Person *person = [[Person alloc] init];
+        NSNumber *personIdNumber = [m_visibleFriendsList objectAtIndex:indexPath.row];
+        
+        if (personIdNumber) {
+            
+            long personId = [personIdNumber longValue];
+            
+            person = [m_friendInfo objectForKey:[NSNumber numberWithLong:personId]];
+            
+            AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+            
+            
+            
+            for (FOF *fof in delegate.feedFofArray) {
+                
+                if ([fof.m_userId isEqualToString: [[NSString alloc] initWithFormat: @"%@", person.tag]]) {
+                
+                    NSLog(@"OLHA O FOOOOOOOOOOOOOOOOF!!!!! %@",person.name);
+                    
+                    [selectedPersonFofs addObject:fof];
+                    
+                }
+            }
+            
+            delegate.friendFofArray = selectedPersonFofs;
+
+        }
+                    
+        FOFTableController *tableController = [[FOFTableController alloc] init];
+        
+        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+        
+        tableController.FOFArray = appDelegate.friendFofArray;
+        
+        tableController.navigationItem.title = @"Friend Pictures";
+        
+        tableController.hidesBottomBarWhenPushed = YES;
+        
+        [self.navigationController pushViewController:tableController animated:true];
+        [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+        
+        NSLog(@"TERMINOOOOOUUUUUUUUU!");
+        
     } else {
         [self switchSelect:indexPath.row];
         [self.tableView deselectRowAtIndexPath:indexPath animated:NO];

@@ -44,7 +44,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray, feedFofArray;
+@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray, feedFofArray, friendFofArray;
 
 - (void)dealloc
 {
@@ -156,8 +156,10 @@
     friendsController = [[FacebookController alloc] init];
     friendsController.hidesBottomBarWhenPushed = NO;
     
+    DyfocusUINavigationController *friendsNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:friendsController];
+    
     UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
-    [friendsController setTabBarItem:friendsTab];
+    [friendsNavigationController setTabBarItem:friendsTab];
     
     // Profile Controller
     ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
@@ -176,7 +178,7 @@
     
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedViewController, cameraNavigationController, friendsController, profileNavigationController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedViewController, cameraNavigationController, friendsNavigationController, profileNavigationController, nil];
     
     self.tabBarController.viewControllers = controllers;
     

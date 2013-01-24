@@ -72,6 +72,7 @@
     NSArray *featuredFofArray;
     NSArray *userFofArray;
     NSArray *feedFofArray;
+    NSArray *friendFofArray;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -100,6 +101,7 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSArray *featuredFofArray;
 @property (nonatomic, retain)  NSArray *userFofArray;
 @property (nonatomic, retain)  NSArray *feedFofArray;
+@property (nonatomic, retain)  NSArray *friendFofArray;
 
 
 

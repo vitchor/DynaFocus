@@ -15,8 +15,8 @@
 @property(nonatomic, readonly) long uid;
 @property(nonatomic, readonly) NSString *name;
 @property(nonatomic, readonly) NSString *details;
-@property(nonatomic, readonly) NSObject *tag;
 @property(nonatomic, retain) NSString *email;
+@property(nonatomic, readonly) NSObject *tag;
 @property(nonatomic, assign) BOOL selected;
 
 - (id)initWithId:(long)iUid andName:(NSString *)iName andDetails:(NSString *)iDetails andTag:(NSObject *)iTag;
