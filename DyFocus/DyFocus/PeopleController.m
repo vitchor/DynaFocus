@@ -435,7 +435,7 @@
             
             AppDelegate *delegate = [UIApplication sharedApplication].delegate;
             
-            
+            delegate.currentFriend = person;
             
             for (FOF *fof in delegate.feedFofArray) {
                 
@@ -452,20 +452,15 @@
 
         }
                     
-        FOFTableController *tableController = [[FOFTableController alloc] init];
+        FriendProfileController *friendProfileController = [[FriendProfileController alloc] init];
         
-        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+        friendProfileController.hidesBottomBarWhenPushed = YES;
         
-        tableController.FOFArray = appDelegate.friendFofArray;
-        
-        tableController.navigationItem.title = @"Friend Pictures";
-        
-        tableController.hidesBottomBarWhenPushed = YES;
-        
-        [self.navigationController pushViewController:tableController animated:true];
+        [self.navigationController pushViewController:friendProfileController animated:true];
         [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-        
+
         NSLog(@"TERMINOOOOOUUUUUUUUU!");
+
         
     } else {
         [self switchSelect:indexPath.row];

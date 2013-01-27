@@ -1,24 +1,24 @@
 //
-//  ProfileController.m
+//  FriendProfileController.h
 //  DyFocus
 //
-//  Created by Alexandre Cordeiro on 8/30/12.
+//  Created by Cássio Marcos Goulart on 24/01/13.
 //  Copyright (c) 2012 Ufscar. All rights reserved.
 //
 
-#import "ProfileController.h"
+#import "FriendProfileController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "FOFTableController.h"
 
-@interface ProfileController ()
+@interface FriendProfileController ()
 
 @end
 
-@implementation ProfileController
+@implementation FriendProfileController
 
 
-@synthesize logoutButton, myPicturesButton;
+@synthesize viewPicturesButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,11 +35,10 @@
     [super viewWillAppear:animated];
     
 
-    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
+    [self.navigationController setNavigationBarHidden:NO animated:FALSE];
     
-    [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
+    [viewPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
    
-
 }
 
 -(void) showPictures{
@@ -48,9 +47,9 @@
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    tableController.FOFArray = appDelegate.userFofArray;
+    tableController.FOFArray = appDelegate.friendFofArray;
     
-    tableController.navigationItem.title = @"My Pictures";
+    tableController.navigationItem.title = @"Friend Pictures";
     
     tableController.hidesBottomBarWhenPushed = YES;
     
@@ -62,10 +61,6 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    
-//    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
-//    self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
     
 }
 
@@ -76,20 +71,9 @@
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
-    self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
+    self.userNameLabel.text = appDelegate.currentFriend.name;
+    self.userProfileImage.profileID = [[NSString alloc] initWithFormat: @"%@", appDelegate.currentFriend.tag];
 
-    [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-}
-
-
-- (void)logout {
-    
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
-    [appDelegate closeSession];
 }
 
 - (void)didReceiveMemoryWarning

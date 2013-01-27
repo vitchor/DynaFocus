@@ -58,6 +58,7 @@
 		4495E69A15EEBCC7009C2B9F /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495E69915EEBCC7009C2B9F /* libsqlite3.0.dylib */; };
 		4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */; };
 		44968011164D811200F76FCF /* ImageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 44968010164D811200F76FCF /* ImageUtil.m */; };
+		449838D116B13D3C00CFC85D /* InfoInvitationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 449838D016B13D3C00CFC85D /* InfoInvitationView.xib */; };
 		44A0A261164ECDE3005DDCE9 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44A0A260164ECDE3005DDCE9 /* libFlurry.a */; };
 		44AA7BEC1657C43D007D7F27 /* UIStyledLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BEB1657C43D007D7F27 /* UIStyledLabel.m */; };
 		44AA7BF01657C44A007D7F27 /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BEF1657C44A007D7F27 /* FacebookController.m */; };
@@ -80,6 +81,9 @@
 		44C8DA4215B1FF80000D2947 /* PathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8DA4115B1FF80000D2947 /* PathView.m */; };
 		44D8FC8E166676EC00E613DC /* gray_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D8FC8D166676EC00E613DC /* gray_background.png */; };
 		44F07658165E7FE100AE6A84 /* SharingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44F07657165E7FE100AE6A84 /* SharingController.xib */; };
+		7B089F6716B1382900700815 /* dyfocus-instructions-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B089F6616B1382900700815 /* dyfocus-instructions-white.png */; };
+		7B3FEC3D16B10381004C8048 /* FriendProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3C16B10381004C8048 /* FriendProfileController.m */; };
+		7B3FEC3F16B10445004C8048 /* FriendProfileController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3E16B10445004C8048 /* FriendProfileController.xib */; };
 		AC07F47915B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */; };
 		AC07F47C15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */; };
 		AC0B80DA16B116B8002EA478 /* dyfocus-instructions-white.png in Resources */ = {isa = PBXBuildFile; fileRef = AC0B80D916B116B8002EA478 /* dyfocus-instructions-white.png */; };
@@ -211,6 +215,7 @@
 		4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		4496800F164D811200F76FCF /* ImageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtil.h; sourceTree = "<group>"; };
 		44968010164D811200F76FCF /* ImageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtil.m; sourceTree = "<group>"; };
+		449838D016B13D3C00CFC85D /* InfoInvitationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoInvitationView.xib; sourceTree = "<group>"; };
 		44A0A25F164ECDE3005DDCE9 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		44A0A260164ECDE3005DDCE9 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
 		44AA7BEA1657C43D007D7F27 /* UIStyledLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIStyledLabel.h; sourceTree = "<group>"; };
@@ -240,6 +245,10 @@
 		44C8DA4115B1FF80000D2947 /* PathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathView.m; sourceTree = "<group>"; };
 		44D8FC8D166676EC00E613DC /* gray_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray_background.png; sourceTree = "<group>"; };
 		44F07657165E7FE100AE6A84 /* SharingController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SharingController.xib; sourceTree = "<group>"; };
+		7B089F6616B1382900700815 /* dyfocus-instructions-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-white.png"; sourceTree = "<group>"; };
+		7B3FEC3B16B1036A004C8048 /* FriendProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileController.h; sourceTree = "<group>"; };
+		7B3FEC3C16B10381004C8048 /* FriendProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileController.m; sourceTree = "<group>"; };
+		7B3FEC3E16B10445004C8048 /* FriendProfileController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendProfileController.xib; sourceTree = "<group>"; };
 		AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_72x72.png; path = ../dynafocus_icon_beta1_orange_nofill_72x72.png; sourceTree = "<group>"; };
 		AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_144x144.png; path = ../dynafocus_icon_beta1_orange_nofill_144x144.png; sourceTree = "<group>"; };
 		AC0B80D916B116B8002EA478 /* dyfocus-instructions-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-white.png"; sourceTree = "<group>"; };
@@ -413,6 +422,7 @@
 			isa = PBXGroup;
 			children = (
 				048BA4BA16B11E28002DBD68 /* CommentViewerController */,
+				7B3FEC3916B1019D004C8048 /* FriendProfileController */,
 				04292BE2169902B0009CF50B /* FOFTableViewController */,
 				44362AF9167E8D5B0007944B /* SplashScreenController */,
 				44B4A0C7167E4B5600956E0C /* LoginController */,
@@ -443,6 +453,7 @@
 		444C504016593636006C8CD3 /* InvitationController */ = {
 			isa = PBXGroup;
 			children = (
+				449838D016B13D3C00CFC85D /* InfoInvitationView.xib */,
 				44AA7BF41657C477007D7F27 /* InvitationController.h */,
 				44AA7BF51657C477007D7F27 /* InvitationController.m */,
 			);
@@ -715,13 +726,21 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		7B3FEC3916B1019D004C8048 /* FriendProfileController */ = {
+			isa = PBXGroup;
+			children = (
+				7B3FEC3B16B1036A004C8048 /* FriendProfileController.h */,
+				7B3FEC3C16B10381004C8048 /* FriendProfileController.m */,
+				7B3FEC3E16B10445004C8048 /* FriendProfileController.xib */,
+			);
+			name = FriendProfileController;
+			sourceTree = "<group>";
+		};
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				044128C816B5E740004E4334 /* heart-blue.png */,
-				044128C516B5E66E004E4334 /* message-blue.png */,
+				7B089F6616B1382900700815 /* dyfocus-instructions-white.png */,
 				4468BFAC16B0D10D000ABF5E /* FOFexamples */,
-				AC0B80D916B116B8002EA478 /* dyfocus-instructions-white.png */,
 				4468BFA716B0C65C000ABF5E /* arrow_left.png */,
 				4468BFA816B0C65C000ABF5E /* arrow_right.png */,
 				04989B7416964E18003ECD93 /* close.png */,
@@ -877,11 +896,9 @@
 				4468BFB616B0D6A2000ABF5E /* fof_example_02_2.jpeg in Resources */,
 				4468BFB716B0D6A2000ABF5E /* fof_example_03_1.jpeg in Resources */,
 				4468BFB816B0D6A2000ABF5E /* fof_example_03_2.jpeg in Resources */,
-				AC0B80DA16B116B8002EA478 /* dyfocus-instructions-white.png in Resources */,
-				048BA4C516B11EBA002DBD68 /* CommentViewerController.xib in Resources */,
-				048BA4CE16B12A5D002DBD68 /* CommentTableCell.xib in Resources */,
-				044128C716B5E66E004E4334 /* message-blue.png in Resources */,
-				044128C916B5E740004E4334 /* heart-blue.png in Resources */,
+				7B3FEC3F16B10445004C8048 /* FriendProfileController.xib in Resources */,
+				7B089F6716B1382900700815 /* dyfocus-instructions-white.png in Resources */,
+				449838D116B13D3C00CFC85D /* InfoInvitationView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,8 +963,7 @@
 				44362AFD167E8D730007944B /* SplashScreenController.m in Sources */,
 				04292BE71699038F009CF50B /* FOFTableController.m in Sources */,
 				04292BEB169904AD009CF50B /* FOFTableCell.m in Sources */,
-				048BA4C416B11EBA002DBD68 /* CommentViewerController.m in Sources */,
-				048BA4CC16B12A35002DBD68 /* CommentTableCell.m in Sources */,
+				7B3FEC3D16B10381004C8048 /* FriendProfileController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1042,8 +1058,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AFB906EB-1A7D-4E35-8A3A-B2189F22DA16";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFB906EB-1A7D-4E35-8A3A-B2189F22DA16";
+				PROVISIONING_PROFILE = "0186FB9D-7B3D-4EAE-A3EE-AA1A5676486D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0186FB9D-7B3D-4EAE-A3EE-AA1A5676486D";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1073,8 +1089,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AFB906EB-1A7D-4E35-8A3A-B2189F22DA16";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AFB906EB-1A7D-4E35-8A3A-B2189F22DA16";
+				PROVISIONING_PROFILE = "0186FB9D-7B3D-4EAE-A3EE-AA1A5676486D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0186FB9D-7B3D-4EAE-A3EE-AA1A5676486D";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;

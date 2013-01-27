@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "UIStyledLabel.h"
 #import "InvitationController.h"
+#import "FriendProfileController.h"
 
 @interface Person : NSObject {
 	long m_id;
