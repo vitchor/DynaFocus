@@ -19,7 +19,7 @@
 
 @implementation SharingController
 
-@synthesize facebookSwitch, activityIndicator, frames, focalPoints, spinner;
+@synthesize facebookSwitch, activityIndicator, commentField, frames, focalPoints, spinner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +28,16 @@
         // Custom initialization
     }
     return self;
+}
+
+- (IBAction) toggleEnabledForSwitch: (id) sender{
+
+    if (facebookSwitch.on) {
+        [commentField setHidden:NO];
+    }else{
+        [commentField setHidden:YES];
+    }
+    
 }
 
 - (void)viewDidLoad
@@ -41,7 +51,8 @@
 	[shareButton release];
 	[share release];
     
-    
+    commentField.layer.cornerRadius = 6.0;
+    [commentField setHidden:YES];
 }
 
 
@@ -67,7 +78,7 @@
     
     NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fofName];
     
-    NSString *message = @"";
+    NSString *message = self.commentField.text;
     
     NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg",savedFacebookId, fofName];
     
@@ -112,7 +123,10 @@
 }
 
 - (void) upload
-{
+{// unregister for keyboard notifications while not visible.
+
+    
+    [commentField resignFirstResponder];
     
     NSURL *webServiceUrl = [NSURL URLWithString:[[[NSString alloc] initWithFormat: @"%@/uploader/image/", dyfocus_url] autorelease]];
     
@@ -193,6 +207,7 @@
     NSLog(@"REQUEST FINISHED");
     
     if (facebookSwitch.on) {
+        [commentField setHidden:NO];
         [self shareWithFacebook];
     } else {
         //[self.navigationController popViewControllerAnimated:YES];
@@ -229,9 +244,53 @@
     NSLog(@"REQUEST REDIRECTED");    
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardWillHide:)
+//                                                 name:UIKeyboardWillHideNotification
+//                                               object:nil];
+    
+    
+}
+
+-(void)keyboardWillShow:(NSNotification*)aNotification{
+    
+    self.commentField.text = @"";
+    
+    CGRect myTextViewFrame = [self.commentField frame];
+    myTextViewFrame.origin.y += -230;
+    myTextViewFrame.origin.x += -25;
+    myTextViewFrame.size.height += 90 ;
+    myTextViewFrame.size.width += 50 ;
+    
+    [self.commentField setFrame:myTextViewFrame];
+    
+}
+
+
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
+    
+//    // unregister for keyboard notifications while not visible.
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:UIKeyboardWillShowNotification
+//                                                  object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:UIKeyboardWillHideNotification
+//                                                  object:nil];
+    
+//    [commentField resignFirstResponder];
+    
+    
     if (request) {
         [request setDelegate:nil];
         [request cancel];
