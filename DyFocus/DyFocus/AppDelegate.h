@@ -29,6 +29,32 @@
 //#define dyfocus_url @"http://192.168.100.140:8000"
 //#define dyfocus_url @"http://192.168.0.190:8000"
 
+
+
+@interface Like: NSObject {
+	NSString *m_fofId;
+	NSString *m_userName;
+	NSString *m_userId;
+}
+
+@property (nonatomic, retain) NSString *m_fofId;
+@property (nonatomic, retain) NSString *m_userName;
+@property (nonatomic, retain) NSString *m_userId;
+@end
+
+@interface Comment: NSObject {
+	NSString *m_fofId;
+	NSString *m_message;
+	NSString *m_userName;
+	NSString *m_userId;    
+}
+
+@property (nonatomic, retain) NSString *m_fofId;
+@property (nonatomic, retain) NSString *m_message;
+@property (nonatomic, retain) NSString *m_userName;
+@property (nonatomic, retain) NSString *m_userId;
+@end
+
 @interface FOF : NSObject {
 	NSString *m_name;
 	NSArray *m_frames;
@@ -39,7 +65,6 @@
 	NSString *m_date;
 	NSString *m_id;
     BOOL *m_liked;
-    
 }
 
 @property (nonatomic, retain) NSArray *m_frames;

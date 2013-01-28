@@ -55,6 +55,8 @@
 
     m_tableView.backgroundColor = [UIColor clearColor];
     
+    [self.navigationController setNavigationBarHidden:YES];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
