@@ -23,6 +23,9 @@
     IBOutlet UIBarButtonItem *clearButton;
     IBOutlet UIBarButtonItem *shootButton;
     
+    IBOutlet UIActivityIndicatorView *spinner;
+    IBOutlet UIView *loadingView;
+    
     AVCaptureSession *captureSession;
     
     NSMutableArray *mFocalPoints;
@@ -57,6 +60,8 @@
 @property(nonatomic,retain) IBOutlet UIButton *popupCloseButton;
 @property(nonatomic,retain) IBOutlet UIView *popupView;
 @property(nonatomic,retain) IBOutlet UIView *popupDarkView;
+@property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
+@property(nonatomic,retain) IBOutlet UIView *loadingView;
 
 
 @end

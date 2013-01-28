@@ -18,7 +18,7 @@
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, popupDarkView;
+@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
@@ -214,6 +214,9 @@
     NSLog(@"CameraView is ready");
     [self.cameraView.layer addSublayer:layer];
     NSLog(@"CameraView is added");
+
+    [spinner stopAnimating];
+    [loadingView setHidden:YES];
     
 }
 
@@ -468,6 +471,9 @@
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     [super viewWillAppear:animated];
     
+    [spinner startAnimating];
+    [loadingView setHidden:NO];
+    
     [shootButton setEnabled:true];
     [clearButton setEnabled:true];
     [infoButton setEnabled:true];
@@ -483,18 +489,6 @@
         mFrames = [[NSMutableArray alloc] init];
     } else {
         [mFrames removeAllObjects];
-    }
-    
-    if (!captureSession) {
-        [self startCaptureSession];
-    } else {
-        [captureSession startRunning];
-        
-        if (mCaptureDevice) {
-            if (![mCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus] || ![mCaptureDevice isFocusPointOfInterestSupported]) {
-                [self disablePictureTaking];
-            }
-        }
     }
     
     pathView.cameraViewController = self;
@@ -519,7 +513,25 @@
         [popupView setTag:420];
     }
     
+    
+    if (!captureSession) {
+        [self startCaptureSession];
+    } else {
+        [captureSession startRunning];
+        
+        if (mCaptureDevice) {
+            if (![mCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus] || ![mCaptureDevice isFocusPointOfInterestSupported]) {
+                [self disablePictureTaking];
+            }
+        }
+        
+        [spinner stopAnimating];
+        [loadingView setHidden:YES];
+    }
+    
     [super viewDidAppear:animated];
+    
+    
 }
 
 - (void)showToast:(NSString *)text {
