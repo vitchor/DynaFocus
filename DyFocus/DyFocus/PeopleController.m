@@ -748,7 +748,7 @@
 	[searchBar setShowsCancelButton:NO animated:YES];	
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
 	self.tableView.frame = CGRectMake(0, 40, 320, 392);
-	[self.view addSubview:m_controlToolbar];
+//	[self.view addSubview:m_controlToolbar];
 	[self showAll];
 }
 
