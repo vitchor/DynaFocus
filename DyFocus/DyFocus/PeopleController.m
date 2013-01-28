@@ -440,8 +440,6 @@
             for (FOF *fof in delegate.feedFofArray) {
                 
                 if ([fof.m_userId isEqualToString: [[NSString alloc] initWithFormat: @"%@", person.tag]]) {
-                
-                    NSLog(@"OLHA O FOOOOOOOOOOOOOOOOF!!!!! %@",person.name);
                     
                     [selectedPersonFofs addObject:fof];
                     
@@ -458,8 +456,6 @@
         
         [self.navigationController pushViewController:friendProfileController animated:true];
         [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-
-        NSLog(@"TERMINOOOOOUUUUUUUUU!");
 
         
     } else {
@@ -750,7 +746,7 @@
 	[searchBar setText:@""];
 	[searchBar resignFirstResponder];	
 	[searchBar setShowsCancelButton:NO animated:YES];	
-	[self.navigationController setNavigationBarHidden:NO animated:YES];	
+	[self.navigationController setNavigationBarHidden:YES animated:YES];
 	self.tableView.frame = CGRectMake(0, 40, 320, 392);
 	[self.view addSubview:m_controlToolbar];
 	[self showAll];
