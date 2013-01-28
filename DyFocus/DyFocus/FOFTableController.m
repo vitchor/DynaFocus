@@ -55,6 +55,10 @@
 
     m_tableView.backgroundColor = [UIColor clearColor];
     
+    if (!(FOFArray && [FOFArray count] > 0)) {
+        [m_tableView setHidden:YES];
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
