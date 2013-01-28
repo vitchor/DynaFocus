@@ -120,7 +120,9 @@
     cameraViewController.hidesBottomBarWhenPushed = YES;
     cameraNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:cameraViewController];
     cameraNavigationController.hidesBottomBarWhenPushed = YES;
-    UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:3];
+    UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot.png"] tag:3];
+    [cameraTab setFinishedSelectedImage:[UIImage imageNamed:@"df_shoot.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_shoot.png"]];
+    [cameraTab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.9686 green:0.5098 blue:0.1176 alpha:1], UITextAttributeTextColor, nil] forState:UIControlStateNormal];
     [cameraNavigationController setTabBarItem:cameraTab];
     
     
@@ -134,12 +136,13 @@
     // TODO: set the foftableController FOFArray
     
     
-    UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured_bw.png"] tag:1];
+    UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured.png"] tag:1];
+    [galleryTab setFinishedSelectedImage:[UIImage imageNamed:@"df_featured_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_featured.png"]];
     [featuredWebViewController setTabBarItem:galleryTab];
     
     // Feed Controller
     feedViewController = [[FOFTableController alloc] init];
-
+    
     NSString *stringUrl = [[NSString alloc] initWithFormat: @"%@/uploader/%@/m_feed/0/", dyfocus_url, [self.myself objectForKey:@"id"]];
     
     feedViewController.FOFArray = self.feedFofArray;
@@ -149,7 +152,8 @@
     //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
     
-    UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed_bw"] tag:2];
+    UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed"] tag:2];
+    [feedTab setFinishedSelectedImage:[UIImage imageNamed:@"df_feed_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_feed.png"]];
     [feedViewController setTabBarItem:feedTab];
     
     
@@ -159,25 +163,34 @@
     
     DyfocusUINavigationController *friendsNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:friendsController];
     
-    UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
+    UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends"] tag:4];
+    [friendsTab setFinishedSelectedImage:[UIImage imageNamed:@"df_friends_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_friends.png"]];
     [friendsNavigationController setTabBarItem:friendsTab];
+    
+    //    //Friend Profile Controller
+    //    friendProfileController = [[FacebookController alloc] init];
+    //    friendProfileController.hidesBottomBarWhenPushed = NO;
+    //
+    //    DyfocusUINavigationController *friendProfileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:friendProfileController];
     
     
     // Profile Controller
     ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
     
     DyfocusUINavigationController *profileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:profileController];
-//    profileController.hidesBottomBarWhenPushed = NO;
+    //    profileController.hidesBottomBarWhenPushed = NO;
     
     profileNavigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
-    UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"df_profile_bw"] tag:5];
+    UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Profile" image:[UIImage imageNamed:@"df_profile"] tag:5];
+    [profileTab setFinishedSelectedImage:[UIImage imageNamed:@"df_profile_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_profile.png"]];
     [profileNavigationController setTabBarItem:profileTab];
     
     // Configure TabBarController
     
     self.tabBarController = [[[DyfocusUITabBarController alloc] init] autorelease];
-    
+    [[[self tabBarController] tabBar] setBackgroundImage:[UIImage imageNamed:@"tabbar-background"]];
+    [[[self tabBarController] tabBar] setSelectionIndicatorImage:[UIImage imageNamed:@"tabbar-selected"]];
     
     
     NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedViewController, cameraNavigationController, friendsNavigationController, profileNavigationController, nil];
