@@ -46,10 +46,15 @@
     FOFTableController *tableView;
    
     int row;
+    float newHeight;
+    
+    UIImage *currentImage;
     
 }
 
 -(void) loadImages;
+
+-(void) refreshImageSize;
 
 @property (nonatomic,retain) IBOutlet UILabel *labelUserName;
 @property (nonatomic,retain) IBOutlet UILabel *labelDate;

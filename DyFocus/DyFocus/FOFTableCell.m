@@ -32,6 +32,27 @@
     
 }
 
+-(void) refreshImageSize {
+    
+    if(imagebackFrame && imagefrontFrame){
+        
+        if(currentImage){
+        
+            if(currentImage.size.height/currentImage.size.width > 1){
+
+                
+                imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
+                                              imagebackFrame.frame.origin.y , imagebackFrame.frame.size.width, newHeight);
+            
+
+                imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
+                                               imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newHeight);
+            }
+        }
+    }
+    
+}
+
 - (void) likeButtonPressed {
     if (!fof.m_liked) {
     
@@ -146,6 +167,8 @@
     
     if (!frames) {
         
+        NSLog(@"ENTROOOOOOU 1");
+        
         [spinner startAnimating];
         
 
@@ -165,6 +188,8 @@
         
         if (!frames) {
         
+            NSLog(@"ENTROOOOU 2");
+            
             frames = [[NSMutableArray alloc] init];
             downloadedFrames = 0;
 
@@ -177,6 +202,8 @@
                                        completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                            if(!error && data) {
                                                UIImage *image = [UIImage imageWithData:data];
+                                               currentImage = image;
+                                               
                                                if(image) {
                                                    [frames addObject:image];
                                                    
@@ -186,8 +213,8 @@
                                                    //NSLog(@"WIDTH: %f", image.size.width);
                                                    //NSLog(@"SCALE: %f", scale);
                                                    if (scale > 1) {
-                                                       
-                                                       float newHeight = imagebackFrame.frame.size.width * scale;
+                                                   
+                                                       newHeight = imagebackFrame.frame.size.width * scale;
                                                        
                                                        [self.tableView addNewCellHeight:newHeight atRow:self.row];
                                                        
@@ -215,7 +242,13 @@
                                        }];
             }
         }
+        
+        NSLog(@"SAIIIIUUUUUU 2");
     }
+    
+    NSLog(@"SAIIIUUUUUU  1");
+    
+    
 }
 
 - (void)fadeImages
