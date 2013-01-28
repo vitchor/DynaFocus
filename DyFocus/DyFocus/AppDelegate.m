@@ -162,12 +162,6 @@
     UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends_bw"] tag:4];
     [friendsNavigationController setTabBarItem:friendsTab];
     
-//    //Friend Profile Controller
-//    friendProfileController = [[FacebookController alloc] init];
-//    friendProfileController.hidesBottomBarWhenPushed = NO;
-//
-//    DyfocusUINavigationController *friendProfileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:friendProfileController];
-    
     
     // Profile Controller
     ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
@@ -949,7 +943,8 @@
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+//    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 -(void)showOkAlertWithMessage:(NSString *)message andTitle:(NSString *)title
