@@ -57,31 +57,52 @@
     
     [self.navigationController setNavigationBarHidden:YES];
     
+    if (!(FOFArray && [FOFArray count] > 0)) {
+        [m_tableView setHidden:YES];
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self refreshCellsImageSizes];
     [self refreshImages];
 }
 
+-(void) refreshCellsImageSizes {
+        
+        NSArray *visibleCells = [m_tableView visibleCells];
+        
+        NSLog(@"Going to refresh");
+        
+        if (visibleCells) {
+            
+            NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
+            
+            for (FOFTableCell *cell in visibleCellsCopy) {
+                
+                // TODO CREATE CACHE
+                //UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithInt:cell.tag]];
+                
+                NSLog(@"LOADING IMAGE");
+                [cell loadImages];
+            }
+            
+            [visibleCellsCopy release];
+        }
+}
 
 -(void) refreshImages {
 
     NSArray *visibleCells = [m_tableView visibleCells];
-
-    NSLog(@"Going to refresh");
     
     if (visibleCells) {
-       
+    
         NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
         
         for (FOFTableCell *cell in visibleCellsCopy) {
             
-            // TODO CREATE CACHE
-            //UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithInt:cell.tag]];
-            
-            NSLog(@"LOADING IMAGE");
-            [cell loadImages];
+            [cell refreshImageSize];
         }
         
         [visibleCellsCopy release];
@@ -174,12 +195,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-	[self refreshImages];
+	[self refreshCellsImageSizes];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 	if (decelerate == NO) {
-		[self refreshImages];
+		[self refreshCellsImageSizes];
 	}
 }
 

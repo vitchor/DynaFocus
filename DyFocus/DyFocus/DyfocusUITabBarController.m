@@ -57,26 +57,26 @@
 
 -(void) tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     
-    if (!(viewController == feedWebController )) {
-        
-        int orientation = [[UIDevice currentDevice] orientation];
-
-        if (orientation != UIDeviceOrientationPortrait) {
-        
-            UIViewController *c = [[UIViewController alloc]init];
-            [viewController presentModalViewController:c animated:NO];
-            [viewController dismissModalViewControllerAnimated:NO];
-            
-            [c release];
-            c = nil;
-            
-            if ([UIViewController respondsToSelector:@selector(attemptRotationToDeviceOrientation)]) {
-                // this ensures that the view will be presented in the orientation of the device
-                // This method is only supported on iOS 5.0.  iOS 4.3 users may get a little dizzy.
-                [UIViewController attemptRotationToDeviceOrientation];
-            }
-        }
-    }
+//    if (!(viewController == feedWebController )) {
+//        
+//        int orientation = [[UIDevice currentDevice] orientation];
+//
+//        if (orientation != UIDeviceOrientationPortrait) {
+//        
+//            UIViewController *c = [[UIViewController alloc]init];
+//            [viewController presentModalViewController:c animated:NO];
+//            [viewController dismissModalViewControllerAnimated:NO];
+//            
+//            [c release];
+//            c = nil;
+//            
+//            if ([UIViewController respondsToSelector:@selector(attemptRotationToDeviceOrientation)]) {
+//                // this ensures that the view will be presented in the orientation of the device
+//                // This method is only supported on iOS 5.0.  iOS 4.3 users may get a little dizzy.
+//                [UIViewController attemptRotationToDeviceOrientation];
+//            }
+//        }
+//    }
     
     if (actualControllerIndex != -1) {
         self.lastControllerIndex = actualControllerIndex;
@@ -94,7 +94,7 @@
 
 -(BOOL)shouldAutorotate
 {
-    return YES;
+    return NO;
 }
 
 - (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
