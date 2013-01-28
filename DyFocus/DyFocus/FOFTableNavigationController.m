@@ -14,6 +14,8 @@
 
 @implementation FOFTableNavigationController
 
+@synthesize tableController;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -23,12 +25,13 @@
     return self;
 }
 
--(id) initWithFOFArray: (NSArray *)FOFArray {
+-(id) initWithFOFArray:(NSArray *)FOFArray andUrl:(NSString *)refreshUrl {
     
     tableController = [[FOFTableController alloc] init];
     
     tableController.FOFArray = FOFArray;
     tableController.shouldHideNavigationBar = YES;
+    tableController.refreshString = refreshUrl;
     
     //[self pushViewController:tableController animated:NO];
     [self setNavigationBarHidden:YES];

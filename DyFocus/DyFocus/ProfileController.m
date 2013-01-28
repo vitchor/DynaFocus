@@ -50,6 +50,7 @@
     
     tableController.FOFArray = appDelegate.userFofArray;
     tableController.shouldHideNavigationBar = NO;
+    tableController.refreshString = refresh_user_url;
     
     tableController.navigationItem.title = @"My Pictures";
     

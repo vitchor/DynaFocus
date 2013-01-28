@@ -21,6 +21,8 @@
 #import "CameraView.h"
 #import "FOFTableController.h"
 
+#import "FOFTableNavigationController.h"
+
 #define UPLOADING 0
 #define SHARING 1
 #define FRIENDS 2
@@ -29,6 +31,9 @@
 //#define dyfocus_url @"http://192.168.100.140:8000"
 //#define dyfocus_url @"http://192.168.0.190:8000"
 
+#define refresh_user_url @"http://dyfoc.us/uploader/json_user_fof/"
+#define refresh_featured_url @"http://dyfoc.us/uploader/json_featured_fof/"
+#define refresh_feed_url @"http://dyfoc.us/uploader/json_feed/"
 
 
 @interface Like: NSObject {
@@ -67,6 +72,8 @@
     BOOL *m_liked;
 }
 
++(FOF *)fofFromJSON: (NSDictionary *)json;
+
 @property (nonatomic, retain) NSArray *m_frames;
 @property (nonatomic, retain) NSArray *m_comments;
 @property (nonatomic, retain) NSString *m_name;
@@ -86,7 +93,7 @@
 
     NSArray *permissions;
     FacebookController *friendsController;
-    FOFTableController *feedViewController;
+    FOFTableNavigationController *feedViewController;
     LoginController *loginController;
     SplashScreenController *splashScreenController;
     CameraView *cameraViewController;
@@ -103,6 +110,8 @@
 }
 
 extern NSString *const FBSessionStateChangedNotification;
+
+-(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString;
 - (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (void)closeSession;
 

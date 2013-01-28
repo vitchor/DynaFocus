@@ -27,6 +27,55 @@
 
 @synthesize m_name, m_frames, m_comments, m_likes, m_userName, m_userId, m_date, m_userNickname, m_id, m_liked;
 
++(FOF *)fofFromJSON: (NSDictionary *)json {
+    
+    FOF *fof = [FOF alloc];
+    
+    NSString *facebook_id = [json valueForKey:@"user_facebook_id"];
+    NSString *name = [json valueForKey:@"user_name"];
+    
+    NSString *fofId = [json valueForKey:@"id"];
+    NSString *liked = [json valueForKey:@"liked"];
+    
+    NSDictionary *frames = [json valueForKey:@"frames"];
+    
+    NSString *pubDate = [json valueForKey:@"pub_date"];
+    
+    NSArray *comments = nil;
+    if([json valueForKey:@"comments"] && [json valueForKey:@"comments"] != 0 && ![[json valueForKey:@"comments"] isEqual:@"0"] && ![[json valueForKey:@"comments"] isEqual:@"null"]) {
+        comments = [json valueForKey:@"comments"];
+    }
+    
+    NSString *likes = [json valueForKey:@"likes"];
+    
+    NSMutableArray *framesData = [[NSMutableArray alloc] init];
+    
+    for (int index = 0; index < [frames count]; index++) {
+        
+        NSDictionary *jsonFrame = [frames objectAtIndex:index];
+        
+        NSMutableDictionary *frameData = [[NSMutableDictionary alloc] init];
+        
+        [frameData setValue:[jsonFrame objectForKey:@"frame_url"] forKey:@"frame_url"];
+        
+        [frameData setValue:[jsonFrame objectForKey:@"frame_index"] forKey:@"frame_index"];
+        
+        [framesData addObject:frameData];
+        
+    }
+    
+    fof.m_id = fofId;
+    fof.m_liked = [liked isEqualToString:@"1"];
+    fof.m_userName = name;
+    fof.m_userId = facebook_id;
+    fof.m_frames = framesData;
+    fof.m_likes = likes;
+    fof.m_comments = comments;
+    fof.m_date = pubDate;
+
+    return fof;
+}
+
 - (void)dealloc {
     [m_name release];
     [m_frames release];
@@ -36,7 +85,7 @@
     [m_userNickname release];
     [m_likes release];
     [m_userId release];
-    [m_id release];    
+    [m_id release];
 	[super dealloc];
 }
 
@@ -156,7 +205,7 @@
     
     
     // Featured Controller
-    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray];
+    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray andUrl:refresh_featured_url];
     
     
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured.png"] tag:1];
@@ -164,7 +213,7 @@
     [featuredWebViewController setTabBarItem:galleryTab];
     
     // Feed Controller
-    FOFTableNavigationController *feedViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.feedFofArray];
+    feedViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.feedFofArray andUrl:refresh_feed_url];
 
     
     //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
@@ -226,6 +275,21 @@
     [self.window addSubview:self.tabBarController.view];
 }
 
+-(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString {
+    
+    if ([refreshString isEqualToString:refresh_featured_url]) {
+        featuredFofArray = fofs;
+        
+    } else if ([refreshString isEqualToString:refresh_feed_url]) {
+        feedFofArray = fofs;
+        
+    } else if ([refreshString isEqualToString:refresh_user_url]) {
+        userFofArray = fofs;
+        
+    }
+    
+}
+
 - (void)resetCameraUINavigationController {
     NSArray *viewControllers = cameraNavigationController.viewControllers;
     UIViewController *rootViewController = [viewControllers objectAtIndex:0];
@@ -244,6 +308,9 @@
     [cameraNavigationController setViewControllers:[NSArray arrayWithObject:rootViewController] animated:NO];
     
     [cameraViewController showToast:@"Upload Complete."];
+    
+    
+    [feedViewController.tableController refreshWithAction:NO];
     
     
     [tabBarController setSelectedIndex:1];
@@ -715,48 +782,9 @@
             for (int i = 0; i < [featuredFOFList count]; i++) {
                 NSDictionary *jsonFOF = [featuredFOFList objectAtIndex:i];
                 
-                NSString *facebook_id = [jsonFOF valueForKey:@"user_facebook_id"];
-                NSString *name = [jsonFOF valueForKey:@"user_name"];
+                                
+                FOF *fof = [FOF fofFromJSON:jsonFOF];
                 
-                NSString *fofId = [jsonFOF valueForKey:@"id"];
-                NSString *liked = [jsonFOF valueForKey:@"liked"];
-                
-                NSDictionary *frames = [jsonFOF valueForKey:@"frames"];
-                
-                NSString *pubDate = [jsonFOF valueForKey:@"pub_date"];
-                
-                NSArray *comments = nil;
-                if([jsonFOF valueForKey:@"comments"] && [jsonFOF valueForKey:@"comments"] != 0 && ![[jsonFOF valueForKey:@"comments"] isEqual:@"0"] && ![[jsonFOF valueForKey:@"comments"] isEqual:@"null"]) {
-                    comments = [jsonFOF valueForKey:@"comments"];
-                }
-                
-                NSString *likes = [jsonFOF valueForKey:@"likes"];
-                
-                NSMutableArray *framesData = [[NSMutableArray alloc] init];
-                
-                for (int index = 0; index < [frames count]; index++) {
-                    
-                    NSDictionary *jsonFrame = [frames objectAtIndex:index];
-                    
-                    NSMutableDictionary *frameData = [[NSMutableDictionary alloc] init];
-
-                    [frameData setValue:[jsonFrame objectForKey:@"frame_url"] forKey:@"frame_url"];
-                    
-                    [frameData setValue:[jsonFrame objectForKey:@"frame_index"] forKey:@"frame_index"];
-                    
-                    [framesData addObject:frameData];
-                    
-                }
-                
-                FOF *fof = [FOF alloc];
-                fof.m_id = fofId;
-                fof.m_liked = [liked isEqualToString:@"1"];
-                fof.m_userName = name;
-                fof.m_userId = facebook_id;
-                fof.m_frames = framesData;
-                fof.m_likes = likes;
-                fof.m_comments = comments;
-                fof.m_date = pubDate;
                 
                 [featuredFOFArray addObject:fof];
                 
@@ -779,47 +807,7 @@
             for (int i = 0; i < [userFOFList count]; i++) {
                 NSDictionary *jsonFOF = [userFOFList objectAtIndex:i];
                 
-                NSString *facebook_id = [jsonFOF valueForKey:@"user_facebook_id"];
-                NSString *name = [jsonFOF valueForKey:@"user_name"];
-                NSDictionary *frames = [jsonFOF valueForKey:@"frames"];
-                
-                NSString *fofId = [jsonFOF valueForKey:@"id"];
-                NSString *liked = [jsonFOF valueForKey:@"liked"];
-                
-                NSString *pubDate = [jsonFOF valueForKey:@"pub_date"];
-                
-                NSArray *comments = nil;
-                if([jsonFOF valueForKey:@"comments"] && [jsonFOF valueForKey:@"comments"] != 0 && ![[jsonFOF valueForKey:@"comments"] isEqual:@"0"] && ![[jsonFOF valueForKey:@"comments"] isEqual:@"null"]) {
-                    comments = [jsonFOF valueForKey:@"comments"];
-                }
-                
-                NSString *likes = [jsonFOF valueForKey:@"likes"];
-                
-                NSMutableArray *framesData = [[NSMutableArray alloc] init];
-                
-                for (int index = 0; index < [frames count]; index++) {
-                    
-                    NSDictionary *jsonFrame = [frames objectAtIndex:index];
-                    
-                    NSMutableDictionary *frameData = [[NSMutableDictionary alloc] init];
-                    
-                    [frameData setValue:[jsonFrame objectForKey:@"frame_url"] forKey:@"frame_url"];
-                    
-                    [frameData setValue:[jsonFrame objectForKey:@"frame_index"] forKey:@"frame_index"];
-                    
-                    [framesData addObject:frameData];
-                    
-                }
-                
-                FOF *fof = [FOF alloc];
-                fof.m_id = fofId;
-                fof.m_liked = [liked isEqualToString:@"1"];
-                fof.m_userName = name;
-                fof.m_userId = facebook_id;
-                fof.m_frames = framesData;
-                fof.m_likes = likes;
-                fof.m_comments = comments;
-                fof.m_date = pubDate;
+                FOF *fof = [FOF fofFromJSON:jsonFOF];
                 
                 [userFOFArray addObject:fof];
                 
@@ -842,47 +830,7 @@
             for (int i = 0; i < [feedFOFList count]; i++) {
                 NSDictionary *jsonFOF = [feedFOFList objectAtIndex:i];
                 
-                NSString *facebook_id = [jsonFOF valueForKey:@"user_facebook_id"];
-                NSString *name = [jsonFOF valueForKey:@"user_name"];
-                NSDictionary *frames = [jsonFOF valueForKey:@"frames"];
-                
-                NSString *fofId = [jsonFOF valueForKey:@"id"];
-                NSString *liked = [jsonFOF valueForKey:@"liked"];
-                
-                NSString *pubDate = [jsonFOF valueForKey:@"pub_date"];
-                
-                NSArray *comments = nil;
-                if([jsonFOF valueForKey:@"comments"] && [jsonFOF valueForKey:@"comments"] != 0 && ![[jsonFOF valueForKey:@"comments"] isEqual:@"0"] && ![[jsonFOF valueForKey:@"comments"] isEqual:@"null"]) {
-                    comments = [jsonFOF valueForKey:@"comments"];
-                }
-                
-                NSString *likes = [jsonFOF valueForKey:@"likes"];
-                
-                NSMutableArray *framesData = [[NSMutableArray alloc] init];
-                
-                for (int index = 0; index < [frames count]; index++) {
-                    
-                    NSDictionary *jsonFrame = [frames objectAtIndex:index];
-                    
-                    NSMutableDictionary *frameData = [[NSMutableDictionary alloc] init];
-                    
-                    [frameData setValue:[jsonFrame objectForKey:@"frame_url"] forKey:@"frame_url"];
-                    
-                    [frameData setValue:[jsonFrame objectForKey:@"frame_index"] forKey:@"frame_index"];
-                    
-                    [framesData addObject:frameData];
-                    
-                }
-                
-                FOF *fof = [FOF alloc];
-                fof.m_id = fofId;
-                fof.m_liked = [liked isEqualToString:@"1"];
-                fof.m_userName = name;
-                fof.m_userId = facebook_id;
-                fof.m_frames = framesData;
-                fof.m_likes = likes;
-                fof.m_comments = comments;
-                fof.m_date = pubDate;
+                FOF *fof = [FOF fofFromJSON:jsonFOF];
                 
                 [feedFOFArray addObject:fof];
                 

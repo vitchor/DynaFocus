@@ -49,6 +49,7 @@
     
     tableController.FOFArray = appDelegate.friendFofArray;
     tableController.shouldHideNavigationBar = NO;
+    tableController.refreshString = refresh_user_url;
     
     tableController.navigationItem.title = @"Friend Pictures";
     

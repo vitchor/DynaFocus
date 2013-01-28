@@ -15,6 +15,8 @@
 
 }
 
--(id) initWithFOFArray:(NSArray *)FOFArray;
+-(id) initWithFOFArray:(NSArray *)FOFArray andUrl:(NSString *)refreshUrl;
+
+@property(nonatomic, retain) FOFTableController *tableController;
 
 @end
