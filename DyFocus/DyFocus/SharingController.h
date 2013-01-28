@@ -17,6 +17,8 @@
     IBOutlet UIView *activityIndicator;
     IBOutlet UIActivityIndicatorView *spinner;
     
+    IBOutlet UITextView *commentField;
+    
     FBSession *facebook;
     ASIFormDataRequest *request;
     NSMutableArray *frames;
@@ -27,10 +29,12 @@
 }
 
 -(void) facebookError;
+- (IBAction) toggleEnabledForSwitch: (id) sender;
 
 @property(nonatomic,retain) IBOutlet UISwitch *facebookSwitch;
 @property(nonatomic,retain) IBOutlet UIView *activityIndicator;
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
+@property(nonatomic,retain) IBOutlet UITextView *commentField;
 
 @property(nonatomic,retain) NSMutableArray *frames;
 @property(nonatomic,retain) NSMutableArray *focalPoints;
