@@ -9,6 +9,8 @@
 #import "FOFTableCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "JSON.h"
+#import "CommentViewerController.h"
+#import "AppDelegate.h"
 
 @implementation FOFTableCell
 @synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel;
@@ -29,6 +31,15 @@
     NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [commentsCountLabel.text intValue] + 1] autorelease];
     [commentsCountLabel setText:newCount];
     
+    CommentViewerController *commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
+    
+    commentController.navigationItem.title = @"Comments";
+    
+    commentController.hidesBottomBarWhenPushed = YES;
+    
+    [tableView.navigationController setNavigationBarHidden:NO];
+    
+    [tableView.navigationController pushViewController:commentController animated:YES];
     
 }
 

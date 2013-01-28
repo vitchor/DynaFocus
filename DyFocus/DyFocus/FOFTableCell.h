@@ -31,7 +31,6 @@
     
     FOF *fof;
     
-    
     NSMutableArray *fofUrls;
     NSString *profilePictureUrl;
     

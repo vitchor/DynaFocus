@@ -55,6 +55,8 @@
 
     m_tableView.backgroundColor = [UIColor clearColor];
     
+    [self.navigationController setNavigationBarHidden:YES];
+    
     if (!(FOFArray && [FOFArray count] > 0)) {
         [m_tableView setHidden:YES];
     }

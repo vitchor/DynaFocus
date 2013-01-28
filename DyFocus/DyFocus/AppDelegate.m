@@ -20,6 +20,7 @@
 #import "JSON.h"
 #import "LoadView.h"
 #import "Flurry.h"
+#import "FOFTableNavigationController.h"
 
 @implementation FOF
 
@@ -36,6 +37,33 @@
     [m_likes release];
     [m_userId release];
     [m_id release];    
+	[super dealloc];
+}
+
+@end
+
+@implementation Like
+
+@synthesize m_userName, m_userId, m_fofId;
+
+- (void)dealloc {
+    [m_userName release];
+    [m_fofId release];
+    [m_userId release];
+	[super dealloc];
+}
+
+@end
+
+@implementation Comment
+
+@synthesize m_message, m_userName, m_userId, m_fofId;
+
+- (void)dealloc {
+    [m_message release];
+    [m_userName release];
+    [m_fofId release];
+    [m_userId release];    
 	[super dealloc];
 }
 
@@ -128,12 +156,7 @@
     
     
     // Featured Controller
-    FOFTableController *featuredWebViewController = [[FOFTableController alloc] init];
-    //[featuredWebViewController loadUrl: @"http://192.168.100.108:8000/uploader/0/featured_fof/"];
-    
-    featuredWebViewController.FOFArray = self.featuredFofArray;
-    
-    // TODO: set the foftableController FOFArray
+    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray];
     
     
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured.png"] tag:1];
