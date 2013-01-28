@@ -48,7 +48,8 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
     tableController.FOFArray = appDelegate.friendFofArray;
-
+    tableController.shouldHideNavigationBar = NO;
+    
     tableController.navigationItem.title = @"Friend Pictures";
     
     tableController.hidesBottomBarWhenPushed = YES;

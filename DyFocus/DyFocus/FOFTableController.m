@@ -16,7 +16,7 @@
 @end
 
 @implementation FOFTableController
-@synthesize m_tableView, FOFArray;
+@synthesize m_tableView, FOFArray, shouldHideNavigationBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,7 +55,7 @@
 
     m_tableView.backgroundColor = [UIColor clearColor];
     
-    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setNavigationBarHidden:shouldHideNavigationBar];
     
     if (!(FOFArray && [FOFArray count] > 0)) {
         [m_tableView setHidden:YES];

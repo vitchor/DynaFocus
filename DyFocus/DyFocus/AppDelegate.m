@@ -164,13 +164,8 @@
     [featuredWebViewController setTabBarItem:galleryTab];
     
     // Feed Controller
-    feedViewController = [[FOFTableController alloc] init];
-    
-    NSString *stringUrl = [[NSString alloc] initWithFormat: @"%@/uploader/%@/m_feed/0/", dyfocus_url, [self.myself objectForKey:@"id"]];
-    
-    feedViewController.FOFArray = self.feedFofArray;
-    
-    [stringUrl release];
+    FOFTableNavigationController *feedViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.feedFofArray];
+
     
     //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
@@ -203,7 +198,7 @@
     DyfocusUINavigationController *profileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:profileController];
     //    profileController.hidesBottomBarWhenPushed = NO;
     
-    profileNavigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    profileNavigationController.navigationBar.barStyle = UIBarStyleBlack;
     
     UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Profile" image:[UIImage imageNamed:@"df_profile"] tag:5];
     [profileTab setFinishedSelectedImage:[UIImage imageNamed:@"df_profile_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_profile.png"]];

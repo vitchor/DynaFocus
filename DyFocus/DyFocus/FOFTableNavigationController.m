@@ -28,6 +28,7 @@
     tableController = [[FOFTableController alloc] init];
     
     tableController.FOFArray = FOFArray;
+    tableController.shouldHideNavigationBar = YES;
     
     //[self pushViewController:tableController animated:NO];
     [self setNavigationBarHidden:YES];

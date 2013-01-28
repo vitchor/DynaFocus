@@ -13,10 +13,12 @@
     IBOutlet UITableView *m_tableView;
     NSArray *FOFArray;
     NSMutableDictionary *cellHeightDictionary;
+    BOOL shouldHideNavigationBar;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *m_tableView;
 @property (nonatomic, retain) IBOutlet NSArray *FOFArray;
+@property (nonatomic, readwrite) BOOL shouldHideNavigationBar;
 
 -(void) addNewCellHeight:(float)height atRow:(int)row;
 

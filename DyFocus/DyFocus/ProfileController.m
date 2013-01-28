@@ -49,6 +49,7 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
     tableController.FOFArray = appDelegate.userFofArray;
+    tableController.shouldHideNavigationBar = NO;
     
     tableController.navigationItem.title = @"My Pictures";
     
