@@ -190,7 +190,7 @@
     
     self.tabBarController = [[[DyfocusUITabBarController alloc] init] autorelease];
     [[[self tabBarController] tabBar] setBackgroundImage:[UIImage imageNamed:@"tabbar-background"]];
-    [[[self tabBarController] tabBar] setSelectionIndicatorImage:[UIImage imageNamed:@"tabbar-selected"]];
+    [[[self tabBarController] tabBar] setSelectionIndicatorImage:[UIImage imageNamed:@"selected"]];
     
     
     NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedViewController, cameraNavigationController, friendsNavigationController, profileNavigationController, nil];
