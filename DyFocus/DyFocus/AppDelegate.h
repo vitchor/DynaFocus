@@ -63,7 +63,7 @@
 @interface FOF : NSObject {
 	NSString *m_name;
 	NSArray *m_frames;
-	NSArray *m_comments;
+	NSString *m_comments;
 	NSString *m_likes;
 	NSString *m_userName;
 	NSString *m_userNickname;
@@ -75,7 +75,7 @@
 +(FOF *)fofFromJSON: (NSDictionary *)json;
 
 @property (nonatomic, retain) NSArray *m_frames;
-@property (nonatomic, retain) NSArray *m_comments;
+@property (nonatomic, retain) NSString *m_comments;
 @property (nonatomic, retain) NSString *m_name;
 @property (nonatomic, retain) NSString *m_likes;
 @property (nonatomic, retain) NSString *m_userName;
