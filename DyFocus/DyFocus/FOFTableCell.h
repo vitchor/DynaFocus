@@ -34,6 +34,8 @@
     NSMutableArray *fofUrls;
     NSString *profilePictureUrl;
     
+    IBOutlet UIView *lightGrayBrackgroundView;
+    
     //FOF *fof;
     NSTimer *timer;
     int oldFrameIndex;
@@ -69,6 +71,7 @@
 @property (nonatomic,retain) IBOutlet UILabel *likesCountLabel;
 
 @property (nonatomic,retain) IBOutlet UIView *whiteView;
+@property (nonatomic,retain) IBOutlet UIView *lightGrayBrackgroundView;
 
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic,retain) NSTimer *timer;

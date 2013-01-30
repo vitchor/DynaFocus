@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 
 @implementation FOFTableCell
-@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel;
+@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel, lightGrayBrackgroundView;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -28,6 +28,12 @@
 }
 
 - (void) commentButtonPressed {
+    
+    [self showCommentView];
+       
+}
+
+- (void) showCommentView {
     CommentViewerController *commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
     
     commentController.navigationItem.title = @"Comments";
@@ -37,7 +43,7 @@
     [tableView.navigationController setNavigationBarHidden:NO];
     
     [tableView.navigationController pushViewController:commentController animated:YES];
-    
+
 }
 
 -(void) refreshImageSize {
@@ -100,9 +106,17 @@
     }
 }
 
+- (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
+{
+    [self showCommentView];
+}
+
 - (void) refreshWithFof:(FOF *)fofObject {
     
     fof = fofObject;
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+    [lightGrayBrackgroundView addGestureRecognizer:singleTap];
     
     [buttonComment addTarget:self action:@selector(commentButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 
