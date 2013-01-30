@@ -460,10 +460,24 @@
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
-                               [LoadView fadeAndRemoveFromView:self.view];
-                               
                                if(!error && data) {
-                                   [LoadView fadeAndRemoveFromView:self.view];  
+                                   [LoadView fadeAndRemoveFromView:self.view];
+                                   
+                                   AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+                                   
+                                   NSDictionary *myself = delegate.myself;
+                                   
+                                   Comment *comment = [[Comment alloc] init];
+                                   comment.m_userId = [myself objectForKey:@"id"];
+                                   comment.m_message = searchBar.text;
+                                   comment.m_userName = [myself objectForKey:@"name"];
+                                   comment.m_fofId = fof.m_id;
+                                   
+                                   [comments addObject:comment];
+                                   [tableView reloadData];
+                                   
+                                   fof.m_comments = [[NSString alloc] initWithFormat: @"%d",[fof.m_comments intValue] + 1];
+                                   
                                }
                            }];
     
