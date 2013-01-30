@@ -119,17 +119,10 @@
     [labelUserName setText:fof.m_userName];
     [labelDate setText:fof.m_date];
     
-    if (fof.m_comments) {
-        [commentsCountLabel setText:[[[NSString alloc] initWithFormat:@"%d", [fof.m_comments count]]autorelease]];
-        
-    } else {
-        [commentsCountLabel setText:@"0"];
-    }
-    
     //[buttonLike setTitle: [[[NSString alloc] initWithFormat:@"Like (%@)", fof.m_likes]autorelease] forState:UIControlStateNormal];
     
     [likesCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_likes] autorelease]];
-    
+    [commentsCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_comments] autorelease]];    
     
     profilePictureUrl = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",fof.m_userId];
     

@@ -41,10 +41,7 @@
     
     NSString *pubDate = [json valueForKey:@"pub_date"];
     
-    NSArray *comments = nil;
-    if([json valueForKey:@"comments"] && [json valueForKey:@"comments"] != 0 && ![[json valueForKey:@"comments"] isEqual:@"0"] && ![[json valueForKey:@"comments"] isEqual:@"null"]) {
-        comments = [json valueForKey:@"comments"];
-    }
+    NSString *comments = [json valueForKey:@"comments"];
     
     NSString *likes = [json valueForKey:@"likes"];
     
