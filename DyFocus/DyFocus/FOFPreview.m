@@ -69,7 +69,16 @@
 }
 
 - (void) next {
-    SharingController *sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
+    SharingController *sharingController;
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        // code for 4-inch screen
+        sharingController = [[SharingController alloc] initWithNibName:@"SharingController_i5" bundle:nil];
+    } else {
+        // code for 3.5-inch screen
+        sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
+    }
     
     sharingController.focalPoints = focalPoints;
     sharingController.frames = frames;
