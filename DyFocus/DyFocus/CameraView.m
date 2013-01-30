@@ -491,6 +491,14 @@
     }
     
     pathView.cameraViewController = self;
+    
+    popupDarkView.layer.cornerRadius = 9.0;
+    [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
+    popupDarkView.clipsToBounds = YES;
+    popupDarkView.layer.masksToBounds = YES;
+    [popupDarkView setNeedsDisplay];
+    [popupDarkView setNeedsLayout];
+
 
 }
 
@@ -501,14 +509,6 @@
         //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
         //[[mToastMessage setDuration:iToastDurationNormal] show];
         
-        popupDarkView.layer.cornerRadius = 9.0;
-        [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
-        popupDarkView.clipsToBounds = YES;
-        popupDarkView.layer.masksToBounds = YES;
-        [popupDarkView setNeedsDisplay];
-        [popupDarkView setNeedsLayout];
-        popupView.clipsToBounds = YES;
-        popupView.layer.masksToBounds = YES;
         [popupView setHidden:NO];
         [popupView setTag:420];
         
