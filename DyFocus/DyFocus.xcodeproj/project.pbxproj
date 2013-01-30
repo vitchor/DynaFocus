@@ -97,6 +97,8 @@
 		AC606B6915DC4912008FDF8F /* CameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC606B6815DC4912008FDF8F /* CameraView.m */; };
 		AC606B6B15DC492F008FDF8F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC606B6A15DC492F008FDF8F /* QuartzCore.framework */; };
 		AC79DE7D16B98C2400CAC486 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC79DE7C16B98C2400CAC486 /* Default@2x.png */; };
+		AC79DE7F16B9952F00CAC486 /* SplashScreenController_5.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC79DE7E16B9952E00CAC486 /* SplashScreenController_5.xib */; };
+		AC79DE8116B99A2F00CAC486 /* CameraView_5.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC79DE8016B99A2F00CAC486 /* CameraView_5.xib */; };
 		AC8C263315DAA9D30093FFD2 /* df_featured_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = AC8C262915DAA9D30093FFD2 /* df_featured_bw.png */; };
 		AC8C263415DAA9D30093FFD2 /* df_shoot_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = AC8C262A15DAA9D30093FFD2 /* df_shoot_bw.png */; };
 		AC8D7B4815DB341700058949 /* ASIAuthenticationDialog.h in Sources */ = {isa = PBXBuildFile; fileRef = AC8D7B3015DB311D00058949 /* ASIAuthenticationDialog.h */; };
@@ -278,6 +280,8 @@
 		AC606B6815DC4912008FDF8F /* CameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraView.m; sourceTree = "<group>"; };
 		AC606B6A15DC492F008FDF8F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		AC79DE7C16B98C2400CAC486 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		AC79DE7E16B9952E00CAC486 /* SplashScreenController_5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashScreenController_5.xib; sourceTree = "<group>"; };
+		AC79DE8016B99A2F00CAC486 /* CameraView_5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraView_5.xib; sourceTree = "<group>"; };
 		AC8C262915DAA9D30093FFD2 /* df_featured_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = df_featured_bw.png; sourceTree = "<group>"; };
 		AC8C262A15DAA9D30093FFD2 /* df_shoot_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = df_shoot_bw.png; sourceTree = "<group>"; };
 		AC8D7B3015DB311D00058949 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIAuthenticationDialog.h; path = useful.classes/ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -484,6 +488,7 @@
 				44362AFA167E8D730007944B /* SplashScreenController.h */,
 				44362AFB167E8D730007944B /* SplashScreenController.m */,
 				44362AFC167E8D730007944B /* SplashScreenController.xib */,
+				AC79DE7E16B9952E00CAC486 /* SplashScreenController_5.xib */,
 			);
 			name = SplashScreenController;
 			sourceTree = "<group>";
@@ -717,6 +722,7 @@
 				441BFFC615B1324700E204D7 /* CameraView.h */,
 				AC606B6815DC4912008FDF8F /* CameraView.m */,
 				ACBAC90616B6400E00AB85C0 /* CameraView.xib */,
+				AC79DE8016B99A2F00CAC486 /* CameraView_5.xib */,
 			);
 			name = CameraView;
 			sourceTree = "<group>";
@@ -964,6 +970,8 @@
 				7B042B7616B95ED500998917 /* dyfocus-instructions-horiz-right-white.png in Resources */,
 				AC3FE6CF16B967AD005252F2 /* Default-568h@2x.png in Resources */,
 				AC79DE7D16B98C2400CAC486 /* Default@2x.png in Resources */,
+				AC79DE7F16B9952F00CAC486 /* SplashScreenController_5.xib in Resources */,
+				AC79DE8116B99A2F00CAC486 /* CameraView_5.xib in Resources */,
 				0470578616B997C40025F1DD /* CommentViewerController_i5.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
