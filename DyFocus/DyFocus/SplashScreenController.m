@@ -14,7 +14,7 @@
 
 @implementation SplashScreenController
 
-@synthesize spinner;
+@synthesize spinner, splashImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

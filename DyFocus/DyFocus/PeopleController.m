@@ -57,7 +57,16 @@
         m_viewCount = 0;
 		
 		// UI
-		m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 392) style:UITableViewStylePlain];
+	
+        
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 480) style:UITableViewStylePlain];
+        } else {
+            m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 392) style:UITableViewStylePlain];
+        }
+        
+        
 		[m_tableView setRowHeight:50.0];
 		m_tableView.dataSource = self;
 		m_tableView.delegate = self;
@@ -722,7 +731,7 @@
 		}
 	}
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	self.tableView.frame = CGRectMake(0, 40, 320, 392);
+	//self.tableView.frame = CGRectMake(0, 40, 320, 392);
 	//[m_controlToolbar removeFromSuperview];
     [self.tableView reloadData];
 }
@@ -747,7 +756,7 @@
 	[searchBar resignFirstResponder];	
 	[searchBar setShowsCancelButton:NO animated:YES];	
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	self.tableView.frame = CGRectMake(0, 40, 320, 392);
+	//self.tableView.frame = CGRectMake(0, 40, 320, 392);
 //	[self.view addSubview:m_controlToolbar];
 	[self showAll];
 }

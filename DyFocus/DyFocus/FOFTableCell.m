@@ -34,8 +34,16 @@
 }
 
 - (void) showCommentView {
-    CommentViewerController *commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
     
+    CommentViewerController *commentController = nil;
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController_i5" andFOF:fof];
+    } else {
+        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
+    }
+        
     commentController.navigationItem.title = @"Comments";
     
     commentController.hidesBottomBarWhenPushed = YES;

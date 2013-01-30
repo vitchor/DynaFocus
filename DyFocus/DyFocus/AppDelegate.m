@@ -154,7 +154,14 @@
          - enable the app flow
          */
         
-        splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            // code for 4-inch screen
+            splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController_5" bundle:nil];
+        } else {
+            // code for 3.5-inch screen
+            splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+        }
         
         [self.window addSubview:splashScreenController.view];
         
@@ -178,7 +185,15 @@
     } else {
         
         // User needs to sign-in/log-in.
-        loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+        
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5" bundle:nil];
+        } else {
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+        }
+        
+        
         self.window.rootViewController  = loginController;
         
         [self.window addSubview:loginController.view];
@@ -191,7 +206,15 @@
 
 - (void)setupTabController {
     // Camera Controller
-    cameraViewController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        // code for 4-inch screen
+        cameraViewController = [[CameraView alloc] initWithNibName:@"CameraView_5" bundle:nil];
+    } else {
+        // code for 3.5-inch screen
+        cameraViewController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
+
+    }
     cameraViewController.hidesBottomBarWhenPushed = YES;
     cameraNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:cameraViewController];
     cameraNavigationController.hidesBottomBarWhenPushed = YES;
@@ -550,7 +573,12 @@
     //[self.tabBarController removeFromParentViewController];
     [self.tabBarController.view removeFromSuperview];
     
-    loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5" bundle:nil];
+    } else {
+        loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+    }
     
     [self.window addSubview:loginController.view];
 }
@@ -895,7 +923,14 @@
          - enable the app flow
          */
         
-        splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            // code for 4-inch screen
+            splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController_5" bundle:nil];
+        } else {
+            // code for 3.5-inch screen
+            splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+        }
         
         [self.window addSubview:splashScreenController.view];
         
@@ -935,7 +970,15 @@
 }
 
 - (void) showSplashScreen {
-    splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        // code for 4-inch screen
+        splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController_5" bundle:nil];
+    } else {
+        // code for 3.5-inch screen
+        splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+    }
     
     [self.window addSubview:splashScreenController.view];
 }
@@ -943,7 +986,12 @@
 - (void) showConnectionError {
     
     if(!loginController) {
-        loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5" bundle:nil];
+        } else {
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+        }
     }
     
     [self.window addSubview:loginController.view];

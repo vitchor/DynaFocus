@@ -27,7 +27,12 @@
     
     NSLog(@"SEARCH BAR ORIGIN: %f",rect.origin.y);
     
-    rect.origin.y = 180;
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        rect.origin.y = 268;
+    } else {
+        rect.origin.y = 180;
+    }
     inputMessageTextField.frame = rect;
     
     inputMessageTextField.delegate = self;
@@ -87,7 +92,15 @@
     [UIView setAnimationDuration:0.3];
     
     CGRect rect = inputMessageTextField.frame;
-    rect.origin.y = 392;
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        rect.origin.y = 480;
+    } else {
+        rect.origin.y = 392;
+    }
+    
+    
     inputMessageTextField.frame = rect;
     
     [UIView commitAnimations];
