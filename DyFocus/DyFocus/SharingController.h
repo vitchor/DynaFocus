@@ -24,6 +24,7 @@
     NSMutableArray *frames;
     NSMutableArray *focalPoints;
     NSString *fofName;
+    UIBarButtonItem *backButton;
     
     
 }
