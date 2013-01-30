@@ -185,7 +185,15 @@
     } else {
         
         // User needs to sign-in/log-in.
-        loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+        
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5" bundle:nil];
+        } else {
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+        }
+        
+        
         self.window.rootViewController  = loginController;
         
         [self.window addSubview:loginController.view];
@@ -565,7 +573,12 @@
     //[self.tabBarController removeFromParentViewController];
     [self.tabBarController.view removeFromSuperview];
     
-    loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5" bundle:nil];
+    } else {
+        loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+    }
     
     [self.window addSubview:loginController.view];
 }
@@ -973,7 +986,12 @@
 - (void) showConnectionError {
     
     if(!loginController) {
-        loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5" bundle:nil];
+        } else {
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+        }
     }
     
     [self.window addSubview:loginController.view];
