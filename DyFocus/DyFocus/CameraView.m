@@ -378,7 +378,7 @@
 
 -(void)showInfoView
 {
-    
+    [popupView setHidden:YES];
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logEvent:@"Show Info View Button"];
     
@@ -474,8 +474,6 @@
     [spinner startAnimating];
     [loadingView setHidden:NO];
     
-    [shootButton setEnabled:true];
-    [clearButton setEnabled:true];
     [infoButton setEnabled:true];
     [cancelButton setEnabled:true];
     
@@ -513,6 +511,8 @@
         [popupView setTag:420];
     }
     
+    [shootButton setEnabled:true];
+    [clearButton setEnabled:true];
     
     if (!captureSession) {
         [self startCaptureSession];
