@@ -184,20 +184,21 @@
     
     SharingController *fshareController = [[SharingController alloc] init];
     
-    NSLog(@"FOF  IIDDDDDDD %@", fof.m_id);
     NSLog(@"FOF  NAMEEEEEE %@", fof.m_name);
+    NSLog(@"FOF  IIDDDDDDD %@", fof.m_userId);
     
     [self.navigationController pushViewController:fshareController animated:true];
     
     fshareController.navigationItem.title = @"Comment";
-    fshareController.fofName = @"183938.299778";
+    fshareController.fofName = @"462837.106732";
+    fshareController.fofUserFbId = @"100000754383534";
 
     [fshareController.commentField becomeFirstResponder];
     [fshareController.commentField setHidden:NO];
     fshareController.navigationItem.leftBarButtonItem = fshareController.backButton;
     
     NSString *share = @"Share";
-	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonSystemItemAction target:fshareController action:@selector(shareWithFbFromComments)];
+	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:fshareController action:@selector(shareWithFbFromComments)];
     fshareController.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
     
@@ -208,7 +209,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     NSString *fshare = @"Fshare"; 
-	UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithTitle:fshare style:UIBarButtonSystemItemAction target:self action:@selector(shareOnFacebook)];
+	UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithTitle:fshare style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFacebook)];
     self.navigationItem.rightBarButtonItem = fshareButton;
     [fshareButton release];
 
