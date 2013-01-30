@@ -83,6 +83,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    [m_tableView reloadData];
+    
     [self refreshCellsImageSizes];
     [self refreshImages];
 }
@@ -178,7 +181,6 @@
     [cell refreshWithFof:fof];
     
 	return cell;
-    
     
 }
 
@@ -285,6 +287,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 -(void) refreshWithAction:(BOOL)isAction {
+    
+    if (!isAction) {
+        [refreshHeaderView setState:EGOOPullRefreshLoading];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.2];
+        m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
+        [UIView commitAnimations];
+    }
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:refreshString]];
     
