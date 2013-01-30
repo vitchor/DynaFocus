@@ -359,6 +359,7 @@
     [popupCloseButton setBackgroundImage:redButtonImage forState:UIControlStateNormal];
     [popupCloseButton addTarget:self action:@selector(closePopup) forControlEvents:UIControlEventTouchUpInside];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
     
     [super viewDidLoad];
 }
@@ -501,6 +502,7 @@
     if(popupView.tag != 420) {
         //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
         //[[mToastMessage setDuration:iToastDurationNormal] show];
+        
         popupDarkView.layer.cornerRadius = 9.0;
         [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
         popupDarkView.clipsToBounds = YES;
@@ -511,6 +513,7 @@
         popupView.layer.masksToBounds = YES;
         [popupView setHidden:NO];
         [popupView setTag:420];
+        
     }
     
     
@@ -561,7 +564,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return NO;
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -594,6 +597,43 @@
 
 - (BOOL)shouldAutorotate {
     return YES;
+}
+
+- (void) didRotate:(NSNotification *)notification
+
+{
+    
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    if (orientation == UIDeviceOrientationLandscapeLeft)
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-right-white" ofType:@"png"]];
+        
+        [instructionsImageView setImage:helpImage];
+        
+    }
+    
+    if (orientation == UIDeviceOrientationLandscapeRight )
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-left-white" ofType:@"png"]];
+        
+        [instructionsImageView setImage:helpImage];
+        
+    }
+    
+
+    if (orientation == UIDeviceOrientationPortrait)
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
+        
+        [instructionsImageView setImage:helpImage];
+        
+    }
+    
+
 }
 
 

@@ -79,6 +79,9 @@
 		44C8DA4215B1FF80000D2947 /* PathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8DA4115B1FF80000D2947 /* PathView.m */; };
 		44D8FC8E166676EC00E613DC /* gray_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D8FC8D166676EC00E613DC /* gray_background.png */; };
 		44F07658165E7FE100AE6A84 /* SharingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44F07657165E7FE100AE6A84 /* SharingController.xib */; };
+		7B042B7216B954B000998917 /* dyfocus-instructions-horiz-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B042B7116B954AF00998917 /* dyfocus-instructions-horiz-white.png */; };
+		7B042B7516B95ED500998917 /* dyfocus-instructions-horiz-left-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B042B7316B95ED200998917 /* dyfocus-instructions-horiz-left-white.png */; };
+		7B042B7616B95ED500998917 /* dyfocus-instructions-horiz-right-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B042B7416B95ED300998917 /* dyfocus-instructions-horiz-right-white.png */; };
 		7B089F6716B1382900700815 /* dyfocus-instructions-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B089F6616B1382900700815 /* dyfocus-instructions-white.png */; };
 		7B3FEC3D16B10381004C8048 /* FriendProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3C16B10381004C8048 /* FriendProfileController.m */; };
 		7B3FEC3F16B10445004C8048 /* FriendProfileController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3E16B10445004C8048 /* FriendProfileController.xib */; };
@@ -252,6 +255,9 @@
 		44C8DA4115B1FF80000D2947 /* PathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathView.m; sourceTree = "<group>"; };
 		44D8FC8D166676EC00E613DC /* gray_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray_background.png; sourceTree = "<group>"; };
 		44F07657165E7FE100AE6A84 /* SharingController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SharingController.xib; sourceTree = "<group>"; };
+		7B042B7116B954AF00998917 /* dyfocus-instructions-horiz-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-horiz-white.png"; sourceTree = "<group>"; };
+		7B042B7316B95ED200998917 /* dyfocus-instructions-horiz-left-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-horiz-left-white.png"; sourceTree = "<group>"; };
+		7B042B7416B95ED300998917 /* dyfocus-instructions-horiz-right-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-horiz-right-white.png"; sourceTree = "<group>"; };
 		7B089F6616B1382900700815 /* dyfocus-instructions-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-white.png"; sourceTree = "<group>"; };
 		7B3FEC3B16B1036A004C8048 /* FriendProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileController.h; sourceTree = "<group>"; };
 		7B3FEC3C16B10381004C8048 /* FriendProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileController.m; sourceTree = "<group>"; };
@@ -764,9 +770,12 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7B042B7316B95ED200998917 /* dyfocus-instructions-horiz-left-white.png */,
+				7B042B7416B95ED300998917 /* dyfocus-instructions-horiz-right-white.png */,
 				04D6A4E516B5F76C00C4A71D /* heart-blue.png */,
 				04D6A4E616B5F76C00C4A71D /* message-blue.png */,
 				7B089F6616B1382900700815 /* dyfocus-instructions-white.png */,
+				7B042B7116B954AF00998917 /* dyfocus-instructions-horiz-white.png */,
 				4468BFAC16B0D10D000ABF5E /* FOFexamples */,
 				4468BFA716B0C65C000ABF5E /* arrow_left.png */,
 				4468BFA816B0C65C000ABF5E /* arrow_right.png */,
@@ -941,6 +950,9 @@
 				ACBAC90716B6400E00AB85C0 /* CameraView.xib in Resources */,
 				ACBAC90A16B642F600AB85C0 /* selected@2x.png in Resources */,
 				ACBAC90B16B642F600AB85C0 /* tabbar-background@2x.png in Resources */,
+				7B042B7216B954B000998917 /* dyfocus-instructions-horiz-white.png in Resources */,
+				7B042B7516B95ED500998917 /* dyfocus-instructions-horiz-left-white.png in Resources */,
+				7B042B7616B95ED500998917 /* dyfocus-instructions-horiz-right-white.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,8 +1116,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0186FB9D-7B3D-4EAE-A3EE-AA1A5676486D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0186FB9D-7B3D-4EAE-A3EE-AA1A5676486D";
+				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1135,8 +1147,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0186FB9D-7B3D-4EAE-A3EE-AA1A5676486D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0186FB9D-7B3D-4EAE-A3EE-AA1A5676486D";
+				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;

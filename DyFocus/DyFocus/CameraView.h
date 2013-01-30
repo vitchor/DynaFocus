@@ -39,7 +39,8 @@
     
     IBOutlet UIButton *popupCloseButton;
     IBOutlet UIView *popupView;
-    IBOutlet UIView *popupDarkView;    
+    IBOutlet UIView *popupDarkView;
+    IBOutlet UIImageView *instructionsImageView;
     
 }
 - (void)showToast:(NSString *)text;
