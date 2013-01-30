@@ -170,6 +170,20 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
+    // Hides magnifier icon
+    UITextField* searchField = nil;
+    for (UIView* subview in inputMessageTextField.subviews) {
+        if ([subview isKindOfClass:[UITextField class]]) {
+            searchField = (UITextField*)subview;
+            break;
+        }
+    }
+    if (searchField) {
+        searchField.leftViewMode = UITextFieldViewModeNever;
+    }
+    
+    inputMessageTextField.placeholder = @"Write a comment...";    
+    
     [tableView setDataSource:self];
     [tableView setDelegate:self];
     
@@ -221,11 +235,14 @@
                                            NSString *fofComment = [jsonComment valueForKey:@"comment"];
                                            NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
                                            
+                                           NSString *commentPubDate = [jsonComment valueForKey:@"pub_date"];
+                                           
                                            Comment *comment = [[Comment alloc] init];
                                            comment.m_userId = fofFriendId;
                                            comment.m_message = fofComment;
                                            comment.m_userName = fofUserName;
                                            comment.m_fofId = fofId;
+                                           comment.m_date = commentPubDate;
                                         
                                            [comments addObject:comment];
                                               NSLog(@"Commentario: %@", comment.m_message);
@@ -417,7 +434,7 @@
     
     return [height intValue];
      */
-    return 114;
+    return 107;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -460,10 +477,25 @@
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
-                               [LoadView fadeAndRemoveFromView:self.view];
-                               
                                if(!error && data) {
-                                   [LoadView fadeAndRemoveFromView:self.view];  
+                                   [LoadView fadeAndRemoveFromView:self.view];
+                                   
+                                   AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+                                   
+                                   NSDictionary *myself = delegate.myself;
+                                   
+                                   Comment *comment = [[Comment alloc] init];
+                                   comment.m_userId = [myself objectForKey:@"id"];
+                                   comment.m_message = searchBar.text;
+                                   comment.m_userName = [myself objectForKey:@"name"];
+                                   comment.m_fofId = fof.m_id;
+                                   comment.m_date = @"Today";
+                                   
+                                   [comments addObject:comment];
+                                   [tableView reloadData];
+                                   
+                                   fof.m_comments = [[NSString alloc] initWithFormat: @"%d",[fof.m_comments intValue] + 1];
+                                   
                                }
                            }];
     

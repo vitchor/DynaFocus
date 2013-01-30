@@ -38,6 +38,11 @@
     [self.navigationController setNavigationBarHidden:NO animated:FALSE];
     
     [viewPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    
+    self.userNameLabel.text = appDelegate.currentFriend.name;
+    self.userProfileImage.profileID = [[NSString alloc] initWithFormat: @"%@", appDelegate.currentFriend.tag];
    
 }
 
@@ -70,12 +75,6 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = @"Profile";
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    
-    self.userNameLabel.text = appDelegate.currentFriend.name;
-    self.userProfileImage.profileID = [[NSString alloc] initWithFormat: @"%@", appDelegate.currentFriend.tag];
-
 }
 
 - (void)didReceiveMemoryWarning

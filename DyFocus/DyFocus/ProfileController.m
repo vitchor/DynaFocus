@@ -30,18 +30,6 @@
     return self;
 }
 
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-
-    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
-    
-    [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
-   
-
-}
-
 -(void) showPictures{
     
     FOFTableController *tableController = [[FOFTableController alloc] init];
@@ -71,19 +59,26 @@
     
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.navigationItem.title = @"Profile";
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    
+    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
+    
+    [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
     self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
     self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.navigationItem.title = @"Profile";
 
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-    
-    
 }
 
 

@@ -29,7 +29,11 @@
 - (void) refreshWithComment: (Comment *)comment {
     labelUserName.text = comment.m_userName;
     commentTextView.text = comment.m_message;
-    //labelDate.text = comment.m_date;
+    
+    if (comment.m_date && ![comment.m_date isEqualToString:@"null"]) {
+        labelDate.text = comment.m_date;
+    }
+    
     
     NSString *profilePictureUrl = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",comment.m_userId];
     

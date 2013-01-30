@@ -28,9 +28,6 @@
 }
 
 - (void) commentButtonPressed {
-    NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [commentsCountLabel.text intValue] + 1] autorelease];
-    [commentsCountLabel setText:newCount];
-    
     CommentViewerController *commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
     
     commentController.navigationItem.title = @"Comments";
@@ -96,8 +93,7 @@
 
         [buttonLike setTitle:@"Liked" forState:UIControlStateNormal];
         fof.m_liked = YES;
-        
-        //buttonLike.titleLabel.font = [UIFont systemFontOfSize:11];
+        fof.m_likes = [[NSString alloc] initWithFormat:@"%d",[fof.m_likes intValue] + 1];
         
     } else {
         //implement liked   
