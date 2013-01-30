@@ -19,7 +19,7 @@
 
 @implementation SharingController
 
-@synthesize facebookSwitch, activityIndicator, commentField, frames, focalPoints, spinner;
+@synthesize facebookSwitch, activityIndicator, commentField, frames, focalPoints, spinner, fofName, backButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -113,8 +113,19 @@
             [alertButton release];
             
         }
-    }];
+    }];    
+    
+}
 
+-(void) shareWithFbFromComments{
+    
+    [commentField resignFirstResponder]; // hides keyboard
+    [commentField setHidden:YES];
+    
+    [self showLoading];
+    [self shareWithFacebook];
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -200,7 +211,6 @@
     
     [request startAsynchronous];
     NSLog(@"MESSAGE %@",[request responseString]);
-    
     
 }
 

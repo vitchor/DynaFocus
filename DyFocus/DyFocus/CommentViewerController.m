@@ -167,8 +167,38 @@
     [self hideKeyboard];
 }
 
+-(void)shareOnFacebook{
+    
+    SharingController *fshareController = [[SharingController alloc] init];
+    
+    NSLog(@"FOF  IIDDDDDDD %@", fof.m_id);
+    NSLog(@"FOF  NAMEEEEEE %@", fof.m_name);
+    
+    [self.navigationController pushViewController:fshareController animated:true];
+    
+    fshareController.navigationItem.title = @"Comment";
+    fshareController.fofName = @"183938.299778";
 
+    [fshareController.commentField becomeFirstResponder];
+    [fshareController.commentField setHidden:NO];
+    fshareController.navigationItem.leftBarButtonItem = fshareController.backButton;
+    
+    NSString *share = @"Share";
+	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonSystemItemAction target:fshareController action:@selector(shareWithFbFromComments)];
+    fshareController.navigationItem.rightBarButtonItem = shareButton;
+    [shareButton release];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+    
+    
+}
 - (void)viewWillAppear:(BOOL)animated {
+    
+    NSString *fshare = @"Fshare"; 
+	UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithTitle:fshare style:UIBarButtonSystemItemAction target:self action:@selector(shareOnFacebook)];
+    self.navigationItem.rightBarButtonItem = fshareButton;
+    [fshareButton release];
+
     
     // Hides magnifier icon
     UITextField* searchField = nil;
