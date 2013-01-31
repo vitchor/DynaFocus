@@ -78,6 +78,7 @@
 @property (nonatomic,retain) FOFTableController *tableView;
 @property (nonatomic,readwrite) int row;
 
+- (void) clearImages;
 - (void) refreshWithFof:(FOF *)fof;
 
 @end

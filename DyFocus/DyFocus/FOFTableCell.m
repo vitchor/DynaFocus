@@ -170,10 +170,12 @@
     [spinner stopAnimating];
     [spinner setHidden:YES];
     
-    [self.imagefrontFrame setImage: [frames objectAtIndex:0]];
-    
-    if ([frames count] > 1) {
-        [self.imagebackFrame setImage: [frames objectAtIndex:1]];
+    if ([frames count] > 0) {
+        [self.imagefrontFrame setImage: [frames objectAtIndex:0]];
+        
+        if ([frames count] > 1) {
+            [self.imagebackFrame setImage: [frames objectAtIndex:1]];
+        }
     }
     
     oldFrameIndex = 0;
@@ -186,14 +188,10 @@
 }
 
 -(void)loadImages {
-    
-    if (!frames) {
-        
-        NSLog(@"ENTROOOOOOU 1");
-        
-        [spinner startAnimating];
-        
 
+    if (imageUserPicture.tag != 420) {
+        
+        // Load Profile Picture
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
@@ -202,79 +200,101 @@
                                        UIImage *image = [UIImage imageWithData:data];
                                        if(image) {
                                            [imageUserPicture setImage:image];
+                                           imageUserPicture.tag = 420;
                                        }
                                    }
                                }];
-        
-        
-        
-        if (!frames) {
-        
-            NSLog(@"ENTROOOOU 2");
-            
-            frames = [[NSMutableArray alloc] init];
-            downloadedFrames = 0;
-
-            for (NSString *frameUrl in fofUrls) {
-                
-                 NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:frameUrl]];
-                
-                [NSURLConnection sendAsynchronousRequest:request
-                                                   queue:[NSOperationQueue mainQueue]
-                                       completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                           if(!error && data) {
-                                               UIImage *image = [UIImage imageWithData:data];
-                                               currentImage = image;
-                                               
-                                               if(image) {
-                                                   [frames addObject:image];
-                                                   
-                                                   float scale = image.size.height / image.size.width;
-                                                   
-                                                   //NSLog(@"HEIGHT: %f", image.size.height);
-                                                   //NSLog(@"WIDTH: %f", image.size.width);
-                                                   //NSLog(@"SCALE: %f", scale);
-                                                   if (scale > 1) {
-                                                   
-                                                       newHeight = imagebackFrame.frame.size.width * scale;
-                                                       
-                                                       [self.tableView addNewCellHeight:newHeight atRow:self.row];
-                                                       
-                                                        imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
-                                                                                           imagebackFrame.frame.origin.y , imagebackFrame.frame.size.width, newHeight);
-                                                       
-                                                      
-                                                       //imagebackFrame.clipsToBounds = YES;
-                                                       newHeight = imagefrontFrame.frame.size.width * scale;
-                                                       imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
-                                                                                            imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newHeight);
-                                                                                                              
-                                                     
-                                                   }
-                                                   
-                                                   //imagefrontFrame.clipsToBounds = YES;
-                                               }
-                                               
-                                               if ([frames count] == [fofUrls count]) {
-                                                   [self startTimer];
-                                                   
-                                                   
-                                               }
-                                           }
-                                       }];
-            }
-        }
-        
-        NSLog(@"SAIIIIUUUUUU 2");
     }
     
-    NSLog(@"SAIIIUUUUUU  1");
     
+    if ([frames count] == 0) {
+        
+       // Load frames
+        
+        frames = [[NSMutableArray alloc] init];
+        downloadedFrames = 0;
+        
+        
+        [spinner startAnimating];
+
+
+        for (NSString *frameUrl in fofUrls) {
+            
+             NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:frameUrl]];
+            
+            [self sendFrameRequest:request];
+            
+        }
+    }
     
+}
+
+-(void) sendFrameRequest:(NSURLRequest *)request {
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               
+                               if(!error && data) {
+                                   
+                                   UIImage *image = [UIImage imageWithData:data];
+                                   currentImage = image;
+                                   
+                                   if(image) {
+                                       
+                                       [frames addObject:image];
+                                       
+                                       float scale = image.size.height / image.size.width;
+                                       
+                                       newHeight = imagebackFrame.frame.size.width * scale;
+                                       
+                                       [self.tableView addNewCellHeight:newHeight atRow:self.row];
+                                       
+                                       imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
+                                                                         imagebackFrame.frame.origin.y , imagebackFrame.frame.size.width, newHeight);
+                                       
+                                       //imagebackFrame.clipsToBounds = YES;
+                                       newHeight = imagefrontFrame.frame.size.width * scale;
+                                       imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
+                                                                          imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newHeight);
+                                       
+                                       
+                                       if ([frames count] == [fofUrls count]) {
+                                           [self startTimer];    
+                                       }
+                                       
+                                   } else {
+                                     [self sendFrameRequest:request];
+                                   }
+                               } else {
+                                   [self sendFrameRequest:request];
+                               }
+                           }];
+}
+
+-(void) clearImages {
+
+    imagebackFrame.image = nil;
+    imagefrontFrame.image = nil;
+    
+    [timer invalidate];
+    timer = nil;
+    
+    for (UIImage *frame in frames) {
+        [frame release];
+    }
+
+    imageUserPicture.tag = 0;
+    
+    [frames removeAllObjects];
+    
+    [frames release];
+    frames = nil;
 }
 
 - (void)fadeImages
 {
+    
     if (self.imagefrontFrame.alpha >= 1.0) {
         
         if (timerPause > 0) {
@@ -290,8 +310,8 @@
                 oldFrameIndex += 1;
             }
             
-            
-            [self.imagebackFrame setImage:[frames objectAtIndex:oldFrameIndex]];
+            if ([frames count] > 0)
+                [self.imagebackFrame setImage:[frames objectAtIndex:oldFrameIndex]];
             
             [self.imagebackFrame setNeedsDisplay];
             
@@ -305,8 +325,9 @@
             } else {
                 newIndex = oldFrameIndex + 1;
             }
-            
-            [self.imagefrontFrame setImage: [frames objectAtIndex: newIndex]];
+
+            if ([frames count] > 0)
+                [self.imagefrontFrame setImage: [frames objectAtIndex: newIndex]];
             
         }
         
@@ -314,6 +335,16 @@
         [self.imagefrontFrame setAlpha:self.imagefrontFrame.alpha + 0.01];
     }
     
+}
+
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+    [super willMoveToSuperview:newSuperview];
+    NSLog(@"%p willMoveToSuperview: %p", self, newSuperview);
+    if(newSuperview == nil) {
+        [self clearImages];
+         NSLog(@"IMAGES CLEARED!!!!");
+    }
 }
 
 @end

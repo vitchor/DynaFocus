@@ -140,45 +140,46 @@
 
 - (void)fadeImages
 {
-    if (self.firstImageView.alpha >= 1.0) {
-        
-        if (timerPause > 0) {
-            timerPause -= 1;
+    if ([frames count] > 0) {
+        if (self.firstImageView.alpha >= 1.0) {
+            
+            if (timerPause > 0) {
+                timerPause -= 1;
+                
+            } else {
+                
+                timerPause = TIMER_PAUSE;
+                
+                if (oldFrameIndex >= [self.frames count] - 1) {
+                    oldFrameIndex = 0;
+                } else {
+                    oldFrameIndex += 1;
+                }
+                
+                
+                [self.secondImageView setImage:[self.frames objectAtIndex:oldFrameIndex]];
+                
+                [self.secondImageView setNeedsDisplay];
+                
+                [self.firstImageView setAlpha:0.0];
+                
+                [self.firstImageView setNeedsDisplay];
+                
+                int newIndex;
+                if (oldFrameIndex == [self.frames count] - 1) {
+                    newIndex = 0;
+                } else {
+                    newIndex = oldFrameIndex + 1;
+                }
+                
+                [self.firstImageView setImage: [self.frames objectAtIndex: newIndex]];
+                
+            }
             
         } else {
-            
-            timerPause = TIMER_PAUSE;
-            
-            if (oldFrameIndex >= [self.frames count] - 1) {
-                oldFrameIndex = 0;
-            } else {
-                oldFrameIndex += 1;
-            }
-            
-            
-            [self.secondImageView setImage:[self.frames objectAtIndex:oldFrameIndex]];
-            
-            [self.secondImageView setNeedsDisplay];
-            
-            [self.firstImageView setAlpha:0.0];
-            
-            [self.firstImageView setNeedsDisplay];
-            
-            int newIndex;
-            if (oldFrameIndex == [self.frames count] - 1) {
-                newIndex = 0;
-            } else {
-                newIndex = oldFrameIndex + 1;
-            }
-            
-            [self.firstImageView setImage: [self.frames objectAtIndex: newIndex]];
-            
+            [self.firstImageView setAlpha:self.firstImageView.alpha + 0.01];
         }
-        
-    } else {
-        [self.firstImageView setAlpha:self.firstImageView.alpha + 0.01];
     }
-    
 }
 
 -(NSUInteger)supportedInterfaceOrientations
