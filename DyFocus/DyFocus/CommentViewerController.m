@@ -210,15 +210,20 @@
     
 }
 - (void)viewWillAppear:(BOOL)animated {
+   
+    UIImage *faceImage = [UIImage imageNamed:@"fb_share_button.png"];
+    UIButton *face = [UIButton buttonWithType:UIButtonTypeCustom];
+    face.bounds = CGRectMake( 0, 0, faceImage.size.width * 0.65, faceImage.size.height * 0.65);
+    [face setImage:faceImage forState:UIControlStateNormal];
     
-    //    NSString *fshare = @"Fshare";
-    //	UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithTitle:fshare style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFacebook)];
+    UIBarButtonItem *faceBtn = [[UIBarButtonItem alloc] initWithCustomView:face];
     
-    UIImage *image = [UIImage imageNamed:@"share_facebook.png"];
-    UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFacebook)];
-    self.navigationItem.rightBarButtonItem = fshareButton;
-    [fshareButton release];
-
+    [face addTarget:self action:@selector(shareOnFacebook) forControlEvents:UIControlEventTouchUpInside];
+    
+    [faceBtn setCustomView:face];
+    
+    [self.navigationItem setRightBarButtonItem:faceBtn];
+    
     
     // Hides magnifier icon
     UITextField* searchField = nil;
