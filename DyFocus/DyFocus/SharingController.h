@@ -24,13 +24,14 @@
     NSMutableArray *frames;
     NSMutableArray *focalPoints;
     NSString *fofName;
+    NSString *fofUserFbId;
     UIBarButtonItem *backButton;
-    
     
 }
 
 -(void) facebookError;
-- (IBAction) toggleEnabledForSwitch: (id) sender;
+-(IBAction) toggleEnabledForSwitch: (id) sender;
+-(void) shareWithFbFromComments;
 
 @property(nonatomic,retain) IBOutlet UISwitch *facebookSwitch;
 @property(nonatomic,retain) IBOutlet UIView *activityIndicator;
@@ -39,5 +40,8 @@
 
 @property(nonatomic,retain) NSMutableArray *frames;
 @property(nonatomic,retain) NSMutableArray *focalPoints;
+@property(nonatomic,retain) UIBarButtonItem *backButton;
+@property(nonatomic,retain) NSString *fofName;
+@property(nonatomic,retain) NSString *fofUserFbId;
 
 @end
