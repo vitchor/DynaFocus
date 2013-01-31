@@ -190,8 +190,11 @@
     [self.navigationController pushViewController:fshareController animated:true];
     
     fshareController.navigationItem.title = @"Comment";
-    fshareController.fofName = @"462837.106732";
-    fshareController.fofUserFbId = @"100000754383534";
+//    fshareController.fofName = @"462837.106732";
+//    fshareController.fofUserFbId = @"100000754383534";
+
+    fshareController.fofName = fof.m_name;
+    fshareController.fofUserFbId = fof.m_userId;
 
     [fshareController.commentField becomeFirstResponder];
     [fshareController.commentField setHidden:NO];
