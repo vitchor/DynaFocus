@@ -211,8 +211,11 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     
-    NSString *fshare = @"Fshare"; 
-	UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithTitle:fshare style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFacebook)];
+    //    NSString *fshare = @"Fshare";
+    //	UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithTitle:fshare style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFacebook)];
+    
+    UIImage *image = [UIImage imageNamed:@"share_facebook.png"];
+    UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFacebook)];
     self.navigationItem.rightBarButtonItem = fshareButton;
     [fshareButton release];
 
