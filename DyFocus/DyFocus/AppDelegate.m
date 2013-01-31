@@ -218,9 +218,9 @@
     cameraViewController.hidesBottomBarWhenPushed = YES;
     cameraNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:cameraViewController];
     cameraNavigationController.hidesBottomBarWhenPushed = YES;
-    UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot.png"] tag:3];
-    [cameraTab setFinishedSelectedImage:[UIImage imageNamed:@"df_shoot.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_shoot.png"]];
-    [cameraTab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.9686 green:0.5098 blue:0.1176 alpha:1], UITextAttributeTextColor, nil] forState:UIControlStateNormal];
+    UITabBarItem *cameraTab = [[UITabBarItem alloc] initWithTitle:@"Shoot" image:[UIImage imageNamed:@"df_shoot_bw.png"] tag:3];
+    [cameraTab setFinishedSelectedImage:[UIImage imageNamed:@"df_shoot_bw.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_shoot_bw.png"]];
+    //[cameraTab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.9686 green:0.5098 blue:0.1176 alpha:1], UITextAttributeTextColor, nil] forState:UIControlStateNormal];
     [cameraNavigationController setTabBarItem:cameraTab];
     
     
@@ -277,8 +277,8 @@
     // Configure TabBarController
     
     self.tabBarController = [[[DyfocusUITabBarController alloc] init] autorelease];
-    [[[self tabBarController] tabBar] setBackgroundImage:[UIImage imageNamed:@"tabbar-background"]];
-    [[[self tabBarController] tabBar] setSelectionIndicatorImage:[UIImage imageNamed:@"selected"]];
+    [[[self tabBarController] tabBar] setBackgroundImage:[UIImage imageNamed:@"tabbar-back-divided"]];
+    [[[self tabBarController] tabBar] setSelectionIndicatorImage:[UIImage imageNamed:@"selected-black"]];
     
     
     NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedViewController, cameraNavigationController, friendsNavigationController, profileNavigationController, nil];
