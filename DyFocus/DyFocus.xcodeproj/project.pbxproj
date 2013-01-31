@@ -14,6 +14,7 @@
 		046FD4E416B72BAB008F449F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046FD4E316B72BAB008F449F /* EGORefreshTableHeaderView.m */; };
 		0470578616B997C40025F1DD /* CommentViewerController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0470578516B997C40025F1DD /* CommentViewerController_i5.xib */; };
 		0470578F16B9AA3A0025F1DD /* LoginController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0470578E16B9AA3A0025F1DD /* LoginController_i5.xib */; };
+		0493612216BA995100CFD8DE /* UIDevice+Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 0493612116BA995100CFD8DE /* UIDevice+Hardware.m */; };
 		04989B721696232F003ECD93 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B711696232F003ECD93 /* close@2x.png */; };
 		04989B7516964E18003ECD93 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B7416964E18003ECD93 /* close.png */; };
 		04D6A4EC16B5FABB00C4A71D /* FOFTableNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D6A4EB16B5FABB00C4A71D /* FOFTableNavigationController.m */; };
@@ -166,6 +167,8 @@
 		048BA4CA16B12A19002DBD68 /* CommentTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableCell.h; sourceTree = "<group>"; };
 		048BA4CB16B12A35002DBD68 /* CommentTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableCell.m; sourceTree = "<group>"; };
 		048BA4CD16B12A5D002DBD68 /* CommentTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTableCell.xib; sourceTree = "<group>"; };
+		0493612016BA995100CFD8DE /* UIDevice+Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Hardware.h"; sourceTree = "<group>"; };
+		0493612116BA995100CFD8DE /* UIDevice+Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Hardware.m"; sourceTree = "<group>"; };
 		04989B711696232F003ECD93 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		04989B7416964E18003ECD93 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		04D6A4E516B5F76C00C4A71D /* heart-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-blue.png"; sourceTree = "<group>"; };
@@ -447,6 +450,8 @@
 				4496800D164D80ED00F76FCF /* Utilities */,
 				AC8C262215DAA9BC0093FFD2 /* Resources */,
 				441BFFB615B131D200E204D7 /* Supporting Files */,
+				0493612016BA995100CFD8DE /* UIDevice+Hardware.h */,
+				0493612116BA995100CFD8DE /* UIDevice+Hardware.m */,
 			);
 			path = DyFocus;
 			sourceTree = "<group>";
@@ -1046,6 +1051,7 @@
 				04D6A4EC16B5FABB00C4A71D /* FOFTableNavigationController.m in Sources */,
 				04D6A4ED16B604E300C4A71D /* CommentViewerController.m in Sources */,
 				046FD4E416B72BAB008F449F /* EGORefreshTableHeaderView.m in Sources */,
+				0493612216BA995100CFD8DE /* UIDevice+Hardware.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,8 +1146,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
+				PROVISIONING_PROFILE = "0113AA52-A4BA-4976-B988-0DD1CA011C3F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0113AA52-A4BA-4976-B988-0DD1CA011C3F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1171,8 +1177,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
+				PROVISIONING_PROFILE = "0113AA52-A4BA-4976-B988-0DD1CA011C3F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0113AA52-A4BA-4976-B988-0DD1CA011C3F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
