@@ -15,6 +15,7 @@
 #import "ImageUtil.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Flurry.h"
+#import "UIDevice+Hardware.h"
 
 @implementation CameraView
 
@@ -124,18 +125,34 @@
     // Create Session
     captureSession = [[AVCaptureSession alloc] init];
     
-    if ([captureSession canSetSessionPreset: AVCaptureSessionPreset1920x1080]) {
-        [captureSession setSessionPreset:AVCaptureSessionPreset1920x1080];
-        captureSession.sessionPreset = AVCaptureSessionPreset1920x1080;
-
-    } else if ([captureSession canSetSessionPreset: AVCaptureSessionPresetHigh]) {
-        [captureSession setSessionPreset:AVCaptureSessionPresetHigh];
-        captureSession.sessionPreset = AVCaptureSessionPresetHigh;
-
-    }
+    NSString *device = [[UIDevice currentDevice] platform];
     
-    else {
-        [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - captureSession can't set preset AVCaptureSessionPresetPhoto"];
+    if ([device isEqualToString:@"iPhone1,1"] || [device isEqualToString:@"iPhone1,2"] || [device isEqualToString:@"iPhone2,1"] || [device isEqualToString:@"iPhone3,1"] || [device isEqualToString:@"iPhone3,2"] || [device isEqualToString:@"iPhone3,3"]) {
+        
+        //Device is older than iPhone 4s
+        
+        if ([captureSession canSetSessionPreset: AVCaptureSessionPresetHigh]) {
+            [captureSession setSessionPreset:AVCaptureSessionPresetHigh];
+            captureSession.sessionPreset = AVCaptureSessionPresetHigh;
+            
+        } else if ([captureSession canSetSessionPreset: AVCaptureSessionPresetMedium]) {
+            [captureSession setSessionPreset:AVCaptureSessionPresetMedium];
+            captureSession.sessionPreset = AVCaptureSessionPresetMedium;
+        }
+        
+    } else {
+        
+        // Device is iPhone 4s or 5
+        
+        if ([captureSession canSetSessionPreset: AVCaptureSessionPreset1920x1080]) {
+            [captureSession setSessionPreset:AVCaptureSessionPreset1920x1080];
+            captureSession.sessionPreset = AVCaptureSessionPreset1920x1080;
+            
+        } else if ([captureSession canSetSessionPreset: AVCaptureSessionPresetHigh]) {
+            [captureSession setSessionPreset:AVCaptureSessionPresetHigh];
+            captureSession.sessionPreset = AVCaptureSessionPresetHigh;
+            
+        }
     }
     
     
@@ -262,9 +279,9 @@
                      NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                      UIImage *image = [[[UIImage alloc] initWithData:imageData] autorelease];
                      
-                     //If the image is too big (1920x1080):
-                     if (image.size.width > 1500 || image.size.height > 1500) {
-                         //Lets crop the image to the desired size
+                     
+                     if ((image.size.height == 1920.00 && image.size.width == 1080.00) || (image.size.height == 1080.00 && image.size.width == 1920.00)) {
+                        
                          CGRect rect = CGRectMake(155,
                                                   0,
                                                   1475,
@@ -273,23 +290,21 @@
                          CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, rect);
                          image = [UIImage imageWithCGImage:imageRef scale:1.0f orientation:image.imageOrientation];
                          CGImageRelease(imageRef);
+                             
+                         
+                     } else if ((image.size.height == 720.00 && image.size.width == 1280.00) || (image.size.height == 1280.00 && image.size.width == 720.00)) {
+                         
+                         CGRect rect = CGRectMake(103,
+                                                  0,
+                                                  983,
+                                                  720);
+
+                         
+                         CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, rect);
+                         image = [UIImage imageWithCGImage:imageRef scale:1.0f orientation:image.imageOrientation];
+                         CGImageRelease(imageRef);
                          
                      }
-                     
-                     /* NO NEED TO SCALE
-                      double imageMaxArea = 3000000.00;
-                      double actualImageArea = image.size.width * image.size.height;
-                      double scale = imageMaxArea / actualImageArea;
-                      
-                      NSLog(@"Image Size: %f, %f .", image.size.width, image.size.height);
-                      NSLog(@"Image Area: %f", actualImageArea);
-                      NSLog(@"Image Scale: %f", scale);
-                      
-                      if (scale < 1) {
-                      image = [[ImageUtil imageWithImage:image scaledToSize: CGSizeMake(scale*image.size.width, scale*image.size.height)] retain];
-                      } else {
-                      [image retain];
-                      }*/
                      
                      [image retain];
                      
