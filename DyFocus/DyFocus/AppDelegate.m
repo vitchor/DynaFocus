@@ -35,6 +35,12 @@
     NSString *name = [json valueForKey:@"user_name"];
     
     NSString *fofId = [json valueForKey:@"id"];
+    NSString *fofName = [json valueForKey:@"fof_name"];
+    
+    NSLog(@"OLHA O USER IDDDDDDDDDDDDDD: %@", facebook_id);
+    NSLog(@"OLHA O IDDDDDDDDDDDDDD: %@", fofId);
+    NSLog(@"OLHA O NAMEEEEEEEEEEEE: %@", fofName);
+    
     NSString *liked = [json valueForKey:@"liked"];
     
     NSDictionary *frames = [json valueForKey:@"frames"];
@@ -62,6 +68,7 @@
     }
     
     fof.m_id = fofId;
+    fof.m_name = fofName;
     fof.m_liked = [liked isEqualToString:@"1"];
     fof.m_userName = name;
     fof.m_userId = facebook_id;
@@ -296,7 +303,7 @@
     [self.window addSubview:self.tabBarController.view];
 }
 
--(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString {
+-(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString andUserId: (NSString *)userId {
     
     if ([refreshString isEqualToString:refresh_featured_url]) {
         featuredFofArray = fofs;
@@ -305,7 +312,12 @@
         feedFofArray = fofs;
         
     } else if ([refreshString isEqualToString:refresh_user_url]) {
-        userFofArray = fofs;
+        
+        if (!userId || [userId isEqualToString:[myself objectForKey:@"id"]]) {
+            //It's me!
+            userFofArray = fofs;
+        }
+
         
     }
     

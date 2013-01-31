@@ -190,8 +190,11 @@
     [self.navigationController pushViewController:fshareController animated:true];
     
     fshareController.navigationItem.title = @"Comment";
-    fshareController.fofName = @"462837.106732";
-    fshareController.fofUserFbId = @"100000754383534";
+//    fshareController.fofName = @"462837.106732";
+//    fshareController.fofUserFbId = @"100000754383534";
+
+    fshareController.fofName = fof.m_name;
+    fshareController.fofUserFbId = fof.m_userId;
 
     [fshareController.commentField becomeFirstResponder];
     [fshareController.commentField setHidden:NO];
@@ -208,8 +211,11 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     
-    NSString *fshare = @"Fshare"; 
-	UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithTitle:fshare style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFacebook)];
+    //    NSString *fshare = @"Fshare";
+    //	UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithTitle:fshare style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFacebook)];
+    
+    UIImage *image = [UIImage imageNamed:@"share_facebook.png"];
+    UIBarButtonItem *fshareButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFacebook)];
     self.navigationItem.rightBarButtonItem = fshareButton;
     [fshareButton release];
 
