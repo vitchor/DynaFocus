@@ -279,10 +279,6 @@
     
     [timer invalidate];
     timer = nil;
-    
-    for (UIImage *frame in frames) {
-        [frame release];
-    }
 
     imageUserPicture.tag = 0;
     
