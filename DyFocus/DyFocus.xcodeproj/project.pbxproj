@@ -403,6 +403,15 @@
 			name = CommentViewerController;
 			sourceTree = "<group>";
 		};
+		0493612716BAA83300CFD8DE /* UIDevice+Hardware */ = {
+			isa = PBXGroup;
+			children = (
+				0493612016BA995100CFD8DE /* UIDevice+Hardware.h */,
+				0493612116BA995100CFD8DE /* UIDevice+Hardware.m */,
+			);
+			name = "UIDevice+Hardware";
+			sourceTree = "<group>";
+		};
 		441BFFA015B131D200E204D7 = {
 			isa = PBXGroup;
 			children = (
@@ -452,8 +461,6 @@
 				4496800D164D80ED00F76FCF /* Utilities */,
 				AC8C262215DAA9BC0093FFD2 /* Resources */,
 				441BFFB615B131D200E204D7 /* Supporting Files */,
-				0493612016BA995100CFD8DE /* UIDevice+Hardware.h */,
-				0493612116BA995100CFD8DE /* UIDevice+Hardware.m */,
 			);
 			path = DyFocus;
 			sourceTree = "<group>";
@@ -740,6 +747,7 @@
 		4496800D164D80ED00F76FCF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0493612716BAA83300CFD8DE /* UIDevice+Hardware */,
 				444C504D16593863006C8CD3 /* JSON */,
 				444C504B16593729006C8CD3 /* ImageUtil */,
 				444C5047165936B2006C8CD3 /* UIImage+FixOrientation */,
