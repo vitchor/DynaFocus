@@ -18,6 +18,8 @@
     
     NSString *refreshString;
     
+    NSString *userFacebookId;
+    
     BOOL _reloading;
 }
 
@@ -25,16 +27,14 @@
 @property (nonatomic, retain) IBOutlet NSArray *FOFArray;
 @property (nonatomic, readwrite) BOOL shouldHideNavigationBar;
 @property (nonatomic, readwrite) NSString *refreshString;
-
--(void) addNewCellHeight:(float)height atRow:(int)row;
-
--(void) refreshWithAction:(BOOL)isAction;
-
+@property (nonatomic, readwrite) NSString *userFacebookId;
 @property(assign,getter=isReloading) BOOL reloading;
 @property(nonatomic,readonly) EGORefreshTableHeaderView *refreshHeaderView;
 
-- (void)reloadTableViewDataSource;
-- (void)dataSourceDidFinishLoadingNewData;
+-(void) addNewCellHeight:(float)height atRow:(int)row;
+-(void) refreshWithAction:(BOOL)isAction;
+-(void)reloadTableViewDataSource;
+-(void)dataSourceDidFinishLoadingNewData;
 
 
 @end

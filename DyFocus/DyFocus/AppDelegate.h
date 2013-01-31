@@ -90,6 +90,7 @@
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
+    
     DyfocusUITabBarController *tabBarController;
     DyfocusUINavigationController *cameraNavigationController;
 
@@ -100,20 +101,20 @@
     SplashScreenController *splashScreenController;
     CameraView *cameraViewController;
     
-    
     NSMutableDictionary *friends;
     NSMutableDictionary *dyfocusFriends;    
     NSMutableDictionary *myself;
     NSArray *featuredFofArray;
     NSArray *userFofArray;
     NSArray *feedFofArray;
+    
     NSArray *friendFofArray;
     Person *currentFriend;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
 
--(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString;
+-(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString andUserId: (NSString *)userId;
 - (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (void)closeSession;
 

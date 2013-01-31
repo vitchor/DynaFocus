@@ -303,7 +303,7 @@
     [self.window addSubview:self.tabBarController.view];
 }
 
--(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString {
+-(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString andUserId: (NSString *)userId {
     
     if ([refreshString isEqualToString:refresh_featured_url]) {
         featuredFofArray = fofs;
@@ -312,7 +312,12 @@
         feedFofArray = fofs;
         
     } else if ([refreshString isEqualToString:refresh_user_url]) {
-        userFofArray = fofs;
+        
+        if (!userId || [userId isEqualToString:[myself objectForKey:@"id"]]) {
+            //It's me!
+            userFofArray = fofs;
+        }
+
         
     }
     

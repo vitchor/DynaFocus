@@ -55,6 +55,7 @@
     tableController.FOFArray = appDelegate.friendFofArray;
     tableController.shouldHideNavigationBar = NO;
     tableController.refreshString = refresh_user_url;
+    tableController.userFacebookId = (NSString *) appDelegate.currentFriend.tag;
     
     tableController.navigationItem.title = @"Friend Pictures";
     

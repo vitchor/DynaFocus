@@ -17,7 +17,7 @@
 @end
 
 @implementation FOFTableController
-@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString;
+@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userFacebookId;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -301,7 +301,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_facebook_id"];
+    
+    if (userFacebookId) {
+        [jsonRequestObject setObject:userFacebookId forKey:@"user_facebook_id"];
+        
+    } else {
+        [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_facebook_id"];
+    }
+
     
     
     NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
@@ -339,7 +346,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        }
                                        self.FOFArray = fofs;
                                        
-                                       [delegate updateModelWithFofArray:fofs andUrl:refreshString];
+                                       [delegate updateModelWithFofArray:fofs andUrl:refreshString andUserId:userFacebookId];
                                        
                                        [refreshHeaderView setCurrentDate];
                                        
