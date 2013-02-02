@@ -15,7 +15,7 @@
 
 @implementation CommentViewerController
 
-@synthesize inputMessageTextField, tableView, likesLabel, scrollView;
+@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden;
 
 -(void)keyboardWillShow:(NSNotification*)aNotification
 {
@@ -26,6 +26,7 @@
     CGRect rect = inputMessageTextField.frame;
     
     NSLog(@"SEARCH BAR ORIGIN: %f",rect.origin.y);
+    isKeyboardHidden = NO;
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     if (screenBounds.size.height == 568) {
@@ -65,6 +66,7 @@
     {
         [self setViewMovedUp:NO];
     } */
+    NSLog(isKeyboardHidden ? @"==== KEYBOARD HIDDEN: Yes" : @"==== KEYBOARD HIDDEN: No");
 }
 
 
@@ -78,6 +80,7 @@
 }
 
 -(void)hideKeyboard {
+    NSLog(isKeyboardHidden ? @"==== KEYBOARD HIDDEN: Yes" : @"==== KEYBOARD HIDDEN: No");
     [inputMessageTextField resignFirstResponder];
 }
 
@@ -178,6 +181,7 @@
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
 {
     [self hideKeyboard];
+    isKeyboardHidden = YES;
 }
 
 -(void)shareOnFacebook{
@@ -460,6 +464,7 @@
             for(id currentObject in topLevelObjects){
                 if ([currentObject isKindOfClass:[CommentTableCell class]]) {
                     cell = (CommentTableCell *)currentObject;
+                    cell.commentController = self;
                     break;
                 }
             }

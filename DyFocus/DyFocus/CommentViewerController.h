@@ -19,6 +19,7 @@
     IBOutlet UILabel *likesLabel;
     IBOutlet UIScrollView *scrollView;
     
+    BOOL isKeyboardHidden;
     NSMutableArray *comments;
     NSMutableArray *likes;
     NSMutableString *likeListUsers;
@@ -39,5 +40,6 @@
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UILabel *likesLabel;
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
+@property (nonatomic) BOOL isKeyboardHidden;
 
 @end
