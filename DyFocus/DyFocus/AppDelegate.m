@@ -1027,10 +1027,10 @@
     }
 }
 
-- (void) setCurrentFriend:(long)friendId{
-    //BUILD A NEW REQUEST THAT RECEIVES AN ID AND SET BOTH:
-//    currentFriend
-//    friendFOFArray
-}
+//- (void) setCurrentFriend:(long)friendId{
+//    //BUILD A NEW REQUEST THAT RECEIVES AN ID AND SET BOTH:
+////    currentFriend
+////    friendFOFArray
+//}
 
 @end
