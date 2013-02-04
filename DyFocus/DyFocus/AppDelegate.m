@@ -1027,6 +1027,15 @@
     }
 }
 
+- (void) showAlertBaloon:(NSString *) alertTitle andAlertMsg:(NSString *) alertMsg andAlertButton:(NSString *) alertButton andController:(UIViewController *) controller {
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:controller cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+    [alert show];
+
+    [alertTitle release];
+    [alertMsg release];
+    [alertButton release];
+}
+
 //- (void) setCurrentFriend:(long)friendId{
 //    //BUILD A NEW REQUEST THAT RECEIVES AN ID AND SET BOTH:
 ////    currentFriend
