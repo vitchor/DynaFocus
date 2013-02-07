@@ -37,10 +37,6 @@
     NSString *fofId = [json valueForKey:@"id"];
     NSString *fofName = [json valueForKey:@"fof_name"];
     
-    NSLog(@"OLHA O USER IDDDDDDDDDDDDDD: %@", facebook_id);
-    NSLog(@"OLHA O IDDDDDDDDDDDDDD: %@", fofId);
-    NSLog(@"OLHA O NAMEEEEEEEEEEEE: %@", fofName);
-    
     NSString *liked = [json valueForKey:@"liked"];
     
     NSDictionary *frames = [json valueForKey:@"frames"];
@@ -51,13 +47,13 @@
     
     NSString *likes = [json valueForKey:@"likes"];
     
-    NSMutableArray *framesData = [[NSMutableArray alloc] init];
+    NSMutableArray *framesData = [NSMutableArray array];
     
     for (int index = 0; index < [frames count]; index++) {
         
         NSDictionary *jsonFrame = [frames objectAtIndex:index];
         
-        NSMutableDictionary *frameData = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *frameData = [NSMutableDictionary dictionary];
         
         [frameData setValue:[jsonFrame objectForKey:@"frame_url"] forKey:@"frame_url"];
         
@@ -76,7 +72,7 @@
     fof.m_likes = likes;
     fof.m_comments = comments;
     fof.m_date = pubDate;
-
+    
     return fof;
 }
 
@@ -321,6 +317,8 @@
         
     }
     
+    //[fofs release];
+    
 }
 
 - (void)resetCameraUINavigationController {
@@ -530,18 +528,15 @@
                          if (statusCode == 200) {
                              // Let's parse the response and create a NSMutableDictonary with the friends:
                              
-                             if (stringReply) {
+                            if (stringReply) {
                                  
-                                 [self parseServerInfo:stringReply];
+                                 if ([self parseServerInfo:stringReply]) {
                                  
-                                 //AWESOME! We have everything we need, time to continue the app flow
-                                 //[LoadView fadeAndRemoveFromView:loginController.view];
-                                 [splashScreenController.view removeFromSuperview];
+                                     //AWESOME! We have everything we need, time to continue the app flow
+                                     [splashScreenController.view removeFromSuperview];
                                  
-                                 
-                                 //[loginController.view removeFromSuperview];
-                                 
-                                 [self setupTabController];
+                                     [self setupTabController];
+                                 }
                                  
                              }
                              
@@ -755,11 +750,13 @@
                  
                  if (stringReply) {
      
-                    [self parseServerInfo:stringReply];
-                    //AWESOME! We have everything we need, time to continue the app flow
-                    [splashScreenController.view removeFromSuperview];
+                     if ([self parseServerInfo:stringReply]) {
+                         
+                         //AWESOME! We have everything we need, time to continue the app flow
+                         [splashScreenController.view removeFromSuperview];
                      
-                     [self setupTabController];                         
+                         [self setupTabController];
+                     }
                      
                  }
                  
@@ -786,7 +783,7 @@
     
 }
 
--(void)parseServerInfo:(NSString *)stringReply {
+-(bool)parseServerInfo:(NSString *)stringReply {
     
     NSDictionary *jsonValues = [stringReply JSONValue];
     
@@ -833,6 +830,9 @@
             
             self.featuredFofArray = featuredFOFArray;
             
+        } else {
+            [self showConnectionError];
+            return NO;
         }
         
         //creating array user fof list
@@ -883,7 +883,12 @@
         
         
         
+    } else {
+        [self showConnectionError];
+        return NO;
     }
+    
+    return YES;
 }
 
 

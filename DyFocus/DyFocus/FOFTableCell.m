@@ -11,6 +11,8 @@
 #import "JSON.h"
 #import "CommentViewerController.h"
 #import "AppDelegate.h"
+#import "NSDyfocusURLRequest.h"
+#import "UIDyfocusImage.h"
 
 @implementation FOFTableCell
 @synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel, lightGrayBrackgroundView;
@@ -18,12 +20,27 @@
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
 
+
+- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
+    NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
+    for ( id item in objs )
+        if ( [item isKindOfClass:[FOFTableCell class]] ) {
+            [self release];
+            self = item;
+            break;
+        }
+    return self;
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-                
-    }
+    NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
+    for ( id item in objs )
+        if ( [item isKindOfClass:[FOFTableCell class]] ) {
+            [self release];
+            self = item;
+            break;
+        }
     return self;
 }
 
@@ -56,21 +73,16 @@
 
 -(void) refreshImageSize {
     
-    if(imagebackFrame && imagefrontFrame){
+    if(imagebackFrame && imagefrontFrame && newHeight != 0.0){
         
-        if(currentImage){
         
-            if(currentImage.size.height/currentImage.size.width > 1){
+        imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
+                                      imagebackFrame.frame.origin.y , imagebackFrame.frame.size.width, newHeight);
+    
 
-                
-                imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
-                                              imagebackFrame.frame.origin.y , imagebackFrame.frame.size.width, newHeight);
-            
+        imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
+                                       imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newHeight);
 
-                imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
-                                               imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newHeight);
-            }
-        }
     }
     
 }
@@ -121,41 +133,62 @@
 
 - (void) refreshWithFof:(FOF *)fofObject {
     
-    fof = fofObject;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
-    [lightGrayBrackgroundView addGestureRecognizer:singleTap];
-    
-    [buttonComment addTarget:self action:@selector(commentButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-
-    [buttonLike addTarget:self action:@selector(likeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    
-    whiteView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    whiteView.layer.cornerRadius = 3.0f;
-    whiteView.layer.borderWidth = 1.0f;
-
-    [labelUserName setText:fof.m_userName];
-    [labelDate setText:fof.m_date];
-    
-    //[buttonLike setTitle: [[[NSString alloc] initWithFormat:@"Like (%@)", fof.m_likes]autorelease] forState:UIControlStateNormal];
-    
-    [likesCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_likes] autorelease]];
-    [commentsCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_comments] autorelease]];    
-    
-    profilePictureUrl = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",fof.m_userId];
-    
-    fofUrls = [[NSMutableArray alloc] init];
-    for (NSDictionary *frame in fof.m_frames) {
+    if ( !fof || fof.m_id != fofObject.m_id ) {
         
-        NSLog([frame debugDescription]);
-        [fofUrls addObject:[frame objectForKey:@"frame_url"]];
+        [self clearImages];
+        
+       
+        imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
+                                           imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, 212);
+        
+        imagebackFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
+                                           imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, 212);
+        
+        
+        
+        fof = fofObject;
+        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+        [lightGrayBrackgroundView addGestureRecognizer:singleTap];
+        
+        [buttonComment addTarget:self action:@selector(commentButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+
+        [buttonLike addTarget:self action:@selector(likeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        whiteView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        whiteView.layer.cornerRadius = 3.0f;
+        whiteView.layer.borderWidth = 1.0f;
+
+        [labelUserName setText:fof.m_userName];
+        [labelDate setText:fof.m_date];
+        
+        //[buttonLike setTitle: [[[NSString alloc] initWithFormat:@"Like (%@)", fof.m_likes]autorelease] forState:UIControlStateNormal];
+        
+        [likesCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_likes] autorelease]];
+        [commentsCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_comments] autorelease]];    
+        
+     
+        
+        
+        if(!fofUrls) {
+            fofUrls = [[NSMutableArray alloc] init];
+        } else {
+            [fofUrls removeAllObjects];
+        }
+        
+        for (NSDictionary *frame in fof.m_frames) {
+            
+            NSLog([frame debugDescription]);
+            [fofUrls addObject:[frame objectForKey:@"frame_url"]];
+        }
+        
+        if (fof.m_liked) {
+            [buttonLike setTitle:@"Liked" forState:UIControlStateNormal];
+            //buttonLike.titleLabel.font = [UIFont systemFontOfSize:11];
+        }
     }
-    
-    if (fof.m_liked) {
-        [buttonLike setTitle:@"Liked" forState:UIControlStateNormal];
-        //buttonLike.titleLabel.font = [UIFont systemFontOfSize:11];
-    }
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -171,10 +204,10 @@
     [spinner setHidden:YES];
     
     if ([frames count] > 0) {
-        [self.imagefrontFrame setImage: [frames objectAtIndex:0]];
+        [self.imagebackFrame setImage: [frames objectAtIndex:0]];
         
         if ([frames count] > 1) {
-            [self.imagebackFrame setImage: [frames objectAtIndex:1]];
+            [self.imagefrontFrame setImage: [frames objectAtIndex:1]];
         }
     }
     
@@ -190,9 +223,10 @@
 -(void)loadImages {
 
     if (imageUserPicture.tag != 420) {
-        
+
         // Load Profile Picture
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",fof.m_userId]]];
+        
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -201,46 +235,54 @@
                                        if(image) {
                                            [imageUserPicture setImage:image];
                                            imageUserPicture.tag = 420;
+                                           image = nil;
                                        }
                                    }
                                }];
     }
     
     
-    if ([frames count] == 0) {
+    if ((!frames || [frames count] == 0) && !spinner.isAnimating) {
         
        // Load frames
-        
-        frames = [[NSMutableArray alloc] init];
-        downloadedFrames = 0;
-        
+        if (!frames) {
+            frames = [[NSMutableArray alloc] initWithCapacity:3];
+        }
         
         [spinner startAnimating];
 
-
+        [frames removeAllObjects];
+        
         for (NSString *frameUrl in fofUrls) {
             
-             NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:frameUrl]];
+             NSDyfocusURLRequest *request = [NSDyfocusURLRequest requestWithURL:[NSURL URLWithString:frameUrl]];
+
+            request.tag = [fofUrls indexOfObject:frameUrl];
+            request.id = fof.m_id;
             
             [self sendFrameRequest:request];
             
         }
+    } else {
+        
+        [self refreshImageSize];
     }
-    
 }
 
--(void) sendFrameRequest:(NSURLRequest *)request {
+-(void)sendFrameRequest:(NSDyfocusURLRequest *)request {
     
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
-                               if(!error && data) {
+                               if(!error && data && request.id == fof.m_id) {
                                    
-                                   UIImage *image = [UIImage imageWithData:data];
-                                   currentImage = image;
+                                   UIDyfocusImage *image = [[[UIDyfocusImage alloc] initWithData:data] autorelease];
                                    
-                                   if(image) {
+                                   
+                                   if (image) {
+                                       
+                                       image.index = request.tag;
                                        
                                        [frames addObject:image];
                                        
@@ -260,6 +302,9 @@
                                        
                                        
                                        if ([frames count] == [fofUrls count]) {
+                                           
+                                           [frames sortUsingFunction:sortByIndex context:nil];
+                                           
                                            [self startTimer];    
                                        }
                                        
@@ -272,68 +317,90 @@
                            }];
 }
 
+
+static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ignore)
+{
+    
+    NSNumber *number1 = [NSNumber numberWithInt:image1.index];
+    NSNumber *number2 = [NSNumber numberWithInt:image2.index];
+    return [number1 compare:number2];
+}
+
 -(void) clearImages {
+    
+    [imageUserPicture setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
 
     imagebackFrame.image = nil;
     imagefrontFrame.image = nil;
     
-    [timer invalidate];
-    timer = nil;
+    if (timer) {
+        [timer invalidate];
+        timer = nil;
+    }
 
     imageUserPicture.tag = 0;
+
     
-    [frames removeAllObjects];
+    if (frames) {
+        [frames removeAllObjects];
     
-    [frames release];
-    frames = nil;
+        [frames release];
+        frames = nil;
+    }
+    
+    [spinner setHidden:NO];
+    
+    [buttonLike setTitle:@"Like" forState:UIControlStateNormal];
+    
 }
 
-- (void)fadeImages
-{
-    
-    if (self.imagefrontFrame.alpha >= 1.0) {
+- (void)fadeImages {
+    if (timer) {
         
-        if (timerPause > 0) {
-            timerPause -= 1;
+        if (self.imagefrontFrame.alpha >= 1.0) {
+            
+            if (timerPause > 0) {
+                timerPause -= 1;
+                
+            } else {
+                
+                timerPause = TIMER_PAUSE;
+                
+                if (oldFrameIndex >= [frames count] - 1) {
+                    oldFrameIndex = 0;
+                } else {
+                    oldFrameIndex += 1;
+                }
+                
+                if ([frames count] > 0)
+                    [self.imagebackFrame setImage:[frames objectAtIndex:oldFrameIndex]];
+                
+                [self.imagebackFrame setNeedsDisplay];
+                
+                [self.imagefrontFrame setAlpha:0.0];
+                
+                [self.imagefrontFrame setNeedsDisplay];
+                
+                int newIndex;
+                if (oldFrameIndex == [frames count] - 1) {
+                    newIndex = 0;
+                } else {
+                    newIndex = oldFrameIndex + 1;
+                }
+
+                if ([frames count] > 0)
+                    [self.imagefrontFrame setImage: [frames objectAtIndex: newIndex]];
+                
+            }
             
         } else {
-            
-            timerPause = TIMER_PAUSE;
-            
-            if (oldFrameIndex >= [frames count] - 1) {
-                oldFrameIndex = 0;
-            } else {
-                oldFrameIndex += 1;
-            }
-            
-            if ([frames count] > 0)
-                [self.imagebackFrame setImage:[frames objectAtIndex:oldFrameIndex]];
-            
-            [self.imagebackFrame setNeedsDisplay];
-            
-            [self.imagefrontFrame setAlpha:0.0];
-            
-            [self.imagefrontFrame setNeedsDisplay];
-            
-            int newIndex;
-            if (oldFrameIndex == [frames count] - 1) {
-                newIndex = 0;
-            } else {
-                newIndex = oldFrameIndex + 1;
-            }
-
-            if ([frames count] > 0)
-                [self.imagefrontFrame setImage: [frames objectAtIndex: newIndex]];
-            
+            [self.imagefrontFrame setAlpha:self.imagefrontFrame.alpha + 0.01];
         }
-        
-    } else {
-        [self.imagefrontFrame setAlpha:self.imagefrontFrame.alpha + 0.01];
     }
     
 }
 
-- (void)willMoveToSuperview:(UIView *)newSuperview
+/*- (void)willMoveToSuperview:(UIView *)newSuperview
 {
     [super willMoveToSuperview:newSuperview];
     NSLog(@"%p willMoveToSuperview: %p", self, newSuperview);
@@ -342,5 +409,10 @@
          NSLog(@"IMAGES CLEARED!!!!");
     }
 }
+
+- (oneway void) release {
+    
+    [super release];
+}*/
 
 @end

@@ -152,26 +152,21 @@
     
 	tableView.backgroundColor = [UIColor clearColor];
 	
-	NSString *cellId = [NSString stringWithFormat:@"0_%d", indexPath.row];
-    cell = [self.m_tableView dequeueReusableCellWithIdentifier:cellId];
+	//NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
+    cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell"];
+    
+    
     if (cell == nil) {
         NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell" owner:self options:nil];
 		
-		for(id currentObject in topLevelObjects){
-			if ([currentObject isKindOfClass:[FOFTableCell class]]) {
-				cell = (FOFTableCell *)currentObject;
-				break;
-			}
-		}
+        // Load the top-level objects from the custom cell XIB.
+        cell = [topLevelObjects objectAtIndex:0];
         
     }
     
     //FOF *fof = (FOF *)[FOFArray objectAtIndex:indexPath.row];
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-	cell.backgroundColor = [UIColor redColor];
-    
+
     cell.tableView = self;
     
     cell.row = indexPath.row;
@@ -179,6 +174,8 @@
     FOF *fof = (FOF *) [FOFArray objectAtIndex:indexPath.row];
     
     [cell refreshWithFof:fof];
+    
+    [cell refreshImageSize];
     
 	return cell;
     
@@ -194,8 +191,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         
     NSNumber *height = (NSNumber *)[cellHeightDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
-
-    NSLog(@"HEIGHT: %d", [height intValue]);
+    
     
     if ([height intValue] != 0) {
         return [height intValue];

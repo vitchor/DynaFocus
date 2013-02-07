@@ -11,7 +11,7 @@
 
 @interface FOFTableController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     IBOutlet UITableView *m_tableView;
-    NSArray *FOFArray;
+    NSMutableArray *FOFArray;
     NSMutableDictionary *cellHeightDictionary;
     BOOL shouldHideNavigationBar;
     EGORefreshTableHeaderView *refreshHeaderView;
@@ -24,7 +24,7 @@
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *m_tableView;
-@property (nonatomic, retain) IBOutlet NSArray *FOFArray;
+@property (nonatomic, retain) IBOutlet NSMutableArray *FOFArray;
 @property (nonatomic, readwrite) BOOL shouldHideNavigationBar;
 @property (nonatomic, readwrite) NSString *refreshString;
 @property (nonatomic, readwrite) NSString *userFacebookId;

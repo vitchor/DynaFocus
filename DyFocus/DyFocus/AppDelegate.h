@@ -104,11 +104,11 @@
     NSMutableDictionary *friends;
     NSMutableDictionary *dyfocusFriends;    
     NSMutableDictionary *myself;
-    NSArray *featuredFofArray;
-    NSArray *userFofArray;
-    NSArray *feedFofArray;
+    NSMutableArray *featuredFofArray;
+    NSMutableArray *userFofArray;
+    NSMutableArray *feedFofArray;
     
-    NSArray *friendFofArray;
+    NSMutableArray *friendFofArray;
     Person *currentFriend;
 }
 
@@ -137,10 +137,10 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSMutableDictionary *friends;
 @property (nonatomic, retain)  NSMutableDictionary *dyfocusFriends;
 @property (nonatomic, retain)  NSMutableDictionary *myself;
-@property (nonatomic, retain)  NSArray *featuredFofArray;
-@property (nonatomic, retain)  NSArray *userFofArray;
-@property (nonatomic, retain)  NSArray *feedFofArray;
-@property (nonatomic, retain)  NSArray *friendFofArray;
+@property (nonatomic, retain)  NSMutableArray *featuredFofArray;
+@property (nonatomic, retain)  NSMutableArray *userFofArray;
+@property (nonatomic, retain)  NSMutableArray *feedFofArray;
+@property (nonatomic, retain)  NSMutableArray *friendFofArray;
 @property (nonatomic, retain)  Person *currentFriend;;
 
 

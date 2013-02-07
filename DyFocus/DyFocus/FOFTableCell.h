@@ -49,8 +49,6 @@
     int row;
     float newHeight;
     
-    UIImage *currentImage;
-    
 }
 
 -(void) loadImages;
