@@ -11,6 +11,8 @@
 		04292BE81699038F009CF50B /* FOFTableController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BE61699038F009CF50B /* FOFTableController.xib */; };
 		04292BEB169904AD009CF50B /* FOFTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04292BEA169904AD009CF50B /* FOFTableCell.m */; };
 		04292BED169904C4009CF50B /* FOFTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BEC169904C3009CF50B /* FOFTableCell.xib */; };
+		0435D8C016C3238C00609475 /* NSDyfocusURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435D8BF16C3238C00609475 /* NSDyfocusURLRequest.m */; };
+		0435D8C316C32CA800609475 /* UIDyfocusImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435D8C216C32CA800609475 /* UIDyfocusImage.m */; };
 		046FD4E416B72BAB008F449F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046FD4E316B72BAB008F449F /* EGORefreshTableHeaderView.m */; };
 		0470578616B997C40025F1DD /* CommentViewerController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0470578516B997C40025F1DD /* CommentViewerController_i5.xib */; };
 		0470578F16B9AA3A0025F1DD /* LoginController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0470578E16B9AA3A0025F1DD /* LoginController_i5.xib */; };
@@ -163,6 +165,10 @@
 		04292BE9169904AD009CF50B /* FOFTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableCell.h; sourceTree = "<group>"; };
 		04292BEA169904AD009CF50B /* FOFTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFTableCell.m; sourceTree = "<group>"; };
 		04292BEC169904C3009CF50B /* FOFTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFTableCell.xib; sourceTree = "<group>"; };
+		0435D8BE16C3238C00609475 /* NSDyfocusURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDyfocusURLRequest.h; sourceTree = "<group>"; };
+		0435D8BF16C3238C00609475 /* NSDyfocusURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDyfocusURLRequest.m; sourceTree = "<group>"; };
+		0435D8C116C32CA800609475 /* UIDyfocusImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDyfocusImage.h; sourceTree = "<group>"; };
+		0435D8C216C32CA800609475 /* UIDyfocusImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDyfocusImage.m; sourceTree = "<group>"; };
 		046FD4E216B72BAB008F449F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		046FD4E316B72BAB008F449F /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		0470578516B997C40025F1DD /* CommentViewerController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentViewerController_i5.xib; sourceTree = "<group>"; };
@@ -388,6 +394,17 @@
 				04D6A4EB16B5FABB00C4A71D /* FOFTableNavigationController.m */,
 			);
 			name = FOFTableViewController;
+			sourceTree = "<group>";
+		};
+		0435D8BC16C3236800609475 /* NSDyfocusURLRequest */ = {
+			isa = PBXGroup;
+			children = (
+				0435D8BE16C3238C00609475 /* NSDyfocusURLRequest.h */,
+				0435D8BF16C3238C00609475 /* NSDyfocusURLRequest.m */,
+				0435D8C116C32CA800609475 /* UIDyfocusImage.h */,
+				0435D8C216C32CA800609475 /* UIDyfocusImage.m */,
+			);
+			name = NSDyfocusURLRequest;
 			sourceTree = "<group>";
 		};
 		046FD4E016B72B84008F449F /* EGORefreshTableHeaderView */ = {
@@ -757,6 +774,7 @@
 		4496800D164D80ED00F76FCF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0435D8BC16C3236800609475 /* NSDyfocusURLRequest */,
 				0493612716BAA83300CFD8DE /* UIDevice+Hardware */,
 				444C504D16593863006C8CD3 /* JSON */,
 				444C504B16593729006C8CD3 /* ImageUtil */,
@@ -1084,6 +1102,8 @@
 				04D6A4ED16B604E300C4A71D /* CommentViewerController.m in Sources */,
 				046FD4E416B72BAB008F449F /* EGORefreshTableHeaderView.m in Sources */,
 				0493612216BA995100CFD8DE /* UIDevice+Hardware.m in Sources */,
+				0435D8C016C3238C00609475 /* NSDyfocusURLRequest.m in Sources */,
+				0435D8C316C32CA800609475 /* UIDyfocusImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
