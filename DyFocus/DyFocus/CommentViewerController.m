@@ -363,8 +363,14 @@
                                             self.navigationItem.rightBarButtonItem.enabled = YES;
                                            
                                            [tableView reloadData];
-                                        }
-                                    }
+                                           
+                                       } else {
+                                           [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
+                                       }
+                                       
+                                   } else {
+                                       [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
+                                   }
                                }];
     
     }
@@ -558,6 +564,9 @@
                                    
                                    fof.m_comments = [[NSString alloc] initWithFormat: @"%d",[fof.m_comments intValue] + 1];
                                    
+                               } else {
+                                   [LoadView fadeAndRemoveFromView:self.view];                                   
+                                   [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
                                }
                            }];
     
@@ -567,7 +576,7 @@
 {
     NSString *alertButton = @"OK";
     
-    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
     [alert show];
     
     [alertButton release];
