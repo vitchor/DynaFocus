@@ -328,13 +328,13 @@
                                            
                                            if (i == 0) {
                                                likeListUsers = [[NSMutableString alloc] initWithString:@""];
-                                               [likeListUsers appendString:[[NSString alloc] initWithFormat:@"%@", [array objectAtIndex:0]]];
+                                               [likeListUsers appendString:[NSString stringWithFormat:@"%@", [array objectAtIndex:0]]];
                                                
                                            } else if ([jsonLikes count] > 1 && i == [jsonLikes count] -1) { // Last Time
-                                               [likeListUsers appendString:[[NSString alloc] initWithFormat:@" and %@", [array objectAtIndex:0]]];
+                                               [likeListUsers appendString:[NSString stringWithFormat:@" and %@", [array objectAtIndex:0]]];
                                                
                                            } else {
-                                               [likeListUsers appendString:[[NSString alloc] initWithFormat:@", %@", [array objectAtIndex:0]]];
+                                               [likeListUsers appendString:[NSString stringWithFormat:@", %@", [array objectAtIndex:0]]];
                                            }
                                            
                                            [likes addObject:like];   

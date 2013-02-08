@@ -35,7 +35,7 @@
     }
     
     
-    NSString *profilePictureUrl = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",comment.m_userId];
+    NSString *profilePictureUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",comment.m_userId];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
     [NSURLConnection sendAsynchronousRequest:request

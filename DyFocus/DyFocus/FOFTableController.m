@@ -63,7 +63,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    UIView *haeaderFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
+    UIView *haeaderFooterView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)] autorelease];
 	haeaderFooterView.backgroundColor = [UIColor clearColor];
 	[m_tableView setTableHeaderView:haeaderFooterView];
 	[m_tableView setTableFooterView:haeaderFooterView];
@@ -340,6 +340,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                            [fofs addObject:fof];
                                            
                                        }
+                                       
                                        
                                        NSMutableArray *newFofs = [NSMutableArray array];
                                        
