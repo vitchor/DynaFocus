@@ -329,20 +329,46 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                    if (jsonValues) {
                                        NSDictionary * jsonFOFs = [jsonValues valueForKey:@"fof_list"];
                                        
-                                       NSMutableArray *fofs = [[NSMutableArray alloc] init];
+                                       NSMutableArray *fofs = [NSMutableArray array];
                                        
                                        for (int i = 0; i < [jsonFOFs count]; i++) {
                                            
                                            NSDictionary *jsonFOF = [jsonFOFs objectAtIndex:i];
                                            
-                                           FOF *fof = [FOF fofFromJSON:jsonFOF];
+                                           FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
                                            
                                            [fofs addObject:fof];
                                            
                                        }
-                                       self.FOFArray = fofs;
                                        
-                                       [delegate updateModelWithFofArray:fofs andUrl:refreshString andUserId:userFacebookId];
+                                       NSMutableArray *newFofs = [NSMutableArray array];
+                                       
+                                       for (FOF *fof1 in fofs) {
+                                           
+                                           bool isEqual = NO;
+                                           
+                                           for (FOF *fof2 in self.FOFArray) {
+                                               
+                                               isEqual = isEqual || [fof1.m_name isEqualToString: fof2.m_name];
+                                               
+                                               if (isEqual) {
+                                                   break;
+                                               }
+                                           }
+                                           
+                                           if (!isEqual) {
+                                               [newFofs insertObject:fof1 atIndex:0];
+                                           } else {
+                                               break;
+                                           }
+                                       }
+                                       
+                                       for (FOF *fof in newFofs) {
+                                           [self.FOFArray insertObject:fof atIndex:0];
+                                       }
+                                       
+                                       
+                                       //[delegate updateModelWithFofArray:self.FOFArray andUrl:refreshString andUserId:userFacebookId];
                                        
                                        [refreshHeaderView setCurrentDate];
                                        

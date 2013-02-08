@@ -135,6 +135,8 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    NSLog(@"REFRESH WITH FOF COUNT: %d", fof.retainCount);
+    
     if ( !fof || fof.m_id != fofObject.m_id ) {
         
         [self clearImages];
@@ -332,6 +334,9 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
 
     imagebackFrame.image = nil;
     imagefrontFrame.image = nil;
+    
+    fof = nil;
+    [fof release];
     
     if (timer) {
         [timer invalidate];
