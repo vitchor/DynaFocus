@@ -73,6 +73,8 @@
     fof.m_comments = comments;
     fof.m_date = pubDate;
     
+    liked = nil;
+    
     return fof;
 }
 
@@ -818,7 +820,7 @@
                 NSDictionary *jsonFOF = [featuredFOFList objectAtIndex:i];
                 
                                 
-                FOF *fof = [FOF fofFromJSON:jsonFOF];
+                FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
                 
                 
                 [featuredFOFArray addObject:fof];
@@ -845,7 +847,7 @@
             for (int i = 0; i < [userFOFList count]; i++) {
                 NSDictionary *jsonFOF = [userFOFList objectAtIndex:i];
                 
-                FOF *fof = [FOF fofFromJSON:jsonFOF];
+                FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
                 
                 [userFOFArray addObject:fof];
                 
@@ -868,7 +870,7 @@
             for (int i = 0; i < [feedFOFList count]; i++) {
                 NSDictionary *jsonFOF = [feedFOFList objectAtIndex:i];
                 
-                FOF *fof = [FOF fofFromJSON:jsonFOF];
+                FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
                 
                 [feedFOFArray addObject:fof];
                 

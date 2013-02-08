@@ -71,7 +71,7 @@
 	NSString *m_userNickname;
 	NSString *m_date;
 	NSString *m_id;
-    BOOL *m_liked;
+    bool m_liked;
 }
 
 +(FOF *)fofFromJSON: (NSDictionary *)json;
@@ -85,7 +85,7 @@
 @property (nonatomic, retain) NSString *m_userId;
 @property (nonatomic, retain) NSString *m_date;
 @property (nonatomic, retain) NSString *m_id;
-@property (nonatomic, readwrite) BOOL *m_liked;
+@property (nonatomic, readwrite) bool m_liked;
 @end
 
 

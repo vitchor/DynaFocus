@@ -135,7 +135,7 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    NSLog(@"REFRESH WITH FOF COUNT: %d", fof.retainCount);
+
     
     if ( !fof || fof.m_id != fofObject.m_id ) {
         
@@ -148,9 +148,24 @@
         imagebackFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
                                            imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, 212);
         
+        if (fof) {
+            [fof release];
+            fof = nil;
+        }
         
         
-        fof = fofObject;
+        fof = [[FOF alloc] init];
+        fof.m_frames = [[fofObject.m_frames copy] autorelease];
+        fof.m_comments = [[fofObject.m_comments copy] autorelease];
+        fof.m_date = [[fofObject.m_date copy] autorelease];
+        fof.m_id = [[fofObject.m_id copy] autorelease];
+        fof.m_liked = fofObject.m_liked;
+        fof.m_likes = [[fofObject.m_likes copy] autorelease];
+        fof.m_name = [[fofObject.m_name copy] autorelease];
+        fof.m_userId = [[fofObject.m_userId copy] autorelease];
+        fof.m_userName = [[fofObject.m_userName copy] autorelease];
+        fof.m_userNickname = [[fofObject.m_userNickname copy] autorelease];
+        
         
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
         [lightGrayBrackgroundView addGestureRecognizer:singleTap];
@@ -335,8 +350,8 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
     imagebackFrame.image = nil;
     imagefrontFrame.image = nil;
     
-    fof = nil;
     [fof release];
+    fof = nil;
     
     if (timer) {
         [timer invalidate];

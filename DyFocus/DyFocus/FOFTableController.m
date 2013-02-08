@@ -170,8 +170,8 @@
     cell.tableView = self;
     
     cell.row = indexPath.row;
-    
-    FOF *fof = (FOF *) [FOFArray objectAtIndex:indexPath.row];
+
+    FOF *fof = (FOF *) [self.FOFArray objectAtIndex:indexPath.row];
     
     [cell refreshWithFof:fof];
     
@@ -329,6 +329,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                    if (jsonValues) {
                                        NSDictionary * jsonFOFs = [jsonValues valueForKey:@"fof_list"];
                                        
+                                    
+                                       
                                        NSMutableArray *fofs = [NSMutableArray array];
                                        
                                        for (int i = 0; i < [jsonFOFs count]; i++) {
@@ -341,35 +343,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                            
                                        }
                                        
+                                       [self.FOFArray removeAllObjects];
+                                       [self.FOFArray addObjectsFromArray:fofs];
                                        
-                                       NSMutableArray *newFofs = [NSMutableArray array];
-                                       
-                                       for (FOF *fof1 in fofs) {
-                                           
-                                           bool isEqual = NO;
-                                           
-                                           for (FOF *fof2 in self.FOFArray) {
-                                               
-                                               isEqual = isEqual || [fof1.m_name isEqualToString: fof2.m_name];
-                                               
-                                               if (isEqual) {
-                                                   break;
-                                               }
-                                           }
-                                           
-                                           if (!isEqual) {
-                                               [newFofs insertObject:fof1 atIndex:0];
-                                           } else {
-                                               break;
-                                           }
-                                       }
-                                       
-                                       for (FOF *fof in newFofs) {
-                                           [self.FOFArray insertObject:fof atIndex:0];
-                                       }
-                                       
-                                       
-                                       //[delegate updateModelWithFofArray:self.FOFArray andUrl:refreshString andUserId:userFacebookId];
                                        
                                        [refreshHeaderView setCurrentDate];
                                        
