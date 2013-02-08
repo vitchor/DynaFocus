@@ -345,7 +345,8 @@
     
     [feedViewController.tableController refreshWithAction:NO];
     
-    
+    tabBarController.lastControllerIndex = 1;
+    tabBarController.actualControllerIndex = 1;
     [tabBarController setSelectedIndex:1];
 }
 
