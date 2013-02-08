@@ -98,7 +98,7 @@
         if (!error) {
             //[self.navigationController popViewControllerAnimated:YES];
             AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-            [appDelegate resetCameraUINavigationController];
+            [appDelegate loadFeedTab];
         } else {
             facebookSwitch.on = false;
             NSString *alertTitle = @"Connection Error";
@@ -145,7 +145,7 @@
         if (!error) {
             //[self.navigationController popViewControllerAnimated:YES];
             AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-            [appDelegate resetCameraUINavigationController];
+            [appDelegate loadFeedTab];
         } else {
             facebookSwitch.on = false;
             NSString *alertTitle = @"Connection Error";

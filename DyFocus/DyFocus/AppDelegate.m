@@ -813,7 +813,7 @@
         
         if (featuredFOFList) {
             
-            NSMutableArray *featuredFOFArray = [[NSMutableArray alloc] init];
+            NSMutableArray *featuredFOFArray = [NSMutableArray array];
             
             for (int i = 0; i < [featuredFOFList count]; i++) {
                 NSDictionary *jsonFOF = [featuredFOFList objectAtIndex:i];
@@ -841,7 +841,7 @@
         
         if (userFOFList) {
             
-            NSMutableArray *userFOFArray = [[NSMutableArray alloc] init];
+            NSMutableArray *userFOFArray = [NSMutableArray array];
             
             for (int i = 0; i < [userFOFList count]; i++) {
                 NSDictionary *jsonFOF = [userFOFList objectAtIndex:i];
@@ -864,7 +864,7 @@
         
         if (feedFOFList) {
             
-            NSMutableArray *feedFOFArray = [[NSMutableArray alloc] init];
+            NSMutableArray *feedFOFArray = [NSMutableArray array];
             
             for (int i = 0; i < [feedFOFList count]; i++) {
                 NSDictionary *jsonFOF = [feedFOFList objectAtIndex:i];
