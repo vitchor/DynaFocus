@@ -452,16 +452,7 @@
         }
         
     } else {
-        NSString *alertTitle = @"No Focus Points";
-        NSString *alertMsg = @"Tap the screen to add focus points.";
-        NSString *alertButton = @"OK";
-        
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
-        [alert show];
-        
-        [alertTitle release];
-        [alertMsg release];
-        [alertButton release];
+        [appDelegate showAlertBaloon:@"No Focus Points" andAlertMsg:@"Tap the screen to add focus points." andAlertButton:@"OK" andController:self];
     }
 }
 

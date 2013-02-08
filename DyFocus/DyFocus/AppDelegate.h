@@ -114,7 +114,7 @@
 
 extern NSString *const FBSessionStateChangedNotification;
 
--(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString andUserId: (NSString *)userId;
+- (void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString andUserId: (NSString *)userId;
 - (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (void)closeSession;
 
@@ -123,6 +123,7 @@ extern NSString *const FBSessionStateChangedNotification;
 
 - (void)resetCameraUINavigationController;
 - (void)loadFeedTab;
+- (void) showAlertBaloon:(NSString *) alertTitle andAlertMsg:(NSString *) alertMsg andAlertButton:(NSString *) alertButton andController:(UIViewController *) delegate;
 - (void)goBackToLastController;
 
 - (void)invitationSentGoBackToFriends;

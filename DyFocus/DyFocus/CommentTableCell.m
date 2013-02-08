@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 
 @implementation CommentTableCell
-@synthesize labelUserName ,labelDate, imageUserPicture, commentTextView, whiteView;
+@synthesize labelUserName ,labelDate, imageUserPicture, commentTextView, whiteView, commentController, m_comment;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -29,7 +29,7 @@
 - (void) refreshWithComment: (Comment *)comment {
     labelUserName.text = comment.m_userName;
     commentTextView.text = comment.m_message;
-    
+
     if (comment.m_date && ![comment.m_date isEqualToString:@"null"]) {
         labelDate.text = comment.m_date;
     }
@@ -51,11 +51,9 @@
     
 }
 
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }    
 
