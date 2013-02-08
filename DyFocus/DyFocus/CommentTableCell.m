@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 
 @implementation CommentTableCell
-@synthesize labelUserName ,labelDate, imageUserPicture, commentTextView, whiteView, commentController, m_comment;
+@synthesize labelUserName ,labelDate, imageUserPicture, commentTextView, whiteView;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
