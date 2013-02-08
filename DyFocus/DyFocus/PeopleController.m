@@ -433,7 +433,7 @@
     if (indexPath.section == 0) {
         
         NSMutableArray *selectedPersonFofs = [[NSMutableArray alloc] init];
-        Person *person = [[Person alloc] init];
+        Person *person = nil;
         NSNumber *personIdNumber = [m_visibleFriendsList objectAtIndex:indexPath.row];
         
         if (personIdNumber) {
@@ -448,7 +448,7 @@
             
             for (FOF *fof in delegate.feedFofArray) {
                 
-                if ([fof.m_userId isEqualToString: [[NSString alloc] initWithFormat: @"%@", person.tag]]) {
+                if ([fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.tag]]) {
                     
                     [selectedPersonFofs addObject:fof];
                     

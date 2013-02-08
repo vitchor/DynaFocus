@@ -211,18 +211,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
    
-    UIImage *faceImage = [UIImage imageNamed:@"fb_share_button.png"];
-    UIButton *face = [UIButton buttonWithType:UIButtonTypeCustom];
-    face.bounds = CGRectMake( 0, 0, faceImage.size.width * 0.65, faceImage.size.height * 0.65);
-    [face setImage:faceImage forState:UIControlStateNormal];
-    
-    UIBarButtonItem *faceBtn = [[UIBarButtonItem alloc] initWithCustomView:face];
-    
-    [face addTarget:self action:@selector(shareOnFacebook) forControlEvents:UIControlEventTouchUpInside];
-    
-    [faceBtn setCustomView:face];
-    
-    [self.navigationItem setRightBarButtonItem:faceBtn];
+
     
     
     // Hides magnifier icon
@@ -242,125 +231,143 @@
     [tableView setDataSource:self];
     [tableView setDelegate:self];
     
-    [LoadView loadViewOnView:self.view withText:@"Loading..."];
-    
-    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/likes_and_comments/",dyfocus_url] autorelease];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    
-    NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
-    
-    [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
-    
-    NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
-                           json] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               
-                               [LoadView fadeAndRemoveFromView:self.view];
-                               
-                               if(!error && data) {
+    if (!comments || [comments count] == 0) {
+        
+        UIImage *faceImage = [UIImage imageNamed:@"fb_share_button.png"];
+        UIButton *face = [UIButton buttonWithType:UIButtonTypeCustom];
+        face.bounds = CGRectMake( 0, 0, faceImage.size.width * 0.65, faceImage.size.height * 0.65);
+        [face setImage:faceImage forState:UIControlStateNormal];
+        
+        UIBarButtonItem *faceBtn = [[UIBarButtonItem alloc] initWithCustomView:face];
+        
+        [face addTarget:self action:@selector(shareOnFacebook) forControlEvents:UIControlEventTouchUpInside];
+        
+        [faceBtn setCustomView:face];
+        
+        [self.navigationItem setRightBarButtonItem:faceBtn];
+        
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        
+        
+        [LoadView loadViewOnView:self.view withText:@"Loading..."];
+        
+        NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/likes_and_comments/",dyfocus_url] autorelease];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+        
+        NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+        
+        [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
+        
+        NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                               json] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                    
-                                   comments = [[NSMutableArray alloc] init];
-                                   likes = [[NSMutableArray alloc] init];                                   
+                                   [LoadView fadeAndRemoveFromView:self.view];
                                    
-                     
-                                   
-                                   NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-                                   
-                                                 NSLog(@"stringReply: %@",stringReply);
-                                   
-                                   NSDictionary *jsonValues = [stringReply JSONValue];
-                                   
-                                   if (jsonValues) {
-                                       NSDictionary * jsonComments = [jsonValues valueForKey:@"comment_list"];
+                                   if(!error && data) {
                                        
-                                       for (int i = 0; i < [jsonComments count]; i++) {
+                                       comments = [[NSMutableArray alloc] init];
+                                       likes = [[NSMutableArray alloc] init];                                   
+                                       
+                         
+                                       
+                                       NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                                       
+                                                     NSLog(@"stringReply: %@",stringReply);
+                                       
+                                       NSDictionary *jsonValues = [stringReply JSONValue];
+                                       
+                                       if (jsonValues) {
+                                           NSDictionary * jsonComments = [jsonValues valueForKey:@"comment_list"];
                                            
-                                           NSDictionary *jsonComment = [jsonComments objectAtIndex:i];
+                                           for (int i = 0; i < [jsonComments count]; i++) {
+                                               
+                                               NSDictionary *jsonComment = [jsonComments objectAtIndex:i];
+                                               
+                                               NSString *fofFriendId = [jsonComment valueForKey:@"user_facebook_id"];
+                                               NSString *fofId = [jsonComment valueForKey:@"fof_id"];
+                                               NSString *fofComment = [jsonComment valueForKey:@"comment"];
+                                               NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
+                                               
+                                               NSString *commentPubDate = [jsonComment valueForKey:@"pub_date"];
+                                               
+                                               Comment *comment = [[Comment alloc] init];
+                                               comment.m_userId = fofFriendId;
+                                               comment.m_message = fofComment;
+                                               comment.m_userName = fofUserName;
+                                               comment.m_fofId = fofId;
+                                               comment.m_date = commentPubDate;
+                                            
+                                               [comments addObject:comment];
+                                                  NSLog(@"Commentario: %@", comment.m_message);
+                                               
+                                            }
                                            
-                                           NSString *fofFriendId = [jsonComment valueForKey:@"user_facebook_id"];
-                                           NSString *fofId = [jsonComment valueForKey:@"fof_id"];
-                                           NSString *fofComment = [jsonComment valueForKey:@"comment"];
-                                           NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
-                                           
-                                           NSString *commentPubDate = [jsonComment valueForKey:@"pub_date"];
-                                           
-                                           Comment *comment = [[Comment alloc] init];
-                                           comment.m_userId = fofFriendId;
-                                           comment.m_message = fofComment;
-                                           comment.m_userName = fofUserName;
-                                           comment.m_fofId = fofId;
-                                           comment.m_date = commentPubDate;
                                         
-                                           [comments addObject:comment];
-                                              NSLog(@"Commentario: %@", comment.m_message);
                                            
-                                        }
-                                       
-                                    
-                                       
-                                       NSDictionary * jsonLikes = [jsonValues valueForKey:@"like_list"];
-                                       
-                                       for (int i = 0; i < [jsonLikes count]; i++) {
+                                           NSDictionary * jsonLikes = [jsonValues valueForKey:@"like_list"];
                                            
-                                           NSDictionary *jsonComment = [jsonLikes objectAtIndex:i];
-                                           
-                                           NSString *fofFriendId = [jsonComment valueForKey:@"user_facebook_id"];
-                                           NSString *fofId = [jsonComment valueForKey:@"fof_id"];
-                                           NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
-                                           
-                                           Like *like = [[Like alloc] init];
-                                           like.m_userId = fofFriendId;
-                                           like.m_userName = fofUserName;
-                                           
-                                           NSArray *array = [like.m_userName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                                           array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
-                                           
-                                           like.m_fofId = fofId;
-                                           
-                                           
-                                           if (i == 0) {
-                                               likeListUsers = [[NSMutableString alloc] initWithString:@""];
-                                               [likeListUsers appendString:[NSString stringWithFormat:@"%@", [array objectAtIndex:0]]];
+                                           for (int i = 0; i < [jsonLikes count]; i++) {
                                                
-                                           } else if ([jsonLikes count] > 1 && i == [jsonLikes count] -1) { // Last Time
-                                               [likeListUsers appendString:[NSString stringWithFormat:@" and %@", [array objectAtIndex:0]]];
+                                               NSDictionary *jsonComment = [jsonLikes objectAtIndex:i];
                                                
-                                           } else {
-                                               [likeListUsers appendString:[NSString stringWithFormat:@", %@", [array objectAtIndex:0]]];
+                                               NSString *fofFriendId = [jsonComment valueForKey:@"user_facebook_id"];
+                                               NSString *fofId = [jsonComment valueForKey:@"fof_id"];
+                                               NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
+                                               
+                                               Like *like = [[Like alloc] init];
+                                               like.m_userId = fofFriendId;
+                                               like.m_userName = fofUserName;
+                                               
+                                               NSArray *array = [like.m_userName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                                               array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
+                                               
+                                               like.m_fofId = fofId;
+                                               
+                                               
+                                               if (i == 0) {
+                                                   likeListUsers = [[NSMutableString alloc] initWithString:@""];
+                                                   [likeListUsers appendString:[NSString stringWithFormat:@"%@", [array objectAtIndex:0]]];
+                                                   
+                                               } else if ([jsonLikes count] > 1 && i == [jsonLikes count] -1) { // Last Time
+                                                   [likeListUsers appendString:[NSString stringWithFormat:@" and %@", [array objectAtIndex:0]]];
+                                                   
+                                               } else {
+                                                   [likeListUsers appendString:[NSString stringWithFormat:@", %@", [array objectAtIndex:0]]];
+                                               }
+                                               
+                                               [likes addObject:like];   
                                            }
                                            
-                                           [likes addObject:like];   
-                                       }
-                                       
-                                       if ([likes count] == 0) {
-                                           likeListUsers = [[NSMutableString alloc] initWithString:@"No one liked this yet."];
+                                           if ([likes count] == 0) {
+                                               likeListUsers = [[NSMutableString alloc] initWithString:@"No one liked this yet."];
+                                               
+                                           } else if ([likes count] == 1) {
+                                               [likeListUsers appendString:@" likes this."];
+                                               
+                                           } else {
+                                               [likeListUsers appendString:@" like this."];
+                                               
+                                           }
                                            
-                                       } else if ([likes count] == 1) {
-                                           [likeListUsers appendString:@" likes this."];
+                                           [likesLabel setText:likeListUsers];
                                            
-                                       } else {
-                                           [likeListUsers appendString:@" like this."];
+                                            self.navigationItem.rightBarButtonItem.enabled = YES;
                                            
-                                       }
-                                       
-                                       [likesLabel setText:likeListUsers];
-                                       
-                    
-                                       
-                                       [tableView reloadData];
+                                           [tableView reloadData];
+                                        }
                                     }
-                                }
-                           }];
+                               }];
     
-    
+    }
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
     [scrollView addGestureRecognizer:singleTap];

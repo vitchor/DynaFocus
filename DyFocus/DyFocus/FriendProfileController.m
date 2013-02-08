@@ -42,7 +42,7 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
     self.userNameLabel.text = appDelegate.currentFriend.name;
-    self.userProfileImage.profileID = [[NSString alloc] initWithFormat: @"%@", appDelegate.currentFriend.tag];
+    self.userProfileImage.profileID = [NSString stringWithFormat: @"%@", appDelegate.currentFriend.tag];
    
 }
 
