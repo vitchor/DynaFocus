@@ -23,6 +23,7 @@
     NSMutableArray *likes;
     NSMutableString *likeListUsers;
     
+    BOOL isKeyboardHidden;
     BOOL isTableEmpty;
     
     FOF *fof;
@@ -39,5 +40,5 @@
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UILabel *likesLabel;
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
-
+@property (nonatomic) BOOL isKeyboardHidden;
 @end

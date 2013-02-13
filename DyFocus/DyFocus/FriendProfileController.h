@@ -11,9 +11,16 @@
 
 @interface FriendProfileController : UIViewController {
     FBSession *facebook;
-    NSString *userName;
+    IBOutlet NSString *userName;
+    IBOutlet NSString *userFacebookId;
     IBOutlet UIButton *viewPicturesButton;
 }
+
+- (void) showPictures;
+- (void) clearCurrentUser;
+
+@property (strong, nonatomic) IBOutlet NSString *userName;
+@property (strong, nonatomic) IBOutlet NSString *userFacebookId;
 
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *userProfileImage;
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;

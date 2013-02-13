@@ -371,19 +371,7 @@
             cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
             
             if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
-                
-                /*
-                 NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"CellView" owner:self options:nil];
-                 
-                 for(id currentObject in topLevelObjects){
-                 if ([currentObject isKindOfClass:[CellView class]]) {
-                 cell = (CellView *)currentObject;
-                 break;
-                 }
-                 }
-                 */
-                
+                cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];                
             }
             
             NSNumber *personIdNumber = [m_visiblePeopleList objectAtIndex:indexPath.row];
@@ -400,19 +388,6 @@
                     image = [UIImage imageNamed:@"AvatarDefault.png"];
                 }
                 cell.imageView.image = image;
-                
-                
-
-                /*
-                if (!cell.accessoryView) {
-                    UILabel *inviteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 10, 65, 30)] autorelease];
-                    inviteLabel.text = @"SELECT";
-                    inviteLabel.shadowOffset = CGSizeMake(0.25,0.8);
-                    inviteLabel.shadowColor = [UIColor darkGrayColor];
-                    inviteLabel.textAlignment = UITextAlignmentCenter;
-                    [inviteLabel setFont:[UIFont boldSystemFontOfSize:16]];
-                    cell.accessoryView = inviteLabel;
-                }*/
                 
                 if (person.selected == NO) {
                     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -462,6 +437,8 @@
         FriendProfileController *friendProfileController = [[FriendProfileController alloc] init];
         
         friendProfileController.hidesBottomBarWhenPushed = YES;
+
+        [friendProfileController clearCurrentUser];
         
         [self.navigationController pushViewController:friendProfileController animated:true];
         [self.navigationController setNavigationBarHidden:NO animated:TRUE];
@@ -648,14 +625,6 @@
 }
 
 - (void)showAll {
-	/*[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationBeginsFromCurrentState:YES];
-	[UIView setAnimationDuration:0.3];
-	m_searchBar.alpha = 1.0;
-	m_searchBar.frame = CGRectMake(0, 0, 320, 40);
-	self.tableView.frame = CGRectMake(0, 40, 320, 326);
-	[UIView commitAnimations];*/
-	
 	m_swithSelectedButton.selectedSegmentIndex = 0;
 	[self filterWithText:[m_searchBar text]];
 	[self.tableView reloadData];
@@ -663,14 +632,6 @@
 }
 
 - (void)showSelected {
-	/*[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationBeginsFromCurrentState:YES];
-	[UIView setAnimationDuration:0.3];
-	m_searchBar.alpha = 0.0;
-	m_searchBar.frame = CGRectMake(0, -40, 320, 40);
-	self.tableView.frame = CGRectMake(0, 0, 320, 366);
-	[UIView commitAnimations];*/
-	
 	m_swithSelectedButton.selectedSegmentIndex = 1;
 	[m_visiblePeopleList setArray:[self selectedIds]];
 	[m_visiblePeopleList sortUsingFunction:comparePerson context:m_peopleInfo];
@@ -731,8 +692,6 @@
 		}
 	}
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	//self.tableView.frame = CGRectMake(0, 40, 320, 392);
-	//[m_controlToolbar removeFromSuperview];
     [self.tableView reloadData];
 }
 
@@ -756,8 +715,6 @@
 	[searchBar resignFirstResponder];	
 	[searchBar setShowsCancelButton:NO animated:YES];	
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	//self.tableView.frame = CGRectMake(0, 40, 320, 392);
-//	[self.view addSubview:m_controlToolbar];
 	[self showAll];
 }
 
