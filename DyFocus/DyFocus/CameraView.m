@@ -24,8 +24,10 @@
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
     NSError *error = nil;
+    if(!mCaptureDevice)
+        mCaptureDevice = [videoProcessor videoDeviceWithPosition:AVCaptureDevicePositionBack];
+    
     if ([mCaptureDevice lockForConfiguration:&error]) {
-        
     
         if ([mCaptureDevice isExposurePointOfInterestSupported]) {
             [mCaptureDevice setExposurePointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
@@ -79,6 +81,8 @@
 -(void)setInitialFocusPoint:(CGPoint)point {
     NSLog(@"Setting initial focus point1");
     NSError *error = nil;
+    if(!mCaptureDevice)
+        mCaptureDevice = [videoProcessor videoDeviceWithPosition:AVCaptureDevicePositionBack];
     if ([mCaptureDevice lockForConfiguration:&error]) {
         
         
@@ -119,11 +123,19 @@
     }
 }
 
-
-- (void)startCaptureSession {
+/*- (void)setupCaptureSession {
 	
     // Create Session
     captureSession = [[AVCaptureSession alloc] init];
+    
+   
+    AVCaptureDeviceInput *videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:[self videoDeviceWithPosition:AVCaptureDevicePositionBack] error:nil];
+    if ([captureSession canAddInput:videoIn])
+        [captureSession addInput:videoIn];
+	[videoIn release];
+    
+    AVCaptureVideoDataOutput *videoOut = [[AVCaptureVideoDataOutput alloc] init];
+    
     
     NSString *device = [[UIDevice currentDevice] platform];
     
@@ -220,7 +232,7 @@
          [self sendErrorReportWithMessage:@"CameraView.startCaptureSession - couldn't get a AVCaptureConnection with a port that is equal to AVMediaTypeVideo"];
     }
 
-    [captureSession startRunning];
+    //[captureSession startRunning];
 
     // Showing preview layer
     AVCaptureVideoPreviewLayer *layer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
@@ -235,7 +247,10 @@
     [spinner stopAnimating];
     [loadingView setHidden:YES];
     
-}
+}*/
+
+
+
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"adjustingFocus"]) {
@@ -249,15 +264,25 @@
             // Capture with handler
             NSLog(@"TAKING PICTURE...");
             
-            [self capture];
             
+            //[self capture];
+            mFOFIndex = mFOFIndex + 1;
+            
+            if (mFOFIndex < [mFocalPoints count]) {
+                [self updateFocusPoint];
+            } else {
+                // STOP REORDING
+                [videoProcessor stopRecording];
+//                videoProcessor s
+                NSLog(@" FINISHED PICTURE");
+            }
 
         }
     }
 }
 
 
-- (void) capture {
+/*- (void) capture {
     if (mVideoConnection && [mVideoConnection isVideoOrientationSupported]){
         [mVideoConnection setVideoOrientation:[UIDevice currentDevice].orientation];
     }
@@ -347,10 +372,43 @@
     } else {
         [self sendErrorReportWithMessage:@"CameraView.observeValueForKeyPath - the ImageOutput was null when using it to capture."];
     }
-}
+}*/
+
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
+    
+    //Vieo setup
+    
+    [super viewDidLoad];
+    
+    // Initialize the class responsible for managing AV capture session and asset writer
+    videoProcessor = [[RosyWriterVideoProcessor alloc] init];
+	videoProcessor.delegate = self;
+    
+    // Keep track of changes to the device orientation so we can update the video processor
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
+	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    
+    // Setup and start the capture session
+    [videoProcessor setupAndStartCaptureSession];
+    
+
+    
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:[UIApplication sharedApplication]];
+    
+    
+    AVCaptureVideoPreviewLayer *layer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:videoProcessor.captureSession];
+    
+    layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    
+    layer.frame = self.cameraView.frame;
+    NSLog(@"CameraView is ready");
+    [self.cameraView.layer addSublayer:layer];
+
+    
+    
     pathView.enabled = true;
     isObserving = false;
     
@@ -377,6 +435,39 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
     
     [super viewDidLoad];
+}
+
+- (void)cleanup
+{
+	//[oglView release];
+	//oglView = nil;
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+	[[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+    
+	[notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:[UIApplication sharedApplication]];
+    
+    // Stop and tear down the capture session
+	[videoProcessor stopAndTearDownCaptureSession];
+	videoProcessor.delegate = nil;
+    [videoProcessor release];
+}
+
+- (void)applicationDidBecomeActive:(NSNotification*)notifcation
+{
+	// For performance reasons, we manually pause/resume the session when saving a recording.
+	// If we try to resume the session in the background it will fail. Resume the session here as well to ensure we will succeed.
+	[videoProcessor resumeCaptureSession];
+}
+
+// UIDeviceOrientationDidChangeNotification selector
+- (void)deviceOrientationDidChange
+{
+	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+	// Don't update the reference orientation when the device orientation is face up/down or unknown.
+	if ( UIDeviceOrientationIsPortrait(orientation) || UIDeviceOrientationIsLandscape(orientation) )
+		[videoProcessor setReferenceOrientation:orientation];
 }
 
 -(void)closePopup {
@@ -419,23 +510,36 @@
     [appDelegate logEvent:@"Clear Points Button"];
 }
 
+
 -(void)addObserverToFocus
 {
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logEvent:@"Capture Button"];
     
+    if(!mCaptureDevice)
+        mCaptureDevice = [videoProcessor videoDeviceWithPosition:AVCaptureDevicePositionBack];
+    
     mFocalPoints = [pathView getPoints];
     
     if ([mFocalPoints count] > 0) {
-        
-        if (mFOFIndex == 0 && ![mCaptureDevice isAdjustingExposure] && ![mCaptureDevice isAdjustingFocus]) {
-            [self capture];
-            
-            if ([mFocalPoints count] > 1) {
-                isObserving = YES;
-                [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
-            }
 
+        if (mFOFIndex == 0 && ![mCaptureDevice isAdjustingExposure] && ![mCaptureDevice isAdjustingFocus]) {
+            
+            [videoProcessor startRecording];
+            //[self capture];
+            
+            mFOFIndex = mFOFIndex + 1;
+            
+            if (mFOFIndex < [mFocalPoints count]) {
+                isObserving = YES;
+                [self updateFocusPoint];
+                [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
+            } else {
+                // STOP REORDING
+                [videoProcessor stopRecording];
+                //                videoProcessor s
+                NSLog(@" FINISHED PICTURE");
+            }
 
         } else {
             [shootButton setEnabled:false];
@@ -448,6 +552,7 @@
             [self updateFocusPoint];
         
             isObserving = YES;
+            [videoProcessor startRecording];
             [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
         }
         
@@ -468,9 +573,9 @@
 
 - (void)viewDidUnload
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+	[super viewDidUnload];
+    
+	[self cleanup];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -478,8 +583,8 @@
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     [super viewWillAppear:animated];
     
-    [spinner startAnimating];
-    [loadingView setHidden:NO];
+    //[spinner startAnimating];
+    //[loadingView setHidden:NO];
     
     [infoButton setEnabled:true];
     [cancelButton setEnabled:true];
@@ -522,7 +627,7 @@
     
     [shootButton setEnabled:true];
     [clearButton setEnabled:true];
-    
+    /*
     if (!captureSession) {
         [self startCaptureSession];
     } else {
@@ -536,7 +641,7 @@
         
         [spinner stopAnimating];
         [loadingView setHidden:YES];
-    }
+    }*/
     
     [super viewDidAppear:animated];
     
@@ -588,10 +693,12 @@
 
 -(void)dealloc
 {
+	[self cleanup];    
     [mFocalPoints release];
     [mFrames release];
     [super dealloc];
 }
+
 
 - (NSUInteger) supportedInterfaceOrientations
 {
@@ -642,5 +749,80 @@
 
 }
 
+#pragma mark Error Handling
+
+- (void)showError:(NSError *)error
+{
+    CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^(void) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[error localizedDescription]
+                                                            message:[error localizedFailureReason]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        [alertView release];
+    });
+}
+
+
+#pragma mark RosyWriterVideoProcessorDelegate
+
+- (void)recordingWillStart
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		//[[self recordButton] setEnabled:NO];
+		//[[self recordButton] setTitle:@"Stop"];
+        
+		// Disable the idle timer while we are recording
+		[UIApplication sharedApplication].idleTimerDisabled = YES;
+        
+		// Make sure we have time to finish saving the movie if the app is backgrounded during recording
+		if ([[UIDevice currentDevice] isMultitaskingSupported])
+			backgroundRecordingID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
+	});
+}
+
+- (void)recordingDidStart
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		//[[self recordButton] setEnabled:YES];
+	});
+}
+
+- (void)recordingWillStop
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		// Disable until saving to the camera roll is complete
+		//[[self recordButton] setTitle:@"Record"];
+		//[[self recordButton] setEnabled:NO];
+		
+		// Pause the capture session so that saving will be as fast as possible.
+		// We resume the sesssion in recordingDidStop:
+		[videoProcessor pauseCaptureSession];
+	});
+}
+
+- (void)recordingDidStop
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		//[[self recordButton] setEnabled:YES];
+		
+		[UIApplication sharedApplication].idleTimerDisabled = NO;
+        
+		[videoProcessor resumeCaptureSession];
+        
+		if ([[UIDevice currentDevice] isMultitaskingSupported]) {
+			[[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingID];
+			backgroundRecordingID = UIBackgroundTaskInvalid;
+		}
+	});
+}
+
+- (void)pixelBufferReadyForDisplay:(CVPixelBufferRef)pixelBuffer
+{
+	// Don't make OpenGLES calls while in the background.
+	//if ( [UIApplication sharedApplication].applicationState != UIApplicationStateBackground )
+	//	[oglView displayPixelBuffer:pixelBuffer];
+}
 
 @end

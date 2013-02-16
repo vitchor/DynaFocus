@@ -13,6 +13,14 @@
 		04292BED169904C4009CF50B /* FOFTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BEC169904C3009CF50B /* FOFTableCell.xib */; };
 		0435D8C016C3238C00609475 /* NSDyfocusURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435D8BF16C3238C00609475 /* NSDyfocusURLRequest.m */; };
 		0435D8C316C32CA800609475 /* UIDyfocusImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435D8C216C32CA800609475 /* UIDyfocusImage.m */; };
+		044D454716C67B2700B463EE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044D454616C67B2700B463EE /* OpenGLES.framework */; };
+		044D454916C67B3F00B463EE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044D454816C67B3F00B463EE /* CoreVideo.framework */; };
+		044D454B16C67B5200B463EE /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044D454A16C67B5200B463EE /* AssetsLibrary.framework */; };
+		044D455216C6839700B463EE /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 044D454E16C6836F00B463EE /* passThrough.fsh */; };
+		044D455316C6839700B463EE /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 044D454F16C6836F00B463EE /* passThrough.vsh */; };
+		044D455A16C6853100B463EE /* RosyWriterPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D455516C6853100B463EE /* RosyWriterPreviewView.m */; };
+		044D455B16C6853100B463EE /* RosyWriterVideoProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D455716C6853100B463EE /* RosyWriterVideoProcessor.m */; };
+		044D455C16C6853100B463EE /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 044D455816C6853100B463EE /* ShaderUtilities.c */; };
 		046FD4E416B72BAB008F449F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046FD4E316B72BAB008F449F /* EGORefreshTableHeaderView.m */; };
 		0470578616B997C40025F1DD /* CommentViewerController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0470578516B997C40025F1DD /* CommentViewerController_i5.xib */; };
 		0470578F16B9AA3A0025F1DD /* LoginController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0470578E16B9AA3A0025F1DD /* LoginController_i5.xib */; };
@@ -168,6 +176,17 @@
 		0435D8BF16C3238C00609475 /* NSDyfocusURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDyfocusURLRequest.m; sourceTree = "<group>"; };
 		0435D8C116C32CA800609475 /* UIDyfocusImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDyfocusImage.h; sourceTree = "<group>"; };
 		0435D8C216C32CA800609475 /* UIDyfocusImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDyfocusImage.m; sourceTree = "<group>"; };
+		044D454616C67B2700B463EE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		044D454816C67B3F00B463EE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		044D454A16C67B5200B463EE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		044D454E16C6836F00B463EE /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
+		044D454F16C6836F00B463EE /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
+		044D455416C6853100B463EE /* RosyWriterPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterPreviewView.h; sourceTree = "<group>"; };
+		044D455516C6853100B463EE /* RosyWriterPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterPreviewView.m; sourceTree = "<group>"; };
+		044D455616C6853100B463EE /* RosyWriterVideoProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterVideoProcessor.h; sourceTree = "<group>"; };
+		044D455716C6853100B463EE /* RosyWriterVideoProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterVideoProcessor.m; sourceTree = "<group>"; };
+		044D455816C6853100B463EE /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
+		044D455916C6853100B463EE /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
 		046FD4E216B72BAB008F449F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		046FD4E316B72BAB008F449F /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		0470578516B997C40025F1DD /* CommentViewerController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentViewerController_i5.xib; sourceTree = "<group>"; };
@@ -357,6 +376,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044D454B16C67B5200B463EE /* AssetsLibrary.framework in Frameworks */,
+				044D454916C67B3F00B463EE /* CoreVideo.framework in Frameworks */,
+				044D454716C67B2700B463EE /* OpenGLES.framework in Frameworks */,
 				447D7ED2166E6264002599EE /* MessageUI.framework in Frameworks */,
 				AC8D7B6615DB403700058949 /* SystemConfiguration.framework in Frameworks */,
 				4495E69A15EEBCC7009C2B9F /* libsqlite3.0.dylib in Frameworks */,
@@ -404,6 +426,20 @@
 			name = NSDyfocusURLRequest;
 			sourceTree = "<group>";
 		};
+		044D453816C6785A00B463EE /* VideoRosyWriter */ = {
+			isa = PBXGroup;
+			children = (
+				044D455416C6853100B463EE /* RosyWriterPreviewView.h */,
+				044D455516C6853100B463EE /* RosyWriterPreviewView.m */,
+				044D455616C6853100B463EE /* RosyWriterVideoProcessor.h */,
+				044D455716C6853100B463EE /* RosyWriterVideoProcessor.m */,
+				044D455816C6853100B463EE /* ShaderUtilities.c */,
+				044D455916C6853100B463EE /* ShaderUtilities.h */,
+			);
+			name = VideoRosyWriter;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		046FD4E016B72B84008F449F /* EGORefreshTableHeaderView */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,6 +475,9 @@
 		441BFFA015B131D200E204D7 = {
 			isa = PBXGroup;
 			children = (
+				044D454A16C67B5200B463EE /* AssetsLibrary.framework */,
+				044D454816C67B3F00B463EE /* CoreVideo.framework */,
+				044D454616C67B2700B463EE /* OpenGLES.framework */,
 				447D7ED1166E6264002599EE /* MessageUI.framework */,
 				441BFFB515B131D200E204D7 /* DyFocus */,
 				441BFFAE15B131D200E204D7 /* Frameworks */,
@@ -770,6 +809,7 @@
 		4496800D164D80ED00F76FCF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				044D453816C6785A00B463EE /* VideoRosyWriter */,
 				0435D8BC16C3236800609475 /* NSDyfocusURLRequest */,
 				0493612716BAA83300CFD8DE /* UIDevice+Hardware */,
 				444C504D16593863006C8CD3 /* JSON */,
@@ -837,6 +877,8 @@
 				7B042B7116B954AF00998917 /* dyfocus-instructions-horiz-white.png */,
 				4468BFAC16B0D10D000ABF5E /* FOFexamples */,
 				4468BFA716B0C65C000ABF5E /* arrow_left.png */,
+				044D454E16C6836F00B463EE /* passThrough.fsh */,
+				044D454F16C6836F00B463EE /* passThrough.vsh */,
 				4468BFA816B0C65C000ABF5E /* arrow_right.png */,
 				04989B7416964E18003ECD93 /* close.png */,
 				ACBAC8F116B63FAB00AB85C0 /* df_featured_white@2x.png */,
@@ -957,6 +999,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044D455216C6839700B463EE /* passThrough.fsh in Resources */,
+				044D455316C6839700B463EE /* passThrough.vsh in Resources */,
 				04D6A4EF16B6063200C4A71D /* CommentTableCell.xib in Resources */,
 				04D6A4EE16B605B400C4A71D /* CommentViewerController.xib in Resources */,
 				44C7B1D51607440000221C12 /* iToast.h in Resources */,
@@ -1100,6 +1144,9 @@
 				0493612216BA995100CFD8DE /* UIDevice+Hardware.m in Sources */,
 				0435D8C016C3238C00609475 /* NSDyfocusURLRequest.m in Sources */,
 				0435D8C316C32CA800609475 /* UIDyfocusImage.m in Sources */,
+				044D455A16C6853100B463EE /* RosyWriterPreviewView.m in Sources */,
+				044D455B16C6853100B463EE /* RosyWriterVideoProcessor.m in Sources */,
+				044D455C16C6853100B463EE /* ShaderUtilities.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1176,8 +1223,8 @@
 		441BFFC415B131D200E204D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bragiel";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bragiel";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -1186,7 +1233,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
 				INFOPLIST_FILE = "DyFocus/DyFocus-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/DyFocus/TestFlightSDK1.0\"",
@@ -1194,8 +1241,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5444D7E1-03D0-422B-A2C0-315720D4BD9A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5444D7E1-03D0-422B-A2C0-315720D4BD9A";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1207,8 +1254,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bragiel";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bragiel";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -1217,7 +1264,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
 				INFOPLIST_FILE = "DyFocus/DyFocus-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/DyFocus/TestFlightSDK1.0\"",
@@ -1225,8 +1272,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5444D7E1-03D0-422B-A2C0-315720D4BD9A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5444D7E1-03D0-422B-A2C0-315720D4BD9A";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;

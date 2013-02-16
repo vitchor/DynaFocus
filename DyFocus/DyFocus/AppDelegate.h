@@ -27,9 +27,10 @@
 #define SHARING 1
 #define FRIENDS 2
 
+
 #define dyfocus_url @"http://dyfoc.us"
 //#define dyfocus_url @"http://192.168.100.140:8000"
-//#define dyfocus_url @"http://192.168.0.190:8000"
+//#define dyfocus_url @"http://192.168.0.104:8000"
 
 #define refresh_user_url @"http://dyfoc.us/uploader/json_user_fof/"
 #define refresh_featured_url @"http://dyfoc.us/uploader/json_featured_fof/"

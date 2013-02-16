@@ -4,8 +4,16 @@
 #import <ImageIO/ImageIO.h>
 #import "PathView.h"
 #import "iToast.h"
+#import <CoreMedia/CMBufferQueue.h>
+#import "RosyWriterPreviewView.h"
+#import "RosyWriterVideoProcessor.h"
 
-@interface CameraView : UIViewController {
+
+@interface CameraView : UIViewController <RosyWriterVideoProcessorDelegate>
+{
+    RosyWriterVideoProcessor *videoProcessor;
+    BOOL shouldShowStats;
+    UIBackgroundTaskIdentifier backgroundRecordingID;
     
 	AVCaptureStillImageOutput *mStillImageOutput;
     AVCaptureConnection *mVideoConnection;
@@ -42,6 +50,18 @@
     IBOutlet UIView *popupDarkView;
     IBOutlet UIImageView *instructionsImageView;
     
+    
+    //VIdeo vars
+    dispatch_queue_t movieWritingQueue;
+    CMBufferQueueRef previewBufferQueue;
+    
+    // Only accessed on movie writing queue
+    BOOL readyToRecordAudio;
+    BOOL readyToRecordVideo;
+	BOOL recordingWillBeStarted;
+	BOOL recordingWillBeStopped;
+	AVAssetWriter *assetWriter;    
+    
 }
 - (void)showToast:(NSString *)text;
 
@@ -63,6 +83,7 @@
 @property(nonatomic,retain) IBOutlet UIView *popupDarkView;
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic,retain) IBOutlet UIView *loadingView;
+@property(nonatomic,retain) IBOutlet    AVCaptureSession *captureSession;
 
 
 @end
