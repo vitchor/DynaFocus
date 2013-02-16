@@ -43,9 +43,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = @"Upload";
+    self.navigationItem.title = @"Save";
  
-    NSString *share = @"Upload";
+    NSString *share = @"Save";
 	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(share)];
 	self.navigationItem.rightBarButtonItem = shareButton;
 	[shareButton release];

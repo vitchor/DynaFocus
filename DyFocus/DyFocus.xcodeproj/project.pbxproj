@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0402D46B16CFEB9700D61B65 /* heart-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0402D46916CFEB9700D61B65 /* heart-blue.png */; };
+		0402D46C16CFEB9700D61B65 /* message-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0402D46A16CFEB9700D61B65 /* message-blue.png */; };
 		04292BE71699038F009CF50B /* FOFTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04292BE51699038F009CF50B /* FOFTableController.m */; };
 		04292BE81699038F009CF50B /* FOFTableController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BE61699038F009CF50B /* FOFTableController.xib */; };
 		04292BEB169904AD009CF50B /* FOFTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04292BEA169904AD009CF50B /* FOFTableCell.m */; };
@@ -158,6 +160,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0402D46916CFEB9700D61B65 /* heart-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-blue.png"; sourceTree = "<group>"; };
+		0402D46A16CFEB9700D61B65 /* message-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "message-blue.png"; sourceTree = "<group>"; };
 		04292BE41699038F009CF50B /* FOFTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableController.h; sourceTree = "<group>"; };
 		04292BE51699038F009CF50B /* FOFTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFTableController.m; sourceTree = "<group>"; };
 		04292BE61699038F009CF50B /* FOFTableController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFTableController.xib; sourceTree = "<group>"; };
@@ -183,8 +187,6 @@
 		04989B711696232F003ECD93 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		04989B7416964E18003ECD93 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		04C5F82216BABB4800E8C289 /* fb_share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_share_button.png; sourceTree = "<group>"; };
-		04D6A4E516B5F76C00C4A71D /* heart-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-blue.png"; sourceTree = "<group>"; };
-		04D6A4E616B5F76C00C4A71D /* message-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "message-blue.png"; sourceTree = "<group>"; };
 		04D6A4EA16B5FABB00C4A71D /* FOFTableNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableNavigationController.h; sourceTree = "<group>"; };
 		04D6A4EB16B5FABB00C4A71D /* FOFTableNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFTableNavigationController.m; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -826,13 +828,13 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0402D46916CFEB9700D61B65 /* heart-blue.png */,
+				0402D46A16CFEB9700D61B65 /* message-blue.png */,
 				04C5F82216BABB4800E8C289 /* fb_share_button.png */,
 				AC79DE7C16B98C2400CAC486 /* Default@2x.png */,
 				AC3FE6CE16B967AC005252F2 /* Default-568h@2x.png */,
 				7B042B7316B95ED200998917 /* dyfocus-instructions-horiz-left-white.png */,
 				7B042B7416B95ED300998917 /* dyfocus-instructions-horiz-right-white.png */,
-				04D6A4E516B5F76C00C4A71D /* heart-blue.png */,
-				04D6A4E616B5F76C00C4A71D /* message-blue.png */,
 				7B089F6616B1382900700815 /* dyfocus-instructions-white.png */,
 				7B042B7116B954AF00998917 /* dyfocus-instructions-horiz-white.png */,
 				4468BFAC16B0D10D000ABF5E /* FOFexamples */,
@@ -932,7 +934,7 @@
 		441BFFA215B131D200E204D7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = dyfocus;
 			};
 			buildConfigurationList = 441BFFA515B131D200E204D7 /* Build configuration list for PBXProject "DyFocus" */;
@@ -1028,6 +1030,8 @@
 				AC3116B116BAAC9B00E18094 /* selected-black@2x.png in Resources */,
 				AC3116B216BAAC9B00E18094 /* tabbar-back-divided@2x.png in Resources */,
 				04C5F82316BABB4800E8C289 /* fb_share_button.png in Resources */,
+				0402D46B16CFEB9700D61B65 /* heart-blue.png in Resources */,
+				0402D46C16CFEB9700D61B65 /* message-blue.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1122,6 +1126,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bragiel";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bragiel";
 				COPY_PHASE_STRIP = NO;
@@ -1136,6 +1144,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PROVISIONING_PROFILE = "043FFAA6-472E-4250-9380-2862B67A77B6";
@@ -1153,6 +1162,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bragiel";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bragiel";
 				COPY_PHASE_STRIP = NO;
@@ -1160,6 +1173,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
