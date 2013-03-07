@@ -15,7 +15,7 @@
 
 @implementation CommentViewerController
 
-@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView;
+@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView, isCommenting;
 
 -(void)keyboardWillShow:(NSNotification*)aNotification
 {
@@ -424,6 +424,11 @@
                                             self.navigationItem.rightBarButtonItem.enabled = YES;
                                            
                                            [tableView reloadData];
+                                           
+                                           if (isCommenting) {
+                                               [inputMessageTextField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.4f];
+                                               //[inputMessageTextField becomeFirstResponder];
+                                           }
                                            
                                        } else {
                                            [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];

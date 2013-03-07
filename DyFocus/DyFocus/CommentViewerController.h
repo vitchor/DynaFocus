@@ -32,6 +32,8 @@
     
     int keyboardSize;
     
+    BOOL isCommenting;
+    
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil andFOF:(FOF *)FOF;
@@ -45,4 +47,5 @@
 @property (nonatomic, retain) IBOutlet UIView *commentView;
 @property (nonatomic, retain) IBOutlet UITextView *fbCommentTextView;
 @property (nonatomic) BOOL isKeyboardHidden;
+@property (nonatomic,readwrite) BOOL isCommenting;
 @end
