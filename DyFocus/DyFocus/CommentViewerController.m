@@ -396,41 +396,23 @@
                                                
                                                Like *like = [[Like alloc] init];
                                                like.m_userId = fofFriendId;
-                                               like.m_userName = fofUserName;
-                                               
-                                               NSArray *array = [like.m_userName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                                               array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
-                                               
                                                like.m_fofId = fofId;
                                                
-                                               
-                                               if (i == 0) {
-                                                   likeListUsers = [[NSMutableString alloc] initWithString:@""];
-                                                   [likeListUsers appendString:[NSString stringWithFormat:@"%@", [array objectAtIndex:0]]];
-                                                   
-                                               } else if ([jsonLikes count] > 1 && i == [jsonLikes count] -1) { // Last Time
-                                                   [likeListUsers appendString:[NSString stringWithFormat:@" and %@", [array objectAtIndex:0]]];
-                                                   
-                                               } else {
-                                                   [likeListUsers appendString:[NSString stringWithFormat:@", %@", [array objectAtIndex:0]]];
+                                               AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+                                               NSString *myFacebookId = [appDelegate.myself objectForKey:@"id"];
+                                               if([fofFriendId isEqualToString:myFacebookId]){
+                                                   like.m_userName = @"You";
+                                               }else{
+                                                   like.m_userName = fofUserName;
                                                }
                                                
-                                               [likes addObject:like];   
+                                               if([like.m_userName isEqualToString:@"You"]){
+                                                   [likes insertObject:like atIndex:0];
+                                               }else{
+                                                   [likes addObject:like];
+                                               } 
                                            }
-                                           
-                                           if ([likes count] == 0) {
-                                               likeListUsers = [[NSMutableString alloc] initWithString:@"No one liked this yet."];
-                                               
-                                           } else if ([likes count] == 1) {
-                                               [likeListUsers appendString:@" likes this."];
-                                               
-                                           } else {
-                                               [likeListUsers appendString:@" like this."];
-                                               
-                                           }
-                                           
-                                           [likesLabel setText:likeListUsers];
-                                           
+                                           [self buildLikesText];                                           
                                             self.navigationItem.rightBarButtonItem.enabled = YES;
                                            
                                            [tableView reloadData];
@@ -481,6 +463,35 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
      
+}
+
+- (void) buildLikesText{
+    int i = 0;
+    for (Like *like in likes)
+    {
+        NSArray *array = [like.m_userName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
+        
+        if (i == 0) {
+            likeListUsers = [[NSMutableString alloc] initWithString:@""];
+            [likeListUsers appendString:[NSString stringWithFormat:@"%@", [array objectAtIndex:0]]];
+        } else if ([likes count] > 1 && i == [likes count] -1) { // Last Time
+            [likeListUsers appendString:[NSString stringWithFormat:@" and %@", [array objectAtIndex:0]]];
+        } else {
+            [likeListUsers appendString:[NSString stringWithFormat:@", %@", [array objectAtIndex:0]]];
+        }
+        i++;
+    }
+    if ([likes count] == 0) {
+        likeListUsers = [[NSMutableString alloc] initWithString:@"No one liked this yet."];
+        
+    } else if ([likes count] == 1) {
+        [likeListUsers appendString:@" likes this."];
+        
+    } else {
+        [likeListUsers appendString:@" like this."];
+    }
+    [likesLabel setText:likeListUsers];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
