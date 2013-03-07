@@ -421,6 +421,8 @@
 
 -(void)addObserverToFocus
 {
+    [shootButton setEnabled:NO];
+    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logEvent:@"Capture Button"];
     
