@@ -432,7 +432,7 @@
 
 -(void)addObserverToFocus
 {
-    [shootButton setEnabled:NO];
+    
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logEvent:@"Capture Button"];
@@ -440,14 +440,14 @@
     mFocalPoints = [pathView getPoints];
     
     if ([mFocalPoints count] > 1) {
+
         
         if (mFOFIndex == 0 && ![mCaptureDevice isAdjustingExposure] && ![mCaptureDevice isAdjustingFocus]) {
+            [shootButton setEnabled:NO];
             [self capture];
             
-            if ([mFocalPoints count] > 1) {
-                isObserving = YES;
-                [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
-            }
+            isObserving = YES;
+            [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
 
 
         } else {
