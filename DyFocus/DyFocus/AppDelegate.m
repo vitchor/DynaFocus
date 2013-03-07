@@ -205,8 +205,26 @@
 
     }
     
+    [[UIApplication sharedApplication]
+     registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeAlert |
+      UIRemoteNotificationTypeBadge |
+      UIRemoteNotificationTypeSound)];
     
     return YES;
+}
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *str =
+    [NSString stringWithFormat:@"DEVICE TOKEN: %@",deviceToken];
+    NSLog(str);
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
+{
+    NSString *str = [NSString stringWithFormat: @"Error: %@", err];
+    NSLog(str);
 }
 
 - (void)setupTabController {
@@ -1043,6 +1061,8 @@
     [alertMsg release];
     [alertButton release];
 }
+
+
 
 //- (void) setCurrentFriend:(long)friendId{
 //    //BUILD A NEW REQUEST THAT RECEIVES AN ID AND SET BOTH:
