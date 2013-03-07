@@ -199,9 +199,6 @@
 
 -(void) shareOnFbFromComments {
     
-    [fbCommentTextView resignFirstResponder]; // hides keyboard
-    [fbCommentTextView setHidden:YES];
-    
     NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fof.m_name];
     
     NSString *message = self.fbCommentTextView.text;
@@ -219,7 +216,7 @@
     [FBRequestConnection startWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         
         if (!error) {
-            [self.navigationController popViewControllerAnimated:YES];
+            [self goBackToComments];
         } else {
             NSString *alertTitle = @"Connection Error";
             NSString *alertMsg = @"Failed to share link on your Facebook wall.";
@@ -235,29 +232,42 @@
         }
     }];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self goBackToComments];    
+}
+
+-(void) goBackToComments {
+    
+    [self cancel];
     
 }
+
 -(void)shareOnFacebook{
         
     NSLog(@"FOF  NAMEEEEEE %@", fof.m_name);
     NSLog(@"FOF  IIDDDDDDD %@", fof.m_userId);
     
     self.navigationItem.title = @"Comment";
-
+    
     [commentView setHidden:NO];
+    fbCommentTextView.layer.cornerRadius = 6.0;
     [fbCommentTextView becomeFirstResponder];
     [fbCommentTextView setHidden:NO];
     
-    NSString *cancelString = @"Cancel";
+     self.navigationItem.hidesBackButton = YES;
+    
+    [self setLeft:@"Cancel" andRightButton:@"Share"];
+}
+
+- (void) setLeft:(NSString*)leftButton andRightButton:(NSString*)rightButton {
+    
+    NSString *cancelString = leftButton;
 	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
                                      initWithTitle:cancelString style:UIBarButtonItemStyleBordered target:self action:@selector(cancel) ];
-    self.navigationItem.hidesBackButton = YES;
 	self.navigationItem.leftBarButtonItem = cancelButton;
     [cancelButton release];
     
-
-    NSString *share = @"Share";
+    
+    NSString *share = rightButton;
 	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFbFromComments)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
