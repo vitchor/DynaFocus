@@ -192,7 +192,7 @@
         [controller release];
         
     } else {
-        [self showOkAlertWithMessage:@"Configure your device email app" andTitle:@"Error"];
+        [self showOkAlertWithMessage:@"Configure your device email app.\nGo to: \"Settings\" -> \"Mail, Contacts, Calendars\" -> Turn ON your Mail app." andTitle:@"Error"];
     }
     
     
