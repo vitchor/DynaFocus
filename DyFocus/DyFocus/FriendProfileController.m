@@ -10,6 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "FOFTableController.h"
+#import "LoadView.h"
 
 @interface FriendProfileController ()
 
@@ -17,15 +18,12 @@
 
 @implementation FriendProfileController
 
-
-@synthesize viewPicturesButton;
+@synthesize viewPicturesButton, userFacebookId, userName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
-        
     }
     return self;
 }
@@ -34,42 +32,57 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-
     [self.navigationController setNavigationBarHidden:NO animated:FALSE];
-    
     [viewPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    
-    self.userNameLabel.text = appDelegate.currentFriend.name;
-    self.userProfileImage.profileID = [NSString stringWithFormat: @"%@", appDelegate.currentFriend.tag];
-   
+
+    if(userName && userFacebookId){
+        self.userNameLabel.text = userName;// appDelegate.currentFriend.name;
+        self.userProfileImage.profileID = [NSString stringWithFormat: @"%@", userFacebookId];
+    }else{
+        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+        self.userNameLabel.text = appDelegate.currentFriend.name;
+        self.userProfileImage.profileID = [NSString stringWithFormat: @"%@", appDelegate.currentFriend.tag];
+    }
 }
 
 -(void) showPictures{
+    NSLog(@"==== show picturesAMAMA");
     
     FOFTableController *tableController = [[FOFTableController alloc] init];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    tableController.FOFArray = appDelegate.friendFofArray;
-    tableController.shouldHideNavigationBar = NO;
+    [LoadView loadViewOnView:tableController.view withText:@"Loading..."];
     tableController.refreshString = refresh_user_url;
-    tableController.userFacebookId = (NSString *) appDelegate.currentFriend.tag;
     
+    if(userName && userFacebookId){
+        tableController.FOFArray = [NSMutableArray arrayWithArray:appDelegate.featuredFofArray]; // This IS a gambiarra! But works just fine =)
+        tableController.userFacebookId = (NSString *) userFacebookId;
+    }else{
+        tableController.FOFArray = [NSMutableArray arrayWithArray:appDelegate.friendFofArray]; // Normal procedure
+        tableController.userFacebookId = (NSString *) appDelegate.currentFriend.tag;
+    }
+    
+    [tableController refreshWithAction:YES];
+    
+    tableController.shouldHideNavigationBar = NO;
     tableController.navigationItem.title = @"Friend Pictures";
-    
     tableController.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-    
 }
 
--(void) viewDidAppear:(BOOL)animated
+- (void) clearCurrentUser{
+    [self.userFacebookId release];
+    self.userFacebookId = nil;
+    [self.userName release];
+    self.userName = nil;
+}
+
+- (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
 }
 
 - (void)viewDidLoad
@@ -88,7 +101,6 @@
 {
     return UIInterfaceOrientationMaskPortrait;
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return NO;

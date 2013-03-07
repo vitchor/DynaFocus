@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "FOFTableCell.h"
 #import "JSON.h"
+#import "LoadView.h"
 
 @interface FOFTableController ()
 
@@ -354,6 +355,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        
                                        [m_tableView reloadData];
                                        [self refreshCellsImageSizes];
+                                       
+                                       [LoadView fadeAndRemoveFromView:self.view];
                                    }
                                }
                            }];

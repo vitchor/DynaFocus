@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "FOFTableController.h"
+#import "CommentViewerController.h"
 
 @interface CommentTableCell : UITableViewCell {
 
@@ -20,6 +21,8 @@
     IBOutlet UIView *whiteView;
         
     IBOutlet UILabel *commentTextView;
+    IBOutlet CommentViewerController *commentController;
+    IBOutlet Comment *m_comment;
     
     int row;
     
@@ -35,5 +38,8 @@
 @property (nonatomic,retain) IBOutlet UIImageView *imageUserPicture;
 
 @property (nonatomic,retain) IBOutlet UIView *whiteView;
+
+@property (nonatomic,retain) IBOutlet CommentViewerController *commentController;
+@property (nonatomic,retain) IBOutlet Comment *m_comment;
 
 @end
