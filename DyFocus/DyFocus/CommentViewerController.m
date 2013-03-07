@@ -15,7 +15,7 @@
 
 @implementation CommentViewerController
 
-@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden;
+@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView, isCommenting;
 
 -(void)keyboardWillShow:(NSNotification*)aNotification
 {
@@ -183,35 +183,104 @@
     [self hideKeyboard];
 }
 
+-(void) cancel{
+    
+    self.navigationItem.title = @"Info";
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.hidesBackButton = NO;
+    
+    [self setFbShareButton];
+    
+    [commentView setHidden:YES];
+    
+    [fbCommentTextView resignFirstResponder];
+
+}
+
+-(void) shareOnFbFromComments {
+    
+    [fbCommentTextView resignFirstResponder]; // hides keyboard
+    [fbCommentTextView setHidden:YES];
+    
+    NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fof.m_name];
+    
+    NSString *message = self.fbCommentTextView.text;
+    
+    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg", fof.m_userId, fof.m_name];
+    
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   urlLink, @"link",
+                                   message,@"message",
+                                   imageUrl,@"picture",
+                                   nil];
+    [urlLink release];
+    [imageUrl release];
+    
+    [FBRequestConnection startWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        
+        if (!error) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            NSString *alertTitle = @"Connection Error";
+            NSString *alertMsg = @"Failed to share link on your Facebook wall.";
+            NSString *alertButton = @"OK";
+            
+            UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+            [alert show];
+            
+            [alertTitle release];
+            [alertMsg release];
+            [alertButton release];
+            
+        }
+    }];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 -(void)shareOnFacebook{
-    
-    SharingController *fshareController = [[SharingController alloc] init];
-    
+        
     NSLog(@"FOF  NAMEEEEEE %@", fof.m_name);
     NSLog(@"FOF  IIDDDDDDD %@", fof.m_userId);
     
-    [self.navigationController pushViewController:fshareController animated:true];
-    
-    fshareController.navigationItem.title = @"Comment";
-//    fshareController.fofName = @"462837.106732";
-//    fshareController.fofUserFbId = @"100000754383534";
+    self.navigationItem.title = @"Comment";
 
-    fshareController.fofName = fof.m_name;
-    fshareController.fofUserFbId = fof.m_userId;
-
-    [fshareController.commentField becomeFirstResponder];
-    [fshareController.commentField setHidden:NO];
-    fshareController.navigationItem.leftBarButtonItem = fshareController.backButton;
+    [commentView setHidden:NO];
+    [fbCommentTextView becomeFirstResponder];
+    [fbCommentTextView setHidden:NO];
     
+    NSString *cancelString = @"Cancel";
+	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
+                                     initWithTitle:cancelString style:UIBarButtonItemStyleBordered target:self action:@selector(cancel) ];
+    self.navigationItem.hidesBackButton = YES;
+	self.navigationItem.leftBarButtonItem = cancelButton;
+    [cancelButton release];
+    
+
     NSString *share = @"Share";
-	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:fshareController action:@selector(shareWithFbFromComments)];
-    fshareController.navigationItem.rightBarButtonItem = shareButton;
+	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFbFromComments)];
+    self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
-    
-    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-    
-    
+
 }
+
+- (void)setFbShareButton {
+    
+    UIImage *faceImage = [UIImage imageNamed:@"fb_share_button.png"];
+    UIButton *face = [UIButton buttonWithType:UIButtonTypeCustom];
+    face.bounds = CGRectMake( 0, 0, faceImage.size.width * 0.65, faceImage.size.height * 0.65);
+    [face setImage:faceImage forState:UIControlStateNormal];
+    
+    UIBarButtonItem *faceBtn = [[UIBarButtonItem alloc] initWithCustomView:face];
+    
+    [face addTarget:self action:@selector(shareOnFacebook) forControlEvents:UIControlEventTouchUpInside];
+    
+    [faceBtn setCustomView:face];
+    
+    [self.navigationItem setRightBarButtonItem:faceBtn];
+
+}
+
 - (void)viewWillAppear:(BOOL)animated {
    
 
@@ -236,18 +305,7 @@
     
     if (!comments || [comments count] == 0) {
         
-        UIImage *faceImage = [UIImage imageNamed:@"fb_share_button.png"];
-        UIButton *face = [UIButton buttonWithType:UIButtonTypeCustom];
-        face.bounds = CGRectMake( 0, 0, faceImage.size.width * 0.65, faceImage.size.height * 0.65);
-        [face setImage:faceImage forState:UIControlStateNormal];
-        
-        UIBarButtonItem *faceBtn = [[UIBarButtonItem alloc] initWithCustomView:face];
-        
-        [face addTarget:self action:@selector(shareOnFacebook) forControlEvents:UIControlEventTouchUpInside];
-        
-        [faceBtn setCustomView:face];
-        
-        [self.navigationItem setRightBarButtonItem:faceBtn];
+        [self setFbShareButton];
         
         self.navigationItem.rightBarButtonItem.enabled = NO;
         
@@ -366,6 +424,11 @@
                                             self.navigationItem.rightBarButtonItem.enabled = YES;
                                            
                                            [tableView reloadData];
+                                           
+                                           if (isCommenting) {
+                                               [inputMessageTextField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.4f];
+                                               //[inputMessageTextField becomeFirstResponder];
+                                           }
                                            
                                        } else {
                                            [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];

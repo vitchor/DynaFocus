@@ -26,6 +26,7 @@
     IBOutlet UILabel *likesCountLabel;
     
     IBOutlet UIView *whiteView;
+    IBOutlet UIView *lightGrayBrackgroundView;
     
     IBOutlet UIActivityIndicatorView *spinner;
     
@@ -33,8 +34,7 @@
     
     NSMutableArray *fofUrls;
     NSString *profilePictureUrl;
-    
-    IBOutlet UIView *lightGrayBrackgroundView;
+
     
     //FOF *fof;
     NSTimer *timer;

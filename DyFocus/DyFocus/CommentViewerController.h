@@ -18,6 +18,8 @@
     IBOutlet UITableView *tableView;
     IBOutlet UILabel *likesLabel;
     IBOutlet UIScrollView *scrollView;
+    IBOutlet UIView *commentView;
+    IBOutlet UITextView *fbCommentTextView;
     
     NSMutableArray *comments;
     NSMutableArray *likes;
@@ -30,6 +32,8 @@
     
     int keyboardSize;
     
+    BOOL isCommenting;
+    
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil andFOF:(FOF *)FOF;
@@ -40,5 +44,8 @@
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UILabel *likesLabel;
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, retain) IBOutlet UIView *commentView;
+@property (nonatomic, retain) IBOutlet UITextView *fbCommentTextView;
 @property (nonatomic) BOOL isKeyboardHidden;
+@property (nonatomic,readwrite) BOOL isCommenting;
 @end
