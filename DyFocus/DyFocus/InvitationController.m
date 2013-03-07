@@ -81,10 +81,22 @@
     [m_messageView endEditing:YES];
 
     if (!infoView) {
-        infoView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 450)] autorelease];
+        
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            infoView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)] autorelease];
+        } else {
+            infoView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 450)] autorelease];
+        }
         infoView.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
     
-        UILabel *titleView = [[[UILabel alloc] initWithFrame: CGRectMake(10, 45, 300, 40)] autorelease];
+        UILabel *titleView = nil;
+        
+        if (screenBounds.size.height == 568) {
+            titleView = [[[UILabel alloc] initWithFrame: CGRectMake(10, 57, 300, 40)] autorelease];
+        } else {
+            titleView = [[[UILabel alloc] initWithFrame: CGRectMake(10, 45, 300, 40)] autorelease];
+        }
         titleView.font = [UIFont boldSystemFontOfSize:21.0];
         titleView.textColor = [UIColor blackColor];
         titleView.shadowColor = [UIColor whiteColor];
@@ -94,7 +106,12 @@
         titleView.text = @"Invitation Informations";
         titleView.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
         
-        UILabel *infoMessageLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 102, 300, 150)] autorelease];
+        UILabel *infoMessageLabel = nil;
+        if (screenBounds.size.height == 568) {
+            infoMessageLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 146, 300, 150)] autorelease];
+        } else {
+            infoMessageLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 102, 300, 150)] autorelease];
+        }
         infoMessageLabel.font = [UIFont systemFontOfSize:19.0];
         infoMessageLabel.textColor = [UIColor blackColor];
         infoMessageLabel.shadowColor = [UIColor whiteColor];
@@ -104,7 +121,12 @@
         infoMessageLabel.text = @"The only way to send a facebook direct message from an app is throw your email account. Your friends will only receive this invite on their facebook message inbox.";
         infoMessageLabel.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
         
-        UILabel *infoMessageObservationLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 280, 300, 100)] autorelease];
+        UILabel *infoMessageObservationLabel = nil;
+        if (screenBounds.size.height == 568) {
+            infoMessageObservationLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 346, 300, 100)] autorelease];
+        } else {
+            infoMessageObservationLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 280, 300, 100)] autorelease];
+        }
         infoMessageObservationLabel.font = [UIFont systemFontOfSize:19.0];
         infoMessageObservationLabel.textColor = [UIColor blackColor];
         infoMessageObservationLabel.shadowColor = [UIColor whiteColor];
@@ -117,8 +139,11 @@
         
         UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom] ; 
         
-        
-        backButton.frame = CGRectMake(10, 418, 80, 50);
+        if (screenBounds.size.height == 568) {
+            backButton.frame = CGRectMake(10, 506, 80, 50);
+        } else {
+            backButton.frame = CGRectMake(10, 418, 80, 50);
+        }
         
         [backButton setTitle:@"< Back" forState:UIControlStateNormal];
         
