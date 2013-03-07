@@ -15,7 +15,7 @@
 
 @implementation CommentViewerController
 
-@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden;
+@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView;
 
 -(void)keyboardWillShow:(NSNotification*)aNotification
 {
@@ -183,34 +183,62 @@
     [self hideKeyboard];
 }
 
+-(void) cancel {
+    
+    
+}
+
+-(void) shareOnFbFromComments {
+    
+}
 -(void)shareOnFacebook{
-    
-    SharingController *fshareController = [[SharingController alloc] init];
-    
+        
     NSLog(@"FOF  NAMEEEEEE %@", fof.m_name);
     NSLog(@"FOF  IIDDDDDDD %@", fof.m_userId);
     
-    [self.navigationController pushViewController:fshareController animated:true];
-    
-    fshareController.navigationItem.title = @"Comment";
-//    fshareController.fofName = @"462837.106732";
-//    fshareController.fofUserFbId = @"100000754383534";
+    self.navigationItem.title = @"Comment";
 
-    fshareController.fofName = fof.m_name;
-    fshareController.fofUserFbId = fof.m_userId;
-
-    [fshareController.commentField becomeFirstResponder];
-    [fshareController.commentField setHidden:NO];
-    fshareController.navigationItem.leftBarButtonItem = fshareController.backButton;
+    [commentView setHidden:NO];
+    [fbCommentTextView becomeFirstResponder];
+    [fbCommentTextView setHidden:NO];
     
+    NSString *cancelString = @"Cancel";
+	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
+                                     initWithTitle:cancelString style:UIBarButtonItemStyleBordered target:self action:@selector(cancel)];
+	self.navigationItem.leftBarButtonItem = cancelButton;
+    [cancelButton release];
+    
+
     NSString *share = @"Share";
-	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:fshareController action:@selector(shareWithFbFromComments)];
-    fshareController.navigationItem.rightBarButtonItem = shareButton;
+	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:self action:@selector(shareOnFbFromComments)];
+    self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
     
-    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
     
-    
+    //    SharingController *fshareController = [[SharingController alloc] init];
+    //
+    //    NSLog(@"FOF  NAMEEEEEE %@", fof.m_name);
+    //    NSLog(@"FOF  IIDDDDDDD %@", fof.m_userId);
+    //
+    //    [self.navigationController pushViewController:fshareController animated:true];
+    //
+    //    fshareController.navigationItem.title = @"Comment";
+    ////    fshareController.fofName = @"462837.106732";
+    ////    fshareController.fofUserFbId = @"100000754383534";
+    //
+    //    fshareController.fofName = fof.m_name;
+    //    fshareController.fofUserFbId = fof.m_userId;
+    //
+    //    [fshareController.commentField becomeFirstResponder];
+    //    [fshareController.commentField setHidden:NO];
+    //    fshareController.navigationItem.leftBarButtonItem = fshareController.backButton;
+    //
+    //    NSString *share = @"Share";
+    //	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:share style:UIBarButtonItemStyleDone target:fshareController action:@selector(shareWithFbFromComments)];
+    //    fshareController.navigationItem.rightBarButtonItem = shareButton;
+    //    [shareButton release];
+    //    
+    //    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
 }
 - (void)viewWillAppear:(BOOL)animated {
    
