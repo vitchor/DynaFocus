@@ -31,7 +31,6 @@
 
 -(void) facebookError;
 -(IBAction) toggleEnabledForSwitch: (id) sender;
-//-(void) shareWithFbFromComments;
 
 @property(nonatomic,retain) IBOutlet UISwitch *facebookSwitch;
 @property(nonatomic,retain) IBOutlet UIView *activityIndicator;
