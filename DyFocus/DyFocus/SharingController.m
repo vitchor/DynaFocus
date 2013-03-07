@@ -117,54 +117,54 @@
     
 }
 
--(void) shareWithFbFromComments{
-    
-    [commentField resignFirstResponder]; // hides keyboard
-    [commentField setHidden:YES];
-    
-    [self showLoading];
-    
-    NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fofName];
-    
-    NSString *message = self.commentField.text;
-    
-    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg", fofUserFbId, fofName];
-    
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   urlLink, @"link",
-                                   message,@"message",
-                                   imageUrl,@"picture",
-                                   nil];
-    [urlLink release];
-    [imageUrl release];
-    
-    [FBRequestConnection startWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        
-        [activityIndicator setHidden:YES];
-        
-        if (!error) {
-            //[self.navigationController popViewControllerAnimated:YES];
-            AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-            [appDelegate loadFeedTab];
-        } else {
-            facebookSwitch.on = false;
-            NSString *alertTitle = @"Connection Error";
-            NSString *alertMsg = @"Failed to share link on your Facebook wall.";
-            NSString *alertButton = @"OK";
-            
-            UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
-            [alert show];
-            
-            [alertTitle release];
-            [alertMsg release];
-            [alertButton release];
-            
-        }
-    }];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
+//-(void) shareWithFbFromComments{
+//    
+//    [commentField resignFirstResponder]; // hides keyboard
+//    [commentField setHidden:YES];
+//    
+//    [self showLoading];
+//    
+//    NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fofName];
+//    
+//    NSString *message = self.commentField.text;
+//    
+//    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg", fofUserFbId, fofName];
+//    
+//    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+//                                   urlLink, @"link",
+//                                   message,@"message",
+//                                   imageUrl,@"picture",
+//                                   nil];
+//    [urlLink release];
+//    [imageUrl release];
+//    
+//    [FBRequestConnection startWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+//        
+//        [activityIndicator setHidden:YES];
+//        
+//        if (!error) {
+//            //[self.navigationController popViewControllerAnimated:YES];
+//            AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+//            [appDelegate loadFeedTab];
+//        } else {
+//            facebookSwitch.on = false;
+//            NSString *alertTitle = @"Connection Error";
+//            NSString *alertMsg = @"Failed to share link on your Facebook wall.";
+//            NSString *alertButton = @"OK";
+//            
+//            UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+//            [alert show];
+//            
+//            [alertTitle release];
+//            [alertMsg release];
+//            [alertButton release];
+//            
+//        }
+//    }];
+//    
+//    [self.navigationController popViewControllerAnimated:YES];
+//    
+//}
 
 - (void)didReceiveMemoryWarning
 {
