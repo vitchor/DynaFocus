@@ -29,7 +29,7 @@
 	
 	context = UIGraphicsGetCurrentContext();
 	
-	ref =  [[UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.5] CGColor];
+	ref =  [[UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:0.3] CGColor];
 	
 	if ([touchPoints count] >= 1) {
 		
@@ -115,7 +115,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
-    if (enabled && [touchPoints count] < 3) {
+    if (enabled && [touchPoints count] < 2) {
         CGPoint touchPoint = [[touches anyObject] locationInView:self];
         [self addPoint:touchPoint];
         
@@ -125,6 +125,9 @@
             cameraViewController.mFocalPoints = [self getPoints];
             [cameraViewController updateFocusPoint];
         }
+    }
+    else if (enabled && [touchPoints count] == 2) {
+        [self clearPoints];
     }
 }
 

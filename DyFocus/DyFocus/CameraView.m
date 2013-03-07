@@ -426,7 +426,7 @@
     
     mFocalPoints = [pathView getPoints];
     
-    if ([mFocalPoints count] > 0) {
+    if ([mFocalPoints count] > 1) {
         
         if (mFOFIndex == 0 && ![mCaptureDevice isAdjustingExposure] && ![mCaptureDevice isAdjustingFocus]) {
             [self capture];
@@ -452,7 +452,7 @@
         }
         
     } else {
-        [appDelegate showAlertBaloon:@"No Focus Points" andAlertMsg:@"Tap the screen to add focus points." andAlertButton:@"OK" andController:self];
+        [appDelegate showAlertBaloon:@"Not enough points" andAlertMsg:@"Select two points on the screen to be focused on." andAlertButton:@"OK" andController:self];
     }
 }
 
