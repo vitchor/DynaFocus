@@ -93,7 +93,7 @@
         UILabel *titleView = nil;
         
         if (screenBounds.size.height == 568) {
-            titleView = [[[UILabel alloc] initWithFrame: CGRectMake(10, 67, 300, 40)] autorelease];
+            titleView = [[[UILabel alloc] initWithFrame: CGRectMake(10, 57, 300, 40)] autorelease];
         } else {
             titleView = [[[UILabel alloc] initWithFrame: CGRectMake(10, 45, 300, 40)] autorelease];
         }
@@ -140,7 +140,7 @@
         UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom] ; 
         
         if (screenBounds.size.height == 568) {
-            backButton.frame = CGRectMake(10, 528, 80, 50);
+            backButton.frame = CGRectMake(10, 506, 80, 50);
         } else {
             backButton.frame = CGRectMake(10, 418, 80, 50);
         }
