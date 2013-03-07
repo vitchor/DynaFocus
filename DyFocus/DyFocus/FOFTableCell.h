@@ -52,7 +52,7 @@
 }
 
 -(void) loadImages;
-
+-(void) increaseCommentsCounter;
 -(void) refreshImageSize;
 
 @property (nonatomic,retain) IBOutlet UILabel *labelUserName;

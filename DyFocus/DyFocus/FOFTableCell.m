@@ -67,6 +67,8 @@
     
     commentController.isCommenting = YES;
     
+    commentController.tableCell = self;
+    
     [tableView.navigationController setNavigationBarHidden:NO];
     
     [tableView.navigationController pushViewController:commentController animated:YES];
@@ -87,6 +89,11 @@
 
     }
     
+}
+
+- (void) increaseCommentsCounter{
+    NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [commentsCountLabel.text intValue] + 1] autorelease];
+    [commentsCountLabel setText:newCount];
 }
 
 - (void) likeButtonPressed {
@@ -227,6 +234,8 @@
     commentController.isCommenting = NO;
     
     commentController.hidesBottomBarWhenPushed = YES;
+    
+    commentController.tableCell = self;
     
     [tableView.navigationController setNavigationBarHidden:NO];
     

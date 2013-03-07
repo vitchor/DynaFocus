@@ -15,7 +15,7 @@
 
 @implementation CommentViewerController
 
-@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView, isCommenting;
+@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView, isCommenting, tableCell;
 
 -(void)keyboardWillShow:(NSNotification*)aNotification
 {
@@ -651,6 +651,13 @@
                                    [tableView reloadData];
                                    
                                    fof.m_comments = [[NSString alloc] initWithFormat: @"%d",[fof.m_comments intValue] + 1];
+                                   
+                                   for (FOF *m_fof in tableCell.tableView.FOFArray) {
+                                       if(m_fof.m_id == fof.m_id){
+                                           m_fof.m_comments = [[NSString alloc] initWithFormat:@"%d", [m_fof.m_comments intValue] + 1];
+                                           [tableCell increaseCommentsCounter];
+                                       }
+                                   }
                                    
                                } else {
                                    [LoadView fadeAndRemoveFromView:self.view];                                   

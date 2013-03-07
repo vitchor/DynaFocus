@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "SharingController.h"
+#import "FOFTableCell.h"
 
 @class TouchView;
 
@@ -20,6 +21,7 @@
     IBOutlet UIScrollView *scrollView;
     IBOutlet UIView *commentView;
     IBOutlet UITextView *fbCommentTextView;
+    IBOutlet FOFTableCell *tableCell;
     
     NSMutableArray *comments;
     NSMutableArray *likes;
@@ -39,7 +41,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil andFOF:(FOF *)FOF;
 
 - (void)hideKeyboard;
-
+@property (nonatomic, retain) IBOutlet FOFTableCell *tableCell;
 @property (nonatomic, retain) IBOutlet UISearchBar *inputMessageTextField;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UILabel *likesLabel;
