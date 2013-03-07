@@ -187,6 +187,13 @@
         whiteView.layer.borderWidth = 1.0f;
 
         [labelUserName setText:fof.m_userName];
+        
+        UITapGestureRecognizer *singleTapUserName = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)];
+        labelUserName.userInteractionEnabled = YES;
+        [labelUserName addGestureRecognizer:singleTapUserName];
+        
+//        labelUserName
+        
         [labelDate setText:fof.m_date];
         
         //[buttonLike setTitle: [[[NSString alloc] initWithFormat:@"Like (%@)", fof.m_likes]autorelease] forState:UIControlStateNormal];
@@ -270,6 +277,53 @@
 
 }
 
+- (void)loadUserProfile:(UITapGestureRecognizer *)gesture
+{
+    NSLog(@"==== CLICK");
+    NSMutableArray *selectedPersonFofs = [[NSMutableArray alloc] init];
+    Person *person = [[Person alloc] init];
+
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+
+    person = [delegate.dyfocusFriends objectForKey:[NSNumber numberWithLong:[fof.m_userId longLongValue]]];
+
+    //WHEN THE COMMENT BELONGS TO A FRIEND:
+    if(person){
+        delegate.currentFriend = person;
+
+        for (FOF *m_fof in delegate.feedFofArray) {
+
+            if ([m_fof.m_userId isEqualToString: [[NSString alloc] initWithFormat: @"%@", person.tag]]) {
+
+                [selectedPersonFofs addObject:m_fof];
+            }
+        }
+
+        delegate.friendFofArray = selectedPersonFofs;
+
+        FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
+        friendProfileController.hidesBottomBarWhenPushed = YES;
+
+        [friendProfileController clearCurrentUser];
+
+        [tableView.navigationController pushViewController:friendProfileController animated:true];
+        [tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
+        //    // WHEN THE COMMENT BELLONGS TO THE USER HIMSELF:
+        //    }else if ([m_comment.m_userId isEqualToString:[delegate.myself objectForKey:@"id"]]){
+        //        [delegate.tabBarController setSelectedIndex:4];
+        //        [commentController.navigationController release];
+        // WHEN THE COMMENT BELLONGS TO A USER OTHER THAN MYSELF OR A FRIEND OF MINE:
+    } else{
+        FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
+        friendProfileController.hidesBottomBarWhenPushed = YES;
+        friendProfileController.userFacebookId = fof.m_userId;
+        friendProfileController.userName = fof.m_userName;
+
+        [tableView.navigationController pushViewController:friendProfileController animated:true];
+        [tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
+    }
+}
+
 -(void)loadImages {
 
     if (imageUserPicture.tag != 420) {
@@ -291,6 +345,11 @@
                                        if(image && request.id == fof.m_id) {
                                            [imageUserPicture setImage:image];
                                            imageUserPicture.tag = 420;
+                                           
+                                           UITapGestureRecognizer *singleTapUserName = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)];
+                                           imageUserPicture.userInteractionEnabled = YES;
+                                           [imageUserPicture addGestureRecognizer:singleTapUserName];
+                                           
                                            image = nil;
                                        }
                                    }
