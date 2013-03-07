@@ -108,7 +108,7 @@
         
         UILabel *infoMessageLabel = nil;
         if (screenBounds.size.height == 568) {
-            infoMessageLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 124, 300, 150)] autorelease];
+            infoMessageLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 146, 300, 150)] autorelease];
         } else {
             infoMessageLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 102, 300, 150)] autorelease];
         }
@@ -123,7 +123,7 @@
         
         UILabel *infoMessageObservationLabel = nil;
         if (screenBounds.size.height == 568) {
-            infoMessageObservationLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 302, 300, 100)] autorelease];
+            infoMessageObservationLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 346, 300, 100)] autorelease];
         } else {
             infoMessageObservationLabel = [[[UILabel alloc] initWithFrame: CGRectMake(10, 280, 300, 100)] autorelease];
         }
@@ -140,7 +140,7 @@
         UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom] ; 
         
         if (screenBounds.size.height == 568) {
-            backButton.frame = CGRectMake(10, 440, 80, 50);
+            backButton.frame = CGRectMake(10, 528, 80, 50);
         } else {
             backButton.frame = CGRectMake(10, 418, 80, 50);
         }
