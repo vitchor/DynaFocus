@@ -19,7 +19,7 @@
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView;
+@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchButton;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
@@ -348,6 +348,14 @@
         [self sendErrorReportWithMessage:@"CameraView.observeValueForKeyPath - the ImageOutput was null when using it to capture."];
     }
 }
+
+-(void) torchToggle {
+
+    isTorchOn = !isTorchOn;
+    [self setTorchOn:isTorchOn];
+}
+
+
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
@@ -356,6 +364,9 @@
     
     shootButton.target = self;
     [shootButton setAction:@selector(addObserverToFocus)];
+    
+    
+    [torchButton addTarget:self action:@selector(torchToggle) forControlEvents:UIControlEventTouchUpInside];
     
     clearButton.target = self;
     [clearButton setAction:@selector(clearPoints)];
@@ -421,7 +432,7 @@
 
 -(void)addObserverToFocus
 {
-    [shootButton setEnabled:NO];
+    
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logEvent:@"Capture Button"];
@@ -429,14 +440,14 @@
     mFocalPoints = [pathView getPoints];
     
     if ([mFocalPoints count] > 1) {
+
         
         if (mFOFIndex == 0 && ![mCaptureDevice isAdjustingExposure] && ![mCaptureDevice isAdjustingFocus]) {
+            [shootButton setEnabled:NO];
             [self capture];
             
-            if ([mFocalPoints count] > 1) {
-                isObserving = YES;
-                [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
-            }
+            isObserving = YES;
+            [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
 
 
         } else {
@@ -642,6 +653,13 @@
     }
     
 
+}
+
+- (void) setTorchOn:(BOOL)isOn
+{
+    [mCaptureDevice lockForConfiguration:nil]; //you must lock before setting torch mode
+    [mCaptureDevice setTorchMode:isOn ? AVCaptureTorchModeOn : AVCaptureTorchModeOff];
+    [mCaptureDevice unlockForConfiguration];
 }
 
 

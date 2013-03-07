@@ -19,6 +19,8 @@
     IBOutlet UIBarButtonItem *infoButton;
     IBOutlet UIButton *getStartedButton;
     
+    IBOutlet UIButton *torchButton;
+    
     IBOutlet UIBarButtonItem *cancelButton;
     IBOutlet UIBarButtonItem *clearButton;
     IBOutlet UIBarButtonItem *shootButton;
@@ -36,6 +38,7 @@
     int mFOFIndex;
     
     bool isObserving;
+    bool isTorchOn;
     
     IBOutlet UIButton *popupCloseButton;
     IBOutlet UIView *popupView;
@@ -63,6 +66,7 @@
 @property(nonatomic,retain) IBOutlet UIView *popupDarkView;
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic,retain) IBOutlet UIView *loadingView;
+@property(nonatomic,retain) IBOutlet UIButton *torchButton;
 
 
 @end
