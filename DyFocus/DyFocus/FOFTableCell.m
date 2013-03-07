@@ -132,8 +132,6 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-
-    
     if ( !fof || fof.m_id != fofObject.m_id ) {
         
         [self clearImages];
@@ -262,14 +260,20 @@
     if (imageUserPicture.tag != 420) {
 
         // Load Profile Picture
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",fof.m_userId]]];
+       //NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:]];
+        
+        NSDyfocusURLRequest *request = [NSDyfocusURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",fof.m_userId]]];
+        
+        request.id = fof.m_id;
         
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                    if(!error && data) {
+                                       
                                        UIImage *image = [UIImage imageWithData:data];
-                                       if(image) {
+                                       
+                                       if(image && request.id == fof.m_id) {
                                            [imageUserPicture setImage:image];
                                            imageUserPicture.tag = 420;
                                            image = nil;
