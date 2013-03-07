@@ -65,6 +65,8 @@
     
     commentController.hidesBottomBarWhenPushed = YES;
     
+    commentController.isCommenting = YES;
+    
     [tableView.navigationController setNavigationBarHidden:NO];
     
     [tableView.navigationController pushViewController:commentController animated:YES];
@@ -161,6 +163,10 @@
         fof.m_userName = [[fofObject.m_userName copy] autorelease];
         fof.m_userNickname = [[fofObject.m_userNickname copy] autorelease];
         
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+        [lightGrayBrackgroundView addGestureRecognizer:singleTap];
+
+        
         [buttonComment addTarget:self action:@selector(commentButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 
         [buttonLike addTarget:self action:@selector(likeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -198,6 +204,29 @@
         }
     }
 }
+
+- (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
+{
+    CommentViewerController *commentController = nil;
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController_i5" andFOF:fof];
+    } else {
+        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
+    }
+    
+    commentController.navigationItem.title = @"Info";
+    
+    commentController.isCommenting = NO;
+    
+    commentController.hidesBottomBarWhenPushed = YES;
+    
+    [tableView.navigationController setNavigationBarHidden:NO];
+    
+    [tableView.navigationController pushViewController:commentController animated:YES];
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
