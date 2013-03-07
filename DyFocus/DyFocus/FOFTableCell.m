@@ -123,6 +123,12 @@
         fof.m_liked = YES;
         fof.m_likes = [[NSString alloc] initWithFormat:@"%d",[fof.m_likes intValue] + 1];
         
+        for (FOF *m_fof in tableView.FOFArray) {
+            if(m_fof.m_id == fof.m_id){
+                m_fof.m_likes = [[NSString alloc] initWithFormat:@"%d", [m_fof.m_likes intValue] + 1];
+                m_fof.m_liked = YES;
+            }
+        }      
     } else {
         //implement liked   
     }
