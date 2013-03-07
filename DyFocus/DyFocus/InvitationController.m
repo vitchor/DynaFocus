@@ -84,7 +84,7 @@
         
         CGRect screenBounds = [[UIScreen mainScreen] bounds];
         if (screenBounds.size.height == 568) {
-            infoView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 450)] autorelease];
+            infoView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)] autorelease];
         } else {
             infoView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 450)] autorelease];
         }
