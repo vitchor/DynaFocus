@@ -126,11 +126,6 @@
     }
 }
 
-- (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
-{
-    [self showCommentView];
-}
-
 - (void) refreshWithFof:(FOF *)fofObject {
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -165,10 +160,6 @@
         fof.m_userId = [[fofObject.m_userId copy] autorelease];
         fof.m_userName = [[fofObject.m_userName copy] autorelease];
         fof.m_userNickname = [[fofObject.m_userNickname copy] autorelease];
-        
-        
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
-        [lightGrayBrackgroundView addGestureRecognizer:singleTap];
         
         [buttonComment addTarget:self action:@selector(commentButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 

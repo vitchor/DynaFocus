@@ -13,12 +13,10 @@
 #import "DyfocusUINavigationController.h"
 #import "FacebookController.h"
 #import "ProfileController.h"
-#import "FriendProfileController.h"
 #import "Flurry.h"
 #import "SharingController.h"
 #import "LoginController.h"
 #import "JSON.h"
-#import "LoadView.h"
 #import "Flurry.h"
 #import "FOFTableNavigationController.h"
 
@@ -277,13 +275,6 @@
     UITabBarItem *friendsTab = [[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"df_friends"] tag:4];
     [friendsTab setFinishedSelectedImage:[UIImage imageNamed:@"df_friends_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_friends.png"]];
     [friendsNavigationController setTabBarItem:friendsTab];
-    
-    //    //Friend Profile Controller
-    //    friendProfileController = [[FacebookController alloc] init];
-    //    friendProfileController.hidesBottomBarWhenPushed = NO;
-    //
-    //    DyfocusUINavigationController *friendProfileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:friendProfileController];
-    
     
     // Profile Controller
     ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];

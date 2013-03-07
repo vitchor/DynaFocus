@@ -14,7 +14,6 @@
 
 #import "FacebookController.h"
 #import "ProfileController.h"
-#import "FriendProfileController.h"
 
 #import "LoginController.h"
 #import "SplashScreenController.h"
