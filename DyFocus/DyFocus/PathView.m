@@ -33,41 +33,62 @@
 	
 	if ([touchPoints count] >= 1) {
 		
+        // Old codes used when the "point" and the "line" were drawn:
+        //
         CGContextSetLineWidth(context, 8);
 		CGContextSetStrokeColorWithColor(context, ref);
         CGContextSetFillColor(context, CGColorGetComponents([UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.9].CGColor));
         
+        
+        UIImage* firstImage = [UIImage imageNamed:@"1st-focus.png"];
+        UIImage* secondImage = [UIImage imageNamed:@"2nd-focus.png"];
+        
+    
 		CGPoint firstPoint = [[touchPoints objectAtIndex:0] CGPointValue];
 		
         if ([touchPoints count] == 1) {
-            CGContextFillEllipseInRect(context, CGRectMake(firstPoint.x - 10, firstPoint.y - 10, 20, 20));
+            [firstImage drawInRect:CGRectMake(firstPoint.x - 40, firstPoint.y - 40, 80, 80) blendMode:0 alpha:0.6];
+            //CGContextFillEllipseInRect(context, CGRectMake(firstPoint.x - 10, firstPoint.y - 10, 20, 20));
             
-        } else {
-            
-            CGPoint lastPoint;
+        } else if ([touchPoints count] == 2){
             for (NSObject *point in touchPoints) {
                 CGPoint cgPoint = [(NSValue *)point CGPointValue];
-                //CGContextStrokeEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
-                
-                
-                CGContextMoveToPoint(context, lastPoint.x, lastPoint.y);
-                
-                if ([touchPoints indexOfObject:point] != 0) {
-                    CGContextAddLineToPoint(context, cgPoint.x, cgPoint.y);
-                    CGContextStrokePath(context);
+                if ([touchPoints indexOfObject:point] == 0) {
+                    [firstImage drawInRect:CGRectMake(cgPoint.x - 40, cgPoint.y - 40, 80, 80) blendMode:0 alpha:0.6];
+                   // CGContextDrawImage(context, CGRectMake(cgPoint.x - 50, cgPoint.y - 50, 100, 100), firstImage.CGImage);
                 }
-                lastPoint = cgPoint;
-                
+                else {
+                    [secondImage drawInRect:CGRectMake(cgPoint.x - 40, cgPoint.y - 40, 80, 80) blendMode:0 alpha:0.6];
+                    //CGContextDrawImage(context, CGRectMake(cgPoint.x - 50, cgPoint.y - 50, 100, 100), secondImage.CGImage);
+                }
             }
             
-            for (NSObject *point in touchPoints) {
-                CGPoint cgPoint = [(NSValue *)point CGPointValue];
-                CGContextFillEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
-            }
+//            
+//            CGPoint lastPoint;
+//            for (NSObject *point in touchPoints) {
+//                CGPoint cgPoint = [(NSValue *)point CGPointValue];
+//                //CGContextStrokeEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
+//                
+//                
+//                CGContextMoveToPoint(context, lastPoint.x, lastPoint.y);
+//                
+//                if ([touchPoints indexOfObject:point] != 0) {
+//                    CGContextAddLineToPoint(context, cgPoint.x, cgPoint.y);
+//                    CGContextStrokePath(context);
+//                }
+//                lastPoint = cgPoint;
+//                
+//            }
+//            
+//            for (NSObject *point in touchPoints) {
+//                CGPoint cgPoint = [(NSValue *)point CGPointValue];
+//                CGContextDrawImage(context, CGRectMake(cgPoint.x - 50, cgPoint.y - 50, 100, 100), secondImage.CGImage);
+//                //CGContextFillEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
+//            }
             
         }
         
-		CGContextStrokePath(context);
+		//CGContextStrokePath(context);
 	}
 	
 }
