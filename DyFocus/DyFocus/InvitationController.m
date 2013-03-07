@@ -42,8 +42,15 @@
 		
       
 		m_delegate = [delegate retain];
-		m_messageView = [[UITextView alloc] initWithFrame:CGRectMake(20, 90, 280, 80)];
-		m_messageView.backgroundColor = [UIColor whiteColor];
+		
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            m_messageView = [[UITextView alloc] initWithFrame:CGRectMake(20, 90, 280, 168)];
+        } else {
+            m_messageView = [[UITextView alloc] initWithFrame:CGRectMake(20, 90, 280, 80)];
+        }
+        
+        m_messageView.backgroundColor = [UIColor whiteColor];
 		m_messageView.delegate = self;
 		m_messageView.enablesReturnKeyAutomatically = YES;
 		m_messageView.font = [UIFont systemFontOfSize:16];
@@ -56,7 +63,12 @@
         UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
         
         [infoButton addTarget:self action:@selector(showInfoView) forControlEvents:UIControlEventTouchUpInside];
-        infoButton.frame = CGRectMake(275, 180, 30, 30);
+        
+        if (screenBounds.size.height == 568) {
+            infoButton.frame = CGRectMake(275, 268, 30, 30);
+        } else {
+            infoButton.frame = CGRectMake(275, 180, 30, 30);
+        }
         
 		[self.view addSubview:infoButton];
         
