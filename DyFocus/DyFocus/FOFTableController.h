@@ -21,6 +21,7 @@
     NSString *userFacebookId;
     
     BOOL _reloading;
+    BOOL m_isFOFTableEmpty;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *m_tableView;
@@ -35,6 +36,7 @@
 -(void) refreshWithAction:(BOOL)isAction;
 -(void)reloadTableViewDataSource;
 -(void)dataSourceDidFinishLoadingNewData;
+-(int)cellStyle;
 
 
 @end
