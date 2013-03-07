@@ -95,6 +95,8 @@
 		7BEB1E6316BAA12C00BF7D49 /* share_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */; };
 		AC07F47915B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */; };
 		AC07F47C15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */; };
+		AC1949CF16E91EA5002CA27C /* 1st-focus.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1949CD16E91EA5002CA27C /* 1st-focus.png */; };
+		AC1949D016E91EA5002CA27C /* 2nd-focus.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1949CE16E91EA5002CA27C /* 2nd-focus.png */; };
 		AC3116AA16BAA9D100E18094 /* df_shoot_bw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC3116A916BAA9D100E18094 /* df_shoot_bw@2x.png */; };
 		AC3116B116BAAC9B00E18094 /* selected-black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC3116AF16BAAC9B00E18094 /* selected-black@2x.png */; };
 		AC3116B216BAAC9B00E18094 /* tabbar-back-divided@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC3116B016BAAC9B00E18094 /* tabbar-back-divided@2x.png */; };
@@ -289,6 +291,8 @@
 		7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_facebook.png; sourceTree = "<group>"; };
 		AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_72x72.png; path = ../dynafocus_icon_beta1_orange_nofill_72x72.png; sourceTree = "<group>"; };
 		AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_144x144.png; path = ../dynafocus_icon_beta1_orange_nofill_144x144.png; sourceTree = "<group>"; };
+		AC1949CD16E91EA5002CA27C /* 1st-focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1st-focus.png"; sourceTree = "<group>"; };
+		AC1949CE16E91EA5002CA27C /* 2nd-focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2nd-focus.png"; sourceTree = "<group>"; };
 		AC3116A916BAA9D100E18094 /* df_shoot_bw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "df_shoot_bw@2x.png"; sourceTree = "<group>"; };
 		AC3116AF16BAAC9B00E18094 /* selected-black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected-black@2x.png"; sourceTree = "<group>"; };
 		AC3116B016BAAC9B00E18094 /* tabbar-back-divided@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-back-divided@2x.png"; sourceTree = "<group>"; };
@@ -828,6 +832,8 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AC1949CD16E91EA5002CA27C /* 1st-focus.png */,
+				AC1949CE16E91EA5002CA27C /* 2nd-focus.png */,
 				0402D46916CFEB9700D61B65 /* heart-blue.png */,
 				0402D46A16CFEB9700D61B65 /* message-blue.png */,
 				04C5F82216BABB4800E8C289 /* fb_share_button.png */,
@@ -1032,6 +1038,8 @@
 				04C5F82316BABB4800E8C289 /* fb_share_button.png in Resources */,
 				0402D46B16CFEB9700D61B65 /* heart-blue.png in Resources */,
 				0402D46C16CFEB9700D61B65 /* message-blue.png in Resources */,
+				AC1949CF16E91EA5002CA27C /* 1st-focus.png in Resources */,
+				AC1949D016E91EA5002CA27C /* 2nd-focus.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1208,8 +1216,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E6055F6C-CEB3-45A0-8ED5-36B72785298A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E6055F6C-CEB3-45A0-8ED5-36B72785298A";
+				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1239,8 +1247,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E6055F6C-CEB3-45A0-8ED5-36B72785298A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E6055F6C-CEB3-45A0-8ED5-36B72785298A";
+				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
