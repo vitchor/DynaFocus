@@ -44,6 +44,9 @@
     IBOutlet UIView *popupView;
     IBOutlet UIView *popupDarkView;
     IBOutlet UIImageView *instructionsImageView;
+    IBOutlet UIImageView *testInfoView;
+    
+    UIDeviceOrientation lastOrientation;
     
 }
 - (void)showToast:(NSString *)text;
@@ -67,6 +70,7 @@
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic,retain) IBOutlet UIView *loadingView;
 @property(nonatomic,retain) IBOutlet UIButton *torchButton;
+@property(nonatomic,retain) IBOutlet UIImageView *testInfoView;
 
 
 @end
