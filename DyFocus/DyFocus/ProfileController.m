@@ -10,6 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "FOFTableController.h"
+#import "CustomBadge.h"
 
 @interface ProfileController ()
 
@@ -18,7 +19,7 @@
 @implementation ProfileController
 
 
-@synthesize logoutButton, myPicturesButton;
+@synthesize logoutButton, myPicturesButton, notificationBadge;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,6 +57,19 @@
     
 //    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
 //    self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
+    
+    notificationBadge = [CustomBadge customBadgeWithString:@"2"
+												   withStringColor:[UIColor whiteColor]
+													withInsetColor:[UIColor redColor]
+													withBadgeFrame:YES
+											   withBadgeFrameColor:[UIColor whiteColor]
+														 withScale:1.0
+													   withShining:YES];
+    
+    [notificationBadge setFrame:CGRectMake(30, 30, 30, 30)];
+    
+    
+    [self.view addSubview:notificationBadge];
     
 }
 
