@@ -124,6 +124,8 @@ extern NSString *const FBSessionStateChangedNotification;
 
 - (void)resetCameraUINavigationController;
 - (void)loadFeedTab;
+- (void) loadProfileImage:(NSString *)facebookId andProfileImage:(UIImageView *)profileImage;
+- (void)loadUserProfile:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController;
 - (void) showAlertBaloon:(NSString *) alertTitle andAlertMsg:(NSString *) alertMsg andAlertButton:(NSString *) alertButton andController:(UIViewController *) delegate;
 - (void)goBackToLastController;
 
