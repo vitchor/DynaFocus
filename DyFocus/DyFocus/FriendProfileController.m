@@ -18,7 +18,7 @@
 
 @implementation FriendProfileController
 
-@synthesize viewPicturesButton, userFacebookId, userName;
+@synthesize viewPicturesButton, userFacebookId, userName, userProfileImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,17 +37,34 @@
 
     if(userName && userFacebookId){
         self.userNameLabel.text = userName;// appDelegate.currentFriend.name;
-        self.userProfileImage.profileID = [NSString stringWithFormat: @"%@", userFacebookId];
+        [self loadImage:userFacebookId];
+//        self.userProfileImage.profileID = [NSString stringWithFormat: @"%@", userFacebookId];
     }else{
         AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
         self.userNameLabel.text = appDelegate.currentFriend.name;
-        self.userProfileImage.profileID = [NSString stringWithFormat: @"%@", appDelegate.currentFriend.tag];
+        [self loadImage: (NSString *)appDelegate.currentFriend.tag];
+//        self.userProfileImage.profileID = [NSString stringWithFormat: @"%@", appDelegate.currentFriend.tag];
     }
 }
 
--(void) showPictures{
-    NSLog(@"==== show picturesAMAMA");
+- (void)loadImage:(NSString*)uid {    
+    //    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",uid] autorelease];
+    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",uid, (int)userProfileImage.frame.size.width, (int)userProfileImage.frame.size.height] autorelease];
     
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if(!error && data) {
+                                   UIImage *image = [UIImage imageWithData:data];
+                                   if(image) {
+                                       [userProfileImage setImage:image];
+                                   }
+                               }
+                           }];
+}
+
+-(void) showPictures{
     FOFTableController *tableController = [[FOFTableController alloc] init];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
