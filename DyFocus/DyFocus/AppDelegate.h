@@ -28,7 +28,7 @@
 
 #define dyfocus_url @"http://dyfoc.us"
 //#define dyfocus_url @"http://192.168.100.140:8000"
-//#define dyfocus_url @"http://192.168.0.190:8000"
+//#define dyfocus_url @"http://192.168.100.140:8000"
 
 #define refresh_user_url @"http://dyfoc.us/uploader/json_user_fof/"
 #define refresh_featured_url @"http://dyfoc.us/uploader/json_featured_fof/"
@@ -109,6 +109,8 @@
     
     NSMutableArray *friendFofArray;
     Person *currentFriend;
+    
+    NSString *deviceId;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -141,8 +143,7 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSMutableArray *userFofArray;
 @property (nonatomic, retain)  NSMutableArray *feedFofArray;
 @property (nonatomic, retain)  NSMutableArray *friendFofArray;
-@property (nonatomic, retain)  Person *currentFriend;;
-
-
+@property (nonatomic, retain)  Person *currentFriend;
+@property (nonatomic, retain)  NSString *deviceId;
 
 @end
