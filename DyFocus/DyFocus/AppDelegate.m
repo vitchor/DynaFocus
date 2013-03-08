@@ -123,7 +123,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend;
+@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend, deviceId;
 
 - (void)dealloc
 {
@@ -212,15 +212,15 @@
     return YES;
 }
 
-- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
-    NSString *str =
-    [NSString stringWithFormat:@"DEVICE TOKEN: %@",deviceToken];
-    NSLog(str);
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
+    deviceId = [[[[[deviceToken description]
+                               stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                              stringByReplacingOccurrencesOfString: @">" withString: @""]
+                             stringByReplacingOccurrencesOfString: @" " withString: @""] retain];
 }
 
-- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
-{
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
     NSString *str = [NSString stringWithFormat: @"Error: %@", err];
     NSLog(str);
 }
@@ -714,7 +714,12 @@
              // Lets create the json, with all the user info, that will be used in the request
              NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
              
-             [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+             if (self.deviceId) {
+                 [jsonRequestObject setObject:self.deviceId forKey:@"device_id"];
+             } else {
+                 [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+             }
+             
              [jsonRequestObject setObject:[user objectForKey:@"id"] forKey:@"facebook_id"];
              [jsonRequestObject setObject:[user objectForKey:@"name"] forKey:@"name"];
              [jsonRequestObject setObject:[user objectForKey:@"email"] forKey:@"email"];

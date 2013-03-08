@@ -69,7 +69,7 @@
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    [LoadView loadViewOnView:tableController.view withText:@"Loading..."];
+    //[LoadView loadViewOnView:tableController.view withText:@"Loading..."];
     tableController.refreshString = refresh_user_url;
     
     if(userName && userFacebookId){

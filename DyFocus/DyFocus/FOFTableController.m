@@ -77,8 +77,12 @@
     [self.navigationController setNavigationBarHidden:shouldHideNavigationBar];
     
     if (!(FOFArray && [FOFArray count] > 0)) {
-        [m_tableView setHidden:YES];
+        // No FOFs to show:
+        
+        //[m_tableView setHidden:YES];
     }
+    
+    else m_isFOFTableEmpty = FALSE;
     
 }
 
@@ -92,6 +96,8 @@
 }
 
 -(void) refreshCellsImageSizes {
+    
+    if (FOFArray && [FOFArray count] != 0) {
         
         NSArray *visibleCells = [m_tableView visibleCells];
         
@@ -112,22 +118,25 @@
             
             [visibleCellsCopy release];
         }
+    }
 }
 
 -(void) refreshImages {
 
-    NSArray *visibleCells = [m_tableView visibleCells];
-    
-    if (visibleCells) {
-    
-        NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
+    if (FOFArray && [FOFArray count] != 0) {
+        NSArray *visibleCells = [m_tableView visibleCells];
         
-        for (FOFTableCell *cell in visibleCellsCopy) {
+        if (visibleCells) {
+        
+            NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
             
-            [cell refreshImageSize];
+            for (FOFTableCell *cell in visibleCellsCopy) {
+                
+                [cell refreshImageSize];
+            }
+            
+            [visibleCellsCopy release];
         }
-        
-        [visibleCellsCopy release];
     }
     
 }
@@ -143,7 +152,18 @@
 #pragma mark Table Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-	return [FOFArray count];
+    if (!FOFArray || [FOFArray count] == 0) {
+        m_isFOFTableEmpty = TRUE;
+        return 1;
+    }
+    else {
+        m_isFOFTableEmpty = FALSE;
+        return [FOFArray count];
+    }
+}
+
+- (int)cellStyle {
+	return UITableViewCellStyleDefault;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -151,32 +171,62 @@
     
 	FOFTableCell *cell = nil;
     
-	tableView.backgroundColor = [UIColor clearColor];
-	
-	//NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
-    cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell"];
-    
-    
-    if (cell == nil) {
-        NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell" owner:self options:nil];
-		
-        // Load the top-level objects from the custom cell XIB.
-        cell = [topLevelObjects objectAtIndex:0];
+    if (m_isFOFTableEmpty == TRUE) {
+        NSLog(@"FOF table is fucking empty motherfucker");
+        NSString *cellId = @"empty";
+        cell = [self.m_tableView dequeueReusableCellWithIdentifier:cellId];
         
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
+        }
+        
+        cell.textLabel.backgroundColor = [UIColor whiteColor];
+        
+        UIView *backgroundView = [[[UIView alloc] init] autorelease];
+        backgroundView.backgroundColor = [UIColor whiteColor];
+        cell.backgroundView = backgroundView;
+        
+        //cell.backgroundColor = [UIColor lightGrayColor];
+        cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.textLabel.numberOfLines = 2;
+        cell.textLabel.text = @"Sorry, but there are no images to show. Try pulling this page down to refresh.";
+        cell.textLabel.textColor = [UIColor blackColor];
+        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     }
     
-    //FOF *fof = (FOF *)[FOFArray objectAtIndex:indexPath.row];
-    
+    else {
+        
+        tableView.backgroundColor = [UIColor clearColor];
+        
+        //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
+        cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell"];
+        
+        
+        if (cell == nil) {
+            NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell" owner:self options:nil];
+            
+            // Load the top-level objects from the custom cell XIB.
+            cell = [topLevelObjects objectAtIndex:0];
+            
+        }
+        
+        //FOF *fof = (FOF *)[FOFArray objectAtIndex:indexPath.row];
+        
 
-    cell.tableView = self;
-    
-    cell.row = indexPath.row;
+        cell.tableView = self;
+        
+        cell.row = indexPath.row;
 
-    FOF *fof = (FOF *) [self.FOFArray objectAtIndex:indexPath.row];
-    
-    [cell refreshWithFof:fof];
-    
-    [cell refreshImageSize];
+        FOF *fof = (FOF *) [self.FOFArray objectAtIndex:indexPath.row];
+        
+        [cell refreshWithFof:fof];
+        
+        [cell refreshImageSize];
+    }
     
 	return cell;
     
@@ -184,23 +234,29 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    cell.backgroundView.backgroundColor = [UIColor redColor];
+    //cell.backgroundView.backgroundColor = [UIColor lightGrayColor];
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (m_isFOFTableEmpty) {
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        return screenRect.size.height - 44;
         
-    NSNumber *height = (NSNumber *)[cellHeightDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
-    
-    
-    if ([height intValue] != 0) {
-        return [height intValue];
     } else {
-        return 334;
-    }
+        NSNumber *height = (NSNumber *)[cellHeightDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
+        
+        
+        if ([height intValue] != 0) {
+            return [height intValue];
+        } else {
+            return 334;
+        }
     
-    return [height intValue];
+        return [height intValue];
+    }
 }
 
 #pragma mark -

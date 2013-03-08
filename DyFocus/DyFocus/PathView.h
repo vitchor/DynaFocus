@@ -18,6 +18,8 @@
     bool enabled;
     NSMutableArray *focusPoints;
     CameraView *cameraViewController;
+    UIImage* firstImage;
+    UIImage* secondImage;
 }
 
 @property(nonatomic,retain) NSMutableArray *touchPoints;
@@ -28,5 +30,10 @@
 
 -(void)clearPoints;
 -(NSMutableArray *)getPoints;
+-(void)setDefaultImages;
+-(void)rotateImagesToTheLeft;
+-(void)rotateImagesToTheRight;
+-(void)rotateImagesToDefault;
+-(void)rotateImagesUpsideDown;
 
 @end
