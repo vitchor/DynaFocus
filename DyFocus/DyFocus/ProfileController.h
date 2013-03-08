@@ -25,6 +25,6 @@
 @property (strong, nonatomic) IBOutlet UIView *dyfocusProfileView;
 @property (strong, nonatomic) IBOutlet UIButton *logoutButton;
 @property (strong, nonatomic) IBOutlet UIButton *myPicturesButton;
-@property (strong, nonatomic) IBOutlet CustomBadge *notificationBadge;
+@property (strong, nonatomic) IBOutlet UIImageView *userPicture;
 
 @end

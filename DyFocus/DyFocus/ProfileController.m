@@ -50,7 +50,19 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];    
+    [super viewDidAppear:animated];
+    
+    notificationBadge = [CustomBadge customBadgeWithString:@"2"
+												   withStringColor:[UIColor whiteColor]
+													withInsetColor:[UIColor redColor]
+													withBadgeFrame:YES
+											   withBadgeFrameColor:[UIColor whiteColor]
+														 withScale:1.0
+													   withShining:YES];
+    
+    [notificationBadge setFrame:CGRectMake(300, 311, 30, 30)];
+    
+    [self.view addSubview:notificationBadge];
 }
 
 - (void)loadImage:(NSString*)uid {
