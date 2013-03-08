@@ -75,39 +75,6 @@
 
 }
 
-
--(void)setInitialFocusPoint:(CGPoint)point {
-    NSLog(@"Setting initial focus point1");
-    NSError *error = nil;
-    if ([mCaptureDevice lockForConfiguration:&error]) {
-        
-        
-        if ([mCaptureDevice isExposurePointOfInterestSupported]) {
-            [mCaptureDevice setExposurePointOfInterest:point];
-    NSLog(@"Setting initial focus point2");
-        } else {
-            [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - exposure point is not supported!!"];
-        }
-        
-               
-        if ([mCaptureDevice isFocusPointOfInterestSupported]) {
-            [mCaptureDevice setFocusPointOfInterest:point];
-                NSLog(@"Setting initial focus point3");
-            
-        } else {
-            [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - focus point is not supported!!"];
-            [self disablePictureTaking];
-        }
-    
-        
-        // Releases the lock
-        [mCaptureDevice unlockForConfiguration];
-    } else {
-        [self sendErrorReportWithMessage:@"CameraView.updateFocusPoint - mCaptureDevice couldn't be locked"];
-    }
-
-}
-
 - (void)disablePictureTaking {
     if (self.navigationItem.rightBarButtonItem.enabled) {
         [shootButton setEnabled:false];
@@ -510,6 +477,7 @@
     }
     
     pathView.cameraViewController = self;
+    [pathView setDefaultImages];
     
     popupDarkView.layer.cornerRadius = 9.0;
     [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
@@ -631,6 +599,9 @@
         
         [instructionsImageView setImage:helpImage];
         
+        NSLog(@"ALOOHAAAA1");
+        
+        [pathView rotateImagesToTheLeft];
     }
     
     if (orientation == UIDeviceOrientationLandscapeRight )
@@ -639,6 +610,10 @@
         UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-left-white" ofType:@"png"]];
         
         [instructionsImageView setImage:helpImage];
+        
+        NSLog(@"ALOOHAAAA2");
+        
+        [pathView rotateImagesToTheRight];
         
     }
     
@@ -650,8 +625,25 @@
         
         [instructionsImageView setImage:helpImage];
         
+        NSLog(@"ALOOHAAAA3");
+        
+        [pathView rotateImagesToDefault];
+        
     }
     
+    if (orientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
+        
+        [instructionsImageView setImage:helpImage];
+        
+        NSLog(@"ALOOHAAAA4");
+        
+        [pathView rotateImagesUpsideDown];
+        
+    }
+
 
 }
 
