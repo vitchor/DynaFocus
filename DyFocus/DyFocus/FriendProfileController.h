@@ -22,7 +22,7 @@
 @property (strong, nonatomic) IBOutlet NSString *userName;
 @property (strong, nonatomic) IBOutlet NSString *userFacebookId;
 
-@property (strong, nonatomic) IBOutlet FBProfilePictureView *userProfileImage;
+@property (strong, nonatomic) IBOutlet UIImageView *userProfileImage;
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (strong, nonatomic) IBOutlet UIView *dyfocusProfileView;
 @property (strong, nonatomic) IBOutlet UIButton *viewPicturesButton;
