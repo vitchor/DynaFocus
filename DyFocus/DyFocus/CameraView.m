@@ -19,7 +19,7 @@
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchButton;
+@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchButton, testInfoView;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
@@ -487,6 +487,7 @@
     [popupDarkView setNeedsLayout];
 
 
+    lastOrientation = [[UIDevice currentDevice] orientation];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -589,6 +590,7 @@
 - (void) didRotate:(NSNotification *)notification
 
 {
+    double duration = 0.3;
     
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     
@@ -602,6 +604,23 @@
         NSLog(@"ALOOHAAAA1");
         
         [pathView rotateImagesToTheLeft];
+        
+
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:duration];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationRepeatCount:1];
+        
+        if(lastOrientation == UIDeviceOrientationPortrait)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
+        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
+        else if(lastOrientation == UIDeviceOrientationLandscapeRight)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI);
+        
+        [UIView commitAnimations];
+        
+        lastOrientation = orientation;
     }
     
     if (orientation == UIDeviceOrientationLandscapeRight )
@@ -615,6 +634,23 @@
         
         [pathView rotateImagesToTheRight];
         
+        [UIView beginAnimations:nil context:NULL];
+        
+        [UIView setAnimationDuration:duration];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationRepeatCount:1];
+        
+        if(lastOrientation == UIDeviceOrientationPortrait)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
+        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
+        else if(lastOrientation == UIDeviceOrientationLandscapeLeft)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI);
+
+        [UIView commitAnimations];
+        
+        
+        lastOrientation = orientation;
     }
     
 
@@ -629,6 +665,22 @@
         
         [pathView rotateImagesToDefault];
         
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:duration];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationRepeatCount:1];
+        
+        if(lastOrientation == UIDeviceOrientationLandscapeLeft)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
+        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI);
+        
+        [UIView commitAnimations];        
+            
+        
+        lastOrientation = orientation;
     }
     
     if (orientation == UIDeviceOrientationPortraitUpsideDown)
@@ -641,6 +693,23 @@
         NSLog(@"ALOOHAAAA4");
         
         [pathView rotateImagesUpsideDown];
+        
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:duration];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationRepeatCount:1];
+        
+        if(lastOrientation == UIDeviceOrientationLandscapeLeft)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
+        else if(lastOrientation == UIDeviceOrientationPortrait)
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI);
+        
+        [UIView commitAnimations];
+     
+        
+        lastOrientation = orientation;
         
     }
 
