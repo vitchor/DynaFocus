@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0402D46B16CFEB9700D61B65 /* heart-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0402D46916CFEB9700D61B65 /* heart-blue.png */; };
 		0402D46C16CFEB9700D61B65 /* message-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0402D46A16CFEB9700D61B65 /* message-blue.png */; };
+		040824F116E935E200A29229 /* PFCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 040824EF16E935E200A29229 /* PFCache.m */; };
 		04292BE71699038F009CF50B /* FOFTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04292BE51699038F009CF50B /* FOFTableController.m */; };
 		04292BE81699038F009CF50B /* FOFTableController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BE61699038F009CF50B /* FOFTableController.xib */; };
 		04292BEB169904AD009CF50B /* FOFTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04292BEA169904AD009CF50B /* FOFTableCell.m */; };
@@ -27,6 +28,8 @@
 		04D6A4EE16B605B400C4A71D /* CommentViewerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048BA4C316B11EBA002DBD68 /* CommentViewerController.xib */; };
 		04D6A4EF16B6063200C4A71D /* CommentTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048BA4CD16B12A5D002DBD68 /* CommentTableCell.xib */; };
 		04D6A4F716B65EFD00C4A71D /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 048BA4CB16B12A35002DBD68 /* CommentTableCell.m */; };
+		04EEABE616EA8179001BCEE3 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EEABE416EA8179001BCEE3 /* CustomBadge.m */; };
+		04EEABE816EA876A001BCEE3 /* ProfileController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EEABE716EA876A001BCEE3 /* ProfileController_i5.xib */; };
 		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
 		441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFB115B131D200E204D7 /* Foundation.framework */; };
 		441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFB815B131D200E204D7 /* InfoPlist.strings */; };
@@ -164,6 +167,8 @@
 /* Begin PBXFileReference section */
 		0402D46916CFEB9700D61B65 /* heart-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-blue.png"; sourceTree = "<group>"; };
 		0402D46A16CFEB9700D61B65 /* message-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "message-blue.png"; sourceTree = "<group>"; };
+		040824EF16E935E200A29229 /* PFCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFCache.m; sourceTree = "<group>"; };
+		040824F016E935E200A29229 /* PFCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFCache.h; sourceTree = "<group>"; };
 		04292BE41699038F009CF50B /* FOFTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableController.h; sourceTree = "<group>"; };
 		04292BE51699038F009CF50B /* FOFTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFTableController.m; sourceTree = "<group>"; };
 		04292BE61699038F009CF50B /* FOFTableController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFTableController.xib; sourceTree = "<group>"; };
@@ -191,6 +196,9 @@
 		04C5F82216BABB4800E8C289 /* fb_share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_share_button.png; sourceTree = "<group>"; };
 		04D6A4EA16B5FABB00C4A71D /* FOFTableNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableNavigationController.h; sourceTree = "<group>"; };
 		04D6A4EB16B5FABB00C4A71D /* FOFTableNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFTableNavigationController.m; sourceTree = "<group>"; };
+		04EEABE416EA8179001BCEE3 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
+		04EEABE516EA8179001BCEE3 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
+		04EEABE716EA876A001BCEE3 /* ProfileController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileController_i5.xib; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		441BFFAF15B131D200E204D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		441BFFB115B131D200E204D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -384,6 +392,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040824EE16E935CF00A29229 /* PFCache */ = {
+			isa = PBXGroup;
+			children = (
+				040824EF16E935E200A29229 /* PFCache.m */,
+				040824F016E935E200A29229 /* PFCache.h */,
+			);
+			name = PFCache;
+			sourceTree = "<group>";
+		};
 		04292BE2169902B0009CF50B /* FOFTableViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -440,6 +457,15 @@
 				0493612116BA995100CFD8DE /* UIDevice+Hardware.m */,
 			);
 			name = "UIDevice+Hardware";
+			sourceTree = "<group>";
+		};
+		04EEABE316EA813B001BCEE3 /* CustomBadge */ = {
+			isa = PBXGroup;
+			children = (
+				04EEABE416EA8179001BCEE3 /* CustomBadge.m */,
+				04EEABE516EA8179001BCEE3 /* CustomBadge.h */,
+			);
+			name = CustomBadge;
 			sourceTree = "<group>";
 		};
 		441BFFA015B131D200E204D7 = {
@@ -709,6 +735,7 @@
 				ACA63D3815EFED4A00314025 /* ProfileController.h */,
 				ACA63D3915EFED4A00314025 /* ProfileController.m */,
 				ACA63D3A15EFED4B00314025 /* ProfileController.xib */,
+				04EEABE716EA876A001BCEE3 /* ProfileController_i5.xib */,
 			);
 			name = ProfileController;
 			sourceTree = "<group>";
@@ -776,6 +803,8 @@
 		4496800D164D80ED00F76FCF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				04EEABE316EA813B001BCEE3 /* CustomBadge */,
+				040824EE16E935CF00A29229 /* PFCache */,
 				0435D8BC16C3236800609475 /* NSDyfocusURLRequest */,
 				0493612716BAA83300CFD8DE /* UIDevice+Hardware */,
 				444C504D16593863006C8CD3 /* JSON */,
@@ -1040,6 +1069,7 @@
 				0402D46C16CFEB9700D61B65 /* message-blue.png in Resources */,
 				AC1949CF16E91EA5002CA27C /* 1st-focus.png in Resources */,
 				AC1949D016E91EA5002CA27C /* 2nd-focus.png in Resources */,
+				04EEABE816EA876A001BCEE3 /* ProfileController_i5.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1112,6 +1142,8 @@
 				0493612216BA995100CFD8DE /* UIDevice+Hardware.m in Sources */,
 				0435D8C016C3238C00609475 /* NSDyfocusURLRequest.m in Sources */,
 				0435D8C316C32CA800609475 /* UIDyfocusImage.m in Sources */,
+				040824F116E935E200A29229 /* PFCache.m in Sources */,
+				04EEABE616EA8179001BCEE3 /* CustomBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1216,8 +1248,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
+				PROVISIONING_PROFILE = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1247,8 +1279,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
+				PROVISIONING_PROFILE = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
