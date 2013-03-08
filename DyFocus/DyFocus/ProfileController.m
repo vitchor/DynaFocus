@@ -19,20 +19,18 @@
 @implementation ProfileController
 
 
-@synthesize logoutButton, myPicturesButton, notificationBadge;
+@synthesize logoutButton, myPicturesButton, userPicture;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        
     }
     return self;
 }
 
 -(void) showPictures{
-    
     FOFTableController *tableController = [[FOFTableController alloc] init];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
@@ -52,25 +50,26 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [super viewDidAppear:animated];    
+}
+
+- (void)loadImage:(NSString*)uid {
+    NSLog(@"==== STEP1: Load Image with id: %@", uid);
     
-//    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
-//    self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
+//    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",uid] autorelease];
+    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",uid, (int)userPicture.frame.size.width, (int)userPicture.frame.size.height] autorelease];
     
-    notificationBadge = [CustomBadge customBadgeWithString:@"2"
-												   withStringColor:[UIColor whiteColor]
-													withInsetColor:[UIColor redColor]
-													withBadgeFrame:YES
-											   withBadgeFrameColor:[UIColor whiteColor]
-														 withScale:1.0
-													   withShining:YES];
-    
-    [notificationBadge setFrame:CGRectMake(30, 30, 30, 30)];
-    
-    
-    [self.view addSubview:notificationBadge];
-    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if(!error && data) {
+                                   UIImage *image = [UIImage imageWithData:data];
+                                   if(image) {
+                                       [userPicture setImage:image];
+                                   }
+                               }
+                           }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -84,7 +83,7 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
     self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
-    self.userProfileImage.profileID = [appDelegate.myself objectForKey:@"id"];
+    [self loadImage:[appDelegate.myself objectForKey:@"id"]];
 }
 
 - (void)viewDidLoad

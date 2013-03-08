@@ -15,6 +15,7 @@
     NSString *userName;
     IBOutlet UIButton *myPicturesButton;
     IBOutlet CustomBadge *notificationBadge;
+    IBOutlet UIImageView *userPicture;
 }
 
 - (void)logout;
