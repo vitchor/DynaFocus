@@ -48,17 +48,18 @@
                 
                 if ([touchPoints indexOfObject:point] == 0) {
                     
-                    firstImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, firstImage.frame.size};
+//                    firstImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, firstImage.frame.size};
                     
-//                    firstImage.center = CGPointMake(cgPoint.x, cgPoint.y);
+                    firstImage.center = CGPointMake(cgPoint.x, cgPoint.y);
                     
                     [firstImage setHidden:NO];
                     
                 }
                 else {
-                    secondImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, secondImage.frame.size};
+//                    secondImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, secondImage.frame.size};
                     
-//                    secondImage.center = CGPointMake(cgPoint.x, cgPoint.y);
+                    secondImage.center = CGPointMake(cgPoint.x, cgPoint.y);
+                    
                     
                     [secondImage setHidden:NO];
                 }
@@ -148,23 +149,31 @@
     return YES;
 }
 
-- (void) rotateImagesToTheLeft{
-
-    NSLog(@"CENTER BEFOOOOOORRRRREEEEE %f", firstImage.center.x);
-    
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.5];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationRepeatCount:1];
-    
-    firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
-    secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
-
-    [UIView commitAnimations];
-    
-    NSLog(@"CENTER AFTEEEEEERRRRRRRRRRR %f",firstImage.center.x);
-}
+//- (void) rotateImagesToTheLeft{
+//
+//    NSLog(@"CENTER BEFOOOOOORRRRREEEEE %f", firstImage.center.x);
+//    
+//    
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:0.5];
+//    [UIView setAnimationBeginsFromCurrentState:YES];
+//    [UIView setAnimationRepeatCount:1];
+//    
+//    NSLog(@"CENTER BEFOOOOOORRRRREEEEE222 %f", firstImage.center.x);
+//    
+////    firstImage.transform = CGAffineTransformMakeTranslation(firstImage.center.x,firstImage.center.y);
+//    firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
+//
+//    NSLog(@"CENTER BEFOOOOOORRRRREEEEE3333 %f", firstImage.center.x);
+////    secondImage.transform = CGAffineTransformMakeTranslation(30.0,30.0);
+//    secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
+//
+//    NSLog(@"CENTER BEFOOOOOORRRRREEEEE444 %f", firstImage.center.x);
+//    
+//    [UIView commitAnimations];
+//    
+//    NSLog(@"CENTER AFTEEEEEERRRRRRRRRRR %f",firstImage.center.x);
+//}
 
 
 //- (void) rotateImagesToTheLeft{
