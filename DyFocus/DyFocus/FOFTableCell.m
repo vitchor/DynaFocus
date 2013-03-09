@@ -45,15 +45,11 @@
 }
 
 - (void) commentButtonPressed {
-    
-    [self showCommentView];
-       
+    [self showCommentView:TRUE];
 }
 
-- (void) showCommentView {
-    
+- (void) showCommentView:(BOOL)isCommenting {
     CommentViewerController *commentController = nil;
-    
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     if (screenBounds.size.height == 568) {
         commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController_i5" andFOF:fof];
@@ -62,17 +58,16 @@
     }
         
     commentController.navigationItem.title = @"Info";
-    
     commentController.hidesBottomBarWhenPushed = YES;
-    
-    commentController.isCommenting = YES;
+    commentController.isCommenting = isCommenting;
+    if(!isCommenting){
+        commentController.hidesBottomBarWhenPushed = !isCommenting;
+    }
     
     commentController.tableCell = self;
     
     [tableView.navigationController setNavigationBarHidden:NO];
-    
     [tableView.navigationController pushViewController:commentController animated:YES];
-
 }
 
 -(void) refreshImageSize {
@@ -211,7 +206,6 @@
         }
         
         for (NSDictionary *frame in fof.m_frames) {
-            
             NSLog([frame debugDescription]);
             [fofUrls addObject:[frame objectForKey:@"frame_url"]];
         }
@@ -225,26 +219,7 @@
 
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
 {
-    CommentViewerController *commentController = nil;
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    if (screenBounds.size.height == 568) {
-        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController_i5" andFOF:fof];
-    } else {
-        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
-    }
-    
-    commentController.navigationItem.title = @"Info";
-    
-    commentController.isCommenting = NO;
-    
-    commentController.hidesBottomBarWhenPushed = YES;
-    
-    commentController.tableCell = self;
-    
-    [tableView.navigationController setNavigationBarHidden:NO];
-    
-    [tableView.navigationController pushViewController:commentController animated:YES];
+    [self showCommentView:FALSE];
 }
 
 
