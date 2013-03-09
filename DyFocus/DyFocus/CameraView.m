@@ -477,7 +477,6 @@
     }
     
     pathView.cameraViewController = self;
-    [pathView setDefaultImages];
     
     popupDarkView.layer.cornerRadius = 9.0;
     [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
@@ -603,7 +602,7 @@
         
         NSLog(@"ALOOHAAAA1");
         
-        [pathView rotateImagesToTheLeft];
+//        [pathView rotateImagesToTheLeft];
         
 
         [UIView beginAnimations:nil context:NULL];
@@ -611,12 +610,27 @@
         [UIView setAnimationBeginsFromCurrentState:YES];
         [UIView setAnimationRepeatCount:1];
         
-        if(lastOrientation == UIDeviceOrientationPortrait)
+//        [pathView fixImageCoordinates];
+        
+        if(lastOrientation == UIDeviceOrientationPortrait){
             testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
-        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown)
+            
+//            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, M_PI/2);
+//            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, M_PI/2);
+        }
+        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown) {
             testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
-        else if(lastOrientation == UIDeviceOrientationLandscapeRight)
+//            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, -M_PI/2);
+//            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, -M_PI/2);
+        }
+        else if(lastOrientation == UIDeviceOrientationLandscapeRight){
             testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI);
+           
+//            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, M_PI);
+//            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, M_PI);
+        }
+        
+        [pathView rotateImagesToTheLeft];
         
         [UIView commitAnimations];
         
@@ -632,7 +646,7 @@
         
         NSLog(@"ALOOHAAAA2");
         
-        [pathView rotateImagesToTheRight];
+//        [pathView rotateImagesToTheRight];
         
         [UIView beginAnimations:nil context:NULL];
         
@@ -663,7 +677,7 @@
         
         NSLog(@"ALOOHAAAA3");
         
-        [pathView rotateImagesToDefault];
+//        [pathView rotateImagesToDefault];
         
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:duration];
@@ -692,7 +706,7 @@
         
         NSLog(@"ALOOHAAAA4");
         
-        [pathView rotateImagesUpsideDown];
+//        [pathView rotateImagesUpsideDown];
         
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:duration];

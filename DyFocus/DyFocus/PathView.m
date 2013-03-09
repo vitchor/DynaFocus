@@ -13,7 +13,7 @@
 
 @implementation PathView
 
-@synthesize touchPoints, ref, context, enabled, cameraViewController;
+@synthesize touchPoints, ref, context, enabled, cameraViewController, firstImage, secondImage;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -24,16 +24,6 @@
     }
     
     return self;
-}
-
-- (void) setDefaultImages{
-    
-    firstImage = [UIImage imageNamed:@"1st-focus.png"];
-    secondImage = [UIImage imageNamed:@"2nd-focus.png"];
-    
-//    firstImage = [[UIImageView alloc] initWithImage:firstImageTmp];
-//    secondImage = [[UIImageView alloc] initWithImage:secondImageTmp];
-
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -50,14 +40,6 @@
 		CGContextSetStrokeColorWithColor(context, ref);
         CGContextSetFillColor(context, CGColorGetComponents([UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.9].CGColor));
         
-		CGPoint firstPoint = [[touchPoints objectAtIndex:0] CGPointValue];
-		
-//        if ([touchPoints count] == 1) {
-//            [firstImage drawInRect:CGRectMake(firstPoint.x - 40, firstPoint.y - 40, 80, 80) blendMode:0 alpha:0.6];
-//            //CGContextFillEllipseInRect(context, CGRectMake(firstPoint.x - 10, firstPoint.y - 10, 20, 20));
-//            
-//        } else if ([touchPoints count] == 2){
-        
         if ([touchPoints count] >= 1){
            
             for (NSObject *point in touchPoints) {
@@ -65,44 +47,25 @@
                 CGPoint cgPoint = [(NSValue *)point CGPointValue];
                 
                 if ([touchPoints indexOfObject:point] == 0) {
-                    [firstImage drawInRect:CGRectMake(cgPoint.x - 40, cgPoint.y - 40, 80, 80) blendMode:0 alpha:0.6];
-                   // CGContextDrawImage(context, CGRectMake(cgPoint.x - 50, cgPoint.y - 50, 100, 100), firstImage.CGImage);
+                    
+                    firstImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, firstImage.frame.size};
+                    
+//                    firstImage.center = CGPointMake(cgPoint.x, cgPoint.y);
+                    
+                    [firstImage setHidden:NO];
+                    
                 }
                 else {
-                    [secondImage drawInRect:CGRectMake(cgPoint.x - 40, cgPoint.y - 40, 80, 80) blendMode:0 alpha:0.6];
-                    //CGContextDrawImage(context, CGRectMake(cgPoint.x - 50, cgPoint.y - 50, 100, 100), secondImage.CGImage);
+                    secondImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, secondImage.frame.size};
+                    
+//                    secondImage.center = CGPointMake(cgPoint.x, cgPoint.y);
+                    
+                    [secondImage setHidden:NO];
                 }
             }
             
         }
         
-            
-//            
-//            CGPoint lastPoint;
-//            for (NSObject *point in touchPoints) {
-//                CGPoint cgPoint = [(NSValue *)point CGPointValue];
-//                //CGContextStrokeEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
-//                
-//                
-//                CGContextMoveToPoint(context, lastPoint.x, lastPoint.y);
-//                
-//                if ([touchPoints indexOfObject:point] != 0) {
-//                    CGContextAddLineToPoint(context, cgPoint.x, cgPoint.y);
-//                    CGContextStrokePath(context);
-//                }
-//                lastPoint = cgPoint;
-//                
-//            }
-//            
-//            for (NSObject *point in touchPoints) {
-//                CGPoint cgPoint = [(NSValue *)point CGPointValue];
-//                CGContextDrawImage(context, CGRectMake(cgPoint.x - 50, cgPoint.y - 50, 100, 100), secondImage.CGImage);
-//                //CGContextFillEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
-//            }
-            
-//        }
-        
-		//CGContextStrokePath(context);
 	}
 	
 }
@@ -112,6 +75,8 @@
 	
 	if(touchPoints!=nil){
 		[touchPoints removeAllObjects];
+        [firstImage setHidden:YES];
+        [secondImage setHidden:YES];
         [self setNeedsDisplay];
 	}
 }
@@ -183,70 +148,89 @@
     return YES;
 }
 
-
 - (void) rotateImagesToTheLeft{
-    
-    UIImage * portraitImage1 = firstImage;
-    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
-                                                             scale: 1.0
-                                                       orientation: UIImageOrientationRight];
 
-    UIImage * portraitImage2 = secondImage;
-    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
-                                                             scale: 1.0
-                                                       orientation: UIImageOrientationRight];
-    [self setNeedsDisplay];
+    NSLog(@"CENTER BEFOOOOOORRRRREEEEE %f", firstImage.center.x);
     
-    NSLog(@"GLA");
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationRepeatCount:1];
+    
+    firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
+    secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
+
+    [UIView commitAnimations];
+    
+    NSLog(@"CENTER AFTEEEEEERRRRRRRRRRR %f",firstImage.center.x);
 }
 
-- (void) rotateImagesToTheRight{
-    
-    UIImage * portraitImage1 = firstImage;
-    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
-                                                                scale: 1.0
-                                                          orientation: UIImageOrientationLeft];
 
-    UIImage * portraitImage2 = secondImage;
-    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
-                                                                scale: 1.0
-                                                          orientation: UIImageOrientationLeft];
+//- (void) rotateImagesToTheLeft{
+//    
+//    UIImage * portraitImage1 = firstImage;
+//    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+//                                                             scale: 1.0
+//                                                       orientation: UIImageOrientationRight];
+//
+//    UIImage * portraitImage2 = secondImage;
+//    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+//                                                             scale: 1.0
+//                                                       orientation: UIImageOrientationRight];
+//    [self setNeedsDisplay];
+//    
+//    NSLog(@"GLA");
+//}
 
-    [self setNeedsDisplay];
-    
-    NSLog(@"GLAGLA");
-}
-
-- (void) rotateImagesToDefault{
-    
-    firstImage = [UIImage imageNamed:@"1st-focus.png"];
-    secondImage = [UIImage imageNamed:@"2nd-focus.png"];
-
-    [self setNeedsDisplay];
-
-    
-    NSLog(@"GLAGLAGLA");
-}
-
--(void)rotateImagesUpsideDown{
-    
-    
-    UIImage * portraitImage1 = [UIImage imageNamed:@"1st-focus.png"];
-    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
-                                            scale: 1.0
-                                      orientation: UIImageOrientationDown];
-    
-    UIImage * portraitImage2 = [UIImage imageNamed:@"2nd-focus.png"];
-    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
-                                             scale: 1.0
-                                       orientation: UIImageOrientationDown];
-
-    
-    [self setNeedsDisplay];
-    
-    
-    NSLog(@"GLAGLAGLAGLA");
-
-}
+//
+//- (void) rotateImagesToTheRight{
+//    
+//    UIImage * portraitImage1 = firstImage;
+//    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+//                                                                scale: 1.0
+//                                                          orientation: UIImageOrientationLeft];
+//
+//    UIImage * portraitImage2 = secondImage;
+//    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+//                                                                scale: 1.0
+//                                                          orientation: UIImageOrientationLeft];
+//
+//    [self setNeedsDisplay];
+//    
+//    NSLog(@"GLAGLA");
+//}
+//
+//- (void) rotateImagesToDefault{
+//    
+//    firstImage = [UIImage imageNamed:@"1st-focus.png"];
+//    secondImage = [UIImage imageNamed:@"2nd-focus.png"];
+//
+//    [self setNeedsDisplay];
+//
+//    
+//    NSLog(@"GLAGLAGLA");
+//}
+//
+//-(void)rotateImagesUpsideDown{
+//    
+//    
+//    UIImage * portraitImage1 = [UIImage imageNamed:@"1st-focus.png"];
+//    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+//                                            scale: 1.0
+//                                      orientation: UIImageOrientationDown];
+//    
+//    UIImage * portraitImage2 = [UIImage imageNamed:@"2nd-focus.png"];
+//    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+//                                             scale: 1.0
+//                                       orientation: UIImageOrientationDown];
+//
+//    
+//    [self setNeedsDisplay];
+//    
+//    
+//    NSLog(@"GLAGLAGLAGLA");
+//
+//}
 
 @end
