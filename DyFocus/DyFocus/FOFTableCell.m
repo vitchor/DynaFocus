@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "NSDyfocusURLRequest.h"
 #import "UIDyfocusImage.h"
+#import "UIImageLoaderDyfocus.h"
 
 @implementation FOFTableCell
 @synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel, lightGrayBrackgroundView;
@@ -254,37 +255,19 @@
 
 - (void)loadUserProfile:(UITapGestureRecognizer *)gesture
 {
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    [delegate loadUserProfile:fof.m_userId andUserName:fof.m_userName andNavigationController:tableView.navigationController];
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+    [imageLoader loadUserProfile:fof.m_userId andUserName:fof.m_userName andNavigationController:tableView.navigationController];
 }
 
 -(void)loadImages {
-
+    UITapGestureRecognizer *singleTapUserName = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)];
+    imageUserPicture.userInteractionEnabled = YES;
+    [imageUserPicture addGestureRecognizer:singleTapUserName];
+    
     if (imageUserPicture.tag != 420) {
-        
-        NSDyfocusURLRequest *request = [NSDyfocusURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",fof.m_userId]]];
-        
-        request.id = fof.m_id;
-        
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   if(!error && data) {
-                                       
-                                       UIImage *image = [UIImage imageWithData:data];
-                                       
-                                       if(image && request.id == fof.m_id) {
-                                           [imageUserPicture setImage:image];
-                                           imageUserPicture.tag = 420;
-                                           
-                                           UITapGestureRecognizer *singleTapUserName = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)];
-                                           imageUserPicture.userInteractionEnabled = YES;
-                                           [imageUserPicture addGestureRecognizer:singleTapUserName];
-                                           
-                                           image = nil;
-                                       }
-                                   }
-                               }];
+        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+        NSLog(@"==== LOAD LIST PROFILE PICTURE");
+        [imageLoader loadListProfilePicture:fof.m_userId andFOFId:fof.m_id andImageView:imageUserPicture];
     }
     
     

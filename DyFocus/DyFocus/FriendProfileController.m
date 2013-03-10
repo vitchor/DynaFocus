@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "FOFTableController.h"
 #import "LoadView.h"
+#import "UIImageLoaderDyfocus.h"
 
 @interface FriendProfileController ()
 
@@ -57,12 +58,13 @@
     [viewPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
 
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
     if(userName && userFacebookId){
         self.userNameLabel.text = userName;
-        [appDelegate loadProfileImage:userFacebookId andProfileImage:userProfileImage];
+        [imageLoader loadProfilePicture:userFacebookId andProfileImage:userProfileImage];
     }else{
         self.userNameLabel.text = appDelegate.currentFriend.name;
-        [appDelegate loadProfileImage:(NSString *)appDelegate.currentFriend.tag andProfileImage:userProfileImage];
+        [imageLoader loadProfilePicture:(NSString *)appDelegate.currentFriend.tag andProfileImage:userProfileImage];
     }
 }
 

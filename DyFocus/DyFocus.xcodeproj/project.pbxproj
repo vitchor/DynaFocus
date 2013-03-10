@@ -87,6 +87,7 @@
 		44B4A0D5167E4F3600956E0C /* fof_example_00_3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 44B4A0D2167E4F3500956E0C /* fof_example_00_3.jpeg */; };
 		44BEFED715B14404004358C9 /* FOFPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEFED515B14404004358C9 /* FOFPreview.m */; };
 		44BEFED815B14404004358C9 /* FOFPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BEFED615B14404004358C9 /* FOFPreview.xib */; };
+		44C0B0AE16EBE7A700DF38E2 /* UIImageLoaderDyfocus.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C0B0AD16EBE7A700DF38E2 /* UIImageLoaderDyfocus.m */; };
 		44C7B1D51607440000221C12 /* iToast.h in Resources */ = {isa = PBXBuildFile; fileRef = 44C7B1D21607433D00221C12 /* iToast.h */; };
 		44C7B1D61607440000221C12 /* iToast.m in Resources */ = {isa = PBXBuildFile; fileRef = 44C7B1D31607433D00221C12 /* iToast.m */; };
 		44C7B1D71607444200221C12 /* iToast.h in Sources */ = {isa = PBXBuildFile; fileRef = 44C7B1D21607433D00221C12 /* iToast.h */; };
@@ -295,6 +296,8 @@
 		44BEFED415B14404004358C9 /* FOFPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFPreview.h; sourceTree = "<group>"; };
 		44BEFED515B14404004358C9 /* FOFPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFPreview.m; sourceTree = "<group>"; };
 		44BEFED615B14404004358C9 /* FOFPreview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview.xib; sourceTree = "<group>"; };
+		44C0B0AC16EBE7A700DF38E2 /* UIImageLoaderDyfocus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageLoaderDyfocus.h; sourceTree = "<group>"; };
+		44C0B0AD16EBE7A700DF38E2 /* UIImageLoaderDyfocus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageLoaderDyfocus.m; sourceTree = "<group>"; };
 		44C7B1D21607433D00221C12 /* iToast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
 		44C7B1D31607433D00221C12 /* iToast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iToast.m; sourceTree = "<group>"; };
 		44C8DA4015B1FF80000D2947 /* PathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathView.h; sourceTree = "<group>"; };
@@ -829,6 +832,7 @@
 		4496800D164D80ED00F76FCF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				44C0B0AB16EBE6DB00DF38E2 /* UIImageLoaderDyfocus */,
 				04EEABE316EA813B001BCEE3 /* CustomBadge */,
 				040824EE16E935CF00A29229 /* PFCache */,
 				0435D8BC16C3236800609475 /* NSDyfocusURLRequest */,
@@ -859,6 +863,15 @@
 				0470578E16B9AA3A0025F1DD /* LoginController_i5.xib */,
 			);
 			name = LoginController;
+			sourceTree = "<group>";
+		};
+		44C0B0AB16EBE6DB00DF38E2 /* UIImageLoaderDyfocus */ = {
+			isa = PBXGroup;
+			children = (
+				44C0B0AC16EBE7A700DF38E2 /* UIImageLoaderDyfocus.h */,
+				44C0B0AD16EBE7A700DF38E2 /* UIImageLoaderDyfocus.m */,
+			);
+			name = UIImageLoaderDyfocus;
 			sourceTree = "<group>";
 		};
 		44C8DA4D15B20FEC000D2947 /* Views */ = {
@@ -1176,6 +1189,7 @@
 				04EEABE616EA8179001BCEE3 /* CustomBadge.m in Sources */,
 				04EEABED16EA92F0001BCEE3 /* NotificationTableViewController.m in Sources */,
 				04EEABF116EA9367001BCEE3 /* NotificationTableViewCell.m in Sources */,
+				44C0B0AE16EBE7A700DF38E2 /* UIImageLoaderDyfocus.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

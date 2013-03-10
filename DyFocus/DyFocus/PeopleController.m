@@ -553,10 +553,10 @@
 	// To be overridden
 }
 
-- (void)setImage:(UIImage *)image withId:(int)uid {
-	[m_imageCache setObject:image forKey:[NSNumber numberWithInt:uid]];
-	[self.tableView reloadData];
-}
+//- (void)setImage:(UIImage *)image withId:(int)uid {
+//	[m_imageCache setObject:image forKey:[NSNumber numberWithInt:uid]];
+//	[self.tableView reloadData];
+//}
 
 - (IBAction)inviteButtonClicked:(id)sender {
 	UISegmentedControl *inviteButton = (UISegmentedControl *)sender;

@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "FOFTableController.h"
 #import "CustomBadge.h"
+#import "UIImageLoaderDyfocus.h"
 
 @interface ProfileController ()
 
@@ -53,9 +54,10 @@
     [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    
     self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
-    [appDelegate loadProfileImage:[appDelegate.myself objectForKey:@"id"] andProfileImage:userPicture];
+    
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+    [imageLoader loadMyProfilePicture:userPicture];
 }
 
 -(void) viewDidAppear:(BOOL)animated{

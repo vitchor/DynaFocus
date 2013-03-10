@@ -20,6 +20,7 @@
 #import "Flurry.h"
 #import "FOFTableNavigationController.h"
 #import "NSDyfocusURLRequest.h"
+#import "UIImageLoaderDyfocus.h"
 
 @implementation FOF
 
@@ -488,9 +489,10 @@
                          
                          // Sets the model object myself
                          self.myself = user;
-                         
+                         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+                        [imageLoader cashProfilePicture];
                          NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
-                         
+                        
                          
                          
                          // Lets create the json, with all the user info, that will be used in the request
@@ -581,72 +583,6 @@
         }
     }];
     
-}
-
-
-- (void) loadProfileImage:(NSString *)facebookId andProfileImage:(UIImageView *)profileImage{
-     NSString *imageUrl;
-    if([facebookId isEqualToString:[self.myself objectForKey:@"id"]]){
-        imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",facebookId, (int)profileImage.frame.size.width, (int)profileImage.frame.size.height] autorelease];
-    }else{
-        imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",facebookId, (int)profileImage.frame.size.width, (int)profileImage.frame.size.height] autorelease];
-    }
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if(!error && data) {
-                                   UIImage *image = [UIImage imageWithData:data];
-                                   if(image) {
-                                       [profileImage setImage:image];
-                                   }
-                               }
-                           }];
-}
-
-- (void)loadUserProfile:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
-    // needs userId, userName, NavigationController
-    NSMutableArray *selectedPersonFofs = [[NSMutableArray alloc] init];
-    Person *person = [[Person alloc] init];
-    
-    person = [self.dyfocusFriends objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
-    
-    //WHEN THE COMMENT BELONGS TO A FRIEND:
-    if(person){
-        self.currentFriend = person;
-        
-        for (FOF *m_fof in self.feedFofArray) {
-            
-            if ([m_fof.m_userId isEqualToString: [[NSString alloc] initWithFormat: @"%@", person.tag]]) {
-                
-                [selectedPersonFofs addObject:m_fof];
-            }
-        }
-        
-        self.friendFofArray = selectedPersonFofs;
-        
-        FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
-        friendProfileController.hidesBottomBarWhenPushed = YES;
-        
-        [friendProfileController clearCurrentUser];
-        
-        [navController pushViewController:friendProfileController animated:true];
-        [navController setNavigationBarHidden:NO animated:TRUE];
-        //    // WHEN THE COMMENT BELLONGS TO THE USER HIMSELF:
-        //    }else if ([m_comment.m_userId isEqualToString:[delegate.myself objectForKey:@"id"]]){
-        //        [delegate.tabBarController setSelectedIndex:4];
-        //        [commentController.navigationController release];
-        // WHEN THE COMMENT BELONGS TO A USER OTHER THAN MYSELF OR A FRIEND OF MINE:
-    } else{
-        FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
-        friendProfileController.hidesBottomBarWhenPushed = YES;
-        friendProfileController.userFacebookId = facebookId;
-        friendProfileController.userName = userName;
-        
-        [navController pushViewController:friendProfileController animated:true];
-        [navController setNavigationBarHidden:NO animated:TRUE];
-    }
 }
 
 - (void)closeSession {
@@ -775,8 +711,9 @@
              // Sets the model object myself
              self.myself = user;
              
+             UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+             [imageLoader cashProfilePicture];
              NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
-             
              
              // Lets create the json, with all the user info, that will be used in the request
              NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];

@@ -9,7 +9,7 @@
 #import "CommentTableCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "JSON.h"
-#import "AppDelegate.h"
+#import "UIImageLoaderDyfocus.h"
 
 @implementation CommentTableCell
 @synthesize labelUserName ,labelDate, imageUserPicture, commentTextView, whiteView, commentController, m_comment;
@@ -35,20 +35,8 @@
     }
     
     
-    NSString *profilePictureUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",comment.m_userId];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if(!error && data) {
-                                   UIImage *image = [UIImage imageWithData:data];
-                                   if(image) {
-                                       [imageUserPicture setImage:image];
-                                   }
-                               }
-                           }];
-    
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+    [imageLoader loadCommentProfilePicture:comment.m_userId andImageView:imageUserPicture];    
     
     if (m_comment) {
         [m_comment release];
@@ -73,8 +61,8 @@
         [commentController hideKeyboard];
         commentController.isKeyboardHidden = YES;
     }else{
-        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-        [delegate loadUserProfile:m_comment.m_userId andUserName:m_comment.m_userName andNavigationController:commentController.navigationController];
+        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+        [imageLoader loadUserProfile:m_comment.m_userId andUserName:m_comment.m_userName andNavigationController:commentController.navigationController];
     }
 }
 
