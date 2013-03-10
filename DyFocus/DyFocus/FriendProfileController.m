@@ -32,11 +32,10 @@
 -(void) showPictures{
     FOFTableController *tableController = [[FOFTableController alloc] init];
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    //[LoadView loadViewOnView:tableController.view withText:@"Loading..."];
     tableController.refreshString = refresh_user_url;
-    
     if(userName && userFacebookId){
-        tableController.FOFArray = [NSMutableArray arrayWithArray:appDelegate.featuredFofArray]; // This IS a gambiarra! But works just fine =)
+        [LoadView loadViewOnView:tableController.view];
+        tableController.FOFArray = [[[NSMutableArray alloc] init] autorelease];
         tableController.userFacebookId = (NSString *) userFacebookId;
     }else{
         tableController.FOFArray = [NSMutableArray arrayWithArray:appDelegate.friendFofArray]; // Normal procedure

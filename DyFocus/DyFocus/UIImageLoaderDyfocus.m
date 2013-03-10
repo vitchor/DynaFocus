@@ -47,8 +47,9 @@
 
 -(void) loadCommentProfilePicture:(NSString *)userId andImageView:(UIImageView *)imageUserPicture{
     if([userId isEqualToString:myPicture.tag]){
-        NSLog(@"==== this is my comment");
        [imageUserPicture setImage:myPicture];
+    }else if([userId isEqualToString:bufferPic.tag]){
+       [imageUserPicture setImage:bufferPic];
     }else{
         NSString *profilePictureUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",userId];
         
@@ -68,7 +69,6 @@
 }
 
 -(void) loadPeopleProfilePicture:(NSString*)facebookId andImageCache:(NSMutableDictionary *)m_imageCache andUid:(int)uid andTableView: (UITableView*)tableView{
-    NSLog(@"==== load people Profile Picture");
     NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",facebookId] autorelease];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
@@ -108,7 +108,6 @@
         [profileImageView setImage:bufferPic];
     }else{
         NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",facebookId, (int)profileImageView.frame.size.width, (int)profileImageView.frame.size.height] autorelease];
-        NSLog(@"==== IMAGEURL: %@",imageUrl);
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
         
         [NSURLConnection sendAsynchronousRequest:request
@@ -151,11 +150,9 @@
     if([facebookId isEqualToString:myPicture.tag]){
         [imageUserPicture setImage:myPicture];
         imageUserPicture.tag = 420;
-        NSLog(@"==== REUSED MY PICTURE");
     }else if([facebookId isEqualToString:bufferPic.tag]){
         [imageUserPicture setImage:bufferPic];
         imageUserPicture.tag = 420;
-        NSLog(@"====Reused BufferPic");
     }else{
         NSDyfocusURLRequest *request = [NSDyfocusURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",facebookId]]];
         request.id = fofId;
