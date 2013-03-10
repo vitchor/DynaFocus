@@ -18,8 +18,8 @@
     bool enabled;
     NSMutableArray *focusPoints;
     CameraView *cameraViewController;
-    UIImage* firstImage;
-    UIImage* secondImage;
+    IBOutlet UIImageView* firstImage;
+    IBOutlet UIImageView* secondImage;
 }
 
 @property(nonatomic,retain) NSMutableArray *touchPoints;
@@ -27,6 +27,8 @@
 @property(nonatomic,readwrite)CGColorRef ref;
 @property(nonatomic,readwrite)bool enabled;
 @property(nonatomic,strong)CameraView *cameraViewController;
+@property(nonatomic,retain) IBOutlet UIImageView *firstImage;
+@property(nonatomic,retain) IBOutlet UIImageView *secondImage;
 
 -(void)clearPoints;
 -(NSMutableArray *)getPoints;
