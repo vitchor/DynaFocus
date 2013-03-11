@@ -36,9 +36,9 @@
 		
         // Old codes used when the "point" and the "line" were drawn:
         //
-        CGContextSetLineWidth(context, 8);
-		CGContextSetStrokeColorWithColor(context, ref);
-        CGContextSetFillColor(context, CGColorGetComponents([UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.9].CGColor));
+//        CGContextSetLineWidth(context, 8);
+//		CGContextSetStrokeColorWithColor(context, ref);
+//        CGContextSetFillColor(context, CGColorGetComponents([UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.9].CGColor));
         
         if ([touchPoints count] >= 1){
            

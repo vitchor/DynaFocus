@@ -578,7 +578,8 @@
 {
     //Because your app is only landscape, your view controller for the view in your
     // popover needs to support only landscape
-    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait ;
+//    return UIInterfaceOrientationMaskAll;
 }
 
 
@@ -589,9 +590,26 @@
 - (void) didRotate:(NSNotification *)notification
 
 {
+    
+    [self checkOrientations];
+
+}
+
+
+- (void) checkOrientations
+{
+    
+    NSLog(@"CHEEEEEEEEEEEEEEEEEEEEEEEEEECKKKKKKKKK");
+ 
     double duration = 0.3;
     
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationRepeatCount:1];
+
     
     if (orientation == UIDeviceOrientationLandscapeLeft)
     {
@@ -602,12 +620,6 @@
         
         NSLog(@"ALOOHAAAA1");
         
-
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:duration];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationRepeatCount:1];
-
         
         if(lastOrientation == UIDeviceOrientationPortrait){
             testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
@@ -624,10 +636,12 @@
             pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, M_PI);
             pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, M_PI);
         }
+//        else if (lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
+//            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, 2*M_PI);
+//            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, 2*M_PI);
+//            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, 2*M_PI);
+//        }
         
-        [UIView commitAnimations];
-        
-        lastOrientation = orientation;
     }
     
     if (orientation == UIDeviceOrientationLandscapeRight )
@@ -640,12 +654,6 @@
         NSLog(@"ALOOHAAAA2");
         
         
-        [UIView beginAnimations:nil context:NULL];
-        
-        [UIView setAnimationDuration:duration];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationRepeatCount:1];
-        
         if(lastOrientation == UIDeviceOrientationPortrait){
             testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
             pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, -M_PI/2);
@@ -656,18 +664,15 @@
             pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, M_PI/2);
             pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, M_PI/2);
         }
-        else if(lastOrientation == UIDeviceOrientationLandscapeLeft){
+        else if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
             testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI);
             pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, -M_PI);
             pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, -M_PI);
-        }
-
-        [UIView commitAnimations];
+        } 
         
-        lastOrientation = orientation;
     }
     
-
+    
     if (orientation == UIDeviceOrientationPortrait)
     {
         
@@ -678,12 +683,7 @@
         NSLog(@"ALOOHAAAA3");
         
         
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:duration];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationRepeatCount:1];
-        
-        if(lastOrientation == UIDeviceOrientationLandscapeLeft){
+        if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
             testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
             pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, -M_PI/2);
             pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, -M_PI/2);
@@ -697,11 +697,7 @@
             testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI);
             pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, -M_PI);
             pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, -M_PI);
-        }
-        
-        [UIView commitAnimations];        
-            
-        lastOrientation = orientation;
+        }         
     }
     
     if (orientation == UIDeviceOrientationPortraitUpsideDown)
@@ -713,12 +709,8 @@
         
         NSLog(@"ALOOHAAAA4");
         
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:duration];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationRepeatCount:1];
         
-        if(lastOrientation == UIDeviceOrientationLandscapeLeft){
+        if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
             testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
             pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, M_PI/2);
             pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, M_PI/2);
@@ -734,13 +726,64 @@
             pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, M_PI);
         }
         
-        [UIView commitAnimations];
-     
-        lastOrientation = orientation;
+    }
+    
+    if (orientation == UIDeviceOrientationFaceUp){
+        
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
+            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, M_PI/2);
+            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, M_PI/2);
+        }
+        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
+            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, -M_PI/2);
+            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, -M_PI/2);
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI);
+            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, -M_PI);
+            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, -M_PI);
+        }
+//        else if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceDown){
+//            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, 2*M_PI);
+//            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, 2*M_PI);
+//            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, 2*M_PI);
+//        }
+        
+    }
+    
+    if (orientation == UIDeviceOrientationFaceDown){
+        
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
+            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, M_PI/2);
+            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, M_PI/2);
+        }
+        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
+            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, -M_PI/2);
+            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, -M_PI/2);
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI);
+            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, -M_PI);
+            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, -M_PI);
+        }
+//        else if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp){
+//            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, 2*M_PI);
+//            pathView.firstImage.transform = CGAffineTransformRotate(pathView.firstImage.transform, 2*M_PI);
+//            pathView.secondImage.transform = CGAffineTransformRotate(pathView.secondImage.transform, 2*M_PI);
+//        }
         
     }
 
+    
+    [UIView commitAnimations];
+    
+    lastOrientation = orientation;
 
+    
 }
 
 - (void) setTorchOn:(BOOL)isOn
