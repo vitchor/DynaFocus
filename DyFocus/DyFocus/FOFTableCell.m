@@ -256,7 +256,7 @@
 - (void)loadUserProfile:(UITapGestureRecognizer *)gesture
 {
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    [imageLoader loadUserProfile:fof.m_userId andUserName:fof.m_userName andNavigationController:tableView.navigationController];
+    [imageLoader loadUserProfileController:fof.m_userId andUserName:fof.m_userName andNavigationController:tableView.navigationController];
 }
 
 -(void)loadImages {

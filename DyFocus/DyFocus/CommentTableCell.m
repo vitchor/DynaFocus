@@ -62,7 +62,7 @@
         commentController.isKeyboardHidden = YES;
     }else{
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadUserProfile:m_comment.m_userId andUserName:m_comment.m_userName andNavigationController:commentController.navigationController];
+        [imageLoader loadUserProfileController:m_comment.m_userId andUserName:m_comment.m_userName andNavigationController:commentController.navigationController];
     }
 }
 

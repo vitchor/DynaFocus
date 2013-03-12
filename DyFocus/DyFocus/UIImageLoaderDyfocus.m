@@ -13,6 +13,7 @@
 @implementation UIImageLoaderDyfocus
 //@syntethize anyProperty
 
+// Singleton:
 +(id)sharedUIImageLoader{
     static UIImageLoaderDyfocus *sharedMyUILoader = nil;
     static dispatch_once_t onceToken;
@@ -22,6 +23,7 @@
     return sharedMyUILoader;
 }
 
+// Singleton
 - (id)init {
     if (self = [super init]) {
 //        someProperty = [[NSString alloc] initWithString:@"Default Property Value"];
@@ -29,6 +31,7 @@
     return self;
 }
 
+// Singleton
 - (void)dealloc {
     [myPicture dealloc];
     [bufferPic dealloc];
@@ -36,6 +39,7 @@
     // Should never be called, but just here for clarity really.
 }
 
+//Load Profile Picture, usually called from ProfileController or FriendProfileController
 - (void) loadProfilePicture:(NSString *)facebookId andProfileImage:(UIImageView *)profileImage{
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     if([facebookId isEqualToString:[appDelegate.myself objectForKey:@"id"]]){
@@ -45,6 +49,7 @@
     }
 }
 
+// Loads profile picture for commentCell. It does a process slightly different from the one used in loadProfilePicture function
 -(void) loadCommentProfilePicture:(NSString *)userId andImageView:(UIImageView *)imageUserPicture{
     if([userId isEqualToString:myPicture.tag]){
        [imageUserPicture setImage:myPicture];
@@ -68,6 +73,7 @@
     }
 }
 
+// Loads profile picture for the friends tab, called in the FacebooController or PeopleController (not sure about this last one ontroller)
 -(void) loadPeopleProfilePicture:(NSString*)facebookId andImageCache:(NSMutableDictionary *)m_imageCache andUid:(int)uid andTableView: (UITableView*)tableView{
     NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",facebookId] autorelease];
 
@@ -86,6 +92,7 @@
                            }];
 }
 
+// Function that cashes picture right at the sign up
 -(void) cashProfilePicture{
     if(!myPicture){
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -103,6 +110,7 @@
     }
 }
 
+//Loads any profile picture based on facebookId
 - (UIImage *) loadAnyProfilePicture:(UIImageView *)profileImageView andFacebookId:(NSString *)facebookId{
     if([bufferPic.tag isEqualToString:facebookId]){
         [profileImageView setImage:bufferPic];
@@ -125,6 +133,7 @@
     return bufferPic;
 }
 
+//Loads my profile picture
 - (UIImage *) loadMyProfilePicture:(UIImageView *)profileImageView{
     if(!myPicture){
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -146,6 +155,7 @@
     return myPicture;
 }
 
+// Load profile picture for FOFTableList
 - (void) loadListProfilePicture:(NSString *)facebookId andFOFId:(NSString *)fofId andImageView:(UIImageView*)imageUserPicture{
     if([facebookId isEqualToString:myPicture.tag]){
         [imageUserPicture setImage:myPicture];
@@ -174,7 +184,7 @@
     }
 }
 
-
+// Calls profile of that user
 - (void)loadUserProfile:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
     // needs userId, userName, NavigationController
     NSMutableArray *selectedPersonFofs = [[NSMutableArray alloc] init];

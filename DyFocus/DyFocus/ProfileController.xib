@@ -53,7 +53,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">AvatarDefault.png</string>
+							<string key="NSResourceName">AvatarHighResolution.jpg</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="382881022">
@@ -104,6 +104,7 @@
 						<string key="NSFrame">{{20, 374}, {67, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -655,6 +656,22 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
+					<string key="className">CustomBadge</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CustomBadge.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">FBProfilePictureView</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/FBProfilePictureView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSLayoutConstraint</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -669,8 +686,10 @@
 						<string key="dyfocusProfileView">UIView</string>
 						<string key="logoutButton">UIButton</string>
 						<string key="myPicturesButton">UIButton</string>
+						<string key="notificationBadge">CustomBadge</string>
 						<string key="userNameLabel">UILabel</string>
 						<string key="userPicture">UIImageView</string>
+						<string key="userProfileImage">FBProfilePictureView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="dyfocusProfileView">
@@ -685,6 +704,10 @@
 							<string key="name">myPicturesButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="notificationBadge">
+							<string key="name">notificationBadge</string>
+							<string key="candidateClassName">CustomBadge</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="userNameLabel">
 							<string key="name">userNameLabel</string>
 							<string key="candidateClassName">UILabel</string>
@@ -692,6 +715,10 @@
 						<object class="IBToOneOutletInfo" key="userPicture">
 							<string key="name">userPicture</string>
 							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="userProfileImage">
+							<string key="name">userProfileImage</string>
+							<string key="candidateClassName">FBProfilePictureView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -706,8 +733,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">AvatarDefault.png</string>
-			<string key="NS.object.0">{50, 50}</string>
+			<string key="NS.key.0">AvatarHighResolution.jpg</string>
+			<string key="NS.object.0">{382, 351}</string>
 		</object>
 		<bool key="IBDocument.UseAutolayout">YES</bool>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

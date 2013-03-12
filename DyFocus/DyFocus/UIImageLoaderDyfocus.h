@@ -19,7 +19,7 @@
 - (void) loadProfilePicture:(NSString *)facebookId andProfileImage:(UIImageView *)profileImage;
 - (UIImage *) loadAnyProfilePicture:(UIImageView *)profileImageView andFacebookId:(NSString *)facebookId;
 - (UIImage *) loadMyProfilePicture:(UIImageView *)profileImageView;
-- (void)loadUserProfile:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController;
+- (void)loadUserProfileController:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController;
 - (void) loadListProfilePicture:(NSString *)facebookId andFOFId:(NSString *)fofId andImageView:(UIImageView*)imageUserPicture;
 -(void) loadCommentProfilePicture:(NSString *)userId andImageView:(UIImageView *)imageUserPicture;
 -(void) loadPeopleProfilePicture:(NSString*)facebookId andImageCache:(NSMutableDictionary *)m_imageCache andUid:(int)uid andTableView: (UITableView*)tableView;
