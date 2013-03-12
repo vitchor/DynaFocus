@@ -487,6 +487,7 @@
 
 
     lastOrientation = [[UIDevice currentDevice] orientation];
+    [self resetOrientations];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -597,6 +598,72 @@
     
     [self checkOrientations];
 
+}
+
+- (void) resetOrientations
+{
+    
+    NSLog(@"RESEEEEEEEEEEEEEET");
+
+    pathView.firstImage.transform = CGAffineTransformIdentity;
+    pathView.secondImage.transform = CGAffineTransformIdentity;
+    
+    UIImage * portraitImage1 = [UIImage imageNamed:@"1st-focus.png"];
+    UIImage * portraitImage2 = [UIImage imageNamed:@"2nd-focus.png"];
+
+    if(lastOrientation == UIDeviceOrientationPortrait)
+    {
+        
+        NSLog(@"PORTRAAAAAAAAAAAAAAAAITEEEEEEEEEEEE");
+
+//        pathView.firstImage.image = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+//                                                               scale: 1.0
+//                                                         orientation: UIImageOrientationUp];
+//        
+//        pathView.secondImage.image = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+//                                                                scale: 1.0
+//                                                          orientation: UIImageOrientationUp];
+        
+        pathView.firstImage.image = portraitImage1;
+
+        pathView.secondImage.image = portraitImage1;
+
+    }
+    else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        
+        pathView.firstImage.image = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+                                                                 scale: 1.0
+                                                           orientation: UIImageOrientationDown];
+
+        pathView.secondImage.image = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+                                                               scale: 1.0
+                                                         orientation: UIImageOrientationDown];
+    }
+    else if(lastOrientation == UIDeviceOrientationLandscapeRight)
+    {
+        
+        pathView.firstImage.image = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+                                                               scale: 1.0
+                                                         orientation: UIImageOrientationLeft];
+        
+        pathView.secondImage.image = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+                                                                scale: 1.0
+                                                          orientation: UIImageOrientationLeft];
+    }
+    else if(lastOrientation == UIDeviceOrientationLandscapeLeft ||
+            lastOrientation == UIDeviceOrientationFaceUp ||
+            lastOrientation == UIDeviceOrientationFaceDown)
+    {
+        pathView.firstImage.image = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+                                                               scale: 1.0
+                                                         orientation: UIImageOrientationRight];
+        
+        pathView.secondImage.image = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+                                                                scale: 1.0
+                                                          orientation: UIImageOrientationRight];
+    }
+    
 }
 
 
