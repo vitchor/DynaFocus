@@ -19,7 +19,7 @@
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchButton, testInfoView;
+@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchButton, testInfoView, firstFocusX, firstFocusY, secondFocusX, secondFocusY;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
@@ -571,6 +571,10 @@
 {
     [mFocalPoints release];
     [mFrames release];
+    [firstFocusX release];
+    [firstFocusY release];
+    [secondFocusX release];
+    [secondFocusY release];
     [super dealloc];
 }
 

@@ -28,6 +28,8 @@
 
 - (void)drawRect:(CGRect)rect {
 	
+//    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
     context = UIGraphicsGetCurrentContext();
 	
 	ref =  [[UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:0.3] CGColor];
@@ -46,21 +48,26 @@
                 
                 CGPoint cgPoint = [(NSValue *)point CGPointValue];
                 
+                
                 if ([touchPoints indexOfObject:point] == 0) {
                     
-//                    firstImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, firstImage.frame.size};
+//                  firstImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, firstImage.frame.size};
+//                  firstImage.center = CGPointMake(cgPoint.x, cgPoint.y);
                     
-                    firstImage.center = CGPointMake(cgPoint.x, cgPoint.y);
+                    cameraViewController.firstFocusX.constant = cgPoint.x-40;
+                    cameraViewController.firstFocusY.constant = cgPoint.y-40;
                     
                     [firstImage setHidden:NO];
                     
                 }
                 else {
-//                    secondImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, secondImage.frame.size};
                     
-                    secondImage.center = CGPointMake(cgPoint.x, cgPoint.y);
+//                  secondImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, secondImage.frame.size};
+//                  secondImage.center = CGPointMake(cgPoint.x, cgPoint.y);
                     
-                    
+                    cameraViewController.secondFocusX.constant = cgPoint.x-40;
+                    cameraViewController.secondFocusY.constant = cgPoint.y-40;
+
                     [secondImage setHidden:NO];
                 }
             }

@@ -48,6 +48,10 @@
     
     UIDeviceOrientation lastOrientation;
     
+    IBOutlet NSLayoutConstraint *firstFocusX;
+    IBOutlet NSLayoutConstraint *firstFocusY;
+    IBOutlet NSLayoutConstraint *secondFocusX;
+    IBOutlet NSLayoutConstraint *secondFocusY;
 }
 - (void)showToast:(NSString *)text;
 
@@ -71,6 +75,9 @@
 @property(nonatomic,retain) IBOutlet UIView *loadingView;
 @property(nonatomic,retain) IBOutlet UIButton *torchButton;
 @property(nonatomic,retain) IBOutlet UIImageView *testInfoView;
-
+@property(nonatomic,retain) IBOutlet NSLayoutConstraint *firstFocusX;
+@property(nonatomic,retain) IBOutlet NSLayoutConstraint *firstFocusY;
+@property(nonatomic,retain) IBOutlet NSLayoutConstraint *secondFocusX;
+@property(nonatomic,retain) IBOutlet NSLayoutConstraint *secondFocusY;
 
 @end
