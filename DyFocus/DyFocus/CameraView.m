@@ -626,7 +626,7 @@
         
         pathView.firstImage.image = portraitImage1;
 
-        pathView.secondImage.image = portraitImage1;
+        pathView.secondImage.image = portraitImage2;
 
     }
     else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown)
