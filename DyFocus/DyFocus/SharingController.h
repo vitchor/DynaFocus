@@ -12,13 +12,13 @@
 
 @interface SharingController : UIViewController {
     
+    IBOutlet UILabel *shareLabel;
     IBOutlet UISwitch *facebookSwitch;
-
     IBOutlet UIView *activityIndicator;
     IBOutlet UIActivityIndicatorView *spinner;
-    
     IBOutlet UITextView *commentField;
     
+
     FBSession *facebook;
     ASIFormDataRequest *request;
     NSMutableArray *frames;

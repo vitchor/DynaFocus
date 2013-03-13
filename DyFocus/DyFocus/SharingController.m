@@ -266,9 +266,15 @@
     
     [commentField resignFirstResponder]; // hides keyboard
     self.navigationItem.leftBarButtonItem = backButton;
+    
+    [facebookSwitch setHidden:NO];
+    [shareLabel setHidden:NO];
 }
 
 -(void)keyboardWillShow:(NSNotification*)aNotification{
+    
+    [facebookSwitch setHidden:YES];
+    [shareLabel setHidden:YES];
     
     self.commentField.text = @"";
     
@@ -317,6 +323,7 @@
     [frames release];
     [focalPoints release];
     [fofName release];
+    [shareLabel release];
     [super dealloc];
 }
 
