@@ -185,7 +185,7 @@
 }
 
 // Calls profile of that user
-- (void)loadUserProfile:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
+- (void)loadUserProfileController:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
     // needs userId, userName, NavigationController
     NSMutableArray *selectedPersonFofs = [[NSMutableArray alloc] init];
     Person *person = [[Person alloc] init];
