@@ -1,29 +1,25 @@
-
+//
+//  InvitationController.h
+//  DyFocus
+//
+//  Created by Cassio Marcos Goulart on 3/13/13.
+//  Copyright (c) 2013 dyfocus. All rights reserved.
+//
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-@protocol InvitationDelegate
+@interface InvitationController : UIViewController <UITextViewDelegate, MFMailComposeViewControllerDelegate>
+{
+    IBOutlet UIView *infoView;
+    IBOutlet UITextView *messageTextView;
 
-@required
-
-- (NSString *)title;
-- (NSString *)description;
-- (NSString *)hintText;
-- (void)saveInviteWithText:(NSString *)text;
-
-@end
-
-
-@interface InvitationController : UIViewController <UITextViewDelegate, MFMailComposeViewControllerDelegate> {
-	UITextView *m_messageView;
-	id m_delegate;
     NSMutableArray *selectedPeople;
-    UIView *infoView;
 }
 
-
 @property(nonatomic, retain) NSMutableArray *selectedPeople;
-@property(nonatomic, retain) UIView *infoView;
+@property (retain, nonatomic) IBOutlet UITextView *messageTextView;
+
+- (IBAction)infoButtonTouch:(UIButton *)sender;
 
 @end

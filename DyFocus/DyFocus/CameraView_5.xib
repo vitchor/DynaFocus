@@ -190,7 +190,6 @@
 						<string key="NSFrame">{{0, 524}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -671,8 +670,24 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">firstImage</string>
+						<reference key="source" ref="205335811"/>
+						<reference key="destination" ref="194976224"/>
+					</object>
+					<int key="connectionID">2111</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">secondImage</string>
+						<reference key="source" ref="205335811"/>
+						<reference key="destination" ref="895344131"/>
+					</object>
+					<int key="connectionID">2132</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">firstFocusX</string>
-						<reference key="source" ref="372490531"/>
+						<reference key="source" ref="205335811"/>
 						<object class="IBNSLayoutConstraint" key="destination" id="874008130">
 							<reference key="firstItem" ref="194976224"/>
 							<int key="firstAttribute">5</int>
@@ -690,12 +705,12 @@
 							<int key="contentType">3</int>
 						</object>
 					</object>
-					<int key="connectionID">2168</int>
+					<int key="connectionID">2172</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">firstFocusY</string>
-						<reference key="source" ref="372490531"/>
+						<reference key="source" ref="205335811"/>
 						<object class="IBNSLayoutConstraint" key="destination" id="124003274">
 							<reference key="firstItem" ref="194976224"/>
 							<int key="firstAttribute">3</int>
@@ -713,12 +728,12 @@
 							<int key="contentType">3</int>
 						</object>
 					</object>
-					<int key="connectionID">2169</int>
+					<int key="connectionID">2173</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">secondFocusX</string>
-						<reference key="source" ref="372490531"/>
+						<reference key="source" ref="205335811"/>
 						<object class="IBNSLayoutConstraint" key="destination" id="287049389">
 							<reference key="firstItem" ref="895344131"/>
 							<int key="firstAttribute">5</int>
@@ -736,12 +751,12 @@
 							<int key="contentType">3</int>
 						</object>
 					</object>
-					<int key="connectionID">2170</int>
+					<int key="connectionID">2174</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">secondFocusY</string>
-						<reference key="source" ref="372490531"/>
+						<reference key="source" ref="205335811"/>
 						<object class="IBNSLayoutConstraint" key="destination" id="283164991">
 							<reference key="firstItem" ref="895344131"/>
 							<int key="firstAttribute">3</int>
@@ -759,23 +774,7 @@
 							<int key="contentType">3</int>
 						</object>
 					</object>
-					<int key="connectionID">2171</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">firstImage</string>
-						<reference key="source" ref="205335811"/>
-						<reference key="destination" ref="194976224"/>
-					</object>
-					<int key="connectionID">2111</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">secondImage</string>
-						<reference key="source" ref="205335811"/>
-						<reference key="destination" ref="895344131"/>
-					</object>
-					<int key="connectionID">2132</int>
+					<int key="connectionID">2175</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2882,7 +2881,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2171</int>
+			<int key="maxID">2175</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2893,8 +2892,6 @@
 						<string key="cameraView">UIView</string>
 						<string key="cancelButton">UIBarButtonItem</string>
 						<string key="clearButton">UIBarButtonItem</string>
-						<string key="firstFocusX">NSLayoutConstraint</string>
-						<string key="firstFocusY">NSLayoutConstraint</string>
 						<string key="getStartedButton">UIButton</string>
 						<string key="infoButton">UIBarButtonItem</string>
 						<string key="infoView">UIView</string>
@@ -2905,8 +2902,6 @@
 						<string key="popupCloseButton">UIButton</string>
 						<string key="popupDarkView">UIView</string>
 						<string key="popupView">UIView</string>
-						<string key="secondFocusX">NSLayoutConstraint</string>
-						<string key="secondFocusY">NSLayoutConstraint</string>
 						<string key="shootButton">UIBarButtonItem</string>
 						<string key="spinner">UIActivityIndicatorView</string>
 						<string key="testInfoView">UIImageView</string>
@@ -2924,14 +2919,6 @@
 						<object class="IBToOneOutletInfo" key="clearButton">
 							<string key="name">clearButton</string>
 							<string key="candidateClassName">UIBarButtonItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="firstFocusX">
-							<string key="name">firstFocusX</string>
-							<string key="candidateClassName">NSLayoutConstraint</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="firstFocusY">
-							<string key="name">firstFocusY</string>
-							<string key="candidateClassName">NSLayoutConstraint</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="getStartedButton">
 							<string key="name">getStartedButton</string>
@@ -2972,14 +2959,6 @@
 						<object class="IBToOneOutletInfo" key="popupView">
 							<string key="name">popupView</string>
 							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="secondFocusX">
-							<string key="name">secondFocusX</string>
-							<string key="candidateClassName">NSLayoutConstraint</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="secondFocusY">
-							<string key="name">secondFocusY</string>
-							<string key="candidateClassName">NSLayoutConstraint</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="shootButton">
 							<string key="name">shootButton</string>
@@ -3023,13 +3002,33 @@
 					<string key="className">PathView</string>
 					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="firstFocusX">NSLayoutConstraint</string>
+						<string key="firstFocusY">NSLayoutConstraint</string>
 						<string key="firstImage">UIImageView</string>
+						<string key="secondFocusX">NSLayoutConstraint</string>
+						<string key="secondFocusY">NSLayoutConstraint</string>
 						<string key="secondImage">UIImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="firstFocusX">
+							<string key="name">firstFocusX</string>
+							<string key="candidateClassName">NSLayoutConstraint</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="firstFocusY">
+							<string key="name">firstFocusY</string>
+							<string key="candidateClassName">NSLayoutConstraint</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="firstImage">
 							<string key="name">firstImage</string>
 							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="secondFocusX">
+							<string key="name">secondFocusX</string>
+							<string key="candidateClassName">NSLayoutConstraint</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="secondFocusY">
+							<string key="name">secondFocusY</string>
+							<string key="candidateClassName">NSLayoutConstraint</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="secondImage">
 							<string key="name">secondImage</string>

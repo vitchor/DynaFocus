@@ -650,8 +650,13 @@
 }
 
 - (void)personalizeMessage {
-	invitationController = [[[InvitationController alloc] initWithDelegate:self] autorelease];
-    
+
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568){
+        invitationController = [[[InvitationController alloc] initWithNibName:@"InvitationController_i5" bundle:nil] autorelease];
+    }else{
+        invitationController = [[[InvitationController alloc] initWithNibName:@"InvitationController" bundle:nil] autorelease];
+    }
     
     NSArray *selectedIds = [self selectedIds];
     NSMutableArray *selectedPeople = [[[NSMutableArray alloc] init] autorelease];

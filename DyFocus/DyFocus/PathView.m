@@ -13,7 +13,7 @@
 
 @implementation PathView
 
-@synthesize touchPoints, ref, context, enabled, cameraViewController, firstImage, secondImage;
+@synthesize touchPoints, ref, context, enabled, cameraViewController;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -54,8 +54,8 @@
 //                  firstImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, firstImage.frame.size};
 //                  firstImage.center = CGPointMake(cgPoint.x, cgPoint.y);
                     
-                    cameraViewController.firstFocusX.constant = cgPoint.x-40;
-                    cameraViewController.firstFocusY.constant = cgPoint.y-40;
+                    firstFocusX.constant = cgPoint.x-40;
+                    firstFocusY.constant = cgPoint.y-40;
                     
                     [firstImage setHidden:NO];
                     
@@ -65,8 +65,8 @@
 //                  secondImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, secondImage.frame.size};
 //                  secondImage.center = CGPointMake(cgPoint.x, cgPoint.y);
                     
-                    cameraViewController.secondFocusX.constant = cgPoint.x-40;
-                    cameraViewController.secondFocusY.constant = cgPoint.y-40;
+                    secondFocusX.constant = cgPoint.x-40;
+                    secondFocusY.constant = cgPoint.y-40;
 
                     [secondImage setHidden:NO];
                 }
@@ -156,97 +156,259 @@
     return YES;
 }
 
-//- (void) rotateImagesToTheLeft{
-//
-//    NSLog(@"CENTER BEFOOOOOORRRRREEEEE %f", firstImage.center.x);
-//    
-//    
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:0.5];
-//    [UIView setAnimationBeginsFromCurrentState:YES];
-//    [UIView setAnimationRepeatCount:1];
-//    
-//    NSLog(@"CENTER BEFOOOOOORRRRREEEEE222 %f", firstImage.center.x);
-//    
-////    firstImage.transform = CGAffineTransformMakeTranslation(firstImage.center.x,firstImage.center.y);
-//    firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
-//
-//    NSLog(@"CENTER BEFOOOOOORRRRREEEEE3333 %f", firstImage.center.x);
-////    secondImage.transform = CGAffineTransformMakeTranslation(30.0,30.0);
-//    secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
-//
-//    NSLog(@"CENTER BEFOOOOOORRRRREEEEE444 %f", firstImage.center.x);
-//    
-//    [UIView commitAnimations];
-//    
-//    NSLog(@"CENTER AFTEEEEEERRRRRRRRRRR %f",firstImage.center.x);
-//}
+- (void) resetOrientations
+{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    firstImage.transform = CGAffineTransformIdentity;
+    secondImage.transform = CGAffineTransformIdentity;
+    
+    UIImage * portraitImage1 = [UIImage imageNamed:@"1st-focus.png"];
+    UIImage * portraitImage2 = [UIImage imageNamed:@"2nd-focus.png"];
+    
+    if(orientation == UIDeviceOrientationPortrait)
+    {
+        
+        firstImage.image = portraitImage1;
+        
+        secondImage.image = portraitImage2;
+        
+    }
+    else if (orientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        
+        firstImage.image = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+                                                               scale: 1.0
+                                                         orientation: UIImageOrientationDown];
+        [firstImage.image release];
+        
+        
+        secondImage.image = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+                                                                scale: 1.0
+                                                          orientation: UIImageOrientationDown];
+        [secondImage.image release];
+    }
+    else if(orientation == UIDeviceOrientationLandscapeRight)
+    {
+        
+        firstImage.image = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+                                                               scale: 1.0
+                                                         orientation: UIImageOrientationLeft];
+        [firstImage.image release];
+        
+        
+        secondImage.image = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+                                                                scale: 1.0
+                                                          orientation: UIImageOrientationLeft];
+        [secondImage.image release];
+    }
+    else if(orientation == UIDeviceOrientationLandscapeLeft ||
+            orientation == UIDeviceOrientationFaceUp ||
+            orientation == UIDeviceOrientationFaceDown)
+    {
+        firstImage.image = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
+                                                               scale: 1.0
+                                                         orientation: UIImageOrientationRight];
+        [firstImage.image release];
+        
+        
+        secondImage.image = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
+                                                                scale: 1.0
+                                                          orientation: UIImageOrientationRight];
+        [secondImage.image release];
+        
+    }
+    
+    lastOrientation = orientation;
+    
+}
 
+- (void) checkOrientations
+{
+    double duration = 0.3;
+    
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationRepeatCount:1];
+    
+    
+    if (orientation == UIDeviceOrientationLandscapeLeft)
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-right-white" ofType:@"png"]];
+        
+        [cameraViewController.instructionsImageView setImage:helpImage];
+        
+            
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
+            
+        }
+        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown) {
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI/2);
+        }
+        else if(lastOrientation == UIDeviceOrientationLandscapeRight){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, M_PI);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI);
+        }
+        //        else if (lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
+        //            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, 2*M_PI);
+        //            firstImage.transform = CGAffineTransformRotate(firstImage.transform, 2*M_PI);
+        //            secondImage.transform = CGAffineTransformRotate(secondImage.transform, 2*M_PI);
+        //        }
+        
+    }
+    
+    if (orientation == UIDeviceOrientationLandscapeRight )
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-left-white" ofType:@"png"]];
+        
+        [cameraViewController.instructionsImageView setImage:helpImage];
+        
+        
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI/2);
+        }
+        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
+        }
+        else if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI);
+        }
+        
+    }
+    
+    
+    if (orientation == UIDeviceOrientationPortrait)
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
+        
+        [cameraViewController.instructionsImageView setImage:helpImage];
+        
+        
+        if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI/2);
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
+        }
+        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI);
+        }
+    }
+    
+    if (orientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
+        
+        [cameraViewController.instructionsImageView setImage:helpImage];
+        
+        
+        if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI/2);
+        }
+        else if(lastOrientation == UIDeviceOrientationPortrait){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, M_PI);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI);
+        }
+        
+    }
+    
+    if (orientation == UIDeviceOrientationFaceUp){
+        
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
+        }
+        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI/2);
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI);
+        }
+        //        else if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceDown){
+        //            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, 2*M_PI);
+        //            firstImage.transform = CGAffineTransformRotate(firstImage.transform, 2*M_PI);
+        //            secondImage.transform = CGAffineTransformRotate(secondImage.transform, 2*M_PI);
+        //        }
+        
+    }
+    
+    if (orientation == UIDeviceOrientationFaceDown){
+        
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
+        }
+        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI/2);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI/2);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI/2);
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, -M_PI);
+            firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI);
+            secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI);
+        }
+        //        else if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp){
+        //            cameraViewController.testInfoView.transform = CGAffineTransformRotate(cameraViewController.testInfoView.transform, 2*M_PI);
+        //            firstImage.transform = CGAffineTransformRotate(firstImage.transform, 2*M_PI);
+        //            secondImage.transform = CGAffineTransformRotate(secondImage.transform, 2*M_PI);
+        //        }
+        
+    }
+    
+    [UIView commitAnimations];
+    
+    lastOrientation = orientation;
+}
 
-//- (void) rotateImagesToTheLeft{
-//    
-//    UIImage * portraitImage1 = firstImage;
-//    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
-//                                                             scale: 1.0
-//                                                       orientation: UIImageOrientationRight];
-//
-//    UIImage * portraitImage2 = secondImage;
-//    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
-//                                                             scale: 1.0
-//                                                       orientation: UIImageOrientationRight];
-//    [self setNeedsDisplay];
-//    
-//    NSLog(@"GLA");
-//}
-
-//
-//- (void) rotateImagesToTheRight{
-//    
-//    UIImage * portraitImage1 = firstImage;
-//    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
-//                                                                scale: 1.0
-//                                                          orientation: UIImageOrientationLeft];
-//
-//    UIImage * portraitImage2 = secondImage;
-//    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
-//                                                                scale: 1.0
-//                                                          orientation: UIImageOrientationLeft];
-//
-//    [self setNeedsDisplay];
-//    
-//    NSLog(@"GLAGLA");
-//}
-//
-//- (void) rotateImagesToDefault{
-//    
-//    firstImage = [UIImage imageNamed:@"1st-focus.png"];
-//    secondImage = [UIImage imageNamed:@"2nd-focus.png"];
-//
-//    [self setNeedsDisplay];
-//
-//    
-//    NSLog(@"GLAGLAGLA");
-//}
-//
-//-(void)rotateImagesUpsideDown{
-//    
-//    
-//    UIImage * portraitImage1 = [UIImage imageNamed:@"1st-focus.png"];
-//    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
-//                                            scale: 1.0
-//                                      orientation: UIImageOrientationDown];
-//    
-//    UIImage * portraitImage2 = [UIImage imageNamed:@"2nd-focus.png"];
-//    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
-//                                             scale: 1.0
-//                                       orientation: UIImageOrientationDown];
-//
-//    
-//    [self setNeedsDisplay];
-//    
-//    
-//    NSLog(@"GLAGLAGLAGLA");
-//
-//}
+-(void)dealloc
+{
+    [firstImage release];
+    [secondImage release];
+    [firstFocusX release];
+    [firstFocusY release];
+    [secondFocusX release];
+    [secondFocusY release];
+    [super dealloc];
+}
 
 @end

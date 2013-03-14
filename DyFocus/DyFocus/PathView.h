@@ -12,14 +12,23 @@
 
 @interface PathView : UIView {
     
-    NSMutableArray *touchPoints;
-	CGContextRef context;
-    CGColorRef ref;
     bool enabled;
+    
+    CGContextRef context;
+    CGColorRef ref;
+    NSMutableArray *touchPoints;
     NSMutableArray *focusPoints;
+    UIDeviceOrientation lastOrientation;
+    
     CameraView *cameraViewController;
+    
     IBOutlet UIImageView* firstImage;
     IBOutlet UIImageView* secondImage;
+    IBOutlet NSLayoutConstraint *firstFocusX;
+    IBOutlet NSLayoutConstraint *firstFocusY;
+    IBOutlet NSLayoutConstraint *secondFocusX;
+    IBOutlet NSLayoutConstraint *secondFocusY;
+    
 }
 
 @property(nonatomic,retain) NSMutableArray *touchPoints;
@@ -27,15 +36,10 @@
 @property(nonatomic,readwrite)CGColorRef ref;
 @property(nonatomic,readwrite)bool enabled;
 @property(nonatomic,strong)CameraView *cameraViewController;
-@property(nonatomic,retain) IBOutlet UIImageView *firstImage;
-@property(nonatomic,retain) IBOutlet UIImageView *secondImage;
 
--(void)clearPoints;
 -(NSMutableArray *)getPoints;
--(void)setDefaultImages;
--(void)rotateImagesToTheLeft;
--(void)rotateImagesToTheRight;
--(void)rotateImagesToDefault;
--(void)rotateImagesUpsideDown;
+-(void)clearPoints;
+-(void)resetOrientations;
+-(void)checkOrientations;
 
 @end
