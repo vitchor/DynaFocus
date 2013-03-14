@@ -18,7 +18,7 @@
 @end
 
 @implementation FOFTableController
-@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userFacebookId;
+@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userFacebookId, loadingView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,8 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-
     
     UIView *backView = [[UIView alloc] initWithFrame:CGRectZero];
     backView.backgroundColor = [UIColor clearColor];
@@ -57,12 +55,14 @@
     }
     
     [backView release];
-    
+   [loadingView setHidden:YES];    
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    NSLog(@"====viewWillAppear in FOFTableController");
     
     UIView *haeaderFooterView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)] autorelease];
 	haeaderFooterView.backgroundColor = [UIColor clearColor];
@@ -78,8 +78,6 @@
     
     if (!(FOFArray && [FOFArray count] > 0)) {
         // No FOFs to show:
-        
-        //[m_tableView setHidden:YES];
     }
     
     else m_isFOFTableEmpty = FALSE;
@@ -413,6 +411,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        [self refreshCellsImageSizes];
                                        
                                        [LoadView fadeAndRemoveFromView:self.view];
+                                       [loadingView setHidden:YES];
                                    }
                                }
                            }];
