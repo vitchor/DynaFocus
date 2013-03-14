@@ -4,7 +4,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "InvitationController.h"
 
-@interface FacebookController : PeopleController <InvitationDelegate, NSURLConnectionDelegate> {
+@interface FacebookController : PeopleController <NSURLConnectionDelegate> {
 	
 	NSArray *m_permissions;
 	NSString *m_message;
