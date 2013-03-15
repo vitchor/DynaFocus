@@ -14,6 +14,6 @@
 }
 
 @property (nonatomic, readwrite) int index;
-@property (nonatomic, readwrite) NSString *tag;
+@property (nonatomic, retain) NSString *tag;
 
 @end

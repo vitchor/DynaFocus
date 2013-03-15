@@ -16,6 +16,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Flurry.h"
 #import "UIDevice+Hardware.h"
+#import "DyfocusSettings.h"
 
 @implementation CameraView
 
@@ -449,6 +450,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    DyfocusSettings *settings = [DyfocusSettings sharedSettings];
+    if(!settings.isFirstLogin && !popupView.isHidden){
+        [popupView setHidden:YES];
+        settings.isFirstLogin = NO;
+    }
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     [super viewWillAppear:animated];
     
@@ -485,6 +491,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+<<<<<<< HEAD
 //    [pathView resetOrientations];
     
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
@@ -497,6 +504,8 @@
         
     }
     
+=======
+>>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
     [shootButton setEnabled:true];
     
     if (!captureSession) {

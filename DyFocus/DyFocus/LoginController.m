@@ -9,6 +9,7 @@
 #import "LoginController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
+#import "DyfocusSettings.h"
 
 @interface LoginController ()
 
@@ -105,9 +106,11 @@
 }
 
 - (void) connectWithFacebook {
+    DyfocusSettings *settings = [DyfocusSettings sharedSettings];
+    settings.isFirstLogin = YES;
+    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate signin];
-    
 }
 
 - (void) showsPreviousFof {

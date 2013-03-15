@@ -266,7 +266,6 @@
     
     if (imageUserPicture.tag != 420) {
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        NSLog(@"==== LOAD LIST PROFILE PICTURE");
         [imageLoader loadListProfilePicture:fof.m_userId andFOFId:fof.m_id andImageView:imageUserPicture];
     }
     

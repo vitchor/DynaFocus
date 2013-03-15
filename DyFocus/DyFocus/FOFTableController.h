@@ -11,6 +11,7 @@
 
 @interface FOFTableController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     IBOutlet UITableView *m_tableView;
+    IBOutlet UIView *loadingView;
     NSMutableArray *FOFArray;
     NSMutableDictionary *cellHeightDictionary;
     BOOL shouldHideNavigationBar;
@@ -24,6 +25,7 @@
     BOOL m_isFOFTableEmpty;
 }
 
+@property (nonatomic,retain) IBOutlet UIView *loadingView;
 @property (nonatomic, retain) IBOutlet UITableView *m_tableView;
 @property (nonatomic, retain) IBOutlet NSMutableArray *FOFArray;
 @property (nonatomic, readwrite) BOOL shouldHideNavigationBar;

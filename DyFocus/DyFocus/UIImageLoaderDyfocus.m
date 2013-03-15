@@ -221,8 +221,8 @@
     } else{
         FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
         friendProfileController.hidesBottomBarWhenPushed = YES;
-        friendProfileController.userFacebookId = facebookId;
-        friendProfileController.userName = userName;
+        friendProfileController.userFacebookId = [facebookId copy];
+        friendProfileController.userName = [userName copy];
         
         [navController pushViewController:friendProfileController animated:true];
         [navController setNavigationBarHidden:NO animated:TRUE];
