@@ -16,6 +16,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Flurry.h"
 #import "UIDevice+Hardware.h"
+#import "DyfocusSettings.h"
 
 @implementation CameraView
 
@@ -490,14 +491,10 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
-    if(popupView.tag != 420) {
-        //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
-        //[[mToastMessage setDuration:iToastDurationNormal] show];
-        
-        [popupView setHidden:NO];
-        [popupView setTag:420];
-        
+    DyfocusSettings *settings = [DyfocusSettings sharedSettings];
+    if(!settings.isFirstLogin && !popupView.isHidden){
+        [popupView setHidden:YES];
+        settings.isFirstLogin = NO;
     }
     
     [shootButton setEnabled:true];

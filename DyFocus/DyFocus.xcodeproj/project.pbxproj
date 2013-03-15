@@ -46,6 +46,7 @@
 		44362AFD167E8D730007944B /* SplashScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44362AFB167E8D730007944B /* SplashScreenController.m */; };
 		44362AFE167E8D730007944B /* SplashScreenController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44362AFC167E8D730007944B /* SplashScreenController.xib */; };
 		44362B00167E8E590007944B /* big_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 44362AFF167E8E590007944B /* big_logo.png */; };
+		4445108316F2866800DAE209 /* DyfocusSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4445108216F2866800DAE209 /* DyfocusSettings.m */; };
 		444ACB0A15EDB38D00A5D581 /* DyfocusUITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 444ACB0915EDB38C00A5D581 /* DyfocusUITabBarController.m */; };
 		444ACB1F15EDF1FB00A5D581 /* DyfocusUINavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 444ACB1E15EDF1FB00A5D581 /* DyfocusUINavigationController.m */; };
 		444C505C16593878006C8CD3 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 444C504F16593878006C8CD3 /* NSObject+SBJSON.m */; };
@@ -231,6 +232,8 @@
 		44362AFB167E8D730007944B /* SplashScreenController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashScreenController.m; sourceTree = "<group>"; };
 		44362AFC167E8D730007944B /* SplashScreenController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashScreenController.xib; sourceTree = "<group>"; };
 		44362AFF167E8E590007944B /* big_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = big_logo.png; sourceTree = "<group>"; };
+		4445108116F2866800DAE209 /* DyfocusSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DyfocusSettings.h; sourceTree = "<group>"; };
+		4445108216F2866800DAE209 /* DyfocusSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DyfocusSettings.m; sourceTree = "<group>"; };
 		444ACB0815EDB38C00A5D581 /* DyfocusUITabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DyfocusUITabBarController.h; sourceTree = "<group>"; };
 		444ACB0915EDB38C00A5D581 /* DyfocusUITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DyfocusUITabBarController.m; sourceTree = "<group>"; };
 		444ACB1D15EDF1FB00A5D581 /* DyfocusUINavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DyfocusUINavigationController.h; sourceTree = "<group>"; };
@@ -595,6 +598,15 @@
 			name = SplashScreenController;
 			sourceTree = "<group>";
 		};
+		4445108016F2863D00DAE209 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4445108116F2866800DAE209 /* DyfocusSettings.h */,
+				4445108216F2866800DAE209 /* DyfocusSettings.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		444C504016593636006C8CD3 /* InvitationController */ = {
 			isa = PBXGroup;
 			children = (
@@ -834,6 +846,7 @@
 		4496800D164D80ED00F76FCF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4445108016F2863D00DAE209 /* Settings */,
 				44C0B0AB16EBE6DB00DF38E2 /* UIImageLoaderDyfocus */,
 				04EEABE316EA813B001BCEE3 /* CustomBadge */,
 				040824EE16E935CF00A29229 /* PFCache */,
@@ -1194,6 +1207,7 @@
 				04EEABED16EA92F0001BCEE3 /* NotificationTableViewController.m in Sources */,
 				04EEABF116EA9367001BCEE3 /* NotificationTableViewCell.m in Sources */,
 				44C0B0AE16EBE7A700DF38E2 /* UIImageLoaderDyfocus.m in Sources */,
+				4445108316F2866800DAE209 /* DyfocusSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
