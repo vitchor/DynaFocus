@@ -456,6 +456,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    DyfocusSettings *settings = [DyfocusSettings sharedSettings];
+    if(!settings.isFirstLogin && !popupView.isHidden){
+        [popupView setHidden:YES];
+        settings.isFirstLogin = NO;
+    }
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     [super viewWillAppear:animated];
     
@@ -491,12 +496,6 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    DyfocusSettings *settings = [DyfocusSettings sharedSettings];
-    if(!settings.isFirstLogin && !popupView.isHidden){
-        [popupView setHidden:YES];
-        settings.isFirstLogin = NO;
-    }
-    
     [shootButton setEnabled:true];
     [clearButton setEnabled:true];
     
