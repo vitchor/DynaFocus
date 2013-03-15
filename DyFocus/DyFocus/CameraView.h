@@ -17,7 +17,8 @@
     IBOutlet PathView *pathView;
     
     IBOutlet UIButton *getStartedButton;
-    IBOutlet UIButton *torchButton;
+    IBOutlet UIButton *torchOneButton;
+    IBOutlet UIButton *torchTwoButton;
     
     IBOutlet UIButton *cancelButton;
     IBOutlet UIButton *shootButton;
@@ -34,6 +35,7 @@
     iToast *mToastMessage;
     
     int mFOFIndex;
+    int torchOnFocusPoints;
     
     bool isObserving;
     bool isTorchOn;
@@ -68,7 +70,8 @@
 @property(nonatomic,retain) IBOutlet UIView *popupDarkView;
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic,retain) IBOutlet UIView *loadingView;
-@property(nonatomic,retain) IBOutlet UIButton *torchButton;
+@property(nonatomic,retain) IBOutlet UIButton *torchOneButton;
+@property(nonatomic,retain) IBOutlet UIButton *torchTwoButton;
 @property(nonatomic,retain) IBOutlet UIImageView *instructionsImageView;
 
 @end

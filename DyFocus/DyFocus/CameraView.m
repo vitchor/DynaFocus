@@ -20,12 +20,28 @@
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchButton, instructionsImageView;
+@synthesize cameraView, pathView, shootButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchOneButton, torchTwoButton, instructionsImageView;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
     NSError *error = nil;
+    
     if ([mCaptureDevice lockForConfiguration:&error]) {
+        
+        if (mFOFIndex > 0) {
+            NSLog(@"On Focus Update - current value for torchOnFocusPoints: %d",torchOnFocusPoints);
+            if (torchOnFocusPoints == 2 || torchOnFocusPoints == 3) {
+                NSLog(@"Turning freaking torch on!");
+                isTorchOn = false;
+                [self setTorchOn:!isTorchOn];
+            } else {
+                NSLog(@"Turning freaking torch off!");
+                isTorchOn = true;
+                [self setTorchOn:!isTorchOn];
+            }
+            
+            torchOnFocusPoints = 0;
+        }
         
     
         if ([mCaptureDevice isExposurePointOfInterestSupported]) {
@@ -286,6 +302,9 @@
                      } else {
                          NSLog(@" FINISHED PICTURE");
                          
+                         isTorchOn = true;
+                         [self setTorchOn:!isTorchOn];
+                         
                          pathView.enabled = true;
                          
                          FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
@@ -322,6 +341,42 @@
     [self setTorchOn:isTorchOn];
 }
 
+// Logic for variable torchOnFocusPoints:
+// 0: no torch on any point
+// 1: torch on focus point 1
+// 2: torch on focus point 2
+// 3: torch on both focus points
+
+-(void) toggleTorchForFocusOne {
+    if (torchOnFocusPoints == 1 || torchOnFocusPoints == 3) {
+        // torch for focus point 1 is on, turn it off immediately
+        isTorchOn = true;
+        [self setTorchOn:!isTorchOn];
+        torchOnFocusPoints -= 1;
+    } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 2) {
+        // torch for focus point 1 is off, turn it on immediately
+        torchOnFocusPoints += 1;
+        isTorchOn = false;
+        [self setTorchOn:!isTorchOn];
+    } else {
+        torchOnFocusPoints = 1;
+        isTorchOn = false;
+        [self setTorchOn:!isTorchOn];
+    }
+    NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
+}
+
+-(void) toggleTorchForFocusTwo {
+    if (torchOnFocusPoints == 2 || torchOnFocusPoints == 3) {
+        // torch for focus point 2 is on, turn it off when taking second pic
+        torchOnFocusPoints -= 2;
+    } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 1) {
+        // torch for focus point 2 is off, turn it on when taking second pic
+        torchOnFocusPoints += 2;
+    }
+    NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
+}
+
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad
@@ -339,7 +394,8 @@
 //    [cancelButton setAction:@selector(goBackToLastController)];
 
     
-    [torchButton addTarget:self action:@selector(torchToggle) forControlEvents:UIControlEventTouchUpInside];
+    [torchOneButton addTarget:self action:@selector(toggleTorchForFocusOne) forControlEvents:UIControlEventTouchUpInside];
+    [torchTwoButton addTarget:self action:@selector(toggleTorchForFocusTwo) forControlEvents:UIControlEventTouchUpInside];
     
     [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
     
