@@ -491,7 +491,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //    [pathView resetOrientations];
     
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
@@ -504,8 +504,8 @@
         
     }
     
-=======
->>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
+//=======
+//>>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
     [shootButton setEnabled:true];
     
     if (!captureSession) {

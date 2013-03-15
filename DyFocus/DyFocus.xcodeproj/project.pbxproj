@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0402D46B16CFEB9700D61B65 /* heart-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0402D46916CFEB9700D61B65 /* heart-blue.png */; };
-		0402D46C16CFEB9700D61B65 /* message-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0402D46A16CFEB9700D61B65 /* message-blue.png */; };
 		040824F116E935E200A29229 /* PFCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 040824EF16E935E200A29229 /* PFCache.m */; };
 		04292BE71699038F009CF50B /* FOFTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04292BE51699038F009CF50B /* FOFTableController.m */; };
 		04292BE81699038F009CF50B /* FOFTableController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04292BE61699038F009CF50B /* FOFTableController.xib */; };
@@ -77,6 +75,7 @@
 		44AA7BEC1657C43D007D7F27 /* UIStyledLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BEB1657C43D007D7F27 /* UIStyledLabel.m */; };
 		44AA7BF01657C44A007D7F27 /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BEF1657C44A007D7F27 /* FacebookController.m */; };
 		44AA7BF31657C45D007D7F27 /* PeopleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BF21657C45D007D7F27 /* PeopleController.m */; };
+		44AA7BF61657C477007D7F27 /* InvitationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7BF51657C477007D7F27 /* InvitationController.m */; };
 		44AA7C031657FCFC007D7F27 /* AvatarDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 44AA7C021657FCFC007D7F27 /* AvatarDefault.png */; };
 		44AA7C06165803FD007D7F27 /* UITableViewCellWithFlag.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AA7C05165803FC007D7F27 /* UITableViewCellWithFlag.m */; };
 		44B4A0CC167E4B8700956E0C /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B4A0CA167E4B8700956E0C /* LoginController.m */; };
@@ -100,22 +99,19 @@
 		7B042B7516B95ED500998917 /* dyfocus-instructions-horiz-left-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B042B7316B95ED200998917 /* dyfocus-instructions-horiz-left-white.png */; };
 		7B042B7616B95ED500998917 /* dyfocus-instructions-horiz-right-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B042B7416B95ED300998917 /* dyfocus-instructions-horiz-right-white.png */; };
 		7B089F6716B1382900700815 /* dyfocus-instructions-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B089F6616B1382900700815 /* dyfocus-instructions-white.png */; };
+		7B0EC6EE16F3861900606626 /* CameraViewTemp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6ED16F3861900606626 /* CameraViewTemp.xib */; };
+		7B0EC6F916F3864C00606626 /* CameraView-CameraIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6EF16F3864C00606626 /* CameraView-CameraIcon.png */; };
+		7B0EC6FA16F3864C00606626 /* CameraView-CancelIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F016F3864C00606626 /* CameraView-CancelIcon.png */; };
+		7B0EC6FB16F3864C00606626 /* CameraView-HelpIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F116F3864C00606626 /* CameraView-HelpIcon.png */; };
+		7B0EC6FC16F3864C00606626 /* CameraView-LeftButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F216F3864C00606626 /* CameraView-LeftButton.png */; };
+		7B0EC6FD16F3864C00606626 /* CameraView-LeftButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F316F3864C00606626 /* CameraView-LeftButtonPressed.png */; };
+		7B0EC6FE16F3864C00606626 /* CameraView-MenuBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F416F3864C00606626 /* CameraView-MenuBar.png */; };
+		7B0EC6FF16F3864C00606626 /* CameraView-RightButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F516F3864C00606626 /* CameraView-RightButton.png */; };
+		7B0EC70016F3864C00606626 /* CameraView-RightButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */; };
+		7B0EC70116F3864C00606626 /* CameraView-ShootButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */; };
+		7B0EC70216F3864C00606626 /* CameraView-ShootButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F816F3864C00606626 /* CameraView-ShootButtonPressed.png */; };
 		7B3FEC3D16B10381004C8048 /* FriendProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3C16B10381004C8048 /* FriendProfileController.m */; };
 		7B3FEC3F16B10445004C8048 /* FriendProfileController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3E16B10445004C8048 /* FriendProfileController.xib */; };
-		7B5524BA16F24A6E0026DA9C /* InvitationController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524B916F24A6E0026DA9C /* InvitationController_i5.xib */; };
-		7B5524C516F24F960026DA9C /* CameraView-CameraIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524BB16F24F960026DA9C /* CameraView-CameraIcon.png */; };
-		7B5524C616F24F960026DA9C /* CameraView-CancelIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524BC16F24F960026DA9C /* CameraView-CancelIcon.png */; };
-		7B5524C716F24F960026DA9C /* CameraView-HelpIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524BD16F24F960026DA9C /* CameraView-HelpIcon.png */; };
-		7B5524C816F24F960026DA9C /* CameraView-LeftButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524BE16F24F960026DA9C /* CameraView-LeftButton.png */; };
-		7B5524C916F24F960026DA9C /* CameraView-LeftButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524BF16F24F960026DA9C /* CameraView-LeftButtonPressed.png */; };
-		7B5524CA16F24F960026DA9C /* CameraView-MenuBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524C016F24F960026DA9C /* CameraView-MenuBar.png */; };
-		7B5524CB16F24F960026DA9C /* CameraView-RightButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524C116F24F960026DA9C /* CameraView-RightButton.png */; };
-		7B5524CC16F24F960026DA9C /* CameraView-RightButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524C216F24F960026DA9C /* CameraView-RightButtonPressed.png */; };
-		7B5524CD16F24F960026DA9C /* CameraView-ShootButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524C316F24F960026DA9C /* CameraView-ShootButton.png */; };
-		7B5524CE16F24F960026DA9C /* CameraView-ShootButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524C416F24F960026DA9C /* CameraView-ShootButtonPressed.png */; };
-		7B5524D016F24FF40026DA9C /* CameraViewTemp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B5524CF16F24FF40026DA9C /* CameraViewTemp.xib */; };
-		7B8F70F116F15133008AE9D7 /* InvitationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8F70EF16F15133008AE9D7 /* InvitationController.m */; };
-		7B8F70F216F15133008AE9D7 /* InvitationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B8F70F016F15133008AE9D7 /* InvitationController.xib */; };
 		7BEB1E6316BAA12C00BF7D49 /* share_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */; };
 		AC07F47915B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */; };
 		AC07F47C15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */; };
@@ -188,8 +184,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0402D46916CFEB9700D61B65 /* heart-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-blue.png"; sourceTree = "<group>"; };
-		0402D46A16CFEB9700D61B65 /* message-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "message-blue.png"; sourceTree = "<group>"; };
 		040824EF16E935E200A29229 /* PFCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFCache.m; sourceTree = "<group>"; };
 		040824F016E935E200A29229 /* PFCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFCache.h; sourceTree = "<group>"; };
 		04292BE41699038F009CF50B /* FOFTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableController.h; sourceTree = "<group>"; };
@@ -300,6 +294,8 @@
 		44AA7BEF1657C44A007D7F27 /* FacebookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookController.m; sourceTree = "<group>"; };
 		44AA7BF11657C45D007D7F27 /* PeopleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleController.h; sourceTree = "<group>"; };
 		44AA7BF21657C45D007D7F27 /* PeopleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleController.m; sourceTree = "<group>"; };
+		44AA7BF41657C477007D7F27 /* InvitationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationController.h; sourceTree = "<group>"; };
+		44AA7BF51657C477007D7F27 /* InvitationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationController.m; sourceTree = "<group>"; };
 		44AA7C021657FCFC007D7F27 /* AvatarDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AvatarDefault.png; sourceTree = "<group>"; };
 		44AA7C04165803FC007D7F27 /* UITableViewCellWithFlag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewCellWithFlag.h; sourceTree = "<group>"; };
 		44AA7C05165803FC007D7F27 /* UITableViewCellWithFlag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewCellWithFlag.m; sourceTree = "<group>"; };
@@ -326,24 +322,20 @@
 		7B042B7316B95ED200998917 /* dyfocus-instructions-horiz-left-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-horiz-left-white.png"; sourceTree = "<group>"; };
 		7B042B7416B95ED300998917 /* dyfocus-instructions-horiz-right-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-horiz-right-white.png"; sourceTree = "<group>"; };
 		7B089F6616B1382900700815 /* dyfocus-instructions-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions-white.png"; sourceTree = "<group>"; };
+		7B0EC6ED16F3861900606626 /* CameraViewTemp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewTemp.xib; sourceTree = "<group>"; };
+		7B0EC6EF16F3864C00606626 /* CameraView-CameraIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-CameraIcon.png"; sourceTree = "<group>"; };
+		7B0EC6F016F3864C00606626 /* CameraView-CancelIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-CancelIcon.png"; sourceTree = "<group>"; };
+		7B0EC6F116F3864C00606626 /* CameraView-HelpIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-HelpIcon.png"; sourceTree = "<group>"; };
+		7B0EC6F216F3864C00606626 /* CameraView-LeftButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-LeftButton.png"; sourceTree = "<group>"; };
+		7B0EC6F316F3864C00606626 /* CameraView-LeftButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-LeftButtonPressed.png"; sourceTree = "<group>"; };
+		7B0EC6F416F3864C00606626 /* CameraView-MenuBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-MenuBar.png"; sourceTree = "<group>"; };
+		7B0EC6F516F3864C00606626 /* CameraView-RightButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButton.png"; sourceTree = "<group>"; };
+		7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButtonPressed.png"; sourceTree = "<group>"; };
+		7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButton.png"; sourceTree = "<group>"; };
+		7B0EC6F816F3864C00606626 /* CameraView-ShootButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButtonPressed.png"; sourceTree = "<group>"; };
 		7B3FEC3B16B1036A004C8048 /* FriendProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileController.h; sourceTree = "<group>"; };
 		7B3FEC3C16B10381004C8048 /* FriendProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileController.m; sourceTree = "<group>"; };
 		7B3FEC3E16B10445004C8048 /* FriendProfileController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendProfileController.xib; sourceTree = "<group>"; };
-		7B5524B916F24A6E0026DA9C /* InvitationController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController_i5.xib; sourceTree = "<group>"; };
-		7B5524BB16F24F960026DA9C /* CameraView-CameraIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-CameraIcon.png"; sourceTree = "<group>"; };
-		7B5524BC16F24F960026DA9C /* CameraView-CancelIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-CancelIcon.png"; sourceTree = "<group>"; };
-		7B5524BD16F24F960026DA9C /* CameraView-HelpIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-HelpIcon.png"; sourceTree = "<group>"; };
-		7B5524BE16F24F960026DA9C /* CameraView-LeftButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-LeftButton.png"; sourceTree = "<group>"; };
-		7B5524BF16F24F960026DA9C /* CameraView-LeftButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-LeftButtonPressed.png"; sourceTree = "<group>"; };
-		7B5524C016F24F960026DA9C /* CameraView-MenuBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-MenuBar.png"; sourceTree = "<group>"; };
-		7B5524C116F24F960026DA9C /* CameraView-RightButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButton.png"; sourceTree = "<group>"; };
-		7B5524C216F24F960026DA9C /* CameraView-RightButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButtonPressed.png"; sourceTree = "<group>"; };
-		7B5524C316F24F960026DA9C /* CameraView-ShootButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButton.png"; sourceTree = "<group>"; };
-		7B5524C416F24F960026DA9C /* CameraView-ShootButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButtonPressed.png"; sourceTree = "<group>"; };
-		7B5524CF16F24FF40026DA9C /* CameraViewTemp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewTemp.xib; sourceTree = "<group>"; };
-		7B8F70EE16F15133008AE9D7 /* InvitationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationController.h; sourceTree = "<group>"; };
-		7B8F70EF16F15133008AE9D7 /* InvitationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationController.m; sourceTree = "<group>"; };
-		7B8F70F016F15133008AE9D7 /* InvitationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController.xib; sourceTree = "<group>"; };
 		7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_facebook.png; sourceTree = "<group>"; };
 		AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_72x72.png; path = ../dynafocus_icon_beta1_orange_nofill_72x72.png; sourceTree = "<group>"; };
 		AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_144x144.png; path = ../dynafocus_icon_beta1_orange_nofill_144x144.png; sourceTree = "<group>"; };
@@ -640,10 +632,8 @@
 		444C504016593636006C8CD3 /* InvitationController */ = {
 			isa = PBXGroup;
 			children = (
-				7B8F70EE16F15133008AE9D7 /* InvitationController.h */,
-				7B8F70EF16F15133008AE9D7 /* InvitationController.m */,
-				7B8F70F016F15133008AE9D7 /* InvitationController.xib */,
-				7B5524B916F24A6E0026DA9C /* InvitationController_i5.xib */,
+				44AA7BF41657C477007D7F27 /* InvitationController.h */,
+				44AA7BF51657C477007D7F27 /* InvitationController.m */,
 			);
 			name = InvitationController;
 			sourceTree = "<group>";
@@ -870,7 +860,7 @@
 				441BFFC615B1324700E204D7 /* CameraView.h */,
 				AC606B6815DC4912008FDF8F /* CameraView.m */,
 				ACBAC90616B6400E00AB85C0 /* CameraView.xib */,
-				7B5524CF16F24FF40026DA9C /* CameraViewTemp.xib */,
+				7B0EC6ED16F3861900606626 /* CameraViewTemp.xib */,
 				AC79DE8016B99A2F00CAC486 /* CameraView_5.xib */,
 			);
 			name = CameraView;
@@ -948,27 +938,22 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				7B5524BB16F24F960026DA9C /* CameraView-CameraIcon.png */,
-				7B5524BC16F24F960026DA9C /* CameraView-CancelIcon.png */,
-				7B5524BD16F24F960026DA9C /* CameraView-HelpIcon.png */,
-				7B5524BE16F24F960026DA9C /* CameraView-LeftButton.png */,
-				7B5524BF16F24F960026DA9C /* CameraView-LeftButtonPressed.png */,
-				7B5524C016F24F960026DA9C /* CameraView-MenuBar.png */,
-				7B5524C116F24F960026DA9C /* CameraView-RightButton.png */,
-				7B5524C216F24F960026DA9C /* CameraView-RightButtonPressed.png */,
-				7B5524C316F24F960026DA9C /* CameraView-ShootButton.png */,
-				7B5524C416F24F960026DA9C /* CameraView-ShootButtonPressed.png */,
-=======
+				7B0EC6EF16F3864C00606626 /* CameraView-CameraIcon.png */,
+				7B0EC6F016F3864C00606626 /* CameraView-CancelIcon.png */,
+				7B0EC6F116F3864C00606626 /* CameraView-HelpIcon.png */,
+				7B0EC6F216F3864C00606626 /* CameraView-LeftButton.png */,
+				7B0EC6F316F3864C00606626 /* CameraView-LeftButtonPressed.png */,
+				7B0EC6F416F3864C00606626 /* CameraView-MenuBar.png */,
+				7B0EC6F516F3864C00606626 /* CameraView-RightButton.png */,
+				7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */,
+				7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */,
+				7B0EC6F816F3864C00606626 /* CameraView-ShootButtonPressed.png */,
 				AC972C6B16F299A700ECD2F8 /* message-blue.png */,
 				AC972C6C16F299A700ECD2F8 /* heart-blue.png */,
->>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
 				44DD4B0D16EEBF0A008E80E8 /* AvatarHighResolution.jpg */,
 				04EEABF416EA978B001BCEE3 /* CameraViewInfoButtonBlack.png */,
 				AC1949CD16E91EA5002CA27C /* 1st-focus.png */,
 				AC1949CE16E91EA5002CA27C /* 2nd-focus.png */,
-				0402D46916CFEB9700D61B65 /* heart-blue.png */,
-				0402D46A16CFEB9700D61B65 /* message-blue.png */,
 				04C5F82216BABB4800E8C289 /* fb_share_button.png */,
 				AC79DE7C16B98C2400CAC486 /* Default@2x.png */,
 				AC3FE6CE16B967AC005252F2 /* Default-568h@2x.png */,
@@ -1169,8 +1154,6 @@
 				AC3116B116BAAC9B00E18094 /* selected-black@2x.png in Resources */,
 				AC3116B216BAAC9B00E18094 /* tabbar-back-divided@2x.png in Resources */,
 				04C5F82316BABB4800E8C289 /* fb_share_button.png in Resources */,
-				0402D46B16CFEB9700D61B65 /* heart-blue.png in Resources */,
-				0402D46C16CFEB9700D61B65 /* message-blue.png in Resources */,
 				AC1949CF16E91EA5002CA27C /* 1st-focus.png in Resources */,
 				AC1949D016E91EA5002CA27C /* 2nd-focus.png in Resources */,
 				04EEABE816EA876A001BCEE3 /* ProfileController_i5.xib in Resources */,
@@ -1178,24 +1161,19 @@
 				04EEABF316EA938A001BCEE3 /* NotificationTableViewCell.xib in Resources */,
 				04EEABF516EA978B001BCEE3 /* CameraViewInfoButtonBlack.png in Resources */,
 				44DD4B0E16EEBF0A008E80E8 /* AvatarHighResolution.jpg in Resources */,
-<<<<<<< HEAD
-				7B8F70F216F15133008AE9D7 /* InvitationController.xib in Resources */,
-				7B5524BA16F24A6E0026DA9C /* InvitationController_i5.xib in Resources */,
-				7B5524C516F24F960026DA9C /* CameraView-CameraIcon.png in Resources */,
-				7B5524C616F24F960026DA9C /* CameraView-CancelIcon.png in Resources */,
-				7B5524C716F24F960026DA9C /* CameraView-HelpIcon.png in Resources */,
-				7B5524C816F24F960026DA9C /* CameraView-LeftButton.png in Resources */,
-				7B5524C916F24F960026DA9C /* CameraView-LeftButtonPressed.png in Resources */,
-				7B5524CA16F24F960026DA9C /* CameraView-MenuBar.png in Resources */,
-				7B5524CB16F24F960026DA9C /* CameraView-RightButton.png in Resources */,
-				7B5524CC16F24F960026DA9C /* CameraView-RightButtonPressed.png in Resources */,
-				7B5524CD16F24F960026DA9C /* CameraView-ShootButton.png in Resources */,
-				7B5524CE16F24F960026DA9C /* CameraView-ShootButtonPressed.png in Resources */,
-				7B5524D016F24FF40026DA9C /* CameraViewTemp.xib in Resources */,
-=======
 				AC972C6D16F299A700ECD2F8 /* message-blue.png in Resources */,
 				AC972C6E16F299A700ECD2F8 /* heart-blue.png in Resources */,
->>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
+				7B0EC6EE16F3861900606626 /* CameraViewTemp.xib in Resources */,
+				7B0EC6F916F3864C00606626 /* CameraView-CameraIcon.png in Resources */,
+				7B0EC6FA16F3864C00606626 /* CameraView-CancelIcon.png in Resources */,
+				7B0EC6FB16F3864C00606626 /* CameraView-HelpIcon.png in Resources */,
+				7B0EC6FC16F3864C00606626 /* CameraView-LeftButton.png in Resources */,
+				7B0EC6FD16F3864C00606626 /* CameraView-LeftButtonPressed.png in Resources */,
+				7B0EC6FE16F3864C00606626 /* CameraView-MenuBar.png in Resources */,
+				7B0EC6FF16F3864C00606626 /* CameraView-RightButton.png in Resources */,
+				7B0EC70016F3864C00606626 /* CameraView-RightButtonPressed.png in Resources */,
+				7B0EC70116F3864C00606626 /* CameraView-ShootButton.png in Resources */,
+				7B0EC70216F3864C00606626 /* CameraView-ShootButtonPressed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1248,6 +1226,7 @@
 				44AA7BEC1657C43D007D7F27 /* UIStyledLabel.m in Sources */,
 				44AA7BF01657C44A007D7F27 /* FacebookController.m in Sources */,
 				44AA7BF31657C45D007D7F27 /* PeopleController.m in Sources */,
+				44AA7BF61657C477007D7F27 /* InvitationController.m in Sources */,
 				44AA7C06165803FD007D7F27 /* UITableViewCellWithFlag.m in Sources */,
 				444C505C16593878006C8CD3 /* NSObject+SBJSON.m in Sources */,
 				444C505D16593878006C8CD3 /* NSString+ParsingExtensions.m in Sources */,
@@ -1272,11 +1251,7 @@
 				04EEABED16EA92F0001BCEE3 /* NotificationTableViewController.m in Sources */,
 				04EEABF116EA9367001BCEE3 /* NotificationTableViewCell.m in Sources */,
 				44C0B0AE16EBE7A700DF38E2 /* UIImageLoaderDyfocus.m in Sources */,
-<<<<<<< HEAD
-				7B8F70F116F15133008AE9D7 /* InvitationController.m in Sources */,
-=======
 				4445108316F2866800DAE209 /* DyfocusSettings.m in Sources */,
->>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1381,13 +1356,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
-				PROVISIONING_PROFILE = "435E490E-B635-4C10-BB77-3EA2B5646600";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "435E490E-B635-4C10-BB77-3EA2B5646600";
-=======
 				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
->>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1417,13 +1387,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
-				PROVISIONING_PROFILE = "435E490E-B635-4C10-BB77-3EA2B5646600";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "435E490E-B635-4C10-BB77-3EA2B5646600";
-=======
 				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
->>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
