@@ -352,12 +352,14 @@
         // torch for focus point 1 is on, turn it off immediately
         isTorchOn = true;
         [self setTorchOn:!isTorchOn];
+        [torchOneButton setImage:[UIImage imageNamed:@"CameraView-TorchOneOff.png"] forState:UIControlStateNormal];
         torchOnFocusPoints -= 1;
     } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 2) {
         // torch for focus point 1 is off, turn it on immediately
         torchOnFocusPoints += 1;
         isTorchOn = false;
         [self setTorchOn:!isTorchOn];
+        [torchOneButton setImage:[UIImage imageNamed:@"CameraView-TorchOneOn.png"] forState:UIControlStateNormal];
     } else {
         torchOnFocusPoints = 1;
         isTorchOn = false;
@@ -370,9 +372,11 @@
     if (torchOnFocusPoints == 2 || torchOnFocusPoints == 3) {
         // torch for focus point 2 is on, turn it off when taking second pic
         torchOnFocusPoints -= 2;
+        [torchTwoButton setImage:[UIImage imageNamed:@"CameraView-TorchTwoOff.png"] forState:UIControlStateNormal];
     } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 1) {
         // torch for focus point 2 is off, turn it on when taking second pic
         torchOnFocusPoints += 2;
+        [torchTwoButton setImage:[UIImage imageNamed:@"CameraView-TorchTwoOn.png"] forState:UIControlStateNormal];
     }
     NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
 }
@@ -519,6 +523,8 @@
     
     [infoButton setEnabled:true];
     [cancelButton setEnabled:true];
+    [torchOneButton setImage:[UIImage imageNamed:@"CameraView-TorchOneOff.png"] forState:UIControlStateNormal];
+    [torchTwoButton setImage:[UIImage imageNamed:@"CameraView-TorchTwoOff.png"] forState:UIControlStateNormal];
     
     mFOFIndex = 0;
     
