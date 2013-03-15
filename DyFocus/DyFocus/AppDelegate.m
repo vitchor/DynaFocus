@@ -235,7 +235,7 @@
         cameraViewController = [[CameraView alloc] initWithNibName:@"CameraView_5" bundle:nil];
     } else {
         // code for 3.5-inch screen
-        cameraViewController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
+        cameraViewController = [[CameraView alloc] initWithNibName:@"CameraViewTemp" bundle:nil];
 
     }
     cameraViewController.hidesBottomBarWhenPushed = YES;

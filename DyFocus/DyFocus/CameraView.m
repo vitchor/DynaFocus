@@ -19,7 +19,7 @@
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchButton, testInfoView, instructionsImageView;
+@synthesize cameraView, pathView, shootButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchButton, instructionsImageView;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
@@ -78,7 +78,6 @@
 - (void)disablePictureTaking {
     if (self.navigationItem.rightBarButtonItem.enabled) {
         [shootButton setEnabled:false];
-        [clearButton setEnabled:false];
         [infoButton setEnabled:false];
         [cancelButton setEnabled:false];
         
@@ -329,23 +328,19 @@
     pathView.enabled = true;
     isObserving = false;
     
-    shootButton.target = self;
-    [shootButton setAction:@selector(addObserverToFocus)];
-    
+//    shootButton.target = self;
+//    [shootButton setAction:@selector(addObserverToFocus)];
+//    
+//    infoButton.target = self;
+//    [infoButton setAction:@selector(showInfoView)];
+//    
+//    cancelButton.target = self;
+//    [cancelButton setAction:@selector(goBackToLastController)];
+
     
     [torchButton addTarget:self action:@selector(torchToggle) forControlEvents:UIControlEventTouchUpInside];
     
-    clearButton.target = self;
-    [clearButton setAction:@selector(clearPoints)];
-    
     [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
-    
-    infoButton.target = self;
-    [infoButton setAction:@selector(showInfoView)];
-    
-    cancelButton.target = self;
-    [cancelButton setAction:@selector(goBackToLastController)];
-    
     
     UIImage *redButtonImage = [UIImage imageNamed:@"close.png"];
     
@@ -393,8 +388,8 @@
 {
     [pathView clearPoints];
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate logEvent:@"Clear Points Button"];
+//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+//    [appDelegate logEvent:@"Clear Points Button"];
 }
 
 -(void)addObserverToFocus
@@ -419,7 +414,6 @@
 
         } else {
             [shootButton setEnabled:false];
-            [clearButton setEnabled:false];
             [infoButton setEnabled:false];
             [cancelButton setEnabled:false];
             
@@ -484,12 +478,15 @@
     popupDarkView.layer.masksToBounds = YES;
     [popupDarkView setNeedsDisplay];
     [popupDarkView setNeedsLayout];
-
+    
     [pathView resetOrientations];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+//    [pathView resetOrientations];
+    
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
     if(popupView.tag != 420) {
         //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
@@ -501,7 +498,6 @@
     }
     
     [shootButton setEnabled:true];
-    [clearButton setEnabled:true];
     
     if (!captureSession) {
         [self startCaptureSession];
@@ -519,9 +515,42 @@
     }
     
     [super viewDidAppear:animated];
-    
-    
+
 }
+
+- (IBAction)cancelAction:(UIButton *)sender {
+    
+    NSLog(@"CANCEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEL");
+
+//    UIImage * image = [UIImage imageNamed:@"CameraView-LeftButtonPressed.png"];
+//    
+//    [cancelButton setImage:image forState:UIControlStateNormal];
+    
+   [self goBackToLastController];
+}
+
+- (IBAction)shootAction:(UIButton *)sender {
+    
+    NSLog(@"SHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOTTTTT");
+    
+//    UIImage * image = [UIImage imageNamed:@"CameraView-ShootButtonPressed.png"];
+//
+//    [shootButton setImage:image forState:UIControlStateNormal];
+    
+    [self addObserverToFocus];
+}
+
+- (IBAction)helpAction:(UIButton *)sender {
+    
+    NSLog(@"HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELP");
+    
+//    UIImage * image = [UIImage imageNamed:@"CameraView-RightButtonPressed.png"];
+//    
+//    [infoButton setImage:image forState:UIControlStateNormal];
+
+    [self showInfoView];
+}
+
 
 - (void)showToast:(NSString *)text {
 
@@ -570,6 +599,9 @@
 {
     [mFocalPoints release];
     [mFrames release];
+    [cancelButton release];
+    [shootButton release];
+    [infoButton release];
     [super dealloc];
 }
 
