@@ -39,7 +39,7 @@
     
     self.m_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    if (refreshHeaderView == nil) {
+    if (!refreshHeaderView && refreshString) {
         
         refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - m_tableView.bounds.size.height, 320.0f, m_tableView.bounds.size.height)];
         
@@ -267,7 +267,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
-	if (scrollView.isDragging) {
+	if (scrollView.isDragging && refreshHeaderView) {
 		if (refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_reloading) {
 			[refreshHeaderView setState:EGOOPullRefreshNormal];
 		} else if (refreshHeaderView.state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_reloading) {
@@ -306,7 +306,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 		[self refreshCellsImageSizes];
 	}
     
-    if (scrollView.contentOffset.y <= - 65.0f && !_reloading) {
+    if (scrollView.contentOffset.y <= - 65.0f && !_reloading && refreshHeaderView) {
 		_reloading = YES;
 		[self reloadTableViewDataSource];
 		[refreshHeaderView setState:EGOOPullRefreshLoading];
@@ -347,7 +347,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         [UIView commitAnimations];
     }
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:refreshString]];
+    
+    NSString *requestString = [NSString stringWithFormat: @"%@%@", dyfocus_url, refreshString];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: requestString]];
     
     NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
     

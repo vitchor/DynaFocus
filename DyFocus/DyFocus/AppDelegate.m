@@ -24,7 +24,7 @@
 
 @implementation Notification
 
-@synthesize m_message, m_userId, m_notificationId, m_wasRead;
+@synthesize m_message, m_userId, m_notificationId, m_wasRead, m_triggerId, m_triggerType;
 
 +(Notification *)notificationFromJSON: (NSDictionary *)json {
     Notification *notification = [Notification alloc];
@@ -33,7 +33,10 @@
     notification.m_userId = [json objectForKey:@"user_facebook_id"];
     notification.m_notificationId = [[json objectForKey:@"notification_id"] stringValue];
     notification.m_wasRead = [[json objectForKey:@"was_read"] intValue] ==  1;
-
+    notification.m_triggerId = [[json objectForKey:@"trigger_id"] intValue];
+    notification.m_triggerType = [[json objectForKey:@"trigger_type"] intValue];
+    
+    NSLog(@"NOTIFICATION ID: %d AND TYPE: %d", notification.m_triggerId, notification.m_triggerType);
     
     return notification;
 }

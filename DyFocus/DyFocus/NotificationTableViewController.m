@@ -233,6 +233,37 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Table Delegate Methods
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Notification *notification = [notifications objectAtIndex:indexPath.row];
+    
+    if (notification.m_triggerType == NOTIFICATION_LIKED_FOF || notification.m_triggerType == NOTIFICATION_COMMENTED_FOF) {
+     
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        
+        for (FOF *fof in delegate.userFofArray) {
+         
+            if ([fof.m_id intValue] == notification.m_triggerId) {
+                
+                FOFTableController *tableController = [[FOFTableController alloc] init];
+                
+                NSMutableArray *array = [NSMutableArray arrayWithObject:fof];
+                tableController.FOFArray = array;
+                tableController.shouldHideNavigationBar = NO;
+                
+                tableController.navigationItem.title = @"Notification";
+                tableController.hidesBottomBarWhenPushed = YES;
+                
+                [self.navigationController pushViewController:tableController animated:true];
+                [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+                
+                break;
+            }
+        }
+    }
+}
 
 
 @end
