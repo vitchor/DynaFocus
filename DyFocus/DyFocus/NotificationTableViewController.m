@@ -95,6 +95,7 @@
                                        }
                                        
                                        [notificationsTableView reloadData];
+                                       [self refreshImages];
                                
                                        //Everything is updated on our side! Let's mark everything as read!
                                        
