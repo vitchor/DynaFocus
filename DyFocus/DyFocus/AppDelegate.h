@@ -26,14 +26,28 @@
 #define SHARING 1
 #define FRIENDS 2
 
-#define dyfocus_url @"http://dyfoc.us"
+//#define dyfocus_url @"http://dyfoc.us"
 //#define dyfocus_url @"http://192.168.100.140:8000"
-//#define dyfocus_url @"http://192.168.100.140:8000"
+#define dyfocus_url @"http://192.168.0.109:8000"
 
 #define refresh_user_url @"http://dyfoc.us/uploader/json_user_fof/"
 #define refresh_featured_url @"http://dyfoc.us/uploader/json_featured_fof/"
 #define refresh_feed_url @"http://dyfoc.us/uploader/json_feed/"
 
+@interface Notification: NSObject {
+    NSString *m_message;
+    NSString *m_userId;
+    NSString *m_notificationId;
+    BOOL m_wasRead;
+}
+
++(Notification *) notificationFromJSON: (NSDictionary *)json;
+
+@property (nonatomic, retain) NSString *m_message;
+@property (nonatomic, retain) NSString *m_userId;
+@property (nonatomic, retain) NSString *m_notificationId;
+@property (nonatomic, readwrite) BOOL m_wasRead;
+@end
 
 @interface Like: NSObject {
 	NSString *m_fofId;
@@ -106,11 +120,20 @@
     NSMutableArray *featuredFofArray;
     NSMutableArray *userFofArray;
     NSMutableArray *feedFofArray;
+    NSMutableArray *notificationsArray;
     
     NSMutableArray *friendFofArray;
     Person *currentFriend;
     
     NSString *deviceId;
+    
+    int unreadNotifications;
+    
+    UITabBarItem *profileTab;
+    
+    ProfileController *profileController;
+    
+    bool showNotification;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -133,6 +156,8 @@ extern NSString *const FBSessionStateChangedNotification;
 
 -(void) logEvent:(NSString *)event;
 
+-(void) clearNotifications;
+
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
 
@@ -145,5 +170,7 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSMutableArray *friendFofArray;
 @property (nonatomic, retain)  Person *currentFriend;
 @property (nonatomic, retain)  NSString *deviceId;
+@property (nonatomic, retain)  NSMutableArray *notificationsArray;
+@property (nonatomic, readwrite) int unreadNotifications;
 
 @end

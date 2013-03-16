@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "FOFTableController.h"
 #import "CustomBadge.h"
+#import "NotificationTableViewController.h"
 
 @interface ProfileController ()
 
@@ -19,7 +20,7 @@
 @implementation ProfileController
 
 
-@synthesize logoutButton, myPicturesButton, userPicture;
+@synthesize logoutButton, myPicturesButton, userPicture, notificationButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,17 +53,39 @@
 {
     [super viewDidAppear:animated];
     
-    notificationBadge = [CustomBadge customBadgeWithString:@"2"
-												   withStringColor:[UIColor whiteColor]
-													withInsetColor:[UIColor redColor]
-													withBadgeFrame:YES
-											   withBadgeFrameColor:[UIColor whiteColor]
-														 withScale:1.0
-													   withShining:YES];
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+
+
+    if (delegate.unreadNotifications > 0) {
+        
+        NSString *badgeLabel = [NSString stringWithFormat:@"%d", delegate.unreadNotifications];
+        notificationBadge = [CustomBadge customBadgeWithString:badgeLabel
+                                                   withStringColor:[UIColor whiteColor]
+                                                    withInsetColor:[UIColor redColor]
+                                                    withBadgeFrame:YES
+                                               withBadgeFrameColor:[UIColor whiteColor]
+                                                         withScale:1.0
+                                                       withShining:YES];
     
-    [notificationBadge setFrame:CGRectMake(300, 311, 30, 30)];
+        
+        int badgeWidth = 25; int badgeheight = 25;
+        
+        if (delegate.unreadNotifications > 9) {
+            badgeWidth = 30;
+        }
     
-    [self.view addSubview:notificationBadge];
+        [notificationBadge setFrame:CGRectMake(notificationButton.frame.origin.x + notificationButton.frame.size.width - 3*badgeWidth/5, notificationButton.frame.origin.y - 2*badgeheight/5, badgeWidth, badgeheight)];
+    
+        [self.view addSubview:notificationBadge];
+        
+    } else {
+        
+        if (notificationBadge) {
+            [notificationBadge removeFromSuperview];
+            notificationBadge = nil;
+        }
+        
+    }
 }
 
 - (void)loadImage:(NSString*)uid {
@@ -92,11 +115,30 @@
     
     [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
     
+    [notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
+    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
     self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
     [self loadImage:[appDelegate.myself objectForKey:@"id"]];
 }
+
+-(void) showNotifications {
+
+    NotificationTableViewController *tableController = [[NotificationTableViewController alloc] init];
+    
+    //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    //tableController.notifications = appDelegate.userNotifications;
+    
+    tableController.navigationItem.title = @"Notifications";
+    
+    tableController.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:tableController animated:true];
+    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+
+}
+
 
 - (void)viewDidLoad
 {

@@ -20,8 +20,33 @@
 #import "Flurry.h"
 #import "FOFTableNavigationController.h"
 
-@implementation FOF
+@implementation Notification
 
+@synthesize m_message, m_userId, m_notificationId, m_wasRead;
+
++(Notification *)notificationFromJSON: (NSDictionary *)json {
+    Notification *notification = [Notification alloc];
+    
+    notification.m_message = [json objectForKey:@"message"];
+    notification.m_userId = [json objectForKey:@"user_facebook_id"];
+    notification.m_notificationId = [[json objectForKey:@"notification_id"] stringValue];
+    notification.m_wasRead = [[json objectForKey:@"was_read"] intValue] ==  1;
+
+    
+    return notification;
+}
+
+- (void)dealloc {
+    [m_message release];
+    [m_userId release];
+    [m_notificationId release]; 
+	[super dealloc];
+}
+
+
+@end
+
+@implementation FOF
 
 @synthesize m_name, m_frames, m_comments, m_likes, m_userName, m_userId, m_date, m_userNickname, m_id, m_liked;
 
@@ -123,7 +148,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend, deviceId;
+@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend, deviceId, notificationsArray, unreadNotifications;
 
 - (void)dealloc
 {
@@ -134,6 +159,19 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Flurry startSession:@"QXSZM9GQQVY6RMQQMBQN"];
+    
+    NSDictionary *userinfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    NSLog(@"lalala 2222");
+    CFShow(userinfo);
+    
+    if (userinfo) {
+        showNotification = YES;
+    } else {
+        showNotification = NO;
+    }
+    
+    // Gets info from user to know if app is starting from the notification center or not.x
     
     
     [FBProfilePictureView class];
@@ -213,11 +251,13 @@
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    
+    NSLog(@"SUCESS");
+
     deviceId = [[[[[deviceToken description]
                                stringByReplacingOccurrencesOfString: @"<" withString: @""]
                               stringByReplacingOccurrencesOfString: @">" withString: @""]
                              stringByReplacingOccurrencesOfString: @" " withString: @""] retain];
+    NSLog(deviceId);
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
@@ -276,15 +316,35 @@
     [friendsTab setFinishedSelectedImage:[UIImage imageNamed:@"df_friends_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_friends.png"]];
     [friendsNavigationController setTabBarItem:friendsTab];
     
-    // Profile Controller
-    ProfileController *profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
+    
+    if (screenBounds.size.height == 568) {
+        // Profile Controller
+        profileController = [[ProfileController alloc] initWithNibName:@"ProfileController_i5" bundle:nil];
+    } else {
+        profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
+    }
     
     DyfocusUINavigationController *profileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:profileController];
     //    profileController.hidesBottomBarWhenPushed = NO;
     
     profileNavigationController.navigationBar.barStyle = UIBarStyleBlack;
     
-    UITabBarItem *profileTab = [[UITabBarItem alloc] initWithTitle:@"Profile" image:[UIImage imageNamed:@"df_profile"] tag:5];
+    profileTab = [[UITabBarItem alloc] initWithTitle:@"Profile" image:[UIImage imageNamed:@"df_profile"] tag:5];
+    
+    unreadNotifications = 0;
+    for (Notification *notification in self.notificationsArray) {
+        
+        if (!notification.m_wasRead) {
+            unreadNotifications = unreadNotifications + 1;
+        }
+    }
+    
+    if (unreadNotifications > 0) {
+        profileTab.badgeValue = [NSString stringWithFormat:@"%d", unreadNotifications];
+    }
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = unreadNotifications;    
+    
     [profileTab setFinishedSelectedImage:[UIImage imageNamed:@"df_profile_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_profile.png"]];
     [profileNavigationController setTabBarItem:profileTab];
     
@@ -308,6 +368,11 @@
     self.window.rootViewController  = self.tabBarController;
     
     [self.window addSubview:self.tabBarController.view];
+    
+    if (showNotification) {
+        [self showNotificationView];
+        showNotification = NO;
+    }
 }
 
 -(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString andUserId: (NSString *)userId {
@@ -803,6 +868,28 @@
     NSDictionary *jsonValues = [stringReply JSONValue];
     
     if (jsonValues) {
+        
+        if (self.notificationsArray) {
+            [self.notificationsArray removeAllObjects];
+        } else {
+            self.notificationsArray = [[NSMutableArray alloc] init];
+        }
+        
+        NSDictionary * jsonNotifications = [jsonValues valueForKey:@"notification_list"];
+        
+        if (jsonNotifications) {
+            
+            for (int i = 0; i < [jsonNotifications count]; i++) {
+                
+                NSDictionary *jsonNotification = [jsonNotifications objectAtIndex:i];
+                
+                Notification *notification = [Notification notificationFromJSON:jsonNotification];
+                
+                [self.notificationsArray addObject:notification];
+            }
+        }
+        
+        
         NSDictionary * jsonFriends = [jsonValues valueForKey:@"friends_list"];
         
         if (jsonFriends) {
@@ -1058,7 +1145,61 @@
     [alertButton release];
 }
 
+-(void) clearNotifications {
+    
+    for (Notification *notification in notificationsArray) {
+        notification.m_wasRead = YES;
+    }
+    
+    profileTab.badgeValue = nil;
+    
+    self.unreadNotifications = 0;
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
+}
 
+- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    // Gets called when we get a call when the app is running
+    NSLog(@"lalala");
+    CFShow(userInfo);
+    
+    if ( application.applicationState == UIApplicationStateActive ) {
+        // app was already in the foreground
+        int badge = [[[userInfo objectForKey:@"aps"] objectForKey:@"badge"] intValue];
+        
+        NSLog(@"BADGE? %d", badge);
+        
+        if (badge != 0) {
+            self.unreadNotifications = badge;
+            [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
+            profileTab.badgeValue = [NSString stringWithFormat:@"%d",badge];
+        }
+        
+    } else {
+        [self showNotificationView];
+    }
+    
+
+   
+    
+
+    
+}
+
+-(void)showNotificationView {
+    
+    tabBarController.lastControllerIndex = tabBarController.actualControllerIndex;
+    tabBarController.actualControllerIndex = 4;
+    [tabBarController setSelectedIndex:4];
+
+    [profileController showNotifications];
+    
+    //select profile controller as tab
+    // call profile controller showNotifications
+    
+    
+}
 
 //- (void) setCurrentFriend:(long)friendId{
 //    //BUILD A NEW REQUEST THAT RECEIVES AN ID AND SET BOTH:
