@@ -53,6 +53,7 @@
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];//
     
     [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
+    [notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
@@ -118,21 +119,7 @@
                            }];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    
-    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
-    
-    [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
-    
-    [notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    
-    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
-    [self loadImage:[appDelegate.myself objectForKey:@"id"]];
-}
+
 
 -(void) showNotifications {
 
