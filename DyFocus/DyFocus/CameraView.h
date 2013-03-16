@@ -11,19 +11,18 @@
     AVCaptureConnection *mVideoConnection;
     AVCaptureDevice *mCaptureDevice;
 
-    //IBOutlet UIButton *shootButton;
-    //IBOutlet UIButton *clearButton;
     IBOutlet UIView *cameraView;
     IBOutlet UIView *infoView;
+    
     IBOutlet PathView *pathView;
-    IBOutlet UIBarButtonItem *infoButton;
+    
     IBOutlet UIButton *getStartedButton;
+    IBOutlet UIButton *torchOneButton;
+    IBOutlet UIButton *torchTwoButton;
     
-    IBOutlet UIButton *torchButton;
-    
-    IBOutlet UIBarButtonItem *cancelButton;
-    IBOutlet UIBarButtonItem *clearButton;
-    IBOutlet UIBarButtonItem *shootButton;
+    IBOutlet UIButton *cancelButton;
+    IBOutlet UIButton *shootButton;
+    IBOutlet UIButton *infoButton;
     
     IBOutlet UIActivityIndicatorView *spinner;
     IBOutlet UIView *loadingView;
@@ -36,6 +35,7 @@
     iToast *mToastMessage;
     
     int mFOFIndex;
+    int torchOnFocusPoints;
     
     bool isObserving;
     bool isTorchOn;
@@ -44,21 +44,22 @@
     IBOutlet UIView *popupView;
     IBOutlet UIView *popupDarkView;
     IBOutlet UIImageView *instructionsImageView;
-    IBOutlet UIImageView *testInfoView;
     
-    UIDeviceOrientation lastOrientation;
     
-}
+    
+    }
+
+- (IBAction)cancelAction:(UIButton *)sender;
+- (IBAction)shootAction:(UIButton *)sender;
+- (IBAction)helpAction:(UIButton *)sender;
+
 - (void)showToast:(NSString *)text;
-
 - (void)updateFocusPoint;
-
 - (void)setInitialFocusPoint:(CGPoint)point;
 
-@property(nonatomic,retain) IBOutlet UIBarButtonItem *shootButton;
-@property(nonatomic,retain) IBOutlet UIBarButtonItem *clearButton;
-@property(nonatomic,retain) IBOutlet UIBarButtonItem *cancelButton;
-@property(nonatomic,retain) IBOutlet UIBarButtonItem *infoButton;
+@property(nonatomic,retain) IBOutlet UIButton *shootButton;
+@property(nonatomic,retain) IBOutlet UIButton *cancelButton;
+@property(nonatomic,retain) IBOutlet UIButton *infoButton;
 @property(nonatomic,retain) IBOutlet UIView *cameraView;
 @property(nonatomic,retain) IBOutlet PathView *pathView;
 @property(nonatomic,retain) IBOutlet UIView *infoView;
@@ -69,8 +70,8 @@
 @property(nonatomic,retain) IBOutlet UIView *popupDarkView;
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic,retain) IBOutlet UIView *loadingView;
-@property(nonatomic,retain) IBOutlet UIButton *torchButton;
-@property(nonatomic,retain) IBOutlet UIImageView *testInfoView;
-
+@property(nonatomic,retain) IBOutlet UIButton *torchOneButton;
+@property(nonatomic,retain) IBOutlet UIButton *torchTwoButton;
+@property(nonatomic,retain) IBOutlet UIImageView *instructionsImageView;
 
 @end

@@ -16,15 +16,32 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Flurry.h"
 #import "UIDevice+Hardware.h"
+#import "DyfocusSettings.h"
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, clearButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchButton, testInfoView;
+@synthesize cameraView, pathView, shootButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchOneButton, torchTwoButton, instructionsImageView;
 
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
     NSError *error = nil;
+    
     if ([mCaptureDevice lockForConfiguration:&error]) {
+        
+        if (mFOFIndex > 0) {
+            NSLog(@"On Focus Update - current value for torchOnFocusPoints: %d",torchOnFocusPoints);
+            if (torchOnFocusPoints == 2 || torchOnFocusPoints == 3) {
+                NSLog(@"Turning freaking torch on!");
+                isTorchOn = false;
+                [self setTorchOn:!isTorchOn];
+            } else {
+                NSLog(@"Turning freaking torch off!");
+                isTorchOn = true;
+                [self setTorchOn:!isTorchOn];
+            }
+            
+            torchOnFocusPoints = 0;
+        }
         
     
         if ([mCaptureDevice isExposurePointOfInterestSupported]) {
@@ -78,7 +95,6 @@
 - (void)disablePictureTaking {
     if (self.navigationItem.rightBarButtonItem.enabled) {
         [shootButton setEnabled:false];
-        [clearButton setEnabled:false];
         [infoButton setEnabled:false];
         [cancelButton setEnabled:false];
         
@@ -286,6 +302,9 @@
                      } else {
                          NSLog(@" FINISHED PICTURE");
                          
+                         isTorchOn = true;
+                         [self setTorchOn:!isTorchOn];
+                         
                          pathView.enabled = true;
                          
                          FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
@@ -322,6 +341,46 @@
     [self setTorchOn:isTorchOn];
 }
 
+// Logic for variable torchOnFocusPoints:
+// 0: no torch on any point
+// 1: torch on focus point 1
+// 2: torch on focus point 2
+// 3: torch on both focus points
+
+-(void) toggleTorchForFocusOne {
+    if (torchOnFocusPoints == 1 || torchOnFocusPoints == 3) {
+        // torch for focus point 1 is on, turn it off immediately
+        isTorchOn = true;
+        [self setTorchOn:!isTorchOn];
+        [torchOneButton setImage:[UIImage imageNamed:@"CameraView-TorchOneOff.png"] forState:UIControlStateNormal];
+        torchOnFocusPoints -= 1;
+    } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 2) {
+        // torch for focus point 1 is off, turn it on immediately
+        torchOnFocusPoints += 1;
+        isTorchOn = false;
+        [self setTorchOn:!isTorchOn];
+        [torchOneButton setImage:[UIImage imageNamed:@"CameraView-TorchOneOn.png"] forState:UIControlStateNormal];
+    } else {
+        torchOnFocusPoints = 1;
+        isTorchOn = false;
+        [self setTorchOn:!isTorchOn];
+    }
+    NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
+}
+
+-(void) toggleTorchForFocusTwo {
+    if (torchOnFocusPoints == 2 || torchOnFocusPoints == 3) {
+        // torch for focus point 2 is on, turn it off when taking second pic
+        torchOnFocusPoints -= 2;
+        [torchTwoButton setImage:[UIImage imageNamed:@"CameraView-TorchTwoOff.png"] forState:UIControlStateNormal];
+    } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 1) {
+        // torch for focus point 2 is off, turn it on when taking second pic
+        torchOnFocusPoints += 2;
+        [torchTwoButton setImage:[UIImage imageNamed:@"CameraView-TorchTwoOn.png"] forState:UIControlStateNormal];
+    }
+    NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
+}
+
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad
@@ -329,23 +388,20 @@
     pathView.enabled = true;
     isObserving = false;
     
-    shootButton.target = self;
-    [shootButton setAction:@selector(addObserverToFocus)];
+//    shootButton.target = self;
+//    [shootButton setAction:@selector(addObserverToFocus)];
+//    
+//    infoButton.target = self;
+//    [infoButton setAction:@selector(showInfoView)];
+//    
+//    cancelButton.target = self;
+//    [cancelButton setAction:@selector(goBackToLastController)];
+
     
-    
-    [torchButton addTarget:self action:@selector(torchToggle) forControlEvents:UIControlEventTouchUpInside];
-    
-    clearButton.target = self;
-    [clearButton setAction:@selector(clearPoints)];
+    [torchOneButton addTarget:self action:@selector(toggleTorchForFocusOne) forControlEvents:UIControlEventTouchUpInside];
+    [torchTwoButton addTarget:self action:@selector(toggleTorchForFocusTwo) forControlEvents:UIControlEventTouchUpInside];
     
     [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
-    
-    infoButton.target = self;
-    [infoButton setAction:@selector(showInfoView)];
-    
-    cancelButton.target = self;
-    [cancelButton setAction:@selector(goBackToLastController)];
-    
     
     UIImage *redButtonImage = [UIImage imageNamed:@"close.png"];
     
@@ -393,8 +449,8 @@
 {
     [pathView clearPoints];
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate logEvent:@"Clear Points Button"];
+//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+//    [appDelegate logEvent:@"Clear Points Button"];
 }
 
 -(void)addObserverToFocus
@@ -419,7 +475,6 @@
 
         } else {
             [shootButton setEnabled:false];
-            [clearButton setEnabled:false];
             [infoButton setEnabled:false];
             [cancelButton setEnabled:false];
             
@@ -455,6 +510,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    DyfocusSettings *settings = [DyfocusSettings sharedSettings];
+    if(!settings.isFirstLogin && !popupView.isHidden){
+        [popupView setHidden:YES];
+        settings.isFirstLogin = NO;
+    }
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     [super viewWillAppear:animated];
     
@@ -463,6 +523,8 @@
     
     [infoButton setEnabled:true];
     [cancelButton setEnabled:true];
+    [torchOneButton setImage:[UIImage imageNamed:@"CameraView-TorchOneOff.png"] forState:UIControlStateNormal];
+    [torchTwoButton setImage:[UIImage imageNamed:@"CameraView-TorchTwoOff.png"] forState:UIControlStateNormal];
     
     mFOFIndex = 0;
     
@@ -477,7 +539,6 @@
     }
     
     pathView.cameraViewController = self;
-    [pathView setDefaultImages];
     
     popupDarkView.layer.cornerRadius = 9.0;
     [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
@@ -485,13 +546,16 @@
     popupDarkView.layer.masksToBounds = YES;
     [popupDarkView setNeedsDisplay];
     [popupDarkView setNeedsLayout];
+    
+    [pathView resetOrientations];
 
-
-    lastOrientation = [[UIDevice currentDevice] orientation];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+//<<<<<<< HEAD
+//    [pathView resetOrientations];
+    
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
     if(popupView.tag != 420) {
         //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
@@ -502,8 +566,9 @@
         
     }
     
+//=======
+//>>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
     [shootButton setEnabled:true];
-    [clearButton setEnabled:true];
     
     if (!captureSession) {
         [self startCaptureSession];
@@ -521,9 +586,42 @@
     }
     
     [super viewDidAppear:animated];
-    
-    
+
 }
+
+- (IBAction)cancelAction:(UIButton *)sender {
+    
+    NSLog(@"CANCEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEL");
+
+//    UIImage * image = [UIImage imageNamed:@"CameraView-LeftButtonPressed.png"];
+//    
+//    [cancelButton setImage:image forState:UIControlStateNormal];
+    
+   [self goBackToLastController];
+}
+
+- (IBAction)shootAction:(UIButton *)sender {
+    
+    NSLog(@"SHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOTTTTT");
+    
+//    UIImage * image = [UIImage imageNamed:@"CameraView-ShootButtonPressed.png"];
+//
+//    [shootButton setImage:image forState:UIControlStateNormal];
+    
+    [self addObserverToFocus];
+}
+
+- (IBAction)helpAction:(UIButton *)sender {
+    
+    NSLog(@"HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELP");
+    
+//    UIImage * image = [UIImage imageNamed:@"CameraView-RightButtonPressed.png"];
+//    
+//    [infoButton setImage:image forState:UIControlStateNormal];
+
+    [self showInfoView];
+}
+
 
 - (void)showToast:(NSString *)text {
 
@@ -572,6 +670,9 @@
 {
     [mFocalPoints release];
     [mFrames release];
+    [cancelButton release];
+    [shootButton release];
+    [infoButton release];
     [super dealloc];
 }
 
@@ -579,7 +680,8 @@
 {
     //Because your app is only landscape, your view controller for the view in your
     // popover needs to support only landscape
-    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait ;
+//    return UIInterfaceOrientationMaskAll;
 }
 
 
@@ -590,130 +692,7 @@
 - (void) didRotate:(NSNotification *)notification
 
 {
-    double duration = 0.3;
-    
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    
-    if (orientation == UIDeviceOrientationLandscapeLeft)
-    {
-        
-        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-right-white" ofType:@"png"]];
-        
-        [instructionsImageView setImage:helpImage];
-        
-        NSLog(@"ALOOHAAAA1");
-        
-        [pathView rotateImagesToTheLeft];
-        
-
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:duration];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationRepeatCount:1];
-        
-        if(lastOrientation == UIDeviceOrientationPortrait)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
-        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
-        else if(lastOrientation == UIDeviceOrientationLandscapeRight)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI);
-        
-        [UIView commitAnimations];
-        
-        lastOrientation = orientation;
-    }
-    
-    if (orientation == UIDeviceOrientationLandscapeRight )
-    {
-        
-        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-left-white" ofType:@"png"]];
-        
-        [instructionsImageView setImage:helpImage];
-        
-        NSLog(@"ALOOHAAAA2");
-        
-        [pathView rotateImagesToTheRight];
-        
-        [UIView beginAnimations:nil context:NULL];
-        
-        [UIView setAnimationDuration:duration];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationRepeatCount:1];
-        
-        if(lastOrientation == UIDeviceOrientationPortrait)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
-        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
-        else if(lastOrientation == UIDeviceOrientationLandscapeLeft)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI);
-
-        [UIView commitAnimations];
-        
-        
-        lastOrientation = orientation;
-    }
-    
-
-    if (orientation == UIDeviceOrientationPortrait)
-    {
-        
-        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
-        
-        [instructionsImageView setImage:helpImage];
-        
-        NSLog(@"ALOOHAAAA3");
-        
-        [pathView rotateImagesToDefault];
-        
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:duration];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationRepeatCount:1];
-        
-        if(lastOrientation == UIDeviceOrientationLandscapeLeft)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
-        else if (lastOrientation == UIDeviceOrientationLandscapeRight)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
-        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI);
-        
-        [UIView commitAnimations];        
-            
-        
-        lastOrientation = orientation;
-    }
-    
-    if (orientation == UIDeviceOrientationPortraitUpsideDown)
-    {
-        
-        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
-        
-        [instructionsImageView setImage:helpImage];
-        
-        NSLog(@"ALOOHAAAA4");
-        
-        [pathView rotateImagesUpsideDown];
-        
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:duration];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationRepeatCount:1];
-        
-        if(lastOrientation == UIDeviceOrientationLandscapeLeft)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI/2);
-        else if (lastOrientation == UIDeviceOrientationLandscapeRight)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, -M_PI/2);
-        else if(lastOrientation == UIDeviceOrientationPortrait)
-            testInfoView.transform = CGAffineTransformRotate(testInfoView.transform, M_PI);
-        
-        [UIView commitAnimations];
-     
-        
-        lastOrientation = orientation;
-        
-    }
-
-
+    [pathView checkOrientations];
 }
 
 - (void) setTorchOn:(BOOL)isOn

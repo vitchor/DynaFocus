@@ -12,6 +12,7 @@
 #import "FOFTableController.h"
 #import "CustomBadge.h"
 #import "NotificationTableViewController.h"
+#import "UIImageLoaderDyfocus.h"
 
 @interface ProfileController ()
 
@@ -33,24 +34,34 @@
 
 -(void) showPictures{
     FOFTableController *tableController = [[FOFTableController alloc] init];
-    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    tableController.refreshString = refresh_user_url;
     
     tableController.FOFArray = appDelegate.userFofArray;
     tableController.shouldHideNavigationBar = NO;
-    tableController.refreshString = refresh_user_url;
     
     tableController.navigationItem.title = @"My Pictures";
-    
     tableController.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-    
 }
 
--(void) viewDidAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:FALSE];//
+    
+    [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
+    
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+    [imageLoader loadMyProfilePicture:userPicture];
+}
+
+-(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
@@ -148,14 +159,6 @@
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
 }
 
-
-- (void)logout {
-    
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
-    [appDelegate closeSession];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -170,6 +173,11 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return NO;
+}
+
+- (void)logout {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    [appDelegate closeSession];
 }
 
 @end

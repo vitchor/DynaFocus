@@ -26,18 +26,10 @@
     return self;
 }
 
-- (void) setDefaultImages{
-    
-    firstImage = [UIImage imageNamed:@"1st-focus.png"];
-    secondImage = [UIImage imageNamed:@"2nd-focus.png"];
-    
-//    firstImage = [[UIImageView alloc] initWithImage:firstImageTmp];
-//    secondImage = [[UIImageView alloc] initWithImage:secondImageTmp];
-
-}
-
 - (void)drawRect:(CGRect)rect {
 	
+//    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
     context = UIGraphicsGetCurrentContext();
 	
 	ref =  [[UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:0.3] CGColor];
@@ -46,17 +38,9 @@
 		
         // Old codes used when the "point" and the "line" were drawn:
         //
-        CGContextSetLineWidth(context, 8);
-		CGContextSetStrokeColorWithColor(context, ref);
-        CGContextSetFillColor(context, CGColorGetComponents([UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.9].CGColor));
-        
-		CGPoint firstPoint = [[touchPoints objectAtIndex:0] CGPointValue];
-		
-//        if ([touchPoints count] == 1) {
-//            [firstImage drawInRect:CGRectMake(firstPoint.x - 40, firstPoint.y - 40, 80, 80) blendMode:0 alpha:0.6];
-//            //CGContextFillEllipseInRect(context, CGRectMake(firstPoint.x - 10, firstPoint.y - 10, 20, 20));
-//            
-//        } else if ([touchPoints count] == 2){
+//        CGContextSetLineWidth(context, 8);
+//		CGContextSetStrokeColorWithColor(context, ref);
+//        CGContextSetFillColor(context, CGColorGetComponents([UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.9].CGColor));
         
         if ([touchPoints count] >= 1){
            
@@ -64,45 +48,32 @@
                 
                 CGPoint cgPoint = [(NSValue *)point CGPointValue];
                 
+                
                 if ([touchPoints indexOfObject:point] == 0) {
-                    [firstImage drawInRect:CGRectMake(cgPoint.x - 40, cgPoint.y - 40, 80, 80) blendMode:0 alpha:0.6];
-                   // CGContextDrawImage(context, CGRectMake(cgPoint.x - 50, cgPoint.y - 50, 100, 100), firstImage.CGImage);
+                    
+//                  firstImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, firstImage.frame.size};
+//                  firstImage.center = CGPointMake(cgPoint.x, cgPoint.y);
+                    
+                    firstFocusX.constant = cgPoint.x-40;
+                    firstFocusY.constant = cgPoint.y-40;
+                    
+                    [firstImage setHidden:NO];
+                    
                 }
                 else {
-                    [secondImage drawInRect:CGRectMake(cgPoint.x - 40, cgPoint.y - 40, 80, 80) blendMode:0 alpha:0.6];
-                    //CGContextDrawImage(context, CGRectMake(cgPoint.x - 50, cgPoint.y - 50, 100, 100), secondImage.CGImage);
+                    
+//                  secondImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, secondImage.frame.size};
+//                  secondImage.center = CGPointMake(cgPoint.x, cgPoint.y);
+                    
+                    secondFocusX.constant = cgPoint.x-40;
+                    secondFocusY.constant = cgPoint.y-40;
+
+                    [secondImage setHidden:NO];
                 }
             }
             
         }
         
-            
-//            
-//            CGPoint lastPoint;
-//            for (NSObject *point in touchPoints) {
-//                CGPoint cgPoint = [(NSValue *)point CGPointValue];
-//                //CGContextStrokeEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
-//                
-//                
-//                CGContextMoveToPoint(context, lastPoint.x, lastPoint.y);
-//                
-//                if ([touchPoints indexOfObject:point] != 0) {
-//                    CGContextAddLineToPoint(context, cgPoint.x, cgPoint.y);
-//                    CGContextStrokePath(context);
-//                }
-//                lastPoint = cgPoint;
-//                
-//            }
-//            
-//            for (NSObject *point in touchPoints) {
-//                CGPoint cgPoint = [(NSValue *)point CGPointValue];
-//                CGContextDrawImage(context, CGRectMake(cgPoint.x - 50, cgPoint.y - 50, 100, 100), secondImage.CGImage);
-//                //CGContextFillEllipseInRect(context, CGRectMake(cgPoint.x - 10, cgPoint.y - 10, 20, 20));
-//            }
-            
-//        }
-        
-		//CGContextStrokePath(context);
 	}
 	
 }
@@ -112,6 +83,8 @@
 	
 	if(touchPoints!=nil){
 		[touchPoints removeAllObjects];
+        [firstImage setHidden:YES];
+        [secondImage setHidden:YES];
         [self setNeedsDisplay];
 	}
 }
@@ -183,70 +156,223 @@
     return YES;
 }
 
-
-- (void) rotateImagesToTheLeft{
+- (void) resetOrientations
+{
     
-    UIImage * portraitImage1 = firstImage;
-    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
-                                                             scale: 1.0
-                                                       orientation: UIImageOrientationRight];
-
-    UIImage * portraitImage2 = secondImage;
-    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
-                                                             scale: 1.0
-                                                       orientation: UIImageOrientationRight];
-    [self setNeedsDisplay];
+    NSLog(@"RESEEEEEEEEEEEEEEEEEET");
     
-    NSLog(@"GLA");
+    firstImage.transform = CGAffineTransformIdentity;
+    secondImage.transform = CGAffineTransformIdentity;
+    cancelIcon.transform = CGAffineTransformIdentity;
+    cameraIcon.transform = CGAffineTransformIdentity;
+    helpIcon.transform = CGAffineTransformIdentity;
+
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    if (orientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        [self rotateImagesHalfMoon];
+    }
+    else if(orientation == UIDeviceOrientationLandscapeRight)
+    {
+        [self rotateImagesToTheLeft];
+    }
+    else if(orientation == UIDeviceOrientationLandscapeLeft ||
+            orientation == UIDeviceOrientationFaceUp ||
+            orientation == UIDeviceOrientationFaceDown)
+    {
+        [self rotateImagesToTheRight];
+    }
+    
+    [UIView commitAnimations];
+
+    lastOrientation = orientation;
+    
 }
 
-- (void) rotateImagesToTheRight{
+- (void) checkOrientations
+{
+    double duration = 0.3;
     
-    UIImage * portraitImage1 = firstImage;
-    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
-                                                                scale: 1.0
-                                                          orientation: UIImageOrientationLeft];
-
-    UIImage * portraitImage2 = secondImage;
-    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
-                                                                scale: 1.0
-                                                          orientation: UIImageOrientationLeft];
-
-    [self setNeedsDisplay];
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     
-    NSLog(@"GLAGLA");
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationRepeatCount:1];
+    
+    
+    if (orientation == UIDeviceOrientationLandscapeLeft)
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-right-white" ofType:@"png"]];
+        
+        [cameraViewController.instructionsImageView setImage:helpImage];
+        
+            
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            [self rotateImagesToTheRight];
+        }
+        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown) {
+            [self rotateImagesToTheLeft];
+        }
+        else if(lastOrientation == UIDeviceOrientationLandscapeRight){
+            [self rotateImagesHalfMoon];
+        }
+        
+    }
+    
+    if (orientation == UIDeviceOrientationLandscapeRight )
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-left-white" ofType:@"png"]];
+        
+        [cameraViewController.instructionsImageView setImage:helpImage];
+        
+        
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            [self rotateImagesToTheLeft];
+        }
+        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            [self rotateImagesToTheRight];
+        }
+        else if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
+            [self rotateImagesHalfMoon];
+        }
+        
+    }
+    
+    
+    if (orientation == UIDeviceOrientationPortrait)
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
+        
+        [cameraViewController.instructionsImageView setImage:helpImage];
+        
+        
+        if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
+            [self rotateImagesToTheLeft];
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            [self rotateImagesToTheRight];
+        }
+        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            [self rotateImagesHalfMoon];
+        }
+    }
+    
+    if (orientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        
+        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
+        
+        [cameraViewController.instructionsImageView setImage:helpImage];
+        
+        
+        if(lastOrientation == UIDeviceOrientationLandscapeLeft || lastOrientation == UIDeviceOrientationFaceUp || lastOrientation == UIDeviceOrientationFaceDown){
+            [self rotateImagesToTheRight];
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            [self rotateImagesToTheLeft];
+        }
+        else if(lastOrientation == UIDeviceOrientationPortrait){
+            [self rotateImagesHalfMoon];
+        }
+        
+    }
+    
+    if (orientation == UIDeviceOrientationFaceUp){
+        
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            [self rotateImagesToTheRight];
+        }
+        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            [self rotateImagesToTheLeft];
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            [self rotateImagesHalfMoon];
+        }
+        
+    }
+    
+    if (orientation == UIDeviceOrientationFaceDown){
+        
+        if(lastOrientation == UIDeviceOrientationPortrait){
+            [self rotateImagesToTheRight];
+        }
+        else if(lastOrientation == UIDeviceOrientationPortraitUpsideDown){
+            [self rotateImagesToTheLeft];
+        }
+        else if (lastOrientation == UIDeviceOrientationLandscapeRight){
+            [self rotateImagesHalfMoon];
+        }
+        
+    }
+    
+    [UIView commitAnimations];
+    
+    lastOrientation = orientation;
 }
 
-- (void) rotateImagesToDefault{
-    
-    firstImage = [UIImage imageNamed:@"1st-focus.png"];
-    secondImage = [UIImage imageNamed:@"2nd-focus.png"];
+//-(void) setImagesOrientation: (UIImageOrientation) orientation{
+//    
+//    UIImage * portraitImage1 = [UIImage imageNamed:@"1st-focus.png"];
+//    UIImage * portraitImage2 = [UIImage imageNamed:@"2nd-focus.png"];
+//    UIImage * portraitImage3 = [UIImage imageNamed:@"CameraView-CancelIcon.png"];
+//    UIImage * portraitImage4 = [UIImage imageNamed:@"CameraView-CameraIcon.png"];
+//    UIImage * portraitImage5 = [UIImage imageNamed:@"CameraView-HelpIcon.png"];
+//    
+//    firstImage.image = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage scale: 1.0 orientation: orientation];
+//    [firstImage.image release];
+//    
+//    secondImage.image = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage scale: 1.0 orientation: orientation];
+//    [secondImage.image release];
+//    
+//    cancelIcon.image = [[UIImage alloc] initWithCGImage: portraitImage3.CGImage scale: 1.0 orientation: orientation];
+//    [cancelIcon.image release];
+//    
+//    cameraIcon.image = [[UIImage alloc] initWithCGImage: portraitImage4.CGImage scale: 1.0 orientation: orientation];
+//    [cameraIcon.image release];
+//    
+//    helpIcon.image = [[UIImage alloc] initWithCGImage: portraitImage5.CGImage scale: 1.0 orientation: orientation];
+//    [helpIcon.image release];
+//    
+//}
 
-    [self setNeedsDisplay];
-
-    
-    NSLog(@"GLAGLAGLA");
+-(void)rotateImagesToTheRight{
+    firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
+    secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
+    cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, M_PI/2);
+    cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, M_PI/2);
+    helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI/2);
 }
-
--(void)rotateImagesUpsideDown{
-    
-    
-    UIImage * portraitImage1 = [UIImage imageNamed:@"1st-focus.png"];
-    firstImage = [[UIImage alloc] initWithCGImage: portraitImage1.CGImage
-                                            scale: 1.0
-                                      orientation: UIImageOrientationDown];
-    
-    UIImage * portraitImage2 = [UIImage imageNamed:@"2nd-focus.png"];
-    secondImage = [[UIImage alloc] initWithCGImage: portraitImage2.CGImage
-                                             scale: 1.0
-                                       orientation: UIImageOrientationDown];
-
-    
-    [self setNeedsDisplay];
-    
-    
-    NSLog(@"GLAGLAGLAGLA");
-
+-(void)rotateImagesToTheLeft{
+    firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI/2);
+    secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI/2);
+    cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, -M_PI/2);
+    cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, -M_PI/2);
+    helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, -M_PI/2);
+}
+-(void)rotateImagesHalfMoon{
+    firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI);
+    secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI);
+    cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, M_PI);
+    cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, M_PI);
+    helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI);
+}
+-(void)dealloc
+{
+    [firstImage release];
+    [secondImage release];
+    [firstFocusX release];
+    [firstFocusY release];
+    [secondFocusX release];
+    [secondFocusY release];
+    [cancelIcon release];
+    [cameraIcon release];
+    [helpIcon release];
+    [super dealloc];
 }
 
 @end

@@ -485,7 +485,7 @@
     if ([likes count] == 0) {
         likeListUsers = [[NSMutableString alloc] initWithString:@"No one liked this yet."];
         
-    } else if ([likes count] == 1) {
+    } else if (([likes count] == 1) && ![likeListUsers isEqualToString:@"You"]) {
         [likeListUsers appendString:@" likes this."];
         
     } else {

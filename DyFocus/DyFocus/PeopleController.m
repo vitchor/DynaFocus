@@ -553,10 +553,10 @@
 	// To be overridden
 }
 
-- (void)setImage:(UIImage *)image withId:(int)uid {
-	[m_imageCache setObject:image forKey:[NSNumber numberWithInt:uid]];
-	[self.tableView reloadData];
-}
+//- (void)setImage:(UIImage *)image withId:(int)uid {
+//	[m_imageCache setObject:image forKey:[NSNumber numberWithInt:uid]];
+//	[self.tableView reloadData];
+//}
 
 - (IBAction)inviteButtonClicked:(id)sender {
 	UISegmentedControl *inviteButton = (UISegmentedControl *)sender;
@@ -650,8 +650,13 @@
 }
 
 - (void)personalizeMessage {
-	invitationController = [[[InvitationController alloc] initWithDelegate:self] autorelease];
-    
+
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568){
+        invitationController = [[[InvitationController alloc] initWithNibName:@"InvitationController_i5" bundle:nil] autorelease];
+    }else{
+        invitationController = [[[InvitationController alloc] initWithNibName:@"InvitationController" bundle:nil] autorelease];
+    }
     
     NSArray *selectedIds = [self selectedIds];
     NSMutableArray *selectedPeople = [[[NSMutableArray alloc] init] autorelease];

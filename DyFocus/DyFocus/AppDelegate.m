@@ -19,6 +19,8 @@
 #import "JSON.h"
 #import "Flurry.h"
 #import "FOFTableNavigationController.h"
+#import "NSDyfocusURLRequest.h"
+#import "UIImageLoaderDyfocus.h"
 
 @implementation Notification
 
@@ -273,7 +275,7 @@
         cameraViewController = [[CameraView alloc] initWithNibName:@"CameraView_5" bundle:nil];
     } else {
         // code for 3.5-inch screen
-        cameraViewController = [[CameraView alloc] initWithNibName:@"CameraView" bundle:nil];
+        cameraViewController = [[CameraView alloc] initWithNibName:@"CameraViewTemp" bundle:nil];
 
     }
     cameraViewController.hidesBottomBarWhenPushed = YES;
@@ -552,9 +554,10 @@
                          
                          // Sets the model object myself
                          self.myself = user;
-                         
+                         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+                        [imageLoader cashProfilePicture];
                          NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
-                         
+                        
                          
                          
                          // Lets create the json, with all the user info, that will be used in the request
@@ -773,8 +776,9 @@
              // Sets the model object myself
              self.myself = user;
              
+             UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+             [imageLoader cashProfilePicture];
              NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
-             
              
              // Lets create the json, with all the user info, that will be used in the request
              NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];

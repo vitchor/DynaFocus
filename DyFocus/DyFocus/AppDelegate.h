@@ -21,6 +21,7 @@
 #import "FOFTableController.h"
 
 #import "FOFTableNavigationController.h"
+#import "UIDyfocusImage.h"
 
 #define UPLOADING 0
 #define SHARING 1
@@ -117,6 +118,7 @@
     NSMutableDictionary *friends;
     NSMutableDictionary *dyfocusFriends;    
     NSMutableDictionary *myself;
+    
     NSMutableArray *featuredFofArray;
     NSMutableArray *userFofArray;
     NSMutableArray *feedFofArray;
@@ -161,6 +163,7 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
 
+@property (nonatomic, retain)  UIImage *myPicture;
 @property (nonatomic, retain)  NSMutableDictionary *friends;
 @property (nonatomic, retain)  NSMutableDictionary *dyfocusFriends;
 @property (nonatomic, retain)  NSMutableDictionary *myself;

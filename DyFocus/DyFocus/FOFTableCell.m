@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "NSDyfocusURLRequest.h"
 #import "UIDyfocusImage.h"
+#import "UIImageLoaderDyfocus.h"
 
 @implementation FOFTableCell
 @synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel, lightGrayBrackgroundView;
@@ -45,15 +46,11 @@
 }
 
 - (void) commentButtonPressed {
-    
-    [self showCommentView];
-       
+    [self showCommentView:TRUE];
 }
 
-- (void) showCommentView {
-    
+- (void) showCommentView:(BOOL)isCommenting {
     CommentViewerController *commentController = nil;
-    
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     if (screenBounds.size.height == 568) {
         commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController_i5" andFOF:fof];
@@ -62,17 +59,16 @@
     }
         
     commentController.navigationItem.title = @"Info";
-    
     commentController.hidesBottomBarWhenPushed = YES;
-    
-    commentController.isCommenting = YES;
+    commentController.isCommenting = isCommenting;
+    if(!isCommenting){
+        commentController.hidesBottomBarWhenPushed = !isCommenting;
+    }
     
     commentController.tableCell = self;
     
     [tableView.navigationController setNavigationBarHidden:NO];
-    
     [tableView.navigationController pushViewController:commentController animated:YES];
-
 }
 
 -(void) refreshImageSize {
@@ -211,7 +207,6 @@
         }
         
         for (NSDictionary *frame in fof.m_frames) {
-            
             NSLog([frame debugDescription]);
             [fofUrls addObject:[frame objectForKey:@"frame_url"]];
         }
@@ -225,26 +220,7 @@
 
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
 {
-    CommentViewerController *commentController = nil;
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    if (screenBounds.size.height == 568) {
-        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController_i5" andFOF:fof];
-    } else {
-        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
-    }
-    
-    commentController.navigationItem.title = @"Info";
-    
-    commentController.isCommenting = NO;
-    
-    commentController.hidesBottomBarWhenPushed = YES;
-    
-    commentController.tableCell = self;
-    
-    [tableView.navigationController setNavigationBarHidden:NO];
-    
-    [tableView.navigationController pushViewController:commentController animated:YES];
+    [self showCommentView:FALSE];
 }
 
 
@@ -279,81 +255,18 @@
 
 - (void)loadUserProfile:(UITapGestureRecognizer *)gesture
 {
-    NSLog(@"==== CLICK");
-    NSMutableArray *selectedPersonFofs = [[NSMutableArray alloc] init];
-    Person *person = [[Person alloc] init];
-
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-
-    person = [delegate.dyfocusFriends objectForKey:[NSNumber numberWithLong:[fof.m_userId longLongValue]]];
-
-    //WHEN THE COMMENT BELONGS TO A FRIEND:
-    if(person){
-        delegate.currentFriend = person;
-
-        for (FOF *m_fof in delegate.feedFofArray) {
-
-            if ([m_fof.m_userId isEqualToString: [[NSString alloc] initWithFormat: @"%@", person.tag]]) {
-
-                [selectedPersonFofs addObject:m_fof];
-            }
-        }
-
-        delegate.friendFofArray = selectedPersonFofs;
-
-        FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
-        friendProfileController.hidesBottomBarWhenPushed = YES;
-
-        [friendProfileController clearCurrentUser];
-
-        [tableView.navigationController pushViewController:friendProfileController animated:true];
-        [tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
-        //    // WHEN THE COMMENT BELLONGS TO THE USER HIMSELF:
-        //    }else if ([m_comment.m_userId isEqualToString:[delegate.myself objectForKey:@"id"]]){
-        //        [delegate.tabBarController setSelectedIndex:4];
-        //        [commentController.navigationController release];
-        // WHEN THE COMMENT BELLONGS TO A USER OTHER THAN MYSELF OR A FRIEND OF MINE:
-    } else{
-        FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
-        friendProfileController.hidesBottomBarWhenPushed = YES;
-        friendProfileController.userFacebookId = fof.m_userId;
-        friendProfileController.userName = fof.m_userName;
-
-        [tableView.navigationController pushViewController:friendProfileController animated:true];
-        [tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
-    }
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+    [imageLoader loadUserProfileController:fof.m_userId andUserName:fof.m_userName andNavigationController:tableView.navigationController];
 }
 
 -(void)loadImages {
-
+    UITapGestureRecognizer *singleTapUserName = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)];
+    imageUserPicture.userInteractionEnabled = YES;
+    [imageUserPicture addGestureRecognizer:singleTapUserName];
+    
     if (imageUserPicture.tag != 420) {
-
-        // Load Profile Picture
-       //NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:]];
-        
-        NSDyfocusURLRequest *request = [NSDyfocusURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",fof.m_userId]]];
-        
-        request.id = fof.m_id;
-        
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   if(!error && data) {
-                                       
-                                       UIImage *image = [UIImage imageWithData:data];
-                                       
-                                       if(image && request.id == fof.m_id) {
-                                           [imageUserPicture setImage:image];
-                                           imageUserPicture.tag = 420;
-                                           
-                                           UITapGestureRecognizer *singleTapUserName = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)];
-                                           imageUserPicture.userInteractionEnabled = YES;
-                                           [imageUserPicture addGestureRecognizer:singleTapUserName];
-                                           
-                                           image = nil;
-                                       }
-                                   }
-                               }];
+        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+        [imageLoader loadListProfilePicture:fof.m_userId andFOFId:fof.m_id andImageView:imageUserPicture];
     }
     
     
