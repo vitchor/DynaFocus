@@ -9,6 +9,7 @@
 #import "FOFPreview.h"
 #import "ASIFormDataRequest.h"
 #import "SharingController.h"
+#import "AppDelegate.h"
 
 #define CANCEL 0
 @implementation FOFPreview
@@ -150,6 +151,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"FOFPreview.viewDidAppear"];
 }
 
 - (void) dealloc

@@ -69,6 +69,9 @@
 
 - (void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"FriendProfileController.viewDidAppear"];
 }
 
 - (void)viewDidLoad{

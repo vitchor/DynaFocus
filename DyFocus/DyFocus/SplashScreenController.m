@@ -7,6 +7,7 @@
 //
 
 #import "SplashScreenController.h"
+#import "AppDelegate.h"
 
 @interface SplashScreenController ()
 
@@ -35,6 +36,9 @@
     [super viewDidAppear:animated];
     
     [spinner startAnimating];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"SplashScreenController.viewDidAppear"];
 }
 
 - (void)didReceiveMemoryWarning

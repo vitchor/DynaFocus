@@ -91,6 +91,9 @@
     
     [self refreshCellsImageSizes];
     [self refreshImages];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"FOFTableController.viewDidAppear"];
 }
 
 -(void) refreshCellsImageSizes {

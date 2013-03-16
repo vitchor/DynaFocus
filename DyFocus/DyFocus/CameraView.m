@@ -553,6 +553,10 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"CameraView.viewDidAppear"];
+    
 //<<<<<<< HEAD
 //    [pathView resetOrientations];
     

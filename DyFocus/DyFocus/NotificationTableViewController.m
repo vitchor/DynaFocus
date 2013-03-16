@@ -31,6 +31,10 @@
     [super viewDidAppear:animated];
 
     [self refreshImages];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"NotificationTableViewController.viewDidAppear"];
+
 }
 
 - (void)viewDidLoad

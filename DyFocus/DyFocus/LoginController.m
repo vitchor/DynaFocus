@@ -77,6 +77,13 @@
     frames = [fofs objectAtIndex:fofIndex];
 }
 
+-(void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"LoginController.viewDidAppear"];
+    
+}
 - (void)viewDidLoad
 {
     NSMutableArray *frames = [fofs objectAtIndex:0];

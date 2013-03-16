@@ -67,7 +67,8 @@
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
 
-
+    [delegate logEvent:@"ProfileController.viewDidAppear"];
+    
     if (delegate.unreadNotifications > 0) {
         
         NSString *badgeLabel = [NSString stringWithFormat:@"%d", delegate.unreadNotifications];
