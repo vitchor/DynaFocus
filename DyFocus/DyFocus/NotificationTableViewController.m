@@ -45,16 +45,19 @@
     self.notifications = delegate.notificationsArray;
     
     
-    //TODO: Send read notifications request
     NSString *requestUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/read_notification/",dyfocus_url] autorelease];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     
     NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
 
-    Notification *notification =[notifications objectAtIndex:0];
+    if (notifications && [notifications count] > 0 ) {
+        Notification *notification =[notifications objectAtIndex:0];
+        [jsonRequestObject setObject:notification.m_notificationId forKey:@"notification_id"];
+    } else {
+        [jsonRequestObject setObject:@"0" forKey:@"notification_id"];
+    }
     
-    [jsonRequestObject setObject:notification.m_notificationId forKey:@"notification_id"];
     [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_id"];
     [jsonRequestObject setObject:@"1" forKey:@"read_all"];
     
@@ -91,31 +94,33 @@
                                            
                                        }
                                        
-                                        [notificationsTableView reloadData];
+                                       [notificationsTableView reloadData];
                                
-                                        //Everything is updated on our side! Let's mark everything as read!
-                                        
-                               
-                                       NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-                                       NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
-                                       Notification *notification =[notifications objectAtIndex:0];
-                                       [jsonRequestObject setObject:notification.m_notificationId forKey:@"notification_id"];
-                                       [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_id"];
-                                       [jsonRequestObject setObject:@"1" forKey:@"read_all"];
-                                       NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
-                                       [request setHTTPMethod:@"POST"];
-                                       [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
-                                                              json] dataUsingEncoding:NSUTF8StringEncoding]];
+                                       //Everything is updated on our side! Let's mark everything as read!
                                        
-                                       [NSURLConnection sendAsynchronousRequest:request
-                                                                          queue:[NSOperationQueue mainQueue]
-                                                              completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                                                  if(!error && data) {
-                                                                      NSLog(@"NICE!");
-                                                                      [delegate clearNotifications];
-                                                                  } else {
-                                                                      NSLog(@"ERROR");
-                                                                  }}];        
+                                       if (notifications && [notifications count] != 0) {
+                                           
+                                           NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+                                           NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
+                                           Notification *notification =[notifications objectAtIndex:0];
+                                           [jsonRequestObject setObject:notification.m_notificationId forKey:@"notification_id"];
+                                           [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_id"];
+                                           [jsonRequestObject setObject:@"1" forKey:@"read_all"];
+                                           NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+                                           [request setHTTPMethod:@"POST"];
+                                           [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                                                                  json] dataUsingEncoding:NSUTF8StringEncoding]];
+                                           
+                                           [NSURLConnection sendAsynchronousRequest:request
+                                                                              queue:[NSOperationQueue mainQueue]
+                                                                  completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                                                      if(!error && data) {
+                                                                          NSLog(@"NICE!");
+                                                                          [delegate clearNotifications];
+                                                                      } else {
+                                                                          NSLog(@"ERROR");
+                                                                      }}];
+                                        }
 
                                    } else if (jsonNotifications && [jsonNotifications count] == 0 ) {
                                        [delegate clearNotifications];
@@ -263,6 +268,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             }
         }
     }
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+
+    [delegate clearNotifications];
+    [super viewDidDisappear:animated];
 }
 
 
