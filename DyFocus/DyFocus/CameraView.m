@@ -401,10 +401,19 @@
     
     [infoButton setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"] forState:UIControlStateHighlighted];
     
-    [pathView.cancelIcon addTarget:self action:@selector(toggleCancelButton) forControlEvents:UIControlStateHighlighted];
-    [pathView.cameraIcon addTarget:self action:@selector(toggleShootButton) forControlEvents:UIControlStateHighlighted];
-    [pathView.helpIcon addTarget:self action:@selector(toggleHelpButton) forControlEvents:UIControlStateHighlighted];
+    [pathView.cancelIcon addTarget:self action:@selector(pressCancelButton) forControlEvents:UIControlEventTouchDown];
+    [pathView.cancelIcon addTarget:self action:@selector(unPressCancelButton) forControlEvents:UIControlEventTouchUpOutside];
+    [pathView.cancelIcon addTarget:self action:@selector(unPressCancelButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    [pathView.cameraIcon addTarget:self action:@selector(pressShootButton) forControlEvents:UIControlEventTouchDown];
+    [pathView.cameraIcon addTarget:self action:@selector(unPressShootButton) forControlEvents:UIControlEventTouchUpOutside];
+    [pathView.cameraIcon addTarget:self action:@selector(unPressShootButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    [pathView.helpIcon addTarget:self action:@selector(pressHelpButton) forControlEvents:UIControlEventTouchDown];
+    [pathView.helpIcon addTarget:self action:@selector(unPressHelpButton) forControlEvents:UIControlEventTouchUpOutside];
+    [pathView.helpIcon addTarget:self action:@selector(unPressHelpButton) forControlEvents:UIControlEventTouchUpInside];
 
+    
     [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
     
     UIImage *redButtonImage = [UIImage imageNamed:@"close.png"];
@@ -691,14 +700,23 @@
     [mCaptureDevice unlockForConfiguration];
 }
 
-- (void) toggleCancelButton{
+- (void) pressCancelButton{
     [cancelButton.imageView setImage:[UIImage imageNamed:@"CameraView-LeftButtonPressed.png"]];
 }
-- (void) toggleShootButton{
+- (void) unPressCancelButton{
+    [cancelButton.imageView setImage:[UIImage imageNamed:@"CameraView-LeftButton.png"]];
+}
+- (void) pressShootButton{
     [shootButton.imageView setImage:[UIImage imageNamed:@"CameraView-ShootButtonPressed.png"]];
 }
-- (void) toggleHelpButton{
+- (void) unPressShootButton{
+    [shootButton.imageView setImage:[UIImage imageNamed:@"CameraView-ShootButton.png"]];
+}
+- (void) pressHelpButton{
     [infoButton.imageView setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"]];
+}
+- (void) unPressHelpButton{
+    [infoButton.imageView setImage:[UIImage imageNamed:@"CameraView-RightButton.png"]];
 }
 
 @end
