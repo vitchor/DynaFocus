@@ -45,8 +45,6 @@
     IBOutlet UIView *popupDarkView;
     IBOutlet UIImageView *instructionsImageView;
     
-    
-    
     }
 
 - (IBAction)cancelAction:(UIButton *)sender;

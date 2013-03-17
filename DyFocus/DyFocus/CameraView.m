@@ -348,6 +348,9 @@
 // 3: torch on both focus points
 
 -(void) toggleTorchForFocusOne {
+    
+    NSLog(@"TOOOOOOOOOOOOOOOOOOOOOOOOOORCH!!!!");
+    
     if (torchOnFocusPoints == 1 || torchOnFocusPoints == 3) {
         // torch for focus point 1 is on, turn it off immediately
         isTorchOn = true;
@@ -387,20 +390,21 @@
 {
     pathView.enabled = true;
     isObserving = false;
-    
-//    shootButton.target = self;
-//    [shootButton setAction:@selector(addObserverToFocus)];
-//    
-//    infoButton.target = self;
-//    [infoButton setAction:@selector(showInfoView)];
-//    
-//    cancelButton.target = self;
-//    [cancelButton setAction:@selector(goBackToLastController)];
-
-    
+        
     [torchOneButton addTarget:self action:@selector(toggleTorchForFocusOne) forControlEvents:UIControlEventTouchUpInside];
     [torchTwoButton addTarget:self action:@selector(toggleTorchForFocusTwo) forControlEvents:UIControlEventTouchUpInside];
     
+    
+    [cancelButton setImage:[UIImage imageNamed:@"CameraView-LeftButtonPressed.png"] forState:UIControlStateHighlighted];
+    
+    [shootButton setImage:[UIImage imageNamed:@"CameraView-ShootButtonPressed.png"] forState:UIControlStateHighlighted];
+    
+    [infoButton setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"] forState:UIControlStateHighlighted];
+    
+    [pathView.cancelIcon addTarget:self action:@selector(toggleCancelButton) forControlEvents:UIControlStateHighlighted];
+    [pathView.cameraIcon addTarget:self action:@selector(toggleShootButton) forControlEvents:UIControlStateHighlighted];
+    [pathView.helpIcon addTarget:self action:@selector(toggleHelpButton) forControlEvents:UIControlStateHighlighted];
+
     [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
     
     UIImage *redButtonImage = [UIImage imageNamed:@"close.png"];
@@ -554,7 +558,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 //<<<<<<< HEAD
-//    [pathView resetOrientations];
     
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
     if(popupView.tag != 420) {
@@ -591,33 +594,15 @@
 
 - (IBAction)cancelAction:(UIButton *)sender {
     
-    NSLog(@"CANCEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEL");
-
-//    UIImage * image = [UIImage imageNamed:@"CameraView-LeftButtonPressed.png"];
-//    
-//    [cancelButton setImage:image forState:UIControlStateNormal];
-    
    [self goBackToLastController];
 }
 
 - (IBAction)shootAction:(UIButton *)sender {
     
-    NSLog(@"SHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOTTTTT");
-    
-//    UIImage * image = [UIImage imageNamed:@"CameraView-ShootButtonPressed.png"];
-//
-//    [shootButton setImage:image forState:UIControlStateNormal];
-    
     [self addObserverToFocus];
 }
 
 - (IBAction)helpAction:(UIButton *)sender {
-    
-    NSLog(@"HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELP");
-    
-//    UIImage * image = [UIImage imageNamed:@"CameraView-RightButtonPressed.png"];
-//    
-//    [infoButton setImage:image forState:UIControlStateNormal];
 
     [self showInfoView];
 }
@@ -702,5 +687,14 @@
     [mCaptureDevice unlockForConfiguration];
 }
 
+- (void) toggleCancelButton{
+    [cancelButton.imageView setImage:[UIImage imageNamed:@"CameraView-LeftButtonPressed.png"]];
+}
+- (void) toggleShootButton{
+    [shootButton.imageView setImage:[UIImage imageNamed:@"CameraView-ShootButtonPressed.png"]];
+}
+- (void) toggleHelpButton{
+    [infoButton.imageView setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"]];
+}
 
 @end
