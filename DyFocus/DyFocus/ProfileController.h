@@ -14,11 +14,13 @@
     FBSession *facebook;
     NSString *userName;
     IBOutlet UIButton *myPicturesButton;
+    IBOutlet UIButton *notificationButton;
     IBOutlet CustomBadge *notificationBadge;
     IBOutlet UIImageView *userPicture;
 }
 
 - (void)logout;
+-(void)showNotifications;
 
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *userProfileImage;
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
@@ -26,5 +28,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *logoutButton;
 @property (strong, nonatomic) IBOutlet UIButton *myPicturesButton;
 @property (strong, nonatomic) IBOutlet UIImageView *userPicture;
+@property (strong, nonatomic) IBOutlet UIButton *notificationButton;
 
 @end

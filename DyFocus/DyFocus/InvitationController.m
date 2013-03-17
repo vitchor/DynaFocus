@@ -45,6 +45,9 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	[messageTextView becomeFirstResponder];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"InvitationController.viewDidAppear"];
 }
 
 - (void)didReceiveMemoryWarning

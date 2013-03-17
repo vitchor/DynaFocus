@@ -557,6 +557,10 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"CameraView.viewDidAppear"];
+    
 //<<<<<<< HEAD
     
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];

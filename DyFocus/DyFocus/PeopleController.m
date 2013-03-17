@@ -158,6 +158,9 @@
 	[super viewDidAppear:animated];
 	[self.tableView reloadData];
 	[self refreshImages];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"PeopleController.viewDidAppear"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

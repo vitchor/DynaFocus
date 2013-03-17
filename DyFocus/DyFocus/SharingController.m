@@ -40,6 +40,14 @@
     
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
+    [delegate logEvent:@"SharingController.viewDidAppear"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

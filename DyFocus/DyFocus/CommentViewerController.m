@@ -164,6 +164,14 @@
     return [self initWithNibName:nibNameOrNil bundle:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    
+    
+    [super viewDidAppear:animated];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"CommentViewerController.viewDidAppear"];
+}
 - (void)viewDidLoad
 {
     isKeyboardHidden = YES;
