@@ -105,7 +105,7 @@
     NSLog(@"==== STEP1: Load Image with id: %@", uid);
     
 //    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",uid] autorelease];
-    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",uid, (int)userPicture.frame.size.width, (int)userPicture.frame.size.height] autorelease];
+    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",uid, (int)userPicture.frame.size.width* 10, (int)userPicture.frame.size.height * 10] autorelease];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
     [NSURLConnection sendAsynchronousRequest:request
