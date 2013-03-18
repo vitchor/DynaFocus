@@ -21,6 +21,15 @@
 
 @synthesize viewPicturesButton, userFacebookId, userName, userProfileImage;
 
+
+-(id) init {
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        return [super initWithNibName:@"FriendProfileController_i5" bundle:nil];
+    } else {
+        return [super initWithNibName:@"FriendProfileController" bundle:nil];
+    }
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
