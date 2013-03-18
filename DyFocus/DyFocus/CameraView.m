@@ -500,7 +500,7 @@
         }
         
     } else {
-        [appDelegate showAlertBaloon:@"Not enough points" andAlertMsg:@"Select two points on the screen to be focused on." andAlertButton:@"OK" andController:self];
+        [appDelegate showAlertBaloon:@"Add more points" andAlertMsg:@"Add 2 focus points by tapping the screen." andAlertButton:@"OK" andController:self];
     }
 }
 
