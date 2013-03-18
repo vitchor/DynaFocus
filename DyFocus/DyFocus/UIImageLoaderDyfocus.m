@@ -122,9 +122,13 @@
                                            queue:[NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                    if(!error && data) {
-                                       [bufferPic dealloc];
-                                       bufferPic = nil;
-                                       bufferPic = [[UIDyfocusImage alloc] initWithData:data];
+                                       
+                                       //if (bufferPic) {
+                                       //    [bufferPic release];
+                                       //    bufferPic = nil;
+                                       //}
+                                       
+                                       bufferPic = [[[UIDyfocusImage alloc] initWithData:data] autorelease];
                                        bufferPic.tag = facebookId;
                                        [profileImageView setImage:bufferPic];
                                    }
@@ -187,10 +191,9 @@
 // Calls profile of that user
 - (void)loadUserProfileController:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
     // needs userId, userName, NavigationController
-    NSMutableArray *selectedPersonFofs = [[NSMutableArray alloc] init];
-    Person *person = [[Person alloc] init];
+    NSMutableArray *selectedPersonFofs = [NSMutableArray array];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    person = [appDelegate.dyfocusFriends objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
+    Person *person = [appDelegate.dyfocusFriends objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
     
     //WHEN THE COMMENT BELONGS TO A FRIEND:
     if(person){
@@ -198,7 +201,7 @@
         
         for (FOF *m_fof in appDelegate.feedFofArray) {
             
-            if ([m_fof.m_userId isEqualToString: [[NSString alloc] initWithFormat: @"%@", person.tag]]) {
+            if ([m_fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.tag]]) {
                 
                 [selectedPersonFofs addObject:m_fof];
             }

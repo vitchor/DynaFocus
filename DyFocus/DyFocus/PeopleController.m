@@ -409,7 +409,7 @@
    
     if (indexPath.section == 0) {
         
-        NSMutableArray *selectedPersonFofs = [[NSMutableArray alloc] init];
+        NSMutableArray *selectedPersonFofs = [NSMutableArray array];
         Person *person = nil;
         NSNumber *personIdNumber = [m_visibleFriendsList objectAtIndex:indexPath.row];
         

@@ -289,7 +289,7 @@
     face.bounds = CGRectMake( 0, 0, faceImage.size.width * 0.65, faceImage.size.height * 0.65);
     [face setImage:faceImage forState:UIControlStateNormal];
     
-    UIBarButtonItem *faceBtn = [[UIBarButtonItem alloc] initWithCustomView:face];
+    UIBarButtonItem *faceBtn = [[[UIBarButtonItem alloc] initWithCustomView:face] autorelease];
     
     [face addTarget:self action:@selector(shareOnFacebook) forControlEvents:UIControlEventTouchUpInside];
     

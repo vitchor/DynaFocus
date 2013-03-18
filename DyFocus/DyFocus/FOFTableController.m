@@ -72,7 +72,7 @@
     [m_tableView setDataSource:self];
     [m_tableView setDelegate:self];
 
-    m_tableView.backgroundColor = [UIColor clearColor];
+    //m_tableView.backgroundColor = [UIColor clearColor];
     
     [self.navigationController setNavigationBarHidden:shouldHideNavigationBar];
     

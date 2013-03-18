@@ -31,7 +31,7 @@
     
     notification.m_message = [json objectForKey:@"message"];
     notification.m_userId = [json objectForKey:@"user_facebook_id"];
-    notification.m_notificationId = [[json objectForKey:@"notification_id"] stringValue];
+    notification.m_notificationId = [NSString stringWithFormat:@"%d",(int)[json objectForKey:@"notification_id"]];
     notification.m_wasRead = [[json objectForKey:@"was_read"] intValue] ==  1;
     notification.m_triggerId = [[json objectForKey:@"trigger_id"] intValue];
     notification.m_triggerType = [[json objectForKey:@"trigger_type"] intValue];
@@ -44,7 +44,7 @@
 - (void)dealloc {
     [m_message release];
     [m_userId release];
-    [m_notificationId release]; 
+    [m_notificationId release];
 	[super dealloc];
 }
 
