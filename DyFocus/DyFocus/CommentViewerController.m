@@ -407,7 +407,7 @@
                                                like.m_fofId = fofId;
                                                
                                                AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-                                               NSString *myFacebookId = [appDelegate.myself objectForKey:@"id"];
+                                               NSString *myFacebookId = appDelegate.myself.facebookId;
                                                if([fofFriendId isEqualToString:myFacebookId]){
                                                    like.m_userName = @"You";
                                                }else{
@@ -625,7 +625,7 @@
     [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"facebook_id"];
+    [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"facebook_id"];
     
     [jsonRequestObject setObject:searchBar.text forKey:@"comment_message"];
     
@@ -646,12 +646,12 @@
                                    
                                    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
                                    
-                                   NSDictionary *myself = delegate.myself;
+                                   Person *myself = delegate.myself;
                                    
                                    Comment *comment = [[Comment alloc] init];
-                                   comment.m_userId = [myself objectForKey:@"id"];
+                                   comment.m_userId = myself.facebookId;
                                    comment.m_message = searchBar.text;
-                                   comment.m_userName = [myself objectForKey:@"name"];
+                                   comment.m_userName = myself.name;
                                    comment.m_fofId = fof.m_id;
                                    comment.m_date = @"Today";
                                    

@@ -529,10 +529,10 @@
         settings.isFirstLogin = NO;
     }
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
-    [super viewWillAppear:animated];
-    
     [spinner startAnimating];
     [loadingView setHidden:NO];
+    
+    [super viewWillAppear:animated];
     
     [infoButton setEnabled:true];
     [cancelButton setEnabled:true];

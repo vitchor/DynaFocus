@@ -42,7 +42,7 @@
 //Load Profile Picture, usually called from ProfileController or FriendProfileController
 - (void) loadProfilePicture:(NSString *)facebookId andProfileImage:(UIImageView *)profileImage{
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if([facebookId isEqualToString:[appDelegate.myself objectForKey:@"id"]]){
+    if([facebookId isEqualToString:appDelegate.myself.facebookId]){
         [self loadMyProfilePicture:profileImage];
     }else{
         [self loadAnyProfilePicture:profileImage andFacebookId:facebookId];
@@ -51,9 +51,9 @@
 
 // Loads profile picture for commentCell. It does a process slightly different from the one used in loadProfilePicture function
 -(void) loadCommentProfilePicture:(NSString *)userId andImageView:(UIImageView *)imageUserPicture{
-    if([userId isEqualToString:myPicture.tag]){
+    if([userId isEqualToString:myPicture.faceId]){
        [imageUserPicture setImage:myPicture];
-    }else if([userId isEqualToString:bufferPic.tag]){
+    }else if([userId isEqualToString:bufferPic.faceId]){
        [imageUserPicture setImage:bufferPic];
     }else{
         NSString *profilePictureUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",userId];
@@ -96,7 +96,8 @@
 -(void) cashProfilePicture{
     if(!myPicture){
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=88&height=88",[appDelegate.myself objectForKey:@"id"]] autorelease];
+       myPicture.faceId = appDelegate.myself.facebookId;
+        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=88&height=88",appDelegate.myself.facebookId] autorelease];
         
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
         [NSURLConnection sendAsynchronousRequest:request
@@ -104,7 +105,6 @@
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                    if(!error && data) {
                                        myPicture = [[UIDyfocusImage alloc] initWithData:data];
-                                       myPicture.tag = [appDelegate.myself objectForKey:@"id"];
                                    }
                                }];
     }
@@ -112,7 +112,7 @@
 
 //Loads any profile picture based on facebookId
 - (UIImage *) loadAnyProfilePicture:(UIImageView *)profileImageView andFacebookId:(NSString *)facebookId{
-    if([bufferPic.tag isEqualToString:facebookId]){
+    if([bufferPic.faceId isEqualToString:facebookId]){
         [profileImageView setImage:bufferPic];
     }else{
         NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",facebookId, (int)profileImageView.frame.size.width, (int)profileImageView.frame.size.height] autorelease];
@@ -129,7 +129,7 @@
                                        //}
                                        
                                        bufferPic = [[[UIDyfocusImage alloc] initWithData:data] autorelease];
-                                       bufferPic.tag = facebookId;
+                                       bufferPic.faceId = facebookId;
                                        [profileImageView setImage:bufferPic];
                                    }
                                }];
@@ -141,7 +141,7 @@
 - (UIImage *) loadMyProfilePicture:(UIImageView *)profileImageView{
     if(!myPicture){
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",[appDelegate.myself objectForKey:@"id"], (int)profileImageView.frame.size.width, (int)profileImageView.frame.size.height] autorelease];
+        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",appDelegate.myself.facebookId, (int)profileImageView.frame.size.width, (int)profileImageView.frame.size.height] autorelease];
         
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
         [NSURLConnection sendAsynchronousRequest:request
@@ -149,7 +149,7 @@
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                    if(!error && data) {
                                        myPicture = [[UIDyfocusImage alloc] initWithData:data];
-                                       myPicture.tag = [appDelegate.myself objectForKey:@"id"];
+                                       myPicture.faceId = appDelegate.myself.facebookId;
                                        [profileImageView setImage:myPicture];
                                    }
                                }];
@@ -161,10 +161,10 @@
 
 // Load profile picture for FOFTableList
 - (void) loadListProfilePicture:(NSString *)facebookId andFOFId:(NSString *)fofId andImageView:(UIImageView*)imageUserPicture{
-    if([facebookId isEqualToString:myPicture.tag]){
+    if([facebookId isEqualToString:myPicture.faceId]){
         [imageUserPicture setImage:myPicture];
         imageUserPicture.tag = 420;
-    }else if([facebookId isEqualToString:bufferPic.tag]){
+    }else if([facebookId isEqualToString:bufferPic.faceId]){
         [imageUserPicture setImage:bufferPic];
         imageUserPicture.tag = 420;
     }else{

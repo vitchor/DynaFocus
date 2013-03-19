@@ -56,7 +56,7 @@
     [notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
+    self.userNameLabel.text = appDelegate.myself.name;
     
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
     [imageLoader loadMyProfilePicture:userPicture];

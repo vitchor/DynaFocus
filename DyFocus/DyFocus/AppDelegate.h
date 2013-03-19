@@ -128,7 +128,7 @@
     
     NSMutableDictionary *friends;
     NSMutableDictionary *dyfocusFriends;    
-    NSMutableDictionary *myself;
+    Person *myself;
     
     NSMutableArray *featuredFofArray;
     NSMutableArray *userFofArray;
@@ -177,7 +177,7 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  UIImage *myPicture;
 @property (nonatomic, retain)  NSMutableDictionary *friends;
 @property (nonatomic, retain)  NSMutableDictionary *dyfocusFriends;
-@property (nonatomic, retain)  NSMutableDictionary *myself;
+@property (nonatomic, retain)  Person *myself;
 @property (nonatomic, retain)  NSMutableArray *featuredFofArray;
 @property (nonatomic, retain)  NSMutableArray *userFofArray;
 @property (nonatomic, retain)  NSMutableArray *feedFofArray;

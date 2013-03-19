@@ -7,10 +7,6 @@
 //
 
 #import "Person.h"
-int MYSELF = 0;
-int FRIENDS_ON_APP_AND_FB = 1;
-int FRIENDS_ON_FB = 2;
-int FRIENDS_ON_APP = 3;
 
 @implementation Person
 
@@ -20,14 +16,16 @@ int FRIENDS_ON_APP = 3;
 // kind = 2: friend just on App, NOT on facebook but a facebook user
 
 -(id) initWithId:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId{
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         [self objectFromId:iUid andName:iName andUserName:iUserName andfacebookId:iFacebookId];
     }
     return self;
 }
 
 - (id)initWithIdAndKind:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId andKind:(int)iKind{
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         [self objectFromId:iUid andName:iName andUserName:iUserName andfacebookId:iFacebookId];
         m_kind = iKind;
     }
@@ -36,23 +34,27 @@ int FRIENDS_ON_APP = 3;
 
 // called from this class
 -(void) objectFromId:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId{
+    m_facebookId = [iFacebookId retain];
     m_name = [iName retain];
     m_facebookUserName = [iUserName retain];
-    m_facebookId = [iFacebookId retain];
     m_selected = NO;
     m_uid = iUid;
-    self.email = @"";
+    m_email = @"";
+    m_location = @"";
+    m_timezone = 0;
 }
 
 - (id)initWithDic:(NSMutableDictionary*) facebookUser {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         [self objectFromDictionary:facebookUser];
     }
     return self;
 }
 
 - (id)initWithDicAndKind:(NSMutableDictionary*) facebookUser andKind:(int)kind {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         [self objectFromDictionary:facebookUser];
         m_kind= kind;
     }
@@ -61,11 +63,11 @@ int FRIENDS_ON_APP = 3;
 
 //called from this class
 - (void)objectFromDictionary:(NSMutableDictionary*)facebookUser {
-    m_facebookId = [facebookUser objectForKey:@"id"];
-    m_name = [facebookUser objectForKey:@"name"];
+    m_facebookId = [[facebookUser objectForKey:@"id"] retain];
+    m_name = [[facebookUser objectForKey:@"name"] retain];
     m_selected = NO;
-    m_email = [facebookUser objectForKey:@"email"];
-    m_facebookUserName = [facebookUser objectForKey:@"username"];
+    m_email = [[facebookUser objectForKey:@"email"] retain];
+    m_facebookUserName = [[facebookUser objectForKey:@"username"] retain];
     @try {
         m_timezone = [[facebookUser objectForKey:@"timezone"] floatValue];
     }
@@ -75,10 +77,10 @@ int FRIENDS_ON_APP = 3;
     }
     
     @try {
-        m_location = [[facebookUser objectForKey:@"location"] objectForKey:@"name"];
+        m_location = [[[facebookUser objectForKey:@"location"] objectForKey:@"name"] retain];
     }
     @catch (NSException *exception) {
-        m_location = [facebookUser objectForKey:@"location"];
+        m_location = [[facebookUser objectForKey:@"location"] retain];
         NSLog(@"!!! EXCEPTION on location attribute: %@", exception);
     }
 }

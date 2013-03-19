@@ -10,10 +10,10 @@
 
 @interface UIDyfocusImage : UIImage {
     int index;
-    NSString *tag;
+    NSString *faceId;
 }
 
 @property (nonatomic, readwrite) int index;
-@property (nonatomic, retain) NSString *tag;
+@property (nonatomic, unsafe_unretained) NSString *faceId;
 
 @end

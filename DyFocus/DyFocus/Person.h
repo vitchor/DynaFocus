@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-extern int MYSELF;                 // kind = 0: friend on both, App and  on  facebook
-extern int FRIENDS_ON_APP_AND_FB;  // kind = 1: friend on both, App and  on  facebook
-extern int FRIENDS_ON_FB;          // kind = 2: not a friend on App, just on facebook
-extern int FRIENDS_ON_APP;         // kind = 3: friend just on App, NOT on facebook but a facebook user
+#define MYSELF 0                 // kind = 0: friend on both, App and  on  facebook
+#define FRIENDS_ON_APP_AND_FB 1;  // kind = 1: friend on both, App and  on  facebook
+#define FRIENDS_ON_FB 2;          // kind = 2: not a friend on App, just on facebook
+#define FRIENDS_ON_APP 3;         // kind = 3: friend just on App, NOT on facebook but a facebook user
 
 @interface Person: NSObject {
     long m_uid;
@@ -26,10 +26,10 @@ extern int FRIENDS_ON_APP;         // kind = 3: friend just on App, NOT on faceb
 
 @property(nonatomic, readonly) long uid;
 @property(nonatomic, assign) int kind;
-@property(nonatomic, retain) NSString *name;
-@property(nonatomic, retain) NSString *facebookUserName;
-@property(nonatomic, retain) NSString *email;
-@property(nonatomic, retain) NSString *facebookId;
+@property(nonatomic, readonly) NSString *name;
+@property(nonatomic, readonly) NSString *facebookUserName;
+@property(nonatomic, readonly) NSString *email;
+@property(nonatomic, readonly) NSString *facebookId;
 @property(nonatomic, readonly) float timezone;
 @property(nonatomic, readonly) NSString *location;
 @property(nonatomic, assign) BOOL selected;

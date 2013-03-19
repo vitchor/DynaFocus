@@ -288,11 +288,13 @@
     //[cameraTab setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.9686 green:0.5098 blue:0.1176 alpha:1], UITextAttributeTextColor, nil] forState:UIControlStateNormal];
     [cameraNavigationController setTabBarItem:cameraTab];
     
+    // Cashing profile Picture
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+    [imageLoader cashProfilePicture];
     
     
     // Featured Controller
     FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray andUrl:refresh_featured_url];
-    
     
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured.png"] tag:1];
     [galleryTab setFinishedSelectedImage:[UIImage imageNamed:@"df_featured_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_featured.png"]];
@@ -389,7 +391,7 @@
         
     } else if ([refreshString isEqualToString:refresh_user_url]) {
         
-        if (!userId || [userId isEqualToString:[myself objectForKey:@"id"]]) {
+        if (!userId || [userId isEqualToString:self.myself.facebookId]) {
             //It's me!
             userFofArray = fofs;
         }
@@ -555,9 +557,9 @@
                          NSMutableDictionary *user = [[userResponse objectForKey:@"body"] JSONValue];
                          
                          // Sets the model object myself
-                         self.myself = user;
+                         self.myself = [[Person alloc] initWithDicAndKind:user andKind:MYSELF];
+                         
                          UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-                        [imageLoader cashProfilePicture];
                          NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
                         
                          
@@ -649,7 +651,6 @@
             [self showConnectionError];
         }
     }];
-    
 }
 
 - (void)closeSession {
@@ -776,7 +777,7 @@
              NSMutableDictionary *user = [[userResponse objectForKey:@"body"] JSONValue];
              
              // Sets the model object myself
-             self.myself = user;
+             self.myself = [[Person alloc] initWithDicAndKind:user andKind:MYSELF];
              
              UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
              [imageLoader cashProfilePicture];
@@ -1134,7 +1135,7 @@
 
     if (self.myself) {
         NSDictionary *articleParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                         [self.myself objectForKey:@"id"], @"User ID", // Capture author info
+                         [[NSString alloc] initWithFormat:@"%@",self.myself.facebookId], @"User ID", // Capture author info
                          [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()], @"Time", // Capture user status
                          nil];
         
