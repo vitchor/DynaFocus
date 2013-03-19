@@ -64,9 +64,9 @@
 
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
 
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
     [delegate logEvent:@"ProfileController.viewDidAppear"];
     
     if (delegate.unreadNotifications > 0) {
