@@ -49,7 +49,7 @@
         tableController.userFacebookId = (NSString *) userFacebookId;
     }else{
         tableController.FOFArray = [NSMutableArray arrayWithArray:appDelegate.friendFofArray]; // Normal procedure
-        tableController.userFacebookId = (NSString *) appDelegate.currentFriend.tag;
+        tableController.userFacebookId = (NSString *) appDelegate.currentFriend.facebookId;
     }
     [tableController refreshWithAction:YES];
     tableController.shouldHideNavigationBar = NO;
@@ -73,7 +73,7 @@
         [imageLoader loadProfilePicture:userFacebookId andProfileImage:userProfileImage];
     }else{
         self.userNameLabel.text = appDelegate.currentFriend.name;
-        [imageLoader loadProfilePicture:(NSString *)appDelegate.currentFriend.tag andProfileImage:userProfileImage];
+        [imageLoader loadProfilePicture:(NSString *)appDelegate.currentFriend.facebookId andProfileImage:userProfileImage];
     }
 }
 

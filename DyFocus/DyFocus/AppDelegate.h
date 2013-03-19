@@ -22,6 +22,7 @@
 
 #import "FOFTableNavigationController.h"
 #import "UIDyfocusImage.h"
+#import "Person.h"
 
 #define UPLOADING 0
 #define SHARING 1

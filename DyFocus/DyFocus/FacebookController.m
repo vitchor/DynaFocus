@@ -81,7 +81,7 @@
     
     if(person){
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadPeopleProfilePicture:(NSString *)person.tag andImageCache:m_imageCache andUid:uid andTableView:self.tableView];
+        [imageLoader loadPeopleProfilePicture:(NSString *)person.facebookId andImageCache:m_imageCache andUid:uid andTableView:self.tableView];
     }
 }
 

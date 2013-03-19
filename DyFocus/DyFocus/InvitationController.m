@@ -98,7 +98,7 @@
     
     for (Person *person in selectedPeople) {
         
-        NSString *email = [[[NSString alloc] initWithFormat:@"%@@facebook.com", person.details] autorelease];
+        NSString *email = [[[NSString alloc] initWithFormat:@"%@@facebook.com", person.facebookUserName] autorelease];
         [emailReceivers addObject:email];
     }
     

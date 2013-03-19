@@ -201,7 +201,7 @@
         
         for (FOF *m_fof in appDelegate.feedFofArray) {
             
-            if ([m_fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.tag]]) {
+            if ([m_fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.facebookId]]) {
                 
                 [selectedPersonFofs addObject:m_fof];
             }

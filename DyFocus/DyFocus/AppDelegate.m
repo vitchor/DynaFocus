@@ -533,7 +533,7 @@
                              NSString *friendName = [friend objectForKey:@"name"];
                              NSString *friendUsername = [friend objectForKey:@"username"];
                              
-                             Person *person = [[[Person alloc] initWithId:[friendId longLongValue] andName:friendName andDetails:friendUsername andTag:friendId] autorelease];
+                             Person *person = [[[Person alloc] initWithId:[friendId longLongValue] andName:friendName andUserName:friendUsername andfacebookId:friendId] autorelease];
                              
                              [self.friends setObject:person forKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                              
@@ -753,7 +753,7 @@
                  NSString *friendName = [friend objectForKey:@"name"];
                  NSString *friendUsername = [friend objectForKey:@"username"];
                  
-                 Person *person = [[[Person alloc] initWithId:[friendId longLongValue] andName:friendName andDetails:friendUsername andTag:friendId] autorelease];
+                 Person *person = [[[Person alloc] initWithId:[friendId longLongValue] andName:friendName andUserName:friendUsername andfacebookId:friendId] autorelease];
                  
                  NSNumber *key = [NSNumber numberWithLong:[friendId longLongValue]];
                  [self.friends setObject:person forKey:key];
@@ -909,8 +909,8 @@
                 Person *person = [self.friends objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                 
                 if (person) {
-                    [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
-                    [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.tag longLongValue]]];
+                    [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                    [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
                 }
 
             }

@@ -5,33 +5,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "DyfocusUINavigationController.h"
 #import "FOFTableController.h"
-
-@implementation Person
-
-@synthesize uid = m_id, name = m_name, details = m_details, tag = m_tag, email = m_email, selected = m_selected;
-
-- (id)initWithId:(long)iUid andName:(NSString *)iName andDetails:(NSString *)iDetails andTag:(NSObject *)iTag {
-	if (self = [super init]) {
-		m_id = iUid;
-		m_name = [iName retain];
-		m_details = [iDetails retain];
-		m_tag = [iTag retain];
-		m_selected = NO;
-		self.email = @"";
-	}
-	return self;
-}
-
-- (void)dealloc {
-    [m_name release];
-    [m_details release];
-    [m_tag release];
-    [m_email release];
-	[super dealloc];
-}
-
-@end
-
+#import "Person.h"
 
 @implementation PeopleController
 
@@ -337,7 +311,7 @@
                 
                 Person *person = [m_friendInfo objectForKey:[NSNumber numberWithLong:personId]];
                 cell.textLabel.text = person.name;
-                cell.detailTextLabel.text = person.details;
+                cell.detailTextLabel.text = person.facebookUserName;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.tag = personId;
                 
@@ -383,7 +357,7 @@
                 
                 Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:personId]];
                 cell.textLabel.text = person.name;
-                cell.detailTextLabel.text = person.details;
+                cell.detailTextLabel.text = person.facebookUserName;
                 cell.tag = personId;
                 UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithLong:personId]];
                 if (image == nil) {
@@ -425,7 +399,7 @@
             
             for (FOF *fof in delegate.feedFofArray) {
                 
-                if ([fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.tag]]) {
+                if ([fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.facebookId]]) {
                     
                     [selectedPersonFofs addObject:fof];
                     
