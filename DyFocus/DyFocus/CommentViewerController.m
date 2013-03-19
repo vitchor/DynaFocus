@@ -300,9 +300,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-   
-
-    
     
     // Hides magnifier icon
     UITextField* searchField = nil;
@@ -441,7 +438,7 @@
     
     }
     
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
     [scrollView addGestureRecognizer:singleTap];
     
     
@@ -560,7 +557,7 @@
         CommentTableCell *cell;
         
         
-        NSString *cellId = [NSString stringWithFormat:@"0_%d", indexPath.row];
+        NSString *cellId = @"CommentTableCell";
         cell = [tableView dequeueReusableCellWithIdentifier:cellId];
         if (cell == nil) {
             NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"CommentTableCell" owner:self options:nil];

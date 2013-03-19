@@ -170,7 +170,7 @@
         fof.m_userName = [[fofObject.m_userName copy] autorelease];
         fof.m_userNickname = [[fofObject.m_userNickname copy] autorelease];
         
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+        UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
         [lightGrayBrackgroundView addGestureRecognizer:singleTap];
 
         
@@ -184,7 +184,7 @@
 
         [labelUserName setText:fof.m_userName];
         
-        UITapGestureRecognizer *singleTapUserName = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)];
+        UITapGestureRecognizer *singleTapUserName = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)] autorelease];
         labelUserName.userInteractionEnabled = YES;
         [labelUserName addGestureRecognizer:singleTapUserName];
         
@@ -260,7 +260,7 @@
 }
 
 -(void)loadImages {
-    UITapGestureRecognizer *singleTapUserName = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)];
+    UITapGestureRecognizer *singleTapUserName = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)] autorelease];
     imageUserPicture.userInteractionEnabled = YES;
     [imageUserPicture addGestureRecognizer:singleTapUserName];
     
