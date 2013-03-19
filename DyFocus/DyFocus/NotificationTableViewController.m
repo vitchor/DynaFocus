@@ -56,11 +56,17 @@
     NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
 
     if (notifications && [notifications count] > 0 ) {
-        Notification *notification =[notifications objectAtIndex:0];
-        [jsonRequestObject setObject:notification.m_notificationId forKey:@"notification_id"];
+        Notification *notification = [notifications objectAtIndex:0];
+        
+        NSString *notificationId = [NSString stringWithFormat:@"%@", notification.m_notificationId];
+        
+        [jsonRequestObject setObject:notificationId forKey:@"notification_id"];
+        
     } else {
         [jsonRequestObject setObject:@"0" forKey:@"notification_id"];
     }
+    
+   
     
     [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_id"];
     [jsonRequestObject setObject:@"1" forKey:@"read_all"];
@@ -108,7 +114,7 @@
                                            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
                                            NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
                                            Notification *notification =[notifications objectAtIndex:0];
-                                           [jsonRequestObject setObject:notification.m_notificationId forKey:@"notification_id"];
+                                           [jsonRequestObject setObject:[NSString stringWithFormat:@"%@",notification.m_notificationId] forKey:@"notification_id"];
                                            [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_id"];
                                            [jsonRequestObject setObject:@"1" forKey:@"read_all"];
                                            NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
@@ -191,18 +197,13 @@
         NotificationTableViewCell *cell;
         
         
-        NSString *cellId = [NSString stringWithFormat:@"0_%d", indexPath.row];
+        NSString *cellId = @"NotificationTableViewCell";
         cell = [tableView dequeueReusableCellWithIdentifier:cellId];
         if (cell == nil) {
             NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"NotificationTableViewCell" owner:self options:nil];
             
-            for(id currentObject in topLevelObjects){
-                if ([currentObject isKindOfClass:[NotificationTableViewCell class]]) {
-                    cell = (NotificationTableViewCell *)currentObject;
-                    //cell.commentController = self;
-                    break;
-                }
-            }
+            // Load the top-level objects from the custom cell XIB.
+            cell = [topLevelObjects objectAtIndex:0];
             
         }
         
