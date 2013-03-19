@@ -66,6 +66,7 @@
 		4468BFB716B0D6A2000ABF5E /* fof_example_03_1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4468BFB116B0D6A2000ABF5E /* fof_example_03_1.jpeg */; };
 		4468BFB816B0D6A2000ABF5E /* fof_example_03_2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4468BFB216B0D6A2000ABF5E /* fof_example_03_2.jpeg */; };
 		446AA6711649D788002FE683 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 446AA6701649D788002FE683 /* UIImage+FixOrientation.m */; };
+		4473693816F7E020001B80DE /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 4473693716F7E020001B80DE /* Person.m */; };
 		44798EAE15E433B700D5BC53 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EAD15E433B700D5BC53 /* WebViewController.m */; };
 		44798EB215E4355100D5BC53 /* LoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB115E4355100D5BC53 /* LoadView.m */; };
 		44798EB515E4362000D5BC53 /* ActivityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB415E4362000D5BC53 /* ActivityLabel.m */; };
@@ -279,6 +280,8 @@
 		4468BFB216B0D6A2000ABF5E /* fof_example_03_2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fof_example_03_2.jpeg; sourceTree = "<group>"; };
 		446AA66F1649D787002FE683 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+FixOrientation.h"; path = "../UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		446AA6701649D788002FE683 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+FixOrientation.m"; path = "../UIImage+FixOrientation.m"; sourceTree = "<group>"; };
+		4473693616F7E020001B80DE /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		4473693716F7E020001B80DE /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		44798EAC15E433B700D5BC53 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		44798EAD15E433B700D5BC53 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		44798EB015E4355100D5BC53 /* LoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadView.h; sourceTree = "<group>"; };
@@ -783,6 +786,15 @@
 			name = FOFexamples;
 			sourceTree = "<group>";
 		};
+		4473693516F7E009001B80DE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4473693616F7E020001B80DE /* Person.h */,
+				4473693716F7E020001B80DE /* Person.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		44794AF01651472F0097824D /* Bundles */ = {
 			isa = PBXGroup;
 			children = (
@@ -876,6 +888,7 @@
 		4496800D164D80ED00F76FCF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4473693516F7E009001B80DE /* Models */,
 				4445108016F2863D00DAE209 /* Settings */,
 				44C0B0AB16EBE6DB00DF38E2 /* UIImageLoaderDyfocus */,
 				04EEABE316EA813B001BCEE3 /* CustomBadge */,
@@ -1268,6 +1281,7 @@
 				04EEABF116EA9367001BCEE3 /* NotificationTableViewCell.m in Sources */,
 				44C0B0AE16EBE7A700DF38E2 /* UIImageLoaderDyfocus.m in Sources */,
 				4445108316F2866800DAE209 /* DyfocusSettings.m in Sources */,
+				4473693816F7E020001B80DE /* Person.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
