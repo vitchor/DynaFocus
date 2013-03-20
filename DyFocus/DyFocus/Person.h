@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #define MYSELF 0                 // kind = 0: friend on both, App and  on  facebook
-#define FRIENDS_ON_APP_AND_FB 1;  // kind = 1: friend on both, App and  on  facebook
-#define FRIENDS_ON_FB 2;          // kind = 2: not a friend on App, just on facebook
-#define FRIENDS_ON_APP 3;         // kind = 3: friend just on App, NOT on facebook but a facebook user
+#define FRIENDS_ON_APP_AND_FB 1  // kind = 1: friend on both, App and  on  facebook
+#define FRIENDS_ON_FB 2          // kind = 2: not a friend on App, just on facebook
+#define FRIENDS_ON_APP 3         // kind = 3: friend just on App, NOT on facebook but a facebook user
 
 @interface Person: NSObject {
     long m_uid;
