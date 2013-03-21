@@ -34,8 +34,11 @@
 #define NOTIFICATION_COMMENTED_ON_COMMENTED_FOF 3
 
 #define dyfocus_url @"http://dyfoc.us"
+//#define dyfocus_url @"http://192.168.0.112:8000"
 //#define dyfocus_url @"http://192.168.100.140:8000"
 //#define dyfocus_url @"http://192.168.0.109:8000"
+
+#define app_fb_id @"417476174956036"
 
 #define refresh_user_url @"/uploader/json_user_fof/"
 #define refresh_featured_url @"/uploader/json_featured_fof/"
@@ -126,9 +129,10 @@
     SplashScreenController *splashScreenController;
     CameraView *cameraViewController;
     
-    NSMutableDictionary *friends;
-    NSMutableDictionary *dyfocusFriends;    
-    Person *myself;
+    NSMutableDictionary *friendsFromFb;         // Friends only in facebook, not the app
+    NSMutableDictionary *dyFriendsFromFace;     // Dyfocus friends that are also FB friends
+    NSMutableDictionary *dyFriendsAtFace;       // Dyfocus friends that AREN'T   FB friends but we get their data from FB
+    Person *myself;                             // My data
     
     NSMutableArray *featuredFofArray;
     NSMutableArray *userFofArray;
@@ -175,8 +179,9 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
 
 @property (nonatomic, retain)  UIImage *myPicture;
-@property (nonatomic, retain)  NSMutableDictionary *friends;
-@property (nonatomic, retain)  NSMutableDictionary *dyfocusFriends;
+@property (nonatomic, retain)  NSMutableDictionary *friendsFromFb;
+@property (nonatomic, retain)  NSMutableDictionary *dyFriendsFromFace;
+@property (nonatomic, retain)  NSMutableDictionary *dyFriendsAtFace;
 @property (nonatomic, retain)  Person *myself;
 @property (nonatomic, retain)  NSMutableArray *featuredFofArray;
 @property (nonatomic, retain)  NSMutableArray *userFofArray;

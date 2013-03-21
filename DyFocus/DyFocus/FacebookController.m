@@ -54,7 +54,7 @@
 - (void)refreshPeople {
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [self setPeople:appDelegate.friends andFriends:appDelegate.dyfocusFriends];
+    [self setPeople:appDelegate.friendsFromFb andFriends:appDelegate.dyFriendsFromFace];
    
 }
 

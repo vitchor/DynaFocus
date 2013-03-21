@@ -193,7 +193,7 @@
     // needs userId, userName, NavigationController
     NSMutableArray *selectedPersonFofs = [NSMutableArray array];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    Person *person = [appDelegate.dyfocusFriends objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
+    Person *person = [appDelegate.dyFriendsFromFace objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
     
     //WHEN THE COMMENT BELONGS TO A FRIEND:
     if(person){

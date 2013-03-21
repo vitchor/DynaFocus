@@ -151,7 +151,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friends, myself, dyfocusFriends, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend, deviceId, notificationsArray, unreadNotifications;
+@synthesize tabBarController, friendsFromFb, myself, dyFriendsFromFace, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend, deviceId, notificationsArray, unreadNotifications, dyFriendsAtFace;
 
 - (void)dealloc
 {
@@ -517,10 +517,10 @@
                      
                      
                      // self.friends are all my friends from facebook
-                     if (!self.friends) {
-                         self.friends = [[NSMutableDictionary alloc] initWithCapacity:[friendsArray count]];
+                     if (!self.friendsFromFb) {
+                         self.friendsFromFb = [[NSMutableDictionary alloc] initWithCapacity:[friendsArray count]];
                      } else {
-                         [self.friends removeAllObjects];
+                         [self.friendsFromFb removeAllObjects];
                      }
                      
                      NSMutableArray *jsonFriendsDyfocusRequest = [[NSMutableArray alloc] initWithCapacity:[friendsArray count]] ;
@@ -531,7 +531,7 @@
                              
                              Person *person = [[Person alloc] initWithDicAndKind:friend andKind:FRIENDS_ON_FB];
                              
-                             [self.friends setObject:person forKey:[NSNumber numberWithLong:person.uid]];
+                             [self.friendsFromFb setObject:person forKey:[NSNumber numberWithLong:person.uid]];
                              
                              NSLog(@"I have a friend named %@ with id %@", person.name, person.facebookId);
 
@@ -543,6 +543,7 @@
                              [jsonFriendsDyfocusRequest addObject:jsonFriendObject];   
                          }
                      
+                         NSLog(@"==== %@/uploader/login/", dyfocus_url);
                          // Let's parse the user information
                          NSDictionary *userResponse = [allResponses objectAtIndex:1];
                          NSMutableDictionary *user = [[userResponse objectForKey:@"body"] JSONValue];
@@ -589,10 +590,10 @@
                          NSLog(@"JSON RESPONSE: %@",stringReply);
                         
                          
-                         if (!self.dyfocusFriends) {
-                             self.dyfocusFriends = [[NSMutableDictionary alloc] init];
+                         if (!self.dyFriendsFromFace) {
+                             self.dyFriendsFromFace = [[NSMutableDictionary alloc] init];
                          } else {
-                             [self.dyfocusFriends removeAllObjects];
+                             [self.dyFriendsFromFace removeAllObjects];
                          }
                          
                          if (statusCode == 200) {
@@ -721,44 +722,34 @@
          
          NSDictionary *body = [bodyString JSONValue];
          
-         NSArray* friendsArray = [body objectForKey:@"data"];
+         NSArray* fbFriendsArray = [body objectForKey:@"data"];
          
-         if (!self.friends) {
-             self.friends = [[NSMutableDictionary alloc] init];
+         if (!self.friendsFromFb) {
+             self.friendsFromFb = [[NSMutableDictionary alloc] init];
          } else {
-             [self.friends removeAllObjects];
+             [self.friendsFromFb removeAllObjects];
          }
-         
-
-         
-         NSMutableArray *jsonFriendsDyfocusRequest = [[[NSMutableArray alloc] initWithCapacity:[friendsArray count]] autorelease];
+        
+         NSMutableArray *jsonFbFriendsDyfocusRequest = [[[NSMutableArray alloc] initWithCapacity:[fbFriendsArray count]] autorelease];
          
          if (httpCode == 200 && !error) {
-             
-             for (NSDictionary* friend in friendsArray) {
+             //ITERATES OVER ALL FACEBOOK DRIENDS THAT CAME FROM REQUEST jsonFbFriendsDyfocusRequest
+             for (NSMutableDictionary* facebookFriend in fbFriendsArray) {
+                
+                 Person *person = [[Person alloc] initWithDicAndKind:facebookFriend andKind:FRIENDS_ON_FB];
                  
-                 NSString *friendId = [friend objectForKey:@"id"];
-                 NSString *friendName = [friend objectForKey:@"name"];
-                 NSString *friendUsername = [friend objectForKey:@"username"];
+                 NSNumber *key = [NSNumber numberWithLong:[person.facebookId longLongValue]];
                  
-                 Person *person = [[[Person alloc] initWithId:[friendId longLongValue] andName:friendName andUserName:friendUsername andfacebookId:friendId] autorelease];
+                 [self.friendsFromFb setObject:person forKey:key]; // Populates the Array of FB friends
                  
-                 NSNumber *key = [NSNumber numberWithLong:[friendId longLongValue]];
-                 [self.friends setObject:person forKey:key];
-                 //[key release];
-                 
-                 NSLog(@"I have a friend named %@ with id %@", friendName, friendId);
-                 
+                 NSLog(@"I have a friend named %@ with id %@", person.name, person.facebookId);
                  
                  //Creates json object and add to the request object
                  NSMutableDictionary *jsonFriendObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
                  
-                 [jsonFriendObject setObject:friendId forKey:@"facebook_id"];
-                 
-                 [jsonFriendsDyfocusRequest addObject:jsonFriendObject];
-                 
+                 [jsonFriendObject setObject:person.facebookId forKey:@"facebook_id"];
+                 [jsonFbFriendsDyfocusRequest addObject:jsonFriendObject];
              }
-             
              
              // Let's parse the user information
              NSDictionary *userResponse = [allResponses objectAtIndex:1];
@@ -784,7 +775,7 @@
              [jsonRequestObject setObject:[user objectForKey:@"name"] forKey:@"name"];
              [jsonRequestObject setObject:[user objectForKey:@"email"] forKey:@"email"];
              
-             [jsonRequestObject setObject:jsonFriendsDyfocusRequest forKey:@"friends"];
+             [jsonRequestObject setObject:jsonFbFriendsDyfocusRequest forKey:@"friends"];
              
              NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
              
@@ -812,10 +803,10 @@
              NSLog(@"JSON RESPONSE: %@",stringReply);
              
              //Lets parse the response to get the dyfocus friends info
-             if (!self.dyfocusFriends) {
-                 self.dyfocusFriends = [[NSMutableDictionary alloc] init];
+             if (!self.dyFriendsFromFace) {
+                 self.dyFriendsFromFace = [[NSMutableDictionary alloc] init];
              } else {
-                 [self.dyfocusFriends removeAllObjects];
+                 [self.dyFriendsFromFace removeAllObjects];
              }
 
              
@@ -831,7 +822,7 @@
                          [splashScreenController.view removeFromSuperview];
                      
                          [self setupTabController];
-                     }
+                     }// TODO
                      
                  }
                  
@@ -889,21 +880,24 @@
         NSMutableArray *justAppFriends = nil;
         if (jsonFriends) {
             for (int i = 0; i < [jsonFriends count]; i++) {
-                
                 NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
                 NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
+                NSString *friendName = [jsonFriend valueForKey:@"name"];
                 
                 // Intersection of appFriends with facebookFriends
-                Person *person = [self.friends objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                Person *person = [self.friendsFromFb objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                 
                 if (person) {
                     person.kind = FRIENDS_ON_APP_AND_FB;
-                    [self.dyfocusFriends setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
-                    [self.friends removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                    // person.since
+                    [self.dyFriendsFromFace setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                    [self.friendsFromFb removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
                 }else{
-                    [justAppFriends addObject:friendId];
                     //NOT MY FRIEND ON FB
-                     // TODO get that guys info from FB or our server AND BUILD AN ARRAY OF friends that use facebook but are not my friends from there?
+                    [justAppFriends addObject:friendId];
+                    Person *dyFriend = [[Person alloc] initWithIdAndKind:[friendId longLongValue] andName:friendName andUserName:@"" andfacebookId:friendId andKind:FRIENDS_ON_APP];
+                    [self.dyFriendsAtFace setObject:dyFriend forKey:[NSNumber numberWithLong:[dyFriend.facebookId longLongValue]]];
+                    NSLog(@"==== facebookId: %@, name: %@", friendId, friendName);
                 }
             }
             
@@ -1027,7 +1021,7 @@
 {
     // this means the user switched back to this app without completing
     // a login in Safari/Facebook App
-    [FBSession setDefaultAppID:@"417476174956036"];
+    [FBSession setDefaultAppID:app_fb_id];
     if (FBSession.activeSession.state == FBSessionStateCreatedOpening) {
         [FBSession.activeSession close]; // so we close our session and start over
         

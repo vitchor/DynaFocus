@@ -66,6 +66,7 @@
     m_facebookId = [[facebookUser objectForKey:@"id"] retain];
     m_name = [[facebookUser objectForKey:@"name"] retain];
     m_selected = NO;
+    m_uid = [[facebookUser objectForKey:@"id"] longLongValue];
     m_email = [[facebookUser objectForKey:@"email"] retain];
     m_facebookUserName = [[facebookUser objectForKey:@"username"] retain];
     @try {
