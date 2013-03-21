@@ -543,7 +543,6 @@
                              [jsonFriendsDyfocusRequest addObject:jsonFriendObject];   
                          }
                      
-                         NSLog(@"==== %@/uploader/login/", dyfocus_url);
                          // Let's parse the user information
                          NSDictionary *userResponse = [allResponses objectAtIndex:1];
                          NSMutableDictionary *user = [[userResponse objectForKey:@"body"] JSONValue];
@@ -897,7 +896,6 @@
                     [justAppFriends addObject:friendId];
                     Person *dyFriend = [[Person alloc] initWithIdAndKind:[friendId longLongValue] andName:friendName andUserName:@"" andfacebookId:friendId andKind:FRIENDS_ON_APP];
                     [self.dyFriendsAtFace setObject:dyFriend forKey:[NSNumber numberWithLong:[dyFriend.facebookId longLongValue]]];
-                    NSLog(@"==== facebookId: %@, name: %@", friendId, friendName);
                 }
             }
             

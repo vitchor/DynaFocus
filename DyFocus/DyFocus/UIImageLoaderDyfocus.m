@@ -192,7 +192,6 @@
 - (void)loadUserProfileController:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     
-    NSLog(@"==== FACEBOOKID: %@, currentFriendFaceId: %@",facebookId,appDelegate.currentFriend.facebookId);
     if(!appDelegate.insideUserProfile || ![facebookId isEqualToString:appDelegate.currentFriend.facebookId]){
         // needs userId, userName, NavigationController
         NSMutableArray *selectedPersonFofs = [NSMutableArray array];

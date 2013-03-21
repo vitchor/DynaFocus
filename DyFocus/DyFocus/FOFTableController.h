@@ -11,11 +11,11 @@
 
 @interface FOFTableController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     IBOutlet UITableView *m_tableView;
-    IBOutlet UIView *loadingView;
     NSMutableArray *FOFArray;
     NSMutableDictionary *cellHeightDictionary;
     BOOL shouldHideNavigationBar;
     EGORefreshTableHeaderView *refreshHeaderView;
+    IBOutlet UIView *loadingView;
     
     NSString *refreshString;
     
@@ -25,13 +25,13 @@
     BOOL m_isFOFTableEmpty;
 }
 
-@property (nonatomic,retain) IBOutlet UIView *loadingView;
 @property (nonatomic, retain) IBOutlet UITableView *m_tableView;
 @property (nonatomic, retain) IBOutlet NSMutableArray *FOFArray;
 @property (nonatomic, readwrite) BOOL shouldHideNavigationBar;
 @property (nonatomic, readwrite) NSString *refreshString;
 @property (nonatomic, readwrite) NSString *userFacebookId;
 @property(assign,getter=isReloading) BOOL reloading;
+@property(nonatomic,retain) IBOutlet UIView *loadingView;
 @property(nonatomic,readonly) EGORefreshTableHeaderView *refreshHeaderView;
 
 -(void) addNewCellHeight:(float)height atRow:(int)row;
