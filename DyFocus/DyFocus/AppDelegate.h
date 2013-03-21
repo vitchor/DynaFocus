@@ -151,6 +151,7 @@
     ProfileController *profileController;
     
     bool showNotification;
+    BOOL insideUserProfile;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -191,5 +192,6 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSString *deviceId;
 @property (nonatomic, retain)  NSMutableArray *notificationsArray;
 @property (nonatomic, readwrite) int unreadNotifications;
+@property (nonatomic, readwrite) BOOL insideUserProfile;
 
 @end

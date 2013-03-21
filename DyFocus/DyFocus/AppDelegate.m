@@ -151,7 +151,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friendsFromFb, myself, dyFriendsFromFace, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend, deviceId, notificationsArray, unreadNotifications, dyFriendsAtFace;
+@synthesize tabBarController, friendsFromFb, myself, dyFriendsFromFace, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend, deviceId, notificationsArray, unreadNotifications, dyFriendsAtFace, insideUserProfile;
 
 - (void)dealloc
 {

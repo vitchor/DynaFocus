@@ -56,6 +56,8 @@
     
     tableController.navigationItem.title = @"Friend Pictures";
     tableController.hidesBottomBarWhenPushed = YES;
+    appDelegate.insideUserProfile = YES;
+
     [self.navigationController pushViewController:tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
 }
@@ -79,9 +81,9 @@
 
 - (void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FriendProfileController.viewDidAppear"];
+    delegate.insideUserProfile = NO;
 }
 
 - (void)viewDidLoad{

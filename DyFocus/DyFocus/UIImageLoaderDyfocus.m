@@ -190,45 +190,53 @@
 
 // Calls profile of that user
 - (void)loadUserProfileController:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
-    // needs userId, userName, NavigationController
-    NSMutableArray *selectedPersonFofs = [NSMutableArray array];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    Person *person = [appDelegate.dyFriendsFromFace objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
     
-    //WHEN THE COMMENT BELONGS TO A FRIEND:
-    if(person){
-        appDelegate.currentFriend = person;
+    NSLog(@"==== FACEBOOKID: %@, currentFriendFaceId: %@",facebookId,appDelegate.currentFriend.facebookId);
+    if(!appDelegate.insideUserProfile || ![facebookId isEqualToString:appDelegate.currentFriend.facebookId]){
+        // needs userId, userName, NavigationController
+        NSMutableArray *selectedPersonFofs = [NSMutableArray array];
+        Person *person = [appDelegate.dyFriendsFromFace objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
         
-        for (FOF *m_fof in appDelegate.feedFofArray) {
+        //WHEN THE COMMENT BELONGS TO A FRIEND:
+        if(person){
+            appDelegate.currentFriend = person;
             
-            if ([m_fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.facebookId]]) {
+            for (FOF *m_fof in appDelegate.feedFofArray) {
                 
-                [selectedPersonFofs addObject:m_fof];
+                if ([m_fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.facebookId]]) {
+                    
+                    [selectedPersonFofs addObject:m_fof];
+                }
             }
+            
+            appDelegate.friendFofArray = selectedPersonFofs;
+            
+            FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
+            friendProfileController.hidesBottomBarWhenPushed = YES;
+            
+            [friendProfileController clearCurrentUser];
+            
+            [navController pushViewController:friendProfileController animated:true];
+            [navController setNavigationBarHidden:NO animated:TRUE];
+            // WHEN THE COMMENT BELLONGS TO THE USER HIMSELF:
+    //    }else if ([facebookId isEqualToString:appDelegate.myself.facebookId]){
+    //        appDelegate.currentFriend = appDelegate.myself;
+    //        appDelegate.profileController.hidesBottomBarWhenPushed = YES;
+    //        [navController pushViewController:appDelegate.profileController animated:true];
+    //        [navController setNavigationBarHidden:NO animated:TRUE];
+    //        [appDelegate.tabBarController setSelectedIndex:4];
+    //     WHEN THE COMMENT BELONGS TO A USER OTHER THAN MYSELF OR A FRIEND OF MINE:
+        } else{
+            appDelegate.currentFriend = [[Person alloc] initWithId:[facebookId longLongValue] andName:userName andUserName:@"" andfacebookId:facebookId];
+            FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
+            friendProfileController.hidesBottomBarWhenPushed = YES;
+            friendProfileController.userFacebookId = [facebookId copy];
+            friendProfileController.userName = [userName copy];
+            
+            [navController pushViewController:friendProfileController animated:true];
+            [navController setNavigationBarHidden:NO animated:TRUE];
         }
-        
-        appDelegate.friendFofArray = selectedPersonFofs;
-        
-        FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
-        friendProfileController.hidesBottomBarWhenPushed = YES;
-        
-        [friendProfileController clearCurrentUser];
-        
-        [navController pushViewController:friendProfileController animated:true];
-        [navController setNavigationBarHidden:NO animated:TRUE];
-        //    // WHEN THE COMMENT BELLONGS TO THE USER HIMSELF:
-        //    }else if ([m_comment.m_userId isEqualToString:[delegate.myself objectForKey:@"id"]]){
-        //        [delegate.tabBarController setSelectedIndex:4];
-        //        [commentController.navigationController release];
-        // WHEN THE COMMENT BELONGS TO A USER OTHER THAN MYSELF OR A FRIEND OF MINE:
-    } else{
-        FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
-        friendProfileController.hidesBottomBarWhenPushed = YES;
-        friendProfileController.userFacebookId = [facebookId copy];
-        friendProfileController.userName = [userName copy];
-        
-        [navController pushViewController:friendProfileController animated:true];
-        [navController setNavigationBarHidden:NO animated:TRUE];
     }
 }
 
