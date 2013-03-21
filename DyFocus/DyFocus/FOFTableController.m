@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "FOFTableCell.h"
 #import "JSON.h"
+#import "LoadView.h"
 
 @interface FOFTableController ()
 
@@ -54,6 +55,7 @@
     }
     
     [backView release];
+   [loadingView setHidden:YES];    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -92,7 +94,6 @@
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FOFTableController.viewDidAppear"];
-    [loadingView setHidden:YES];
 }
 
 -(void) refreshCellsImageSizes {
@@ -415,6 +416,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        [m_tableView reloadData];
                                        [self refreshCellsImageSizes];
                                        
+                                       [LoadView fadeAndRemoveFromView:self.view];
                                        [loadingView setHidden:YES];
                                    }
                                }
