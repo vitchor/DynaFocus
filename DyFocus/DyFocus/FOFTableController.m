@@ -62,8 +62,6 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSLog(@"====viewWillAppear in FOFTableController");
-    
     UIView *haeaderFooterView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)] autorelease];
 	haeaderFooterView.backgroundColor = [UIColor clearColor];
 	[m_tableView setTableHeaderView:haeaderFooterView];

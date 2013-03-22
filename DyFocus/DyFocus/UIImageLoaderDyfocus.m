@@ -191,8 +191,7 @@
 // Calls profile of that user
 - (void)loadUserProfileController:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    
-    NSLog(@"==== FACEBOOKID: %@, currentFriendFaceId: %@",facebookId,appDelegate.currentFriend.facebookId);
+
     if(!appDelegate.insideUserProfile || ![facebookId isEqualToString:appDelegate.currentFriend.facebookId]){
         // needs userId, userName, NavigationController
         NSMutableArray *selectedPersonFofs = [NSMutableArray array];
@@ -228,7 +227,11 @@
     //        [appDelegate.tabBarController setSelectedIndex:4];
     //     WHEN THE COMMENT BELONGS TO A USER OTHER THAN MYSELF OR A FRIEND OF MINE:
         } else{
-            appDelegate.currentFriend = [[Person alloc] initWithId:[facebookId longLongValue] andName:userName andUserName:@"" andfacebookId:facebookId];
+            if([facebookId isEqualToString:appDelegate.myself.facebookId]){
+                appDelegate.currentFriend = appDelegate.myself;
+            }else{
+                appDelegate.currentFriend = [[Person alloc] initWithId:[facebookId longLongValue] andName:userName andUserName:@"" andfacebookId:facebookId];
+            }
             FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
             friendProfileController.hidesBottomBarWhenPushed = YES;
             friendProfileController.userFacebookId = [facebookId copy];
