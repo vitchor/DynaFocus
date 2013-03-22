@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import "SharingController.h"
 #import "FOFTableCell.h"
 
 @class TouchView;
@@ -22,6 +21,11 @@
     IBOutlet UIView *commentView;
     IBOutlet UITextView *fbCommentTextView;
     IBOutlet FOFTableCell *tableCell;
+    
+    IBOutlet UIView *activityView;
+    IBOutlet UIActivityIndicatorView *activityIndicator;
+    IBOutlet UILabel *sharingLabel;
+    IBOutlet UILabel *sharingCompletedLabel;
     
     NSMutableArray *comments;
     NSMutableArray *likes;
