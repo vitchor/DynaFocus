@@ -43,14 +43,20 @@
     FOFTableController *tableController = [[FOFTableController alloc] init];
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     tableController.refreshString = refresh_user_url;
-    if(userName && userFacebookId){
-        [LoadView loadViewOnView:tableController.view];
-        tableController.FOFArray = [[[NSMutableArray alloc] init] autorelease];
-        tableController.userFacebookId = (NSString *) userFacebookId;
-    }else{
+    if(appDelegate.currentFriend.kind == MYSELF  ||  [appDelegate.currentFriend.facebookId isEqualToString:appDelegate.myself.facebookId]){
+        tableController.FOFArray = appDelegate.userFofArray;
+        tableController.userFacebookId = (NSString *) appDelegate.myself.facebookId;
+    }else if(appDelegate.currentFriend.kind == FRIENDS_ON_APP || appDelegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB){
         tableController.FOFArray = [NSMutableArray arrayWithArray:appDelegate.friendFofArray]; // Normal procedure
         tableController.userFacebookId = (NSString *) appDelegate.currentFriend.facebookId;
+    }else if(appDelegate.currentFriend.kind == NOT_FRIEND){
+        [LoadView loadViewOnView:tableController.view];
+        [tableController.loadingView setHidden:FALSE];
+        [LoadView removeFromView:tableController.view];
+        tableController.FOFArray = [[[NSMutableArray alloc] init] autorelease];
+        tableController.userFacebookId = (NSString *) appDelegate.currentFriend.facebookId;
     }
+    
     [tableController refreshWithAction:YES];
     tableController.shouldHideNavigationBar = NO;
     
