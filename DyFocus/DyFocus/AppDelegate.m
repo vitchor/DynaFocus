@@ -165,7 +165,6 @@
     
     NSDictionary *userinfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     
-    NSLog(@"lalala 2222");
     CFShow(userinfo);
     
     if (userinfo) {
@@ -758,7 +757,6 @@
              self.myself = [[Person alloc] initWithDicAndKind:user andKind:MYSELF];
              
              UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-             [imageLoader cashProfilePicture];
              NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
              
              // Lets create the json, with all the user info, that will be used in the request

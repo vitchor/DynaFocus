@@ -94,20 +94,18 @@
 
 // Function that cashes picture right at the sign up
 -(void) cashProfilePicture{
-    if(!myPicture){
-        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-       myPicture.faceId = appDelegate.myself.facebookId;
-        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=88&height=88",appDelegate.myself.facebookId] autorelease];
-        
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   if(!error && data) {
-                                       myPicture = [[UIDyfocusImage alloc] initWithData:data];
-                                   }
-                               }];
-    }
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    myPicture.faceId = appDelegate.myself.facebookId;
+    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=88&height=88",appDelegate.myself.facebookId] autorelease];
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if(!error && data) {
+                                   myPicture = [[UIDyfocusImage alloc] initWithData:data];
+                               }
+                           }];
 }
 
 //Loads any profile picture based on facebookId
