@@ -37,11 +37,15 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     tableController.refreshString = refresh_user_url;
     
+    appDelegate.currentFriend = appDelegate.myself;
+    
+    
     tableController.FOFArray = appDelegate.userFofArray;
     tableController.shouldHideNavigationBar = NO;
     
     tableController.navigationItem.title = @"My Pictures";
     tableController.hidesBottomBarWhenPushed = YES;
+    appDelegate.insideUserProfile = YES;
     
     [self.navigationController pushViewController:tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
@@ -99,6 +103,7 @@
         }
         
     }
+    delegate.insideUserProfile = NO;
 }
 
 - (void)loadImage:(NSString*)uid {
