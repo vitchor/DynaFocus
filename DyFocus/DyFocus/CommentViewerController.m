@@ -207,6 +207,10 @@
 
 -(void) shareOnFbFromComments {
     
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    
+    [self showActivity];
+    
     NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fof.m_name];
     
     NSString *message = self.fbCommentTextView.text;
@@ -224,7 +228,9 @@
     [FBRequestConnection startWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         
         if (!error) {
-            [self goBackToComments];
+            //activity done
+            [self doneActivity];
+            
         } else {
             NSString *alertTitle = @"Connection Error";
             NSString *alertMsg = @"Failed to share link on your Facebook wall.";
@@ -239,8 +245,54 @@
             
         }
     }];
+ 
+}
+
+-(void) showActivity {
     
-    [self goBackToComments];    
+    [fbCommentTextView resignFirstResponder];
+    
+    [activityView setBackgroundColor:[UIColor lightGrayColor]];
+    
+    [activityIndicator startAnimating];
+    [activityView setHidden:NO];
+    [sharingCompletedLabel setHidden:YES];
+    [activityIndicator setHidden:NO];
+    [sharingLabel setHidden:NO];
+    
+}
+
+-(void) doneActivity {
+    
+    [activityIndicator setHidden:YES];
+    [activityIndicator stopAnimating];
+    [sharingLabel setHidden:YES];
+    
+    sharingCompletedLabel.alpha = 0.0;
+    [sharingCompletedLabel setHidden:NO];
+    [activityView setBackgroundColor:[UIColor clearColor]];
+    
+    [self goBackToComments];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        sharingCompletedLabel.alpha = 0.8;
+        
+    } completion: ^(BOOL finished) {
+        
+        [UIView animateWithDuration:2.0 animations:^{
+            
+            sharingCompletedLabel.alpha = 0.0;
+                        
+        }completion: ^(BOOL finished) {
+
+            [sharingCompletedLabel setHidden:YES];
+            [activityView setHidden:YES];
+
+        }];
+        
+    }];
+   
 }
 
 -(void) goBackToComments {
@@ -263,10 +315,10 @@
     
      self.navigationItem.hidesBackButton = YES;
     
-    [self setLeft:@"Cancel" andRightButton:@"Share"];
+    [self setLeft:@"Cancel" andRightButtons:@"Share"];
 }
 
-- (void) setLeft:(NSString*)leftButton andRightButton:(NSString*)rightButton {
+- (void) setLeft:(NSString*)leftButton andRightButtons:(NSString*)rightButton {
     
     NSString *cancelString = leftButton;
 	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
@@ -690,4 +742,11 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 }
 
+- (void)dealloc {
+    [activityView release];
+    [activityIndicator release];
+    [sharingLabel release];
+    [sharingCompletedLabel release];
+    [super dealloc];
+}
 @end

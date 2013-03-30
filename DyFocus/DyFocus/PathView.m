@@ -445,6 +445,10 @@
     cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, M_PI/2);
     cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, M_PI/2);
     helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI/2);
+//    torchOneX.constant = torchOneX.constant + 15.0;
+//    torchOneY.constant = torchOneY.constant - 15.0;
+//    torchTwoX.constant = torchTwoX.constant + 15.0;
+//    torchTwoY.constant = torchTwoY.constant - 15.0;
     torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, M_PI/2);
     torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, M_PI/2);
 
