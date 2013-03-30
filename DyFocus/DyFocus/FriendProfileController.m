@@ -61,6 +61,63 @@
     return self;
 }
 
+-(void)followUser{
+    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/follow/",dyfocus_url] autorelease];
+    [self JSONfollowUnfollow:url];
+}
+
+- (void)unfollowUser{
+    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/unfollow/",dyfocus_url] autorelease];
+    [self JSONfollowUnfollow:url];
+}
+
+//    curl -d json='{"follower_facebook_id": 100001077656862, "feed_facebook_id":640592329}' http://localhost:8000/uploader/unfollow/
+- (void)JSONfollowUnfollow:(NSString*)url{
+    [LoadView loadViewOnView:self.view withText:@"Loading..."];
+    
+//    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/follow/",dyfocus_url] autorelease];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+    AppDelegate* delegate = [UIApplication sharedApplication].delegate;
+
+    [jsonRequestObject setObject:delegate.currentFriend.facebookId forKey:@"feed_facebook_id"];
+    [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"follower_facebook_id"];
+    
+    NSString *json = [(NSObject*)jsonRequestObject JSONRepresentation];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                           json] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               
+                               NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                               NSLog(@"stringReply: %@",stringReply);
+                               
+                               if(!error && data) {
+                                   //REMOVES, CASE IT IS A FRIEND
+                                   if(delegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB){
+                                       delegate.currentFriend.kind = NOT_FRIEND;
+                                       [delegate.dyFriendsFromFace removeObjectForKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
+//                                       [[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]]
+                                   }else if(delegate.currentFriend.kind == FRIENDS_ON_APP){
+                                       delegate.currentFriend.kind = NOT_FRIEND;
+                                       [delegate.dyFriendsAtFace removeObjectForKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
+                                   }else if(delegate.currentFriend.kind == NOT_FRIEND){
+                                       delegate.currentFriend.kind = FRIENDS_ON_APP;
+                                       [delegate.dyFriendsAtFace setObject:delegate.currentFriend forKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
+                                   }
+                               }
+                               [LoadView fadeAndRemoveFromView:self.view];
+                               [self resolveUserType];
+                           }
+     ];
+}
+
 -(void) showPictures{
     FOFTableController *tableController = [[FOFTableController alloc] init];
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
@@ -95,6 +152,8 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:FALSE];
     [viewPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
+    [follow addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
+    [unfollow addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
 
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
