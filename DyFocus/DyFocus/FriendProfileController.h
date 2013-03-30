@@ -14,6 +14,8 @@
     IBOutlet NSString *userName;
     IBOutlet NSString *userFacebookId;
     IBOutlet UIButton *viewPicturesButton;
+    IBOutlet UIButton *follow;
+    IBOutlet UIButton *unfollow;
 }
 
 - (void) showPictures;
@@ -26,5 +28,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (strong, nonatomic) IBOutlet UIView *dyfocusProfileView;
 @property (strong, nonatomic) IBOutlet UIButton *viewPicturesButton;
+
+@property (strong, nonatomic) IBOutlet UIButton *follow;
+@property (strong, nonatomic) IBOutlet UIButton *unfollow;
 
 @end

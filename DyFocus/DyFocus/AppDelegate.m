@@ -731,7 +731,7 @@
          NSMutableArray *jsonFbFriendsDyfocusRequest = [[[NSMutableArray alloc] initWithCapacity:[fbFriendsArray count]] autorelease];
          
          if (httpCode == 200 && !error) {
-             //ITERATES OVER ALL FACEBOOK DRIENDS THAT CAME FROM REQUEST jsonFbFriendsDyfocusRequest
+             //ITERATES OVER ALL FACEBOOK FRIENDS THAT CAME FROM REQUEST jsonFbFriendsDyfocusRequest
              for (NSMutableDictionary* facebookFriend in fbFriendsArray) {
                 
                  Person *person = [[Person alloc] initWithDicAndKind:facebookFriend andKind:FRIENDS_ON_FB];
@@ -893,7 +893,15 @@
                     //NOT MY FRIEND ON FB
                     [justAppFriends addObject:friendId];
                     Person *dyFriend = [[Person alloc] initWithIdAndKind:[friendId longLongValue] andName:friendName andUserName:@"" andfacebookId:friendId andKind:FRIENDS_ON_APP];
+                    dyFriend.kind = FRIENDS_ON_APP;
+                    
+                    if (!self.dyFriendsAtFace) {
+                        self.dyFriendsAtFace = [[NSMutableDictionary alloc] init];
+                    } else {
+                        [self.dyFriendsAtFace removeAllObjects];
+                    }
                     [self.dyFriendsAtFace setObject:dyFriend forKey:[NSNumber numberWithLong:[dyFriend.facebookId longLongValue]]];
+                    NSLog(@"==== %@ is a friend on APP. Is 4 == %d ??", dyFriend.name, dyFriend.kind);
                 }
             }
             

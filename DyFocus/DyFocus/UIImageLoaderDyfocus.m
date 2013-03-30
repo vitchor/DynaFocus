@@ -190,17 +190,23 @@
 - (void)loadUserProfileController:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
 
+    // Works only if you are not inside someones profile
     if(!appDelegate.insideUserProfile || ![facebookId isEqualToString:appDelegate.currentFriend.facebookId]){
         // needs userId, userName, NavigationController
         NSMutableArray *selectedPersonFofs = [NSMutableArray array];
+        
+        // WHEN person is friend on app and fb:
         Person *person = [appDelegate.dyFriendsFromFace objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
         
-        //WHEN THE COMMENT BELONGS TO A FRIEND:
+        if(!person){
+            //WHEN person is friend on APP:
+            NSLog(@"==== IS FRIEND ON APP");
+            person = [appDelegate.dyFriendsAtFace objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
+        }
+        
         if(person){
             appDelegate.currentFriend = person;
-            
             for (FOF *m_fof in appDelegate.feedFofArray) {
-                
                 if ([m_fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.facebookId]]) {
                     
                     [selectedPersonFofs addObject:m_fof];
@@ -216,13 +222,6 @@
             
             [navController pushViewController:friendProfileController animated:true];
             [navController setNavigationBarHidden:NO animated:TRUE];
-            // WHEN THE COMMENT BELLONGS TO THE USER HIMSELF:
-    //    }else if ([facebookId isEqualToString:appDelegate.myself.facebookId]){
-    //        appDelegate.currentFriend = appDelegate.myself;
-    //        appDelegate.profileController.hidesBottomBarWhenPushed = YES;
-    //        [navController pushViewController:appDelegate.profileController animated:true];
-    //        [navController setNavigationBarHidden:NO animated:TRUE];
-    //        [appDelegate.tabBarController setSelectedIndex:4];
     //     WHEN THE COMMENT BELONGS TO A USER OTHER THAN MYSELF OR A FRIEND OF MINE:
         } else{
             if([facebookId isEqualToString:appDelegate.myself.facebookId]){

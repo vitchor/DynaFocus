@@ -19,7 +19,7 @@
 
 @implementation FriendProfileController
 
-@synthesize viewPicturesButton, userFacebookId, userName, userProfileImage;
+@synthesize viewPicturesButton, userFacebookId, userName, userProfileImage, follow, unfollow;
 
 
 -(id) init {
@@ -28,6 +28,28 @@
         return [self initWithNibName:@"FriendProfileController_i5" bundle:nil];
     } else {
         return [self initWithNibName:@"FriendProfileController" bundle:nil];
+    }
+}
+
+- (void) resolveUserType{
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    Person *user = delegate.currentFriend;
+    if(user.kind == FRIENDS_ON_APP  ||  user.kind == FRIENDS_ON_APP_AND_FB){
+        //FRIEND
+        [follow setEnabled:FALSE];
+        follow.alpha = 0.5f;
+        [unfollow setEnabled:TRUE];
+        unfollow.alpha = 1.0f;
+    }else if(user.kind == NOT_FRIEND){
+        [unfollow setEnabled:FALSE];
+        unfollow.alpha = 0.5f;
+        [follow setEnabled:TRUE];
+        follow.alpha = 1.0f;
+    } else if(user.kind == MYSELF){
+        [unfollow setEnabled:FALSE];
+        unfollow.alpha = 0.5f;
+        [follow setEnabled:FALSE];
+        follow.alpha = 0.5f;
     }
 }
 
@@ -76,13 +98,13 @@
 
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    if(userName && userFacebookId){
-        self.userNameLabel.text = userName;
-        [imageLoader loadProfilePicture:userFacebookId andProfileImage:userProfileImage];
-    }else{
-        self.userNameLabel.text = appDelegate.currentFriend.name;
-        [imageLoader loadProfilePicture:(NSString *)appDelegate.currentFriend.facebookId andProfileImage:userProfileImage];
-    }
+//    if(userName && userFacebookId){
+//    self.userNameLabel.text = userName;
+//    [imageLoader loadProfilePicture:userFacebookId andProfileImage:userProfileImage];
+//    }else{
+    self.userNameLabel.text = appDelegate.currentFriend.name;
+    [imageLoader loadProfilePicture:(NSString *)appDelegate.currentFriend.facebookId andProfileImage:userProfileImage];
+//    }
 }
 
 - (void) viewDidAppear:(BOOL)animated{
@@ -95,6 +117,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.navigationItem.title = @"Profile";
+    [self resolveUserType];
 }
 
 - (void)didReceiveMemoryWarning{
