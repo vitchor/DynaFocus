@@ -36,6 +36,8 @@
 		04EEABF116EA9367001BCEE3 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EEABF016EA9367001BCEE3 /* NotificationTableViewCell.m */; };
 		04EEABF316EA938A001BCEE3 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EEABF216EA938A001BCEE3 /* NotificationTableViewCell.xib */; };
 		04EEABF516EA978B001BCEE3 /* CameraViewInfoButtonBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EEABF416EA978B001BCEE3 /* CameraViewInfoButtonBlack.png */; };
+		1F59C19C1707F1250070D3C4 /* InvitationController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C19A1707F1250070D3C4 /* InvitationController_i5.xib */; };
+		1F59C19D1707F1250070D3C4 /* InvitationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C19B1707F1250070D3C4 /* InvitationController.xib */; };
 		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
 		441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFB115B131D200E204D7 /* Foundation.framework */; };
 		441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFB815B131D200E204D7 /* InfoPlist.strings */; };
@@ -231,6 +233,8 @@
 		04EEABF016EA9367001BCEE3 /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewCell.m; sourceTree = "<group>"; };
 		04EEABF216EA938A001BCEE3 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		04EEABF416EA978B001BCEE3 /* CameraViewInfoButtonBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraViewInfoButtonBlack.png; sourceTree = "<group>"; };
+		1F59C19A1707F1250070D3C4 /* InvitationController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController_i5.xib; sourceTree = "<group>"; };
+		1F59C19B1707F1250070D3C4 /* InvitationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController.xib; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		441BFFAF15B131D200E204D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		441BFFB115B131D200E204D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -643,6 +647,8 @@
 		444C504016593636006C8CD3 /* InvitationController */ = {
 			isa = PBXGroup;
 			children = (
+				1F59C19A1707F1250070D3C4 /* InvitationController_i5.xib */,
+				1F59C19B1707F1250070D3C4 /* InvitationController.xib */,
 				44AA7BF41657C477007D7F27 /* InvitationController.h */,
 				44AA7BF51657C477007D7F27 /* InvitationController.m */,
 			);
@@ -1203,6 +1209,8 @@
 				042D101516F6A59D0056A7FC /* ProfileController.xib in Resources */,
 				042D101716F6B3F50056A7FC /* FriendProfileController.xib in Resources */,
 				042D101916F6B5220056A7FC /* FriendProfileController_i5.xib in Resources */,
+				1F59C19C1707F1250070D3C4 /* InvitationController_i5.xib in Resources */,
+				1F59C19D1707F1250070D3C4 /* InvitationController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
