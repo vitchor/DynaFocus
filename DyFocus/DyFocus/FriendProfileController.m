@@ -12,6 +12,7 @@
 #import "FOFTableController.h"
 #import "LoadView.h"
 #import "UIImageLoaderDyfocus.h"
+#import "JSON.h"
 
 @interface FriendProfileController ()
 
@@ -122,6 +123,45 @@
      ];
 }
 
+-(void)JSONGetNumberOfFollows {
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/how_many_follow/",dyfocus_url] autorelease];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+    AppDelegate* delegate = [UIApplication sharedApplication].delegate;
+    
+    [jsonRequestObject setObject:delegate.currentFriend.facebookId forKey:@"facebook_id"];
+    
+    NSString *json = [(NSObject*)jsonRequestObject JSONRepresentation];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                           json] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               
+                               NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                               
+                               NSDictionary *jsonValues = [stringReply JSONValue];
+                               
+                               NSLog(@"stringReply: %@",stringReply);
+                               
+                               if(!error && data) {
+                                   NSString *followersCount = [jsonValues valueForKey:@"followers"];
+                                   NSString *followingCount = [jsonValues valueForKey:@"following"];
+                                   
+                                   self.followersLabel.text = [NSString stringWithFormat:@"%@", followersCount];
+                                   self.followingLabel.text = [NSString stringWithFormat:@"%@", followingCount];
+                               }
+                           }
+     ];
+
+}
+
 -(void) showPictures{
     FOFTableController *tableController = [[FOFTableController alloc] init];
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
@@ -166,6 +206,16 @@
 //    [imageLoader loadProfilePicture:userFacebookId andProfileImage:userProfileImage];
 //    }else{
     self.userNameLabel.text = appDelegate.currentFriend.name;
+    
+//    if (appDelegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB) {
+//        NSLog(@"Followers: %@, Following: %@", appDelegate.currentFriend.followersCount, appDelegate.currentFriend.followingCount);
+//        self.followersLabel.text = [NSString stringWithFormat:@"%@", appDelegate.currentFriend.followersCount];
+//        self.followingLabel.text = [NSString stringWithFormat:@"%@", appDelegate.currentFriend.followingCount];
+//    } else {
+//        [self JSONGetNumberOfFollows];
+//    }
+    [self JSONGetNumberOfFollows];
+
     [imageLoader loadProfilePicture:(NSString *)appDelegate.currentFriend.facebookId andProfileImage:userProfileImage];
 //    }
 }
@@ -175,6 +225,7 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FriendProfileController.viewDidAppear"];
     delegate.insideUserProfile = NO;
+    
 }
 
 - (void)viewDidLoad{
@@ -203,4 +254,9 @@
     self.userName = nil;
 }
 
+- (void)dealloc {
+    [_followingLabel release];
+    [_followersLabel release];
+    [super dealloc];
+}
 @end

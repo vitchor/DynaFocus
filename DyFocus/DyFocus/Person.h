@@ -23,6 +23,9 @@
     float m_timezone;
     NSString *m_location;
 	BOOL m_selected;
+    NSString *m_followersCount;
+    NSString *m_followingCount;
+    NSString *m_idOrigin;
 }
 
 @property(nonatomic, readonly) long uid;
@@ -34,9 +37,13 @@
 @property(nonatomic, readonly) float timezone;
 @property(nonatomic, readonly) NSString *location;
 @property(nonatomic, assign) BOOL selected;
+@property(nonatomic, assign) NSString *followersCount;
+@property(nonatomic, assign) NSString *followingCount;
+@property(nonatomic, assign) NSString *idOrigin;
 
 - (id) initWithId:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId;
 - (id)initWithIdAndKind:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId andKind:(int)iKind;
+- (id)initWithIdAndCounters:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId andKind:(int)iKind andIdOrigin:(NSString *)iIdOrigin andFollowersCount:(NSString *)iFollowersCount andFollowingCount:(NSString *)iFollowingCount;
 - (id)initWithDic:(NSMutableDictionary*) facebookUser;
 - (id)initWithDicAndKind:(NSMutableDictionary*) facebookUser andKind:(int)kind;
 
