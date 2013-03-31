@@ -115,8 +115,6 @@
 		7B0EC70116F3864C00606626 /* CameraView-ShootButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */; };
 		7B0EC70216F3864C00606626 /* CameraView-ShootButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F816F3864C00606626 /* CameraView-ShootButtonPressed.png */; };
 		7B3FEC3D16B10381004C8048 /* FriendProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3C16B10381004C8048 /* FriendProfileController.m */; };
-		7B9ED2531707E5A700B0AC01 /* InvitationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B9ED2521707E5A700B0AC01 /* InvitationController.xib */; };
-		7B9ED2551707E5B700B0AC01 /* InvitationController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B9ED2541707E5B700B0AC01 /* InvitationController_i5.xib */; };
 		7BEB1E6316BAA12C00BF7D49 /* share_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */; };
 		AC07F47915B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */; };
 		AC07F47C15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */; };
@@ -347,8 +345,6 @@
 		7B0EC6F816F3864C00606626 /* CameraView-ShootButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButtonPressed.png"; sourceTree = "<group>"; };
 		7B3FEC3B16B1036A004C8048 /* FriendProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileController.h; sourceTree = "<group>"; };
 		7B3FEC3C16B10381004C8048 /* FriendProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileController.m; sourceTree = "<group>"; };
-		7B9ED2521707E5A700B0AC01 /* InvitationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController.xib; sourceTree = "<group>"; };
-		7B9ED2541707E5B700B0AC01 /* InvitationController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController_i5.xib; sourceTree = "<group>"; };
 		7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_facebook.png; sourceTree = "<group>"; };
 		AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_72x72.png; path = ../dynafocus_icon_beta1_orange_nofill_72x72.png; sourceTree = "<group>"; };
 		AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_144x144.png; path = ../dynafocus_icon_beta1_orange_nofill_144x144.png; sourceTree = "<group>"; };
@@ -649,8 +645,6 @@
 			children = (
 				44AA7BF41657C477007D7F27 /* InvitationController.h */,
 				44AA7BF51657C477007D7F27 /* InvitationController.m */,
-				7B9ED2521707E5A700B0AC01 /* InvitationController.xib */,
-				7B9ED2541707E5B700B0AC01 /* InvitationController_i5.xib */,
 			);
 			name = InvitationController;
 			sourceTree = "<group>";
@@ -1209,8 +1203,6 @@
 				042D101516F6A59D0056A7FC /* ProfileController.xib in Resources */,
 				042D101716F6B3F50056A7FC /* FriendProfileController.xib in Resources */,
 				042D101916F6B5220056A7FC /* FriendProfileController_i5.xib in Resources */,
-				7B9ED2531707E5A700B0AC01 /* InvitationController.xib in Resources */,
-				7B9ED2551707E5B700B0AC01 /* InvitationController_i5.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1394,8 +1386,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "435E490E-B635-4C10-BB77-3EA2B5646600";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "435E490E-B635-4C10-BB77-3EA2B5646600";
+				PROVISIONING_PROFILE = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1425,8 +1417,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "435E490E-B635-4C10-BB77-3EA2B5646600";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "435E490E-B635-4C10-BB77-3EA2B5646600";
+				PROVISIONING_PROFILE = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
