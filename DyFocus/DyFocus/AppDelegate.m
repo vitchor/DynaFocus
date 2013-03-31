@@ -21,6 +21,7 @@
 #import "FOFTableNavigationController.h"
 #import "NSDyfocusURLRequest.h"
 #import "UIImageLoaderDyfocus.h"
+#import "FilterUtil.h"
 
 @implementation Notification
 
@@ -1031,6 +1032,30 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    
+
+    /*
+    UIImage *image = [UIImage imageNamed:@"tiger.png"];
+    
+    UIImage *filteredImage = [FilterUtil filterImage:image withFilterId:1];
+    UIImageWriteToSavedPhotosAlbum(filteredImage, nil, nil, nil);
+    
+    filteredImage = [FilterUtil filterImage:image withFilterId:2];
+    UIImageWriteToSavedPhotosAlbum(filteredImage, nil, nil, nil);
+    
+    filteredImage = [FilterUtil filterImage:image withFilterId:3];
+    UIImageWriteToSavedPhotosAlbum(filteredImage, nil, nil, nil);
+    
+    filteredImage = [FilterUtil filterImage:image withFilterId:4];
+    UIImageWriteToSavedPhotosAlbum(filteredImage, nil, nil, nil);
+    
+    filteredImage = [FilterUtil filterImage:image withFilterId:5];
+    UIImageWriteToSavedPhotosAlbum(filteredImage, nil, nil, nil);
+    
+    filteredImage = [FilterUtil filterImage:image withFilterId:6];
+    UIImageWriteToSavedPhotosAlbum(filteredImage, nil, nil, nil);*/
+    
+    
     // this means the user switched back to this app without completing
     // a login in Safari/Facebook App
     [FBSession setDefaultAppID:@"417476174956036"];

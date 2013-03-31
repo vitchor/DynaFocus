@@ -307,7 +307,15 @@
                          
                          pathView.enabled = true;
                          
-                         FOFPreview *FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil];
+                         CGRect screenBounds = [[UIScreen mainScreen] bounds];
+                         
+                         FOFPreview *FOFpreview;
+                         
+                         if (screenBounds.size.height == 568) {
+                            FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview_i5" bundle:nil];
+                         } else {
+                            FOFpreview = [[FOFPreview alloc] initWithNibName:@"FOFPreview" bundle:nil]; 
+                         }
                          
                          FOFpreview.frames = mFrames;
                          FOFpreview.focalPoints = mFocalPoints;

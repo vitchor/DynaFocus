@@ -10,6 +10,12 @@
 
 @implementation UIImage (FixOrientation)
 
+- (CGSize)  fixSize:(CGSize) forSize{
+    NSInteger w = (NSInteger) forSize.width;
+    NSInteger h = (NSInteger) forSize.height;
+    return CGSizeMake(w, h);
+}
+
 - (UIImage *)fixOrientation {
 	
     // No-op if the orientation is already correct
@@ -55,17 +61,18 @@
 	
     // Now we draw the underlying CGImage into a new context, applying the transform
     // calculated above.
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef ctx = CGBitmapContextCreate(NULL, self.size.width, self.size.height,
                                              CGImageGetBitsPerComponent(self.CGImage), 0,
-                                             CGImageGetColorSpace(self.CGImage),
-                                             CGImageGetBitmapInfo(self.CGImage));
+                                            rgbColorSpace,
+                                             kCGImageAlphaNoneSkipLast);
     CGContextConcatCTM(ctx, transform);
+    CGColorSpaceRelease(rgbColorSpace);
     switch (self.imageOrientation) {
         case UIImageOrientationLeft:
         case UIImageOrientationLeftMirrored:
         case UIImageOrientationRight:
         case UIImageOrientationRightMirrored:
-            // Grr...
             CGContextDrawImage(ctx, CGRectMake(0,0,self.size.height,self.size.width), self.CGImage);
             break;
 			

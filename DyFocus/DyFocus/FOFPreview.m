@@ -10,11 +10,14 @@
 #import "ASIFormDataRequest.h"
 #import "SharingController.h"
 #import "AppDelegate.h"
+#import "FilterUtil.h"
+
+#import "GPUImage.h"
 
 #define CANCEL 0
 @implementation FOFPreview
 
-@synthesize firstImageView,secondImageView, frames, focalPoints, timer;
+@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -42,6 +45,8 @@
 - (void)viewDidLoad
 {
     
+    displayedFrames = [[NSMutableArray alloc] init];
+    
     NSString *doneString = @"Next";
 	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
 									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(next)];
@@ -65,8 +70,72 @@
         [self.secondImageView setImage: [self.frames objectAtIndex:1]];
     }
     
+    for (UIImage *frame in frames) {
+        [displayedFrames addObject:[frame copy]];
+    }
+    
     oldFrameIndex = 0;
     timerPause = TIMER_INTERVAL;
+    
+    [firstTableView setDataSource:self];
+    [secondTableView setDataSource:self];
+    
+    
+    //[firstTableView selectRowAtIndexPath: [NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+    
+    
+    [firstTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    
+    //[secondTableView selectRowAtIndexPath: [NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+    
+    [firstTableView setDelegate:self];
+    [secondTableView setDelegate:self];    
+    
+}
+
+- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
+    return [FilterUtil getFiltersSize];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
+	return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 105;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+		 cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    NSLog(@"CELL CELL CELL CELL");
+    UIHorizontalTableViewCell *cell;
+    
+    //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
+    cell = [tableView dequeueReusableCellWithIdentifier:@"UIHorizontalTableViewCell"];
+    
+    
+    if (cell == nil) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"UIHorizontalTableViewCell" owner:self options:nil];
+        
+        // Load the top-level objects from the custom cell XIB.
+        cell = [topLevelObjects objectAtIndex:0];
+        
+    }
+    
+    //FOF *fof = (FOF *)[FOFArray objectAtIndex:indexPath.row];
+    NSString *filterName = [FilterUtil getFilterName:indexPath.row];
+    
+    NSString *filterImageName = [NSString stringWithFormat:@"Filter_%@.jpg", filterName];
+    NSLog(@"FILTER NAMMEEE: %@",filterName);
+    [cell refreshWithImage:filterImageName andTitle:filterName];
+    
+    UIView *myBackView = [[UIView alloc] initWithFrame:cell.frame];
+    myBackView.backgroundColor = [UIColor colorWithRed:0.28 green:0.28 blue:0.28 alpha:1];
+    cell.selectedBackgroundView = myBackView;
+    [myBackView release];
+    return cell;
+
 }
 
 - (void) next {
@@ -82,7 +151,7 @@
     }
     
     sharingController.focalPoints = focalPoints;
-    sharingController.frames = frames;
+    sharingController.frames = displayedFrames;
     
     [self.navigationController pushViewController:sharingController animated:true];
     
@@ -101,14 +170,14 @@
             
             timerPause = TIMER_PAUSE;
             
-            if (oldFrameIndex >= [self.frames count] - 1) {
+            if (oldFrameIndex >= [self.displayedFrames count] - 1) {
                 oldFrameIndex = 0;
             } else {
                 oldFrameIndex += 1;
             }
             
             
-            [self.secondImageView setImage:[self.frames objectAtIndex:oldFrameIndex]];
+            [self.secondImageView setImage:[self.displayedFrames objectAtIndex:oldFrameIndex]];
 
             [self.secondImageView setNeedsDisplay];
             
@@ -117,13 +186,13 @@
             [self.firstImageView setNeedsDisplay];
             
             int newIndex;
-            if (oldFrameIndex == [self.frames count] - 1) {
+            if (oldFrameIndex == [self.displayedFrames count] - 1) {
                 newIndex = 0;
             } else {
                 newIndex = oldFrameIndex + 1;
             }
             
-            [self.firstImageView setImage: [self.frames objectAtIndex: newIndex]];
+            [self.firstImageView setImage: [self.displayedFrames objectAtIndex: newIndex]];
         
         }
             
@@ -152,8 +221,31 @@
 {
     [super viewDidAppear:animated];
     
+    //UIImage *inputImage = [UIImage imageNamed:@"Lambeau.jpg"];
+    
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FOFPreview.viewDidAppear"];
+}
+
+#pragma mark -
+#pragma mark Table Delegate Methods
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (tableView == firstTableView) {
+        
+        UIImage *filteredImage = [FilterUtil filterImage:[frames objectAtIndex:0] withFilterId:indexPath.row];
+        
+        [self.displayedFrames setObject:filteredImage atIndexedSubscript:0];
+        
+    } else if (tableView == secondTableView) {
+        
+        UIImage *filteredImage = [FilterUtil filterImage:[frames objectAtIndex:1] withFilterId:indexPath.row];
+        
+        [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];
+        
+    }
+	
 }
 
 - (void) dealloc
