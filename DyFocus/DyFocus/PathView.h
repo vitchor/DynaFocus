@@ -13,6 +13,7 @@
 @interface PathView : UIView {
     
     bool enabled;
+    float fadeDuration;
     
     CGContextRef context;
     CGColorRef ref;

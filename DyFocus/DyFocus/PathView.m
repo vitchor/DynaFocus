@@ -203,6 +203,10 @@
         [self rotateImagesToTheRight];
         [self setTorchButtonsPlace:UIDeviceOrientationLandscapeLeft];
     }
+    else
+    {
+        [self setTorchButtonsPlace:UIDeviceOrientationPortrait];
+    }
 
     lastOrientation = orientation;
     
@@ -210,6 +214,8 @@
 
 - (void) checkOrientations
 {
+    fadeDuration = 0.15;
+    
     double duration = 0.3;
 
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
@@ -356,11 +362,6 @@
 
 -(void) setTorchButtonsPlace:(UIDeviceOrientation) orientation {
     
-    [UIView animateWithDuration:0.15 animations:^{
-        torchOneButton.alpha = 0.0;
-        torchTwoButton.alpha = 0.0;
-    } completion: ^(BOOL finished) {
-       
         CGRect screenBounds = [[UIScreen mainScreen] bounds];
         
         if (screenBounds.size.height == 568) {
@@ -431,11 +432,10 @@
             }
         }
         
-        [UIView animateWithDuration:0.15 animations:^{
+        [UIView animateWithDuration:fadeDuration animations:^{
             torchOneButton.alpha = 0.5;
             torchTwoButton.alpha = 0.5;
         }];
-    }];
 }
 
 -(void)rotateImagesToTheRight
@@ -445,13 +445,14 @@
     cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, M_PI/2);
     cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, M_PI/2);
     helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI/2);
-//    torchOneX.constant = torchOneX.constant + 15.0;
-//    torchOneY.constant = torchOneY.constant - 15.0;
-//    torchTwoX.constant = torchTwoX.constant + 15.0;
-//    torchTwoY.constant = torchTwoY.constant - 15.0;
-    torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, M_PI/2);
-    torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, M_PI/2);
-
+    
+    [UIView animateWithDuration:fadeDuration animations:^{
+        torchOneButton.alpha = 0.0;
+        torchTwoButton.alpha = 0.0;
+    } completion: ^(BOOL finished) {
+        torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, M_PI/2);
+        torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, M_PI/2);
+    }];
 //    CGAffineTransform rotateOne = CGAffineTransformRotate(torchOneView.transform, M_PI/2);
 //    CGAffineTransform translateOne = CGAffineTransformMakeTranslation(toneX, toneY);
 //    CGAffineTransform finalTransformOne = CGAffineTransformConcat(rotateOne, translateOne);
@@ -465,8 +466,14 @@
     cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, -M_PI/2);
     cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, -M_PI/2);
     helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, -M_PI/2);
-    torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, -M_PI/2);
-    torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, -M_PI/2);    
+    
+    [UIView animateWithDuration:fadeDuration animations:^{
+        torchOneButton.alpha = 0.0;
+        torchTwoButton.alpha = 0.0;
+    } completion: ^(BOOL finished) {
+        torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, -M_PI/2);
+        torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, -M_PI/2);
+    }];
 }
 -(void)rotateImagesHalfMoon
 {
@@ -475,8 +482,14 @@
     cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, M_PI);
     cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, M_PI);
     helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI);
-    torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, M_PI);
-    torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, M_PI);
+    
+    [UIView animateWithDuration:fadeDuration animations:^{
+        torchOneButton.alpha = 0.0;
+        torchTwoButton.alpha = 0.0;
+    } completion: ^(BOOL finished) {
+        torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, M_PI);
+        torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, M_PI);
+    }];
 }
 -(void)dealloc
 {
