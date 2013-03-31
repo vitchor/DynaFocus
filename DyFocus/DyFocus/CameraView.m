@@ -476,26 +476,19 @@
 
 -(void)addObserverToFocus
 {
-    
-    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logEvent:@"Capture Button"];
     
     mFocalPoints = [pathView getPoints];
     
     if ([mFocalPoints count] > 1) {
-
-        
+        [shootButton setEnabled:NO];
         if (mFOFIndex == 0 && ![mCaptureDevice isAdjustingExposure] && ![mCaptureDevice isAdjustingFocus]) {
-            [shootButton setEnabled:NO];
             [self capture];
             
             isObserving = YES;
             [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
-
-
         } else {
-            [shootButton setEnabled:false];
             [infoButton setEnabled:false];
             [cancelButton setEnabled:false];
             
@@ -506,7 +499,6 @@
             isObserving = YES;
             [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
         }
-        
     } else {
         [appDelegate showAlertBaloon:@"Add more points" andAlertMsg:@"Add 2 focus points by tapping the screen." andAlertButton:@"OK" andController:self];
     }
@@ -570,6 +562,29 @@
     
     [pathView resetOrientations];
 
+    
+    // ---- PROXIMITY SENSOR:
+    UIDevice *device = [UIDevice currentDevice];
+    // Turn on proximity monitoring
+    // To determine if proximity monitoring is available, attempt to enable it.
+    [device setProximityMonitoringEnabled:YES];
+    //// If the value of the proximityMonitoringEnabled property remains NO, proximity
+    //// monitoring is not available.
+    if([device isProximityMonitoringEnabled]){
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proximityChanged) name:UIDeviceProximityStateDidChangeNotification object:device];
+    }
+    NSLog([device isProximityMonitoringEnabled] ? @"====YES Proximity is supported": @"====NO Proximity AIN'T SUPPORTED");
+}
+
+// PROXIMITY SENSOR GESTURE SELECTOR:
+-(void) proximityChanged{
+    BOOL proximityState = [[UIDevice currentDevice] proximityState];
+    NSLog(proximityState ? @"==== CLOSE": @"==== FAR");
+    
+    if([shootButton isEnabled]  &&  proximityState  &&  [[pathView getPoints] count] > 1){
+        // TODO SHOOT PIC
+        [self addObserverToFocus];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -651,6 +666,8 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
+    UIDevice *device = [UIDevice currentDevice];
+    [device setProximityMonitoringEnabled:NO];
 }
 
 

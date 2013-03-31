@@ -4,13 +4,16 @@
 #import "InvitationController.h"
 #import "FriendProfileController.h"
 
-@interface PeopleController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate> {
+@interface PeopleController : UIViewController  /*Extends a Table of Cells */<
+                                  UITableViewDataSource /*Used to edit table's content*/,
+                                  UITableViewDelegate   /*Used to capture interaction in the tables*/,
+                                  UISearchBarDelegate   /*Used to capture interaction with the searchBar*/> {
 	// UI
-	UITableView *m_tableView;
-	UISearchBar *m_searchBar;
-	UIToolbar *m_controlToolbar;
-	UISegmentedControl *m_swithSelectedButton;
-	UIStyledLabel *m_customMessageLabel;
+	UITableView *m_tableView;                   //The Table
+	UISearchBar *m_searchBar;                   //Search Bar on the top of the view
+	UIToolbar *m_controlToolbar;                // ??
+	UISegmentedControl *m_swithSelectedButton;  // ??
+	UIStyledLabel *m_customMessageLabel;        // ??
 	BOOL m_isFacebookTableEmpty;
 	BOOL m_isDyfocusTableEmpty;
 	
@@ -18,10 +21,8 @@
 	NSMutableDictionary *m_peopleInfo;
 	NSMutableArray *m_visiblePeopleList;
 	NSMutableDictionary *m_imageCache;
-    
 	NSMutableDictionary *m_friendInfo;
 	NSMutableArray *m_visibleFriendsList;
-    
     InvitationController *invitationController;
     
 	int m_viewCount;
