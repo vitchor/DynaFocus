@@ -200,7 +200,6 @@
         
         if(!person){
             //WHEN person is friend on APP:
-            NSLog(@"==== IS FRIEND ON APP");
             person = [appDelegate.dyFriendsAtFace objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
         }
         

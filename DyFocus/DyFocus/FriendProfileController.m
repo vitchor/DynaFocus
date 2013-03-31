@@ -109,6 +109,10 @@
                                        [delegate.dyFriendsAtFace removeObjectForKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
                                    }else if(delegate.currentFriend.kind == NOT_FRIEND){
                                        delegate.currentFriend.kind = FRIENDS_ON_APP;
+                                       
+                                       if (!delegate.dyFriendsAtFace) {
+                                           delegate.dyFriendsAtFace = [[NSMutableDictionary alloc] init];
+                                       }
                                        [delegate.dyFriendsAtFace setObject:delegate.currentFriend forKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
                                    }
                                }

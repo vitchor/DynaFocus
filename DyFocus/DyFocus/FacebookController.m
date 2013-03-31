@@ -52,10 +52,16 @@
 }
 
 - (void)refreshPeople {
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [self setPeople:appDelegate.friendsFromFb andFriends:appDelegate.dyFriendsFromFace];
-   
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSMutableDictionary *allFriends = [[NSMutableDictionary alloc] init];
+
+    for(id key in delegate.dyFriendsAtFace){
+        [allFriends setObject:[delegate.dyFriendsAtFace objectForKey:key] forKey:key];
+    }
+    for(id key in delegate.dyFriendsFromFace){
+        [allFriends setObject:[delegate.dyFriendsFromFace objectForKey:key] forKey:key];
+    }
+    [self setPeople:delegate.friendsFromFb andFriends:allFriends];
 }
 
 - (void)facebookError {

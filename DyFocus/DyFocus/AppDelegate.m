@@ -894,14 +894,12 @@
                     [justAppFriends addObject:friendId];
                     Person *dyFriend = [[Person alloc] initWithIdAndKind:[friendId longLongValue] andName:friendName andUserName:@"" andfacebookId:friendId andKind:FRIENDS_ON_APP];
                     dyFriend.kind = FRIENDS_ON_APP;
-                    
                     if (!self.dyFriendsAtFace) {
                         self.dyFriendsAtFace = [[NSMutableDictionary alloc] init];
                     } else {
                         [self.dyFriendsAtFace removeAllObjects];
                     }
                     [self.dyFriendsAtFace setObject:dyFriend forKey:[NSNumber numberWithLong:[dyFriend.facebookId longLongValue]]];
-                    NSLog(@"==== %@ is a friend on APP. Is 4 == %d ??", dyFriend.name, dyFriend.kind);
                 }
             }
             
