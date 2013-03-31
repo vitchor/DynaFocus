@@ -32,7 +32,7 @@
 		
 		// UI
 	
-        
+        //Changes tableView bounds according to the screen size of the iPhone:
         CGRect screenBounds = [[UIScreen mainScreen] bounds];
         if (screenBounds.size.height == 568) {
             m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 480) style:UITableViewStylePlain];
@@ -40,14 +40,15 @@
             m_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, 320, 392) style:UITableViewStylePlain];
         }
         
-        
+        //Defines table characteristics
 		[m_tableView setRowHeight:50.0];
-		m_tableView.dataSource = self;
-		m_tableView.delegate = self;
+		m_tableView.dataSource = self;  //First Include
+		m_tableView.delegate = self;    //Second Include
 		[self.view addSubview:m_tableView];
 		
+        //Defines searchBar characteristics
 		m_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-		m_searchBar.delegate = self;
+		m_searchBar.delegate = self;    //Third Include
 		m_searchBar.barStyle = UIBarStyleBlackOpaque;
 		m_searchBar.placeholder = @"Search people";		
 		[self.view addSubview:m_searchBar];

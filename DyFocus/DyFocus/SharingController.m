@@ -34,7 +34,9 @@
 
     if (facebookSwitch.on) {
         [commentField setHidden:NO];
+        [placeHolderLabel setHidden:NO];
     }else{
+        [placeHolderLabel setHidden:YES];
         [commentField setHidden:YES];
     }
     
@@ -61,6 +63,7 @@
     
     backButton = self.navigationItem.leftBarButtonItem;
     commentField.layer.cornerRadius = 6.0;
+    [placeHolderLabel setHidden:YES];
     [commentField setHidden:YES];
 }
 
@@ -262,7 +265,7 @@
 }
 
 -(void)hidesKeyboard{
-    self.commentField.text = @"Write a comment...";
+    self.commentField.text = @"";
     
     CGRect myTextViewFrame = [self.commentField frame];
     myTextViewFrame.origin.y -= -230;
@@ -277,10 +280,12 @@
     
     [facebookSwitch setHidden:NO];
     [shareLabel setHidden:NO];
+    [placeHolderLabel setHidden:NO];
 }
 
 -(void)keyboardWillShow:(NSNotification*)aNotification{
     
+    [placeHolderLabel setHidden:YES];
     [facebookSwitch setHidden:YES];
     [shareLabel setHidden:YES];
     
@@ -332,6 +337,11 @@
     [focalPoints release];
     [fofName release];
     [shareLabel release];
+    [facebookSwitch release];
+    [activityIndicator release];
+    [spinner release];
+    [commentField release];
+    [placeHolderLabel release];
     [super dealloc];
 }
 

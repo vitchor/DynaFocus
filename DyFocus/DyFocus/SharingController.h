@@ -17,6 +17,7 @@
     IBOutlet UIView *activityIndicator;
     IBOutlet UIActivityIndicatorView *spinner;
     IBOutlet UITextView *commentField;
+    IBOutlet UILabel *placeHolderLabel;
     
 
     FBSession *facebook;

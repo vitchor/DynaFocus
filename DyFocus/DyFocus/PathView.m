@@ -13,7 +13,7 @@
 
 @implementation PathView
 
-@synthesize touchPoints, ref, context, enabled, cameraViewController,cancelIcon,cameraIcon,helpIcon;
+@synthesize touchPoints, ref, context, enabled, cameraViewController;
 
 - (id)initWithFrame:(CGRect)frame
 {
