@@ -17,6 +17,9 @@
 #import "Flurry.h"
 #import "UIDevice+Hardware.h"
 #import "DyfocusSettings.h"
+#import <MediaPlayer/MPVolumeView.h>
+
+#define OK 0
 
 @implementation CameraView
 
@@ -419,7 +422,17 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeChanged:) name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
+    
     [super viewDidLoad];
+    
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame: CGRectZero];
+//    MPVolumeView *volumeView = [[[MPVolumeView alloc] initWithFrame:CGRectMake(18.0, 340.0, 284.0, 23.0)] autorelease];
+//    [[self view] addSubview:volumeView];
+    volumeView.showsRouteButton = NO;
+    volumeView.showsVolumeSlider = NO;
+    [self.view addSubview: volumeView];
+    [volumeView release];
 }
 
 -(void)closePopup {
@@ -465,7 +478,6 @@
 -(void)addObserverToFocus
 {
     
-    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logEvent:@"Capture Button"];
     
@@ -496,7 +508,36 @@
         }
         
     } else {
-        [appDelegate showAlertBaloon:@"Add more points" andAlertMsg:@"Add 2 focus points by tapping the screen." andAlertButton:@"OK" andController:self];
+//        [appDelegate showAlertBaloon:@"Add more points" andAlertMsg:@"Add 2 focus points by tapping the screen." andAlertButton:@"OK" andController:self];
+        
+        [shootButton setEnabled:false];
+        
+        [self showAlertBaloon];
+    }
+}
+
+
+- (void) showAlertBaloon {
+    
+	NSString *alertTitle = @"Add more points";
+	NSString *alertMsg =@"Add 2 focus points by tapping the screen.";
+	NSString *alertButton1 = @"OK";
+	
+	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton1 otherButtonTitles:nil] autorelease];
+    // optional - add more buttons:
+	[alert setTag:OK];
+    [alert show];
+	
+	[alertTitle release];
+	[alertMsg release];
+	[alertButton1 release];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if ([alertView tag] == OK) {
+        if (buttonIndex == 0) {
+			 [shootButton setEnabled:true];
+        }
     }
 }
 
@@ -565,9 +606,7 @@
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"CameraView.viewDidAppear"];
-    
-//<<<<<<< HEAD
-    
+  
     //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
     if(popupView.tag != 420) {
         //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
@@ -577,9 +616,7 @@
         [popupView setTag:420];
         
     }
-    
-//=======
-//>>>>>>> fa50715bbb065040e236b2dac1c61aab6130ad23
+
     [shootButton setEnabled:true];
     
     if (!captureSession) {
@@ -684,10 +721,20 @@
 }
 
 - (void) didRotate:(NSNotification *)notification
-
 {
     [pathView checkOrientations];
 }
+
+
+-(IBAction)volumeChanged:(id)sender{
+
+    NSLog(@"VOLUUUUUUUUUUUME");
+    
+    if(shootButton.isEnabled)
+        [self addObserverToFocus];
+
+}
+
 
 - (void) setTorchOn:(BOOL)isOn
 {
