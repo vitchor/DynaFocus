@@ -62,8 +62,6 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSLog(@"====viewWillAppear in FOFTableController");
-    
     UIView *haeaderFooterView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)] autorelease];
 	haeaderFooterView.backgroundColor = [UIColor clearColor];
 	[m_tableView setTableHeaderView:haeaderFooterView];
@@ -363,7 +361,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         [jsonRequestObject setObject:userFacebookId forKey:@"user_facebook_id"];
         
     } else {
-        [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_facebook_id"];
+        [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"user_facebook_id"];
     }
 
     

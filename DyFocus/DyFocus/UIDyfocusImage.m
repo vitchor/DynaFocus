@@ -10,7 +10,7 @@
 
 @implementation UIDyfocusImage
 
-@synthesize index, tag;
+@synthesize index, faceId;
 
 
 

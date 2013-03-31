@@ -68,7 +68,7 @@
     
    
     
-    [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_id"];
+    [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"user_id"];
     [jsonRequestObject setObject:@"1" forKey:@"read_all"];
     
     NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
@@ -115,7 +115,7 @@
                                            NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
                                            Notification *notification =[notifications objectAtIndex:0];
                                            [jsonRequestObject setObject:[NSString stringWithFormat:@"%@",notification.m_notificationId] forKey:@"notification_id"];
-                                           [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"user_id"];
+                                           [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"user_id"];
                                            [jsonRequestObject setObject:@"1" forKey:@"read_all"];
                                            NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
                                            [request setHTTPMethod:@"POST"];

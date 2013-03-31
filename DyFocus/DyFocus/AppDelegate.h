@@ -22,6 +22,7 @@
 
 #import "FOFTableNavigationController.h"
 #import "UIDyfocusImage.h"
+#import "Person.h"
 
 #define UPLOADING 0
 #define SHARING 1
@@ -33,8 +34,11 @@
 #define NOTIFICATION_COMMENTED_ON_COMMENTED_FOF 3
 
 #define dyfocus_url @"http://dyfoc.us"
+//#define dyfocus_url @"http://192.168.0.112:8000"
 //#define dyfocus_url @"http://192.168.100.140:8000"
 //#define dyfocus_url @"http://192.168.0.109:8000"
+
+#define app_fb_id @"417476174956036"
 
 #define refresh_user_url @"/uploader/json_user_fof/"
 #define refresh_featured_url @"/uploader/json_featured_fof/"
@@ -125,9 +129,10 @@
     SplashScreenController *splashScreenController;
     CameraView *cameraViewController;
     
-    NSMutableDictionary *friends;
-    NSMutableDictionary *dyfocusFriends;    
-    NSMutableDictionary *myself;
+    NSMutableDictionary *friendsFromFb;         // Friends only in facebook, not the app
+    NSMutableDictionary *dyFriendsFromFace;     // Dyfocus friends that are also FB friends
+    NSMutableDictionary *dyFriendsAtFace;       // Dyfocus friends that AREN'T   FB friends but we get their data from FB
+    Person *myself;                             // My data
     
     NSMutableArray *featuredFofArray;
     NSMutableArray *userFofArray;
@@ -146,6 +151,7 @@
     ProfileController *profileController;
     
     bool showNotification;
+    BOOL insideUserProfile;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -174,9 +180,10 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
 
 @property (nonatomic, retain)  UIImage *myPicture;
-@property (nonatomic, retain)  NSMutableDictionary *friends;
-@property (nonatomic, retain)  NSMutableDictionary *dyfocusFriends;
-@property (nonatomic, retain)  NSMutableDictionary *myself;
+@property (nonatomic, retain)  NSMutableDictionary *friendsFromFb;
+@property (nonatomic, retain)  NSMutableDictionary *dyFriendsFromFace;
+@property (nonatomic, retain)  NSMutableDictionary *dyFriendsAtFace;
+@property (nonatomic, retain)  Person *myself;
 @property (nonatomic, retain)  NSMutableArray *featuredFofArray;
 @property (nonatomic, retain)  NSMutableArray *userFofArray;
 @property (nonatomic, retain)  NSMutableArray *feedFofArray;
@@ -185,5 +192,6 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSString *deviceId;
 @property (nonatomic, retain)  NSMutableArray *notificationsArray;
 @property (nonatomic, readwrite) int unreadNotifications;
+@property (nonatomic, readwrite) BOOL insideUserProfile;
 
 @end

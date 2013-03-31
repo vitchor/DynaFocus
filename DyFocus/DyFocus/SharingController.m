@@ -83,7 +83,7 @@
 -(void)shareWithFacebook {
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    NSString *savedFacebookId = [appDelegate.myself objectForKey:@"id"];
+    NSString *savedFacebookId = appDelegate.myself.facebookId;
     
     NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fofName];
     
@@ -141,9 +141,9 @@
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    NSString *savedFacebookId = [appDelegate.myself objectForKey:@"id"];
-    NSString *savedFacebookName = [appDelegate.myself objectForKey:@"name"];
-    NSString *savedFacebookEmail = [appDelegate.myself objectForKey:@"email"];
+    NSString *savedFacebookId = appDelegate.myself.facebookId;
+    NSString *savedFacebookName = appDelegate.myself.name;
+    NSString *savedFacebookEmail = appDelegate.myself.email;
     
     request = [[ASIFormDataRequest requestWithURL:webServiceUrl] retain];
     [request setDelegate:self];

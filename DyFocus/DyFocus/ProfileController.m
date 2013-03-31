@@ -37,11 +37,15 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     tableController.refreshString = refresh_user_url;
     
+    appDelegate.currentFriend = appDelegate.myself;
+    
+    
     tableController.FOFArray = appDelegate.userFofArray;
     tableController.shouldHideNavigationBar = NO;
     
     tableController.navigationItem.title = @"My Pictures";
     tableController.hidesBottomBarWhenPushed = YES;
+    appDelegate.insideUserProfile = YES;
     
     [self.navigationController pushViewController:tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
@@ -56,7 +60,7 @@
     [notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    self.userNameLabel.text = [appDelegate.myself objectForKey:@"name"];
+    self.userNameLabel.text = appDelegate.myself.name;
     
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
     [imageLoader loadMyProfilePicture:userPicture];
@@ -99,11 +103,10 @@
         }
         
     }
+    delegate.insideUserProfile = NO;
 }
 
 - (void)loadImage:(NSString*)uid {
-    NSLog(@"==== STEP1: Load Image with id: %@", uid);
-    
 //    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",uid] autorelease];
     NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",uid, (int)userPicture.frame.size.width* 10, (int)userPicture.frame.size.height * 10] autorelease];
     

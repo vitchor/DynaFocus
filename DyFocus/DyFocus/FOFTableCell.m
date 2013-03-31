@@ -107,7 +107,7 @@
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
         [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
-        [jsonRequestObject setObject:[delegate.myself objectForKey:@"id"] forKey:@"facebook_id"];
+        [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"facebook_id"];
         
         NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
         

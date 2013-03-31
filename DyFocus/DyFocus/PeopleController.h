@@ -4,27 +4,6 @@
 #import "InvitationController.h"
 #import "FriendProfileController.h"
 
-@interface Person : NSObject {
-	long m_id;
-	NSString *m_name;
-	NSString *m_details;
-	NSString *m_email;
-	NSObject *m_tag;
-	BOOL m_selected;
-}
-
-@property(nonatomic, readonly) long uid;
-@property(nonatomic, readonly) NSString *name;
-@property(nonatomic, readonly) NSString *details;
-@property(nonatomic, retain) NSString *email;
-@property(nonatomic, readonly) NSObject *tag;
-@property(nonatomic, assign) BOOL selected;
-
-- (id)initWithId:(long)iUid andName:(NSString *)iName andDetails:(NSString *)iDetails andTag:(NSObject *)iTag;
-
-@end
-
-
 @interface PeopleController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate> {
 	// UI
 	UITableView *m_tableView;

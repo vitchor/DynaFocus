@@ -25,8 +25,6 @@
 // Singleton
 - (id)init {
     if (self = [super init]) {
-//        NSLog(@"==== reset isFirstLogin = NO");
-//        isFirstLogin = NO;
     }
     return self;
 }
