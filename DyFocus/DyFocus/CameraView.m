@@ -408,18 +408,6 @@
     [shootButton setImage:[UIImage imageNamed:@"CameraView-ShootButtonPressed.png"] forState:UIControlStateHighlighted];
     
     [infoButton setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"] forState:UIControlStateHighlighted];
-    
-    [pathView.cancelIcon addTarget:self action:@selector(pressCancelButton) forControlEvents:UIControlEventTouchDown];
-    [pathView.cancelIcon addTarget:self action:@selector(unPressCancelButton) forControlEvents:UIControlEventTouchUpOutside];
-    [pathView.cancelIcon addTarget:self action:@selector(unPressCancelButton) forControlEvents:UIControlEventTouchUpInside];
-    
-    [pathView.cameraIcon addTarget:self action:@selector(pressShootButton) forControlEvents:UIControlEventTouchDown];
-    [pathView.cameraIcon addTarget:self action:@selector(unPressShootButton) forControlEvents:UIControlEventTouchUpOutside];
-    [pathView.cameraIcon addTarget:self action:@selector(unPressShootButton) forControlEvents:UIControlEventTouchUpInside];
-    
-    [pathView.helpIcon addTarget:self action:@selector(pressHelpButton) forControlEvents:UIControlEventTouchDown];
-    [pathView.helpIcon addTarget:self action:@selector(unPressHelpButton) forControlEvents:UIControlEventTouchUpOutside];
-    [pathView.helpIcon addTarget:self action:@selector(unPressHelpButton) forControlEvents:UIControlEventTouchUpInside];
 
     
     [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
@@ -723,25 +711,6 @@
     [mCaptureDevice lockForConfiguration:nil]; //you must lock before setting torch mode
     [mCaptureDevice setTorchMode:isOn ? AVCaptureTorchModeOn : AVCaptureTorchModeOff];
     [mCaptureDevice unlockForConfiguration];
-}
-
-- (void) pressCancelButton{
-    [cancelButton.imageView setImage:[UIImage imageNamed:@"CameraView-LeftButtonPressed.png"]];
-}
-- (void) unPressCancelButton{
-    [cancelButton.imageView setImage:[UIImage imageNamed:@"CameraView-LeftButton.png"]];
-}
-- (void) pressShootButton{
-    [shootButton.imageView setImage:[UIImage imageNamed:@"CameraView-ShootButtonPressed.png"]];
-}
-- (void) unPressShootButton{
-    [shootButton.imageView setImage:[UIImage imageNamed:@"CameraView-ShootButton.png"]];
-}
-- (void) pressHelpButton{
-    [infoButton.imageView setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"]];
-}
-- (void) unPressHelpButton{
-    [infoButton.imageView setImage:[UIImage imageNamed:@"CameraView-RightButton.png"]];
 }
 
 @end

@@ -47,9 +47,6 @@
 @property(nonatomic,readwrite)CGColorRef ref;
 @property(nonatomic,readwrite)bool enabled;
 @property(nonatomic,strong)CameraView *cameraViewController;
-@property(nonatomic,retain) IBOutlet UIButton *cancelIcon;
-@property(nonatomic,retain) IBOutlet UIButton *cameraIcon;
-@property(nonatomic,retain) IBOutlet UIButton *helpIcon;
 
 
 -(NSMutableArray *)getPoints;
