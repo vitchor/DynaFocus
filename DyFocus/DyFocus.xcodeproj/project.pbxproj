@@ -55,6 +55,12 @@
 		1F59C19C1707F1250070D3C4 /* InvitationController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C19A1707F1250070D3C4 /* InvitationController_i5.xib */; };
 		1F59C19D1707F1250070D3C4 /* InvitationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C19B1707F1250070D3C4 /* InvitationController.xib */; };
 		1F59C1A317080BB30070D3C4 /* FOFPreview_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C1A217080BB30070D3C4 /* FOFPreview_i5.xib */; };
+		1F59C1B21708EB130070D3C4 /* LikesTableViewCell.h in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1AC1708CF840070D3C4 /* LikesTableViewCell.h */; };
+		1F59C1B31708EB130070D3C4 /* LikesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1AD1708CF840070D3C4 /* LikesTableViewCell.m */; };
+		1F59C1B41708EB130070D3C4 /* LikesTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1AE1708CF840070D3C4 /* LikesTableViewCell.xib */; };
+		1F59C1B51708EB130070D3C4 /* LikesTableViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1AF1708CF840070D3C4 /* LikesTableViewController.h */; };
+		1F59C1B61708EB130070D3C4 /* LikesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1B01708CF840070D3C4 /* LikesTableViewController.m */; };
+		1F59C1B71708EB130070D3C4 /* LikesTableViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1B11708CF840070D3C4 /* LikesTableViewController.xib */; };
 		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
 		441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFB115B131D200E204D7 /* Foundation.framework */; };
 		441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFB815B131D200E204D7 /* InfoPlist.strings */; };
@@ -296,6 +302,12 @@
 		1F59C19A1707F1250070D3C4 /* InvitationController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController_i5.xib; sourceTree = "<group>"; };
 		1F59C19B1707F1250070D3C4 /* InvitationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController.xib; sourceTree = "<group>"; };
 		1F59C1A217080BB30070D3C4 /* FOFPreview_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview_i5.xib; sourceTree = "<group>"; };
+		1F59C1AC1708CF840070D3C4 /* LikesTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LikesTableViewCell.h; sourceTree = "<group>"; };
+		1F59C1AD1708CF840070D3C4 /* LikesTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LikesTableViewCell.m; sourceTree = "<group>"; };
+		1F59C1AE1708CF840070D3C4 /* LikesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikesTableViewCell.xib; sourceTree = "<group>"; };
+		1F59C1AF1708CF840070D3C4 /* LikesTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LikesTableViewController.h; sourceTree = "<group>"; };
+		1F59C1B01708CF840070D3C4 /* LikesTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LikesTableViewController.m; sourceTree = "<group>"; };
+		1F59C1B11708CF840070D3C4 /* LikesTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikesTableViewController.xib; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		441BFFAF15B131D200E204D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		441BFFB115B131D200E204D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -561,6 +573,7 @@
 		048BA4BA16B11E28002DBD68 /* CommentViewerController */ = {
 			isa = PBXGroup;
 			children = (
+				1F59C1A91708CE7E0070D3C4 /* Likes */,
 				048BA4C116B11EBA002DBD68 /* CommentViewerController.h */,
 				048BA4C216B11EBA002DBD68 /* CommentViewerController.m */,
 				048BA4C316B11EBA002DBD68 /* CommentViewerController.xib */,
@@ -654,6 +667,19 @@
 				04EEABF216EA938A001BCEE3 /* NotificationTableViewCell.xib */,
 			);
 			name = NotificationTableViewController;
+			sourceTree = "<group>";
+		};
+		1F59C1A91708CE7E0070D3C4 /* Likes */ = {
+			isa = PBXGroup;
+			children = (
+				1F59C1AC1708CF840070D3C4 /* LikesTableViewCell.h */,
+				1F59C1AD1708CF840070D3C4 /* LikesTableViewCell.m */,
+				1F59C1AE1708CF840070D3C4 /* LikesTableViewCell.xib */,
+				1F59C1AF1708CF840070D3C4 /* LikesTableViewController.h */,
+				1F59C1B01708CF840070D3C4 /* LikesTableViewController.m */,
+				1F59C1B11708CF840070D3C4 /* LikesTableViewController.xib */,
+			);
+			name = Likes;
 			sourceTree = "<group>";
 		};
 		441BFFA015B131D200E204D7 = {
@@ -1381,6 +1407,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F59C1B21708EB130070D3C4 /* LikesTableViewCell.h in Sources */,
+				1F59C1B31708EB130070D3C4 /* LikesTableViewCell.m in Sources */,
+				1F59C1B41708EB130070D3C4 /* LikesTableViewCell.xib in Sources */,
+				1F59C1B51708EB130070D3C4 /* LikesTableViewController.h in Sources */,
+				1F59C1B61708EB130070D3C4 /* LikesTableViewController.m in Sources */,
+				1F59C1B71708EB130070D3C4 /* LikesTableViewController.xib in Sources */,
 				04D6A4F716B65EFD00C4A71D /* CommentTableCell.m in Sources */,
 				44C7B1D71607444200221C12 /* iToast.h in Sources */,
 				44C7B1D81607444200221C12 /* iToast.m in Sources */,

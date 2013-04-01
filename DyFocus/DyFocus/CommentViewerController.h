@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "FOFTableCell.h"
+#import "LikesTableViewController.h"
 
 @class TouchView;
 
@@ -30,6 +31,8 @@
     NSMutableArray *comments;
     NSMutableArray *likes;
     NSMutableString *likeListUsers;
+    LikesTableViewController *likesController;
+    IBOutlet UIView *likesView;
     
     BOOL isKeyboardHidden;
     BOOL isTableEmpty;
@@ -51,6 +54,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *likesLabel;
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) IBOutlet UIView *commentView;
+@property (nonatomic, retain) IBOutlet UIView *likesView;
 @property (nonatomic, retain) IBOutlet UITextView *fbCommentTextView;
 @property (nonatomic) BOOL isKeyboardHidden;
 @property (nonatomic,readwrite) BOOL isCommenting;

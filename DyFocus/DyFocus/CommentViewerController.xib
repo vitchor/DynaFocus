@@ -234,7 +234,7 @@
 							<object class="IBUIActivityIndicatorView" id="222230680">
 								<reference key="NSNextResponder" ref="945347583"/>
 								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{100, 199}, {37, 37}}</string>
+								<string key="NSFrame">{{100, 200}, {37, 37}}</string>
 								<reference key="NSSuperview" ref="945347583"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="96862136"/>
@@ -247,7 +247,7 @@
 							<object class="IBUILabel" id="96862136">
 								<reference key="NSNextResponder" ref="945347583"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{100, 207}, {120, 21}}</string>
+								<string key="NSFrame">{{100, 208}, {120, 21}}</string>
 								<reference key="NSSuperview" ref="945347583"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="200634746"/>
@@ -276,7 +276,7 @@
 							<object class="IBUILabel" id="651833454">
 								<reference key="NSNextResponder" ref="945347583"/>
 								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{81, 207}, {158, 21}}</string>
+								<string key="NSFrame">{{81, 208}, {158, 21}}</string>
 								<reference key="NSSuperview" ref="945347583"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="222230680"/>
@@ -414,6 +414,14 @@
 						<reference key="destination" ref="651833454"/>
 					</object>
 					<int key="connectionID">604</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">likesView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="798980287"/>
+					</object>
+					<int key="connectionID">622</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1080,11 +1088,6 @@
 						<reference key="parent" ref="596953404"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">452</int>
-						<reference key="object" ref="1068655128"/>
-						<reference key="parent" ref="798980287"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">459</int>
 						<reference key="object" ref="762612411"/>
 						<reference key="parent" ref="798980287"/>
@@ -1483,6 +1486,11 @@
 						<reference key="object" ref="16324211"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">452</int>
+						<reference key="object" ref="1068655128"/>
+						<reference key="parent" ref="798980287"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1632,7 +1640,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">604</int>
+			<int key="maxID">622</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1645,7 +1653,9 @@
 						<string key="commentView">UIView</string>
 						<string key="fbCommentTextView">UITextView</string>
 						<string key="inputMessageTextField">UISearchBar</string>
+						<string key="likesGrayView">UIView</string>
 						<string key="likesLabel">UILabel</string>
+						<string key="likesView">UIView</string>
 						<string key="scrollView">UIScrollView</string>
 						<string key="sharingCompletedLabel">UILabel</string>
 						<string key="sharingLabel">UILabel</string>
@@ -1673,9 +1683,17 @@
 							<string key="name">inputMessageTextField</string>
 							<string key="candidateClassName">UISearchBar</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="likesGrayView">
+							<string key="name">likesGrayView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="likesLabel">
 							<string key="name">likesLabel</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="likesView">
+							<string key="name">likesView</string>
+							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="scrollView">
 							<string key="name">scrollView</string>

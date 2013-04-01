@@ -15,7 +15,7 @@
 
 @implementation CommentViewerController
 
-@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView, isCommenting, tableCell;
+@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView, isCommenting, tableCell, likesView;
 
 -(void)keyboardWillShow:(NSNotification*)aNotification
 {
@@ -165,13 +165,27 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    
-    
     [super viewDidAppear:animated];
+    
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLikesTableView)] autorelease];
+    [likesView addGestureRecognizer:singleTap];
+
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"CommentViewerController.viewDidAppear"];
 }
+
+-(void) showLikesTableView{
+    NSLog(@"==== Show Likes Table View");
+    if (!likesController) {
+        likesController = [[LikesTableViewController alloc] init];
+    }
+    
+    [self.navigationController pushViewController:likesController animated:true];
+    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+    
+}
+
 - (void)viewDidLoad
 {
     isKeyboardHidden = YES;

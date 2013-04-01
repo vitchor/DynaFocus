@@ -119,7 +119,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
 	[super viewWillAppear:animated];
-    
     [self refreshPeople];
     
 	if (m_viewCount == 0) {

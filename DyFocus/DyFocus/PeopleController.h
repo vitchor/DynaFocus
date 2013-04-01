@@ -9,11 +9,11 @@
                                   UITableViewDelegate   /*Used to capture interaction in the tables*/,
                                   UISearchBarDelegate   /*Used to capture interaction with the searchBar*/> {
 	// UI
-	UITableView *m_tableView;                   //The Table
-	UISearchBar *m_searchBar;                   //Search Bar on the top of the view
-	UIToolbar *m_controlToolbar;                // ??
-	UISegmentedControl *m_swithSelectedButton;  // ??
-	UIStyledLabel *m_customMessageLabel;        // ??
+	UITableView *m_tableView;                   // The Table
+	UISearchBar *m_searchBar;                   // Search Bar on the top of the view
+	UIToolbar *m_controlToolbar;                // Gray Bar with All/Selected(#) button and "Send Invitations >"
+	UISegmentedControl *m_swithSelectedButton;  // All/Selected Button
+	UIStyledLabel *m_customMessageLabel;        // @"Send Invitations >" label
 	BOOL m_isFacebookTableEmpty;
 	BOOL m_isDyfocusTableEmpty;
 	
