@@ -33,7 +33,6 @@
 		04D98AD817069EC40093E056 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D98AD717069EC40093E056 /* CoreVideo.framework */; };
 		04D98ADA17069ED10093E056 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D98AD917069ED10093E056 /* OpenGLES.framework */; };
 		04D98AF51706A5DE0093E056 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D98AF21706A5D00093E056 /* libGPUImage.a */; };
-		04D98AFA170767930093E056 /* FOFPreview_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D98AF9170767930093E056 /* FOFPreview_i5.xib */; };
 		04D98AFE17077CF80093E056 /* UIHorizontalTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D98AFD17077CF80093E056 /* UIHorizontalTableView.m */; };
 		04D98B0117077D240093E056 /* UIHorizontalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D98B0017077D240093E056 /* UIHorizontalTableViewCell.m */; };
 		04D98B0317077D6B0093E056 /* UIHorizontalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D98B0217077D6A0093E056 /* UIHorizontalTableViewCell.xib */; };
@@ -55,6 +54,7 @@
 		04EEABF516EA978B001BCEE3 /* CameraViewInfoButtonBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EEABF416EA978B001BCEE3 /* CameraViewInfoButtonBlack.png */; };
 		1F59C19C1707F1250070D3C4 /* InvitationController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C19A1707F1250070D3C4 /* InvitationController_i5.xib */; };
 		1F59C19D1707F1250070D3C4 /* InvitationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C19B1707F1250070D3C4 /* InvitationController.xib */; };
+		1F59C1A317080BB30070D3C4 /* FOFPreview_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C1A217080BB30070D3C4 /* FOFPreview_i5.xib */; };
 		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
 		441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFB115B131D200E204D7 /* Foundation.framework */; };
 		441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFB815B131D200E204D7 /* InfoPlist.strings */; };
@@ -267,7 +267,6 @@
 		04D98AD717069EC40093E056 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		04D98AD917069ED10093E056 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		04D98AEB1706A5D00093E056 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = GPUImage/framework/GPUImage.xcodeproj; sourceTree = "<group>"; };
-		04D98AF9170767930093E056 /* FOFPreview_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FOFPreview_i5.xib; path = /Users/mac/DynaFocus/DyFocus/DyFocus/FOFPreview_i5.xib; sourceTree = "<absolute>"; };
 		04D98AFC17077CF80093E056 /* UIHorizontalTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHorizontalTableView.h; sourceTree = "<group>"; };
 		04D98AFD17077CF80093E056 /* UIHorizontalTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHorizontalTableView.m; sourceTree = "<group>"; };
 		04D98AFF17077D240093E056 /* UIHorizontalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHorizontalTableViewCell.h; sourceTree = "<group>"; };
@@ -295,6 +294,7 @@
 		04EEABF416EA978B001BCEE3 /* CameraViewInfoButtonBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraViewInfoButtonBlack.png; sourceTree = "<group>"; };
 		1F59C19A1707F1250070D3C4 /* InvitationController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController_i5.xib; sourceTree = "<group>"; };
 		1F59C19B1707F1250070D3C4 /* InvitationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController.xib; sourceTree = "<group>"; };
+		1F59C1A217080BB30070D3C4 /* FOFPreview_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview_i5.xib; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		441BFFAF15B131D200E204D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		441BFFB115B131D200E204D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -990,12 +990,12 @@
 		44794B251651A9000097824D /* FOFPreview */ = {
 			isa = PBXGroup;
 			children = (
+				1F59C1A217080BB30070D3C4 /* FOFPreview_i5.xib */,
 				04D98B041707B13D0093E056 /* FilterUtil */,
 				04D98AFB17077CC60093E056 /* HorizontalTableView */,
 				44BEFED415B14404004358C9 /* FOFPreview.h */,
 				44BEFED515B14404004358C9 /* FOFPreview.m */,
 				44BEFED615B14404004358C9 /* FOFPreview.xib */,
-				04D98AF9170767930093E056 /* FOFPreview_i5.xib */,
 				04D98B081707DD820093E056 /* tiger.png */,
 			);
 			name = FOFPreview;
@@ -1355,7 +1355,6 @@
 				042D101716F6B3F50056A7FC /* FriendProfileController.xib in Resources */,
 				042D101916F6B5220056A7FC /* FriendProfileController_i5.xib in Resources */,
 				046FAAC316F94D6900790306 /* CameraView-ShootButtonPressed.png in Resources */,
-				04D98AFA170767930093E056 /* FOFPreview_i5.xib in Resources */,
 				04D98B0317077D6B0093E056 /* UIHorizontalTableViewCell.xib in Resources */,
 				04D98B091707DD850093E056 /* tiger.png in Resources */,
 				04D98B111707E4150093E056 /* Filter_Edges.jpg in Resources */,
@@ -1367,6 +1366,7 @@
 				04D98B171707E4150093E056 /* Filter_Warm.jpg in Resources */,
 				1F59C19C1707F1250070D3C4 /* InvitationController_i5.xib in Resources */,
 				1F59C19D1707F1250070D3C4 /* InvitationController.xib in Resources */,
+				1F59C1A317080BB30070D3C4 /* FOFPreview_i5.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
