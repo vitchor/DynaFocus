@@ -37,9 +37,9 @@
 @property(nonatomic, readonly) float timezone;
 @property(nonatomic, readonly) NSString *location;
 @property(nonatomic, assign) BOOL selected;
-@property(nonatomic, assign) NSString *followersCount;
-@property(nonatomic, assign) NSString *followingCount;
-@property(nonatomic, assign) NSString *idOrigin;
+@property(nonatomic, retain) NSString *followersCount;
+@property(nonatomic, retain) NSString *followingCount;
+@property(nonatomic, retain) NSString *idOrigin;
 
 - (id) initWithId:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId;
 - (id)initWithIdAndKind:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId andKind:(int)iKind;

@@ -207,14 +207,16 @@
 //    }else{
     self.userNameLabel.text = appDelegate.currentFriend.name;
     
-//    if (appDelegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB) {
-//        NSLog(@"Followers: %@, Following: %@", appDelegate.currentFriend.followersCount, appDelegate.currentFriend.followingCount);
-//        self.followersLabel.text = [NSString stringWithFormat:@"%@", appDelegate.currentFriend.followersCount];
-//        self.followingLabel.text = [NSString stringWithFormat:@"%@", appDelegate.currentFriend.followingCount];
-//    } else {
-//        [self JSONGetNumberOfFollows];
-//    }
-    [self JSONGetNumberOfFollows];
+    if (appDelegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB || appDelegate.currentFriend.kind == FRIENDS_ON_APP) {
+        NSLog(@"Followers: %@, Following: %@", appDelegate.currentFriend.followersCount, appDelegate.currentFriend.followingCount);
+        self.followersLabel.text = [[NSString alloc] initWithFormat:@"%@", appDelegate.currentFriend.followersCount];
+        //self.followersLabel.text = [NSString stringWithFormat:@"%@", appDelegate.currentFriend.followersCount];
+        self.followingLabel.text = [[NSString alloc] initWithFormat:@"%@", appDelegate.currentFriend.followingCount];
+        //self.followingLabel.text = [NSString stringWithFormat:@"%@", appDelegate.currentFriend.followingCount];
+    } else {
+        [self JSONGetNumberOfFollows];
+    }
+    //[self JSONGetNumberOfFollows];
 
     [imageLoader loadProfilePicture:(NSString *)appDelegate.currentFriend.facebookId andProfileImage:userProfileImage];
 //    }

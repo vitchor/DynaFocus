@@ -34,6 +34,7 @@
 #define NOTIFICATION_COMMENTED_ON_COMMENTED_FOF 3
 
 #define dyfocus_url @"http://dyfoc.us"
+//#define dyfocus_url @"http://192.168.100.164:8000"
 //#define dyfocus_url @"http://192.168.0.112:8000"
 //#define dyfocus_url @"http://192.168.100.140:8000"
 //#define dyfocus_url @"http://192.168.0.109:8000"
