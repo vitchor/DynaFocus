@@ -558,7 +558,8 @@
                          [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
                          [jsonRequestObject setObject:[user objectForKey:@"id"] forKey:@"facebook_id"];
                          [jsonRequestObject setObject:[user objectForKey:@"name"] forKey:@"name"];
-                         [jsonRequestObject setObject:[user objectForKey:@"email"] forKey:@"email"];                             
+                         [jsonRequestObject setObject:[user objectForKey:@"email"] forKey:@"email"];
+                         [jsonRequestObject setObject:@"1" forKey:@"id_origin"];
                          
                          [jsonRequestObject setObject:jsonFriendsDyfocusRequest forKey:@"friends"];
                          
@@ -881,12 +882,19 @@
                 NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
                 NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
                 NSString *friendName = [jsonFriend valueForKey:@"name"];
+                NSString *friendIdOrigin = [jsonFriend valueForKey:@"id_origin"];
+                NSString *friendFollowers = [jsonFriend valueForKey:@"followers"];
+                NSString *friendFollowing = [jsonFriend valueForKey:@"following"];
                 
                 // Intersection of appFriends with facebookFriends
                 Person *person = [self.friendsFromFb objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                 
                 if (person) {
                     person.kind = FRIENDS_ON_APP_AND_FB;
+                    person.idOrigin = friendIdOrigin;
+                    person.followersCount = friendFollowers;
+                    person.followingCount = friendFollowing;
+                    NSLog(@"Name: %@. Followers: %@. Following: %@", person.name, person.followersCount, person.followingCount);
                     // person.since
                     [self.dyFriendsFromFace setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
                     [self.friendsFromFb removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
@@ -895,6 +903,10 @@
                     [justAppFriends addObject:friendId];
                     Person *dyFriend = [[Person alloc] initWithIdAndKind:[friendId longLongValue] andName:friendName andUserName:@"" andfacebookId:friendId andKind:FRIENDS_ON_APP];
                     dyFriend.kind = FRIENDS_ON_APP;
+                    dyFriend.idOrigin = friendIdOrigin;
+                    dyFriend.followersCount = friendFollowers;
+                    dyFriend.followingCount = friendFollowing;
+                    NSLog(@"Name: %@. Followers: %@. Following: %@", dyFriend.name, dyFriend.followersCount, dyFriend.followingCount);
                     if (!self.dyFriendsAtFace) {
                         self.dyFriendsAtFace = [[NSMutableDictionary alloc] init];
                     } else {
@@ -921,7 +933,7 @@
                 
                 [featuredFOFArray addObject:fof];
                 
-                NSLog(@"Adding FOf %@",fof.m_userName);
+                //NSLog(@"Adding FOf %@",fof.m_userName);
                 
             }
             NSLog(@"FEATURED FOF COUNT: %d", [featuredFOFArray count]);
@@ -947,7 +959,7 @@
                 
                 [userFOFArray addObject:fof];
                 
-                NSLog(@"Adding FOf %@",fof.m_userName);
+                //NSLog(@"Adding FOf %@",fof.m_userName);
                 
             }
             NSLog(@"USER FOF COUNT: %d", [userFOFArray count]);
@@ -970,7 +982,7 @@
                 
                 [feedFOFArray addObject:fof];
                 
-                NSLog(@"Adding FOf %@",fof.m_userName);
+                //NSLog(@"Adding FOf %@",fof.m_userName);
                 
             }
             NSLog(@"FEED FOF COUNT: %d", [feedFOFArray count]);

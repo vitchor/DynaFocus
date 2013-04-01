@@ -17,7 +17,6 @@
 #import "Flurry.h"
 #import "UIDevice+Hardware.h"
 #import "DyfocusSettings.h"
-#import <MediaPlayer/MPVolumeView.h>
 
 #define OK 0
 
@@ -360,8 +359,6 @@
 
 -(void) toggleTorchForFocusOne {
     
-    NSLog(@"TOOOOOOOOOOOOOOOOOOOOOOOOOORCH!!!!");
-    
     if (torchOnFocusPoints == 1 || torchOnFocusPoints == 3) {
         // torch for focus point 1 is on, turn it off immediately
         isTorchOn = true;
@@ -420,19 +417,8 @@
     [popupCloseButton setBackgroundImage:redButtonImage forState:UIControlStateNormal];
     [popupCloseButton addTarget:self action:@selector(closePopup) forControlEvents:UIControlEventTouchUpInside];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeChanged:) name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
-    
     [super viewDidLoad];
     
-    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame: CGRectZero];
-//    MPVolumeView *volumeView = [[[MPVolumeView alloc] initWithFrame:CGRectMake(18.0, 340.0, 284.0, 23.0)] autorelease];
-//    [[self view] addSubview:volumeView];
-    volumeView.showsRouteButton = NO;
-    volumeView.showsVolumeSlider = NO;
-    [self.view addSubview: volumeView];
-    [volumeView release];
 }
 
 -(void)closePopup {
@@ -483,11 +469,13 @@
     
     mFocalPoints = [pathView getPoints];
     
+    [shootButton setEnabled:false];
+    
     if ([mFocalPoints count] > 1) {
-        [shootButton setEnabled:NO];
+        
         if (mFOFIndex == 0 && ![mCaptureDevice isAdjustingExposure] && ![mCaptureDevice isAdjustingFocus]) {
+           
             [self capture];
-            
             isObserving = YES;
             [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
         } else {
@@ -502,10 +490,6 @@
             [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
         }
     } else {
-//        [appDelegate showAlertBaloon:@"Add more points" andAlertMsg:@"Add 2 focus points by tapping the screen." andAlertButton:@"OK" andController:self];
-        
-        [shootButton setEnabled:false];
-        
         [self showAlertBaloon];
     }
 }
@@ -582,6 +566,11 @@
         [mFrames removeAllObjects];
     }
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeChanged:) name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
+    
     pathView.cameraViewController = self;
     
     popupDarkView.layer.cornerRadius = 9.0;
@@ -593,7 +582,7 @@
     
     [pathView resetOrientations];
 
-    
+           
     // ---- PROXIMITY SENSOR:
     UIDevice *device = [UIDevice currentDevice];
     // Turn on proximity monitoring
@@ -605,6 +594,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proximityChanged) name:UIDeviceProximityStateDidChangeNotification object:device];
     }
     NSLog([device isProximityMonitoringEnabled] ? @"====YES Proximity is supported": @"====NO Proximity AIN'T SUPPORTED");
+    
 }
 
 // PROXIMITY SENSOR GESTURE SELECTOR:
@@ -695,6 +685,8 @@
 	[super viewDidDisappear:animated];
     UIDevice *device = [UIDevice currentDevice];
     [device setProximityMonitoringEnabled:NO];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
 }
 
 
@@ -746,12 +738,8 @@
 
 
 -(IBAction)volumeChanged:(id)sender{
-
-    NSLog(@"VOLUUUUUUUUUUUME");
-    
     if(shootButton.isEnabled)
         [self addObserverToFocus];
-
 }
 
 

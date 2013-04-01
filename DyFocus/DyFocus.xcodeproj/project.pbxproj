@@ -139,7 +139,6 @@
 		7B0EC70016F3864C00606626 /* CameraView-RightButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */; };
 		7B0EC70116F3864C00606626 /* CameraView-ShootButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */; };
 		7B3FEC3D16B10381004C8048 /* FriendProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3FEC3C16B10381004C8048 /* FriendProfileController.m */; };
-		7B4C48C61708BCD2002FB1C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B4C48C51708BCD2002FB1C8 /* MediaPlayer.framework */; };
 		7BEB1E6316BAA12C00BF7D49 /* share_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */; };
 		AC07F47915B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */; };
 		AC07F47C15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */; };
@@ -421,7 +420,6 @@
 		7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButton.png"; sourceTree = "<group>"; };
 		7B3FEC3B16B1036A004C8048 /* FriendProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendProfileController.h; sourceTree = "<group>"; };
 		7B3FEC3C16B10381004C8048 /* FriendProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendProfileController.m; sourceTree = "<group>"; };
-		7B4C48C51708BCD2002FB1C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_facebook.png; sourceTree = "<group>"; };
 		AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_72x72.png; path = ../dynafocus_icon_beta1_orange_nofill_72x72.png; sourceTree = "<group>"; };
 		AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_144x144.png; path = ../dynafocus_icon_beta1_orange_nofill_144x144.png; sourceTree = "<group>"; };
@@ -501,7 +499,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B4C48C61708BCD2002FB1C8 /* MediaPlayer.framework in Frameworks */,
 				04D98AF51706A5DE0093E056 /* libGPUImage.a in Frameworks */,
 				AC606B6B15DC492F008FDF8F /* QuartzCore.framework in Frameworks */,
 				441BFFCC15B1328300E204D7 /* AVFoundation.framework in Frameworks */,
@@ -685,7 +682,6 @@
 		441BFFA015B131D200E204D7 = {
 			isa = PBXGroup;
 			children = (
-				7B4C48C51708BCD2002FB1C8 /* MediaPlayer.framework */,
 				04D98AD917069ED10093E056 /* OpenGLES.framework */,
 				04D98AD717069EC40093E056 /* CoreVideo.framework */,
 				447D7ED1166E6264002599EE /* MessageUI.framework */,
@@ -1020,12 +1016,12 @@
 		44794B251651A9000097824D /* FOFPreview */ = {
 			isa = PBXGroup;
 			children = (
-				1F59C1A217080BB30070D3C4 /* FOFPreview_i5.xib */,
 				04D98B041707B13D0093E056 /* FilterUtil */,
 				04D98AFB17077CC60093E056 /* HorizontalTableView */,
 				44BEFED415B14404004358C9 /* FOFPreview.h */,
 				44BEFED515B14404004358C9 /* FOFPreview.m */,
 				44BEFED615B14404004358C9 /* FOFPreview.xib */,
+				1F59C1A217080BB30070D3C4 /* FOFPreview_i5.xib */,
 				04D98B081707DD820093E056 /* tiger.png */,
 			);
 			name = FOFPreview;

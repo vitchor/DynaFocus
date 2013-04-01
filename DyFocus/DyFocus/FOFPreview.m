@@ -17,7 +17,7 @@
 #define CANCEL 0
 @implementation FOFPreview
 
-@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames;
+@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames, scrollView;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -221,7 +221,17 @@
 {
     [super viewDidAppear:animated];
     
-    //UIImage *inputImage = [UIImage imageNamed:@"Lambeau.jpg"];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    if (screenBounds.size.height == 568) {
+    } else {
+        
+        CGSize size = ((UIImage *)[frames objectAtIndex:0]).size;
+        
+        CGFloat height = (size.height/size.width) * firstImageView.frame.size.width;
+        
+        [scrollView setContentSize:CGSizeMake(320, height + 18)];
+    }
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FOFPreview.viewDidAppear"];

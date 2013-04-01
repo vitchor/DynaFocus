@@ -10,7 +10,8 @@
 
 @implementation Person
 
-@synthesize kind = m_kind, name = m_name, facebookUserName = m_facebookUserName, email = m_email, facebookId = m_facebookId, timezone = m_timezone, location = m_location, selected = m_selected;
+@synthesize kind = m_kind, name = m_name, facebookUserName = m_facebookUserName, email = m_email, facebookId = m_facebookId, timezone = m_timezone, location = m_location, selected = m_selected, followersCount = m_followersCount, followingCount = m_followingCount, idOrigin = m_idOrigin;
+
 // kind = 0: friend on both, App and  on  facebook
 // kind = 1: not a friend on App, just on facebook
 // kind = 2: friend just on App, NOT on facebook but a facebook user
@@ -30,6 +31,20 @@
         m_kind = iKind;
     }
 	return self;
+}
+
+-(id)initWithIdAndCounters:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId andKind:(int)iKind andIdOrigin:(NSString *)iIdOrigin andFollowersCount:(NSString *)iFollowersCount andFollowingCount:(NSString *)iFollowingCount {
+    
+    self = [super init];
+    if (self) {
+        [self objectFromId:iUid andName:iName andUserName:iUserName andfacebookId:iFacebookId];
+        m_kind = iKind;
+        m_idOrigin = iIdOrigin;
+        m_followersCount = iFollowersCount;
+        m_followingCount = iFollowingCount;
+    }
+    
+    return self;
 }
 
 // called from this class

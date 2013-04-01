@@ -20,6 +20,7 @@
     IBOutlet UIHorizontalTableView *firstTableView;
     IBOutlet UIHorizontalTableView *secondTableView;    
     NSString *fofName;
+    IBOutlet UIScrollView *scrollView;
     
     NSTimer *timer;
     
@@ -35,6 +36,7 @@
 @property(nonatomic,retain) IBOutlet UIHorizontalTableView *firstTableView;
 @property(nonatomic,retain) IBOutlet UIHorizontalTableView *secondTableView;
 @property(nonatomic,retain) NSTimer *timer;
+@property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 
 -(IBAction)changeSlider:(id)sender;
 
