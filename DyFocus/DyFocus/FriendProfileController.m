@@ -207,7 +207,7 @@
 //    }else{
     self.userNameLabel.text = appDelegate.currentFriend.name;
     
-    if (appDelegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB || appDelegate.currentFriend.kind == FRIENDS_ON_APP) {
+    if (appDelegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB) {
         NSLog(@"Followers: %@, Following: %@", appDelegate.currentFriend.followersCount, appDelegate.currentFriend.followingCount);
         self.followersLabel.text = [[NSString alloc] initWithFormat:@"%@", appDelegate.currentFriend.followersCount];
         //self.followersLabel.text = [NSString stringWithFormat:@"%@", appDelegate.currentFriend.followersCount];
