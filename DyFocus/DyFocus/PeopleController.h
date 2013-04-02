@@ -18,14 +18,14 @@
 	BOOL m_isDyfocusTableEmpty;
 	
 	// Model
-	NSMutableDictionary *m_peopleInfo;
-	NSMutableArray *m_visiblePeopleList;
-	NSMutableDictionary *m_imageCache;
-	NSMutableDictionary *m_friendInfo;
+	NSMutableDictionary *m_peopleInfo;          // ??
+	NSMutableArray *m_visiblePeopleList;        // ??
+	NSMutableDictionary *m_imageCache;          // Available to invite section
+	NSMutableDictionary *m_friendInfo;          // Friend Section
 	NSMutableArray *m_visibleFriendsList;
     InvitationController *invitationController;
     
-	int m_viewCount;
+	int m_viewCount;                            //??
 }
 
 @property(nonatomic, retain) UITableView *tableView;

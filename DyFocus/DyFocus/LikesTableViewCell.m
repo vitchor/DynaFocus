@@ -7,10 +7,12 @@
 //
 
 #import "LikesTableViewCell.h"
+#import "UIImageLoaderDyfocus.h"
+#import "AppDelegate.h"
 
 @implementation LikesTableViewCell
 
-@synthesize userImage, notificationLabel;
+@synthesize userImage, userNameLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -30,46 +32,37 @@
 
 -(void) clear {
     
-    [m_notification release];
-    m_notification = nil;
+    [m_like release];
+    m_like = nil;
     
-    notificationLabel.text = nil;
+    userNameLabel.text = nil;
 
     [userImage setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
     userImage.tag = 0;
-    
-}
-- (void) refreshWithNotification: (Notification *)notification {
-    
-    if (!m_notification ||  notification.m_notificationId != m_notification.m_notificationId) {
-        
-        [self clear];
-        
-        m_notification = [[Notification alloc] init];
-        m_notification.m_message = [[notification.m_message copy] autorelease];
-        m_notification.m_notificationId = [[notification.m_notificationId copy] autorelease];
-        m_notification.m_userId = [[notification.m_userId copy] autorelease];
-        m_notification.m_wasRead = notification.m_wasRead;
-        
-        UIView *backView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
-        
-        if (m_notification.m_wasRead) {
-            backView.backgroundColor = [UIColor whiteColor];
-        } else {
-            backView.backgroundColor = [UIColor colorWithRed:1 green:0.9 blue:0.78 alpha:1];
-        }
-        
-        
-        self.backgroundView = backView;
-        
-        [notificationLabel setText:m_notification.m_message];
-    }
 }
 
--(void) loadImage {
+- (void) refreshWithLike:(Like *)like{
+    [self clear];
+
+    m_like = [[Like alloc] init];
+    m_like.m_userId = [like.m_userId copy];
     
+    if([like.m_userName isEqualToString:@"You"]){
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        m_like.m_userName = [delegate.myself.name copy];
+        self.userNameLabel.text = delegate.myself.name;
+    }else{
+        m_like.m_userName = [like.m_userName copy];
+        self.userNameLabel.text = like.m_userName;
+    }
+
+    [self loadImage];
+//    TODO COPY THE REST
+}
+
+-(void) loadImage{
     if (userImage.tag != 420) {
-        NSString *profilePictureUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",m_notification.m_userId];
+        NSString *profilePictureUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",m_like.m_userId];
         
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
         [NSURLConnection sendAsynchronousRequest:request
@@ -84,8 +77,6 @@
                                    }
                                }];
     }
-    
-
 }
 
 @end

@@ -15,6 +15,8 @@
     UIDyfocusImage *bufferPic;
 }
 //    @property...
+// public:
++ (id) sharedUIImageLoader;
 
 - (void) loadProfilePicture:(NSString *)facebookId andProfileImage:(UIImageView *)profileImage;
 - (UIImage *) loadAnyProfilePicture:(UIImageView *)profileImageView andFacebookId:(NSString *)facebookId;
@@ -26,6 +28,8 @@
 -(void) cashProfilePicture;
 
 
-+ (id) sharedUIImageLoader;
+
+//private:
+
 
 @end

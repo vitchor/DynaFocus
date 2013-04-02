@@ -10,17 +10,16 @@
 #import "AppDelegate.h"
 
 @interface LikesTableViewCell : UITableViewCell {
-    
+    //UI:
     IBOutlet UIImageView *userImage;
-    IBOutlet UILabel *notificationLabel;
-    IBOutlet Notification *m_notification;
-    
+    IBOutlet UILabel *userNameLabel;
+    Like *m_like;
 }
 
 @property (nonatomic,retain) IBOutlet UIImageView *userImage;
-@property (nonatomic,retain) IBOutlet UILabel *notificationLabel;
+@property (nonatomic,retain) IBOutlet UILabel *userNameLabel;
 
-- (void) refreshWithNotification:(Notification *)notification;
 - (void) loadImage;
+- (void) refreshWithLike:(Like *)like;
 
 @end

@@ -469,16 +469,17 @@
 	[m_visibleFriendsList removeAllObjects];
     
     NSString *lowerText = [text lowercaseString];
-    
+//    [self.dyFriendsFromFace setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
 	NSArray *allPeople = [m_peopleInfo allKeys];
     NSArray *allFriends = [m_friendInfo allKeys];
     
 	for (int i = 0; i < [allPeople count]; ++i) {
 		long uid = [[allPeople objectAtIndex:i] longValue];
 		Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:uid]];
+        
 		NSString *personName = [person.name lowercaseString];
 		if ([lowerText length] == 0 || [personName rangeOfString:lowerText].location != NSNotFound) {
-			[m_visiblePeopleList addObject:[NSNumber numberWithLong:person.uid]];
+			[m_visiblePeopleList addObject:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
 		}
 	}
 	[m_visiblePeopleList sortUsingFunction:comparePerson context:m_peopleInfo];
@@ -513,7 +514,7 @@
     m_friendInfo = [friend retain];
     
     [m_visibleFriendsList removeAllObjects];
-    [m_visibleFriendsList setArray:[m_friendInfo allKeys]];
+    [m_visibleFriendsList setArray:[m_friendInfo allKeys]]; //visible friends = array of keys of m_friendInfo
 	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_friendInfo];
     
 	[m_swithSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];

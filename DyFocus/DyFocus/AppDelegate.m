@@ -531,7 +531,7 @@
                              
                              Person *person = [[Person alloc] initWithDicAndKind:friend andKind:FRIENDS_ON_FB];
                              
-                             [self.friendsFromFb setObject:person forKey:[NSNumber numberWithLong:person.uid]];
+                             [self.friendsFromFb setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
                              
                              NSLog(@"I have a friend named %@ with id %@", person.name, person.facebookId);
 

@@ -10,7 +10,7 @@
 
 @interface UIDyfocusImage : UIImage {
     int index;
-    NSString *faceId;
+    NSString *faceId;   // Used to know which user has it's photo loaded. In case The user logs out and with another user logs in
 }
 
 @property (nonatomic, readwrite) int index;

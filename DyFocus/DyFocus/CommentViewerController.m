@@ -176,9 +176,9 @@
 }
 
 -(void) showLikesTableView{
-    NSLog(@"==== Show Likes Table View");
     if (!likesController) {
         likesController = [[LikesTableViewController alloc] init];
+        likesController.likesArray = likes;
     }
     
     [self.navigationController pushViewController:likesController animated:true];
@@ -456,10 +456,10 @@
                                         
                                            
                                            NSDictionary * jsonLikes = [jsonValues valueForKey:@"like_list"];
-                                           
+                                           // TODO GET THE LIST OF USERS THAT LIKED
                                            for (int i = 0; i < [jsonLikes count]; i++) {
                                                
-                                               NSDictionary *jsonComment = [jsonLikes objectAtIndex:i];
+                                               NSDictionary *jsonComment = [jsonLikes objectAtIndex:i];  // jsonComment? why not jonLike?
                                                
                                                NSString *fofFriendId = [jsonComment valueForKey:@"user_facebook_id"];
                                                NSString *fofId = [jsonComment valueForKey:@"fof_id"];
@@ -468,6 +468,7 @@
                                                Like *like = [[Like alloc] init];
                                                like.m_userId = fofFriendId;
                                                like.m_fofId = fofId;
+//                                               like.m_userName = fofUserName;//todo
                                                
                                                AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
                                                NSString *myFacebookId = appDelegate.myself.facebookId;
@@ -490,7 +491,6 @@
                                            
                                            if (isCommenting) {
                                                [inputMessageTextField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.4f];
-                                               //[inputMessageTextField becomeFirstResponder];
                                            }
                                            
                                        } else {

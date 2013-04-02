@@ -22,7 +22,7 @@
 		self.title = @"Friends";
 		m_permissions =  [[NSArray arrayWithObjects:@"friends_about_me", @"publish_stream", nil] retain];
 		m_invitesLeftToSend = 0;
-		
+		m_viewCount = 0;
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		NSString *savedMessage = [defaults stringForKey:@"FacebookDefaultMessage"];
 		if (savedMessage) {
