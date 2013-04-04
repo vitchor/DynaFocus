@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LikesTableViewCell.h"
 
-@interface LikesTableViewController : UIViewController <UITableViewDataSource>  {
+@interface LikesTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>  {
     IBOutlet UITableView *likesTableView;
     NSMutableArray *likesArray;
     bool isTableEmpty;

@@ -9,6 +9,7 @@
 #import "LikesTableViewController.h"
 #import "AppDelegate.h"
 #import "JSON.h"
+#import "UIImageLoaderDyfocus.h"
 
 @interface LikesTableViewController ()
 
@@ -45,6 +46,14 @@
 
 }
 
+#pragma mark -
+#pragma mark Table Delegate Methods
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
+    Like *like = [likesArray objectAtIndex:indexPath.row];
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+    [imageLoader loadFriendControllerWithFaceId:like.m_userId andUserName:like.m_userName andNavigationController:self.navigationController];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [likesArray count];
@@ -75,6 +84,7 @@
 {
     [super viewDidLoad];
     [likesTableView setDataSource:self];
+    [likesTableView setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
