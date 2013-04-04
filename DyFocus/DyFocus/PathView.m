@@ -111,7 +111,9 @@
 	
 	NSValue *value = [NSValue valueWithCGPoint:actualTouchPoint];
 	[touchPoints addObject:value];
-	
+    if([touchPoints count] == 2){
+        [cameraViewController setProximityEnabled:YES];
+    }
 }
 
 - (NSMutableArray *)getPoints {
@@ -134,11 +136,9 @@
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-
     if (enabled && [touchPoints count] < 2) {
         CGPoint touchPoint = [[touches anyObject] locationInView:self];
         [self addPoint:touchPoint];
-        
         [self setNeedsDisplay];
         
         if ([touchPoints count] == 1) {
@@ -148,6 +148,7 @@
     }
     else if (enabled && [touchPoints count] == 2) {
         [self clearPoints];
+        [cameraViewController setProximityEnabled:NO];
     }
 }
 

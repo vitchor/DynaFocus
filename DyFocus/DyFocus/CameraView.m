@@ -581,20 +581,24 @@
     [popupDarkView setNeedsLayout];
     
     [pathView resetOrientations];
+}
 
-           
-    // ---- PROXIMITY SENSOR:
+-(void) setProximityEnabled:(BOOL)isOn{
     UIDevice *device = [UIDevice currentDevice];
-    // Turn on proximity monitoring
-    // To determine if proximity monitoring is available, attempt to enable it.
-    [device setProximityMonitoringEnabled:YES];
-    //// If the value of the proximityMonitoringEnabled property remains NO, proximity
-    //// monitoring is not available.
-    if([device isProximityMonitoringEnabled]){
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proximityChanged) name:UIDeviceProximityStateDidChangeNotification object:device];
-    }
-    NSLog([device isProximityMonitoringEnabled] ? @"YES, Proximity is supported": @"NO, Proximity AIN'T SUPPORTED");
     
+    if(isOn) {
+                    NSLog(@"Tryes to ENABLE PROXIMITY SENSOR...");
+        // To determine if proximity monitoring is available, attempt to enable it:
+        [device setProximityMonitoringEnabled:YES];
+        // If the value of the proximityMonitoringEnabled property remains NO, proximity monitoring is not available.
+        if([device isProximityMonitoringEnabled]){
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proximityChanged) name:UIDeviceProximityStateDidChangeNotification object:device];
+        }
+        NSLog([device isProximityMonitoringEnabled] ? @"SUCCESS, proximity is enabled": @"FAIL, Proximity AIN'T SUPPORTED");
+    }else{
+                    NSLog(@"DISABLE PROXIMITY SENSOR");
+        [device setProximityMonitoringEnabled:NO];
+    }
 }
 
 // PROXIMITY SENSOR GESTURE SELECTOR:
@@ -683,8 +687,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
-    UIDevice *device = [UIDevice currentDevice];
-    [device setProximityMonitoringEnabled:NO];
+    [self setProximityEnabled:NO];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
 }
