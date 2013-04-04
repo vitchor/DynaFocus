@@ -256,7 +256,7 @@
 - (void)loadUserProfile:(UITapGestureRecognizer *)gesture
 {
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    [imageLoader loadUserProfileController:fof.m_userId andUserName:fof.m_userName andNavigationController:tableView.navigationController];
+    [imageLoader loadFriendControllerWithFaceId:fof.m_userId andUserName:fof.m_userName andNavigationController:tableView.navigationController];
 }
 
 -(void)loadImages {
@@ -266,7 +266,8 @@
     
     if (imageUserPicture.tag != 420) {
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadListProfilePicture:fof.m_userId andFOFId:fof.m_id andImageView:imageUserPicture];
+//        [imageLoader loadPictureWithFaceId:fof.m_userId andImageView:imageUserPicture andIsSmall:YES];
+        [imageLoader loadFofTableCellUserPicture:fof.m_userId andFOFId:fof.m_id andImageView:imageUserPicture];
     }
     
     

@@ -77,17 +77,16 @@
 }
 
 
-- (void)loadImage:(int)uid {
+- (void)loadImage:(int)cellTag {
     
-    Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:uid]];
+    Person *person = [m_peopleInfo objectForKey:[NSNumber numberWithLong:cellTag]];
     
     if (!person) {
-        person = [m_friendInfo objectForKey:[NSNumber numberWithLong:uid]];
+        person = [m_friendInfo objectForKey:[NSNumber numberWithLong:cellTag]];
     }
-    
     if(person){
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadPeopleProfilePicture:(NSString *)person.facebookId andImageCache:m_imageCache andUid:uid andTableView:self.tableView];
+        [imageLoader loadFriendTabPicsWithFaceId:(NSString *)person.facebookId andImageCache:m_imageCache andUid:cellTag andTableView:self.tableView];
     }
 }
 

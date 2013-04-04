@@ -593,14 +593,14 @@
     if([device isProximityMonitoringEnabled]){
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proximityChanged) name:UIDeviceProximityStateDidChangeNotification object:device];
     }
-    NSLog([device isProximityMonitoringEnabled] ? @"====YES Proximity is supported": @"====NO Proximity AIN'T SUPPORTED");
+    NSLog([device isProximityMonitoringEnabled] ? @"YES, Proximity is supported": @"NO, Proximity AIN'T SUPPORTED");
     
 }
 
 // PROXIMITY SENSOR GESTURE SELECTOR:
 -(void) proximityChanged{
     BOOL proximityState = [[UIDevice currentDevice] proximityState];
-    NSLog(proximityState ? @"==== CLOSE": @"==== FAR");
+    NSLog(proximityState ? @"CLOSE": @"FAR");
     
     if([shootButton isEnabled]  &&  proximityState  &&  [[pathView getPoints] count] > 1){
         // TODO SHOOT PIC

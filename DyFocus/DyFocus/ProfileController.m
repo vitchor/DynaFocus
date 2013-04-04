@@ -62,8 +62,9 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     self.userNameLabel.text = appDelegate.myself.name;
     
+    // Load Profile Picture
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    [imageLoader loadMyProfilePicture:userPicture];
+    [imageLoader loadPictureWithFaceId:appDelegate.myself.facebookId andImageView:userPicture andIsSmall:NO];
 }
 
 -(void) viewDidAppear:(BOOL)animated{
@@ -105,25 +106,6 @@
     }
     delegate.insideUserProfile = NO;
 }
-
-- (void)loadImage:(NSString*)uid {
-//    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture",uid] autorelease];
-    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%i&height=%i",uid, (int)userPicture.frame.size.width* 10, (int)userPicture.frame.size.height * 10] autorelease];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if(!error && data) {
-                                   UIImage *image = [UIImage imageWithData:data];
-                                   if(image) {
-                                       [userPicture setImage:image];
-                                   }
-                               }
-                           }];
-}
-
-
 
 -(void) showNotifications {
 

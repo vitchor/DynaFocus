@@ -451,7 +451,7 @@
 			for (UITableViewCell *cell in visibleCellsCopy) {
 				UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithInt:cell.tag]];
 				if (image == nil) {
-					[self loadImage:cell.tag];
+					[self loadImage:cell.tag]; // Load user image for each Cell
 				}
 			}
 			[visibleCellsCopy release];

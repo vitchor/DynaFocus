@@ -7,6 +7,7 @@
 //
 
 #import "NotificationTableViewCell.h"
+#import "UIImageLoaderDyfocus.h"
 
 @implementation NotificationTableViewCell
 
@@ -67,22 +68,9 @@
 }
 
 -(void) loadImage {
-    
     if (userImage.tag != 420) {
-        NSString *profilePictureUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture",m_notification.m_userId];
-        
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:profilePictureUrl]];
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   if(!error && data) {
-                                       UIImage *image = [UIImage imageWithData:data];
-                                       if(image) {
-                                           [userImage setImage:image];
-                                           userImage.tag = 420;
-                                       }
-                                   }
-                               }];
+        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+        [imageLoader loadPictureWithFaceId:m_notification.m_userId andImageView:userImage andIsSmall:YES];
     }
     
 

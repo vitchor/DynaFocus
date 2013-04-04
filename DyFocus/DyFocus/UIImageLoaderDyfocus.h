@@ -14,22 +14,24 @@
     UIDyfocusImage *myPicture;
     UIDyfocusImage *bufferPic;
 }
-//    @property...
-// public:
+
+@property(nonatomic, retain) UIDyfocusImage *myPicture;
+@property(nonatomic, retain) UIDyfocusImage *bufferPic;
+
+// Singleton:
 + (id) sharedUIImageLoader;
 
-- (void) loadProfilePicture:(NSString *)facebookId andProfileImage:(UIImageView *)profileImage;
-- (UIImage *) loadAnyProfilePicture:(UIImageView *)profileImageView andFacebookId:(NSString *)facebookId;
-- (UIImage *) loadMyProfilePicture:(UIImageView *)profileImageView;
-- (void)loadUserProfileController:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController;
-- (void) loadListProfilePicture:(NSString *)facebookId andFOFId:(NSString *)fofId andImageView:(UIImageView*)imageUserPicture;
--(void) loadCommentProfilePicture:(NSString *)userId andImageView:(UIImageView *)imageUserPicture;
--(void) loadPeopleProfilePicture:(NSString*)facebookId andImageCache:(NSMutableDictionary *)m_imageCache andUid:(int)uid andTableView: (UITableView*)tableView;
--(void) cashProfilePicture;
+// Called from many classes. All of them also use this class to load users images:
+- (void)loadFriendControllerWithFaceId:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController;
 
+// Generic Method to load any user picture:
+- (void) loadPictureWithFaceId:(NSString *)facebookId andImageView:(UIImageView *)profileImage andIsSmall:(BOOL)isSmall;
+- (void) cashProfilePicture; //Cash user picture when signing in
 
+// I couldn't modularize the below methods:
+- (void) loadFofTableCellUserPicture:(NSString *)facebookId andFOFId:(NSString *)fofId andImageView:(UIImageView*)imageUserPicture;
+- (void) loadFriendTabPicsWithFaceId:(NSString*)facebookId andImageCache:(NSMutableDictionary *)m_imageCache andUid:(int)uid andTableView: (UITableView*)tableView;
 
-//private:
 
 
 @end

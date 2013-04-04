@@ -124,7 +124,6 @@
 }
 
 -(void)JSONGetNumberOfFollows {
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/how_many_follow/",dyfocus_url] autorelease];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     
@@ -201,25 +200,17 @@
 
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-//    if(userName && userFacebookId){
-//    self.userNameLabel.text = userName;
-//    [imageLoader loadProfilePicture:userFacebookId andProfileImage:userProfileImage];
-//    }else{
     self.userNameLabel.text = appDelegate.currentFriend.name;
     
     if (appDelegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB) {
         NSLog(@"Followers: %@, Following: %@", appDelegate.currentFriend.followersCount, appDelegate.currentFriend.followingCount);
         self.followersLabel.text = [[NSString alloc] initWithFormat:@"%@", appDelegate.currentFriend.followersCount];
-        //self.followersLabel.text = [NSString stringWithFormat:@"%@", appDelegate.currentFriend.followersCount];
         self.followingLabel.text = [[NSString alloc] initWithFormat:@"%@", appDelegate.currentFriend.followingCount];
-        //self.followingLabel.text = [NSString stringWithFormat:@"%@", appDelegate.currentFriend.followingCount];
     } else {
         [self JSONGetNumberOfFollows];
     }
-    //[self JSONGetNumberOfFollows];
 
-    [imageLoader loadProfilePicture:(NSString *)appDelegate.currentFriend.facebookId andProfileImage:userProfileImage];
-//    }
+    [imageLoader loadPictureWithFaceId:appDelegate.currentFriend.facebookId andImageView:userProfileImage andIsSmall:NO];
 }
 
 - (void) viewDidAppear:(BOOL)animated{

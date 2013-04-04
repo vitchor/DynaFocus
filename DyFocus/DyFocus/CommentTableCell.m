@@ -53,7 +53,8 @@
         
         
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadCommentProfilePicture:comment.m_userId andImageView:imageUserPicture];    
+        [imageLoader loadPictureWithFaceId:comment.m_userId andImageView:imageUserPicture andIsSmall:YES];
+//        [imageLoader loadCommentProfilePicture:comment.m_userId andImageView:imageUserPicture];    
         
         if (m_comment) {
             [m_comment release];
@@ -81,7 +82,7 @@
         commentController.isKeyboardHidden = YES;
     }else{
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadUserProfileController:m_comment.m_userId andUserName:m_comment.m_userName andNavigationController:commentController.navigationController];
+        [imageLoader loadFriendControllerWithFaceId:m_comment.m_userId andUserName:m_comment.m_userName andNavigationController:commentController.navigationController];
     }
 }
 

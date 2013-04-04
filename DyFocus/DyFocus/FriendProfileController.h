@@ -16,6 +16,7 @@
     IBOutlet UIButton *viewPicturesButton;
     IBOutlet UIButton *follow;
     IBOutlet UIButton *unfollow;
+    IBOutlet UIImageView *userProfileImage;
 }
 
 - (void) showPictures;
