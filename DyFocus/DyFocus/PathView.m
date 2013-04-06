@@ -227,8 +227,15 @@
 
     if(!(orientation==UIDeviceOrientationFaceUp||
          orientation==UIDeviceOrientationFaceDown)){
+        
         lastOrientation = orientation;
+        
     }
+    if(lastOrientation==UIDeviceOrientationUnknown){
+        
+        lastOrientation = UIDeviceOrientationPortrait;
+    }
+
 }
 
 - (void) checkOrientations
