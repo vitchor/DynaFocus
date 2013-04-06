@@ -10,6 +10,8 @@
 	AVCaptureStillImageOutput *mStillImageOutput;
     AVCaptureConnection *mVideoConnection;
     AVCaptureDevice *mCaptureDevice;
+    UIDeviceOrientation currentOrientation;
+    UIDeviceOrientation lastOrientation;
 
     IBOutlet UIView *cameraView;
     IBOutlet UIView *infoView;
