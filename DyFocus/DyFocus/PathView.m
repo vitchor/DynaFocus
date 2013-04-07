@@ -371,24 +371,24 @@
 
 -(void)rotateImagesToTheRight: (UIDeviceOrientation) orientation
 {
-    firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI/2);
-    secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI/2);
-    cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, M_PI/2);
-    cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, M_PI/2);
-    helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI/2);
+    firstImage.transform = CGAffineTransformRotate(firstImage.transform, M_PI_2);
+    secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI_2);
+    cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, M_PI_2);
+    cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, M_PI_2);
+    helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI_2);
     
     [UIView animateWithDuration:fadeDuration animations:^{
         torchOneButton.alpha = 0.0;
         torchTwoButton.alpha = 0.0;
     } completion: ^(BOOL finished) {
         [UIView animateWithDuration:0 animations:^{
-            torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, M_PI/2);
-            torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, M_PI/2);
+            torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, M_PI_2);
+            torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, M_PI_2);
         } completion: ^(BOOL finished) {
             [self setTorchButtonsPlace:orientation];
         }];
     }];
-//    CGAffineTransform rotateOne = CGAffineTransformRotate(torchOneView.transform, M_PI/2);
+//    CGAffineTransform rotateOne = CGAffineTransformRotate(torchOneView.transform, M_PI_2);
 //    CGAffineTransform translateOne = CGAffineTransformMakeTranslation(toneX, toneY);
 //    CGAffineTransform finalTransformOne = CGAffineTransformConcat(rotateOne, translateOne);
 //    torchOneView.transform = finalTransformOne;
@@ -396,19 +396,19 @@
 }
 -(void)rotateImagesToTheLeft: (UIDeviceOrientation) orientation
 {
-    firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI/2);
-    secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI/2);
-    cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, -M_PI/2);
-    cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, -M_PI/2);
-    helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, -M_PI/2);
+    firstImage.transform = CGAffineTransformRotate(firstImage.transform, -M_PI_2);
+    secondImage.transform = CGAffineTransformRotate(secondImage.transform, -M_PI_2);
+    cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, -M_PI_2);
+    cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, -M_PI_2);
+    helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, -M_PI_2);
     
     [UIView animateWithDuration:fadeDuration animations:^{
         torchOneButton.alpha = 0.0;
         torchTwoButton.alpha = 0.0;
     } completion: ^(BOOL finished) {
         [UIView animateWithDuration:0 animations:^{
-            torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, -M_PI/2);
-            torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, -M_PI/2);
+            torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, -M_PI_2);
+            torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, -M_PI_2);
         } completion: ^(BOOL finished) {
             [self setTorchButtonsPlace:orientation];
         }];

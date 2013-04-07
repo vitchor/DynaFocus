@@ -65,6 +65,7 @@
     self.navigationItem.title = @"Preview";
     
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
+    [firstImageViewFullScreen setImage:[self.frames objectAtIndex:0]];
     
     if ([self.frames count] > 1) {
         [self.secondImageView setImage: [self.frames objectAtIndex:1]];
@@ -91,6 +92,24 @@
     [firstTableView setDelegate:self];
     [secondTableView setDelegate:self];    
     
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    if (screenBounds.size.height == 568) {
+    } else {
+        isFullScreen = false;
+        
+        tapScrollView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imgToFullScreen)];
+        tapScrollView.delegate = self;
+        
+        tapFullScreenView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imgToFullScreen)];
+        tapFullScreenView.delegate = self;
+        
+        [scrollView addGestureRecognizer:tapScrollView];
+        [scrollView setUserInteractionEnabled:YES];
+        [fullScreenView addGestureRecognizer:tapFullScreenView];
+        [fullScreenView setUserInteractionEnabled:NO];
+    }
+
 }
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
@@ -178,12 +197,16 @@
             
             
             [self.secondImageView setImage:[self.displayedFrames objectAtIndex:oldFrameIndex]];
-
+            [secondImageViewFullScreen setImage:[self.displayedFrames objectAtIndex:oldFrameIndex]];
+            
             [self.secondImageView setNeedsDisplay];
+            [secondImageViewFullScreen setNeedsDisplay];
             
             [self.firstImageView setAlpha:0.0];
+            [firstImageViewFullScreen setAlpha:0.0];
             
             [self.firstImageView setNeedsDisplay];
+            [firstImageViewFullScreen setNeedsDisplay];
             
             int newIndex;
             if (oldFrameIndex == [self.displayedFrames count] - 1) {
@@ -193,11 +216,12 @@
             }
             
             [self.firstImageView setImage: [self.displayedFrames objectAtIndex: newIndex]];
-        
+            [firstImageViewFullScreen setImage: [self.displayedFrames objectAtIndex: newIndex]];
         }
             
     } else {
         [self.firstImageView setAlpha:self.firstImageView.alpha + 0.01];
+        [firstImageViewFullScreen setAlpha:firstImageView.alpha];
     }
     
 }
@@ -272,7 +296,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.focalPoints release];
     [self.firstImageView release];
     [self.secondImageView release];
-    
+    [tapScrollView release];
+    [tapFullScreenView release];
+    [firstImageViewFullScreen release];
+    [secondImageViewFullScreen release];
+    [scrollView release];
+    [fullScreenView release];
     [super dealloc];
 }
 
@@ -312,6 +341,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
     [timer fire];
     [super viewWillAppear:animated];
+//    [fullScreenView setHidden:YES];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -321,4 +351,32 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [super viewWillDisappear:animated];
     
 }
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch;
+{
+    BOOL shouldReceiveTouch = YES;
+    
+    if (gestureRecognizer == tapScrollView || gestureRecognizer==tapFullScreenView) {
+         shouldReceiveTouch = (touch.view == scrollView || touch.view == fullScreenView);
+    }
+    
+    return shouldReceiveTouch;
+}
+
+-(void)imgToFullScreen{
+    
+    if (!isFullScreen) {
+            [fullScreenView setHidden:NO];
+            [fullScreenView setUserInteractionEnabled:YES];
+            isFullScreen = true;
+        return;
+    }
+    else{
+            [fullScreenView setHidden:YES];
+            [fullScreenView setUserInteractionEnabled:NO];
+            isFullScreen = false;;
+        return;
+    }
+}
+
 @end
