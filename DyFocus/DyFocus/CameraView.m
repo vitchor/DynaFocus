@@ -243,8 +243,26 @@
 
 
 - (void) capture {
+    
     if (mVideoConnection && [mVideoConnection isVideoOrientationSupported]){
-        [mVideoConnection setVideoOrientation:[UIDevice currentDevice].orientation];
+        
+        if(currentOrientation == UIDeviceOrientationFaceUp || currentOrientation == UIDeviceOrientationFaceDown){
+            
+            if(lastOrientation==UIDeviceOrientationPortrait ||
+               lastOrientation==UIDeviceOrientationPortraitUpsideDown ||
+               lastOrientation==UIDeviceOrientationLandscapeLeft ||
+               lastOrientation==UIDeviceOrientationLandscapeRight){
+                
+                [mVideoConnection setVideoOrientation:lastOrientation];
+            }
+            else{
+                [mVideoConnection setVideoOrientation:UIDeviceOrientationPortrait];
+            }
+        }
+        else
+        {
+            [mVideoConnection setVideoOrientation:currentOrientation];
+        }
     }
     
     if (mStillImageOutput) {
@@ -581,6 +599,9 @@
     [popupDarkView setNeedsLayout];
     
     [pathView resetOrientations];
+    
+    currentOrientation = [UIDevice currentDevice].orientation;
+    
 }
 
 -(void) setProximityEnabled:(BOOL)isOn{
@@ -614,7 +635,6 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"CameraView.viewDidAppear"];
   
@@ -690,6 +710,7 @@
     [self setProximityEnabled:NO];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 
@@ -725,8 +746,8 @@
 {
     //Because your app is only landscape, your view controller for the view in your
     // popover needs to support only landscape
-    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait ;
-//    return UIInterfaceOrientationMaskAll;
+//    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait ;
+    return UIInterfaceOrientationMaskAll;
 }
 
 
@@ -736,6 +757,16 @@
 
 - (void) didRotate:(NSNotification *)notification
 {
+        if(currentOrientation==UIDeviceOrientationPortrait ||
+             currentOrientation==UIDeviceOrientationPortraitUpsideDown ||
+           currentOrientation==UIDeviceOrientationLandscapeLeft ||
+           currentOrientation==UIDeviceOrientationLandscapeRight)
+        {
+            lastOrientation = currentOrientation;
+        }
+    
+    currentOrientation = [UIDevice currentDevice].orientation;
+    
     [pathView checkOrientations];
 }
 

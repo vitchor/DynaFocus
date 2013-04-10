@@ -10,7 +10,7 @@
 #import "UIHorizontalTableView.h"
 #import "UIHorizontalTableViewCell.h"
 
-@interface FOFPreview : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface FOFPreview : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate> {
     
     IBOutlet UIImageView *firstImageView;
     IBOutlet UIImageView *secondImageView;
@@ -26,6 +26,15 @@
     
     int oldFrameIndex;
     int timerPause;
+    
+    UITapGestureRecognizer *tapScrollView;
+    UITapGestureRecognizer *tapFullScreenView;
+    BOOL isFullScreen;
+    CGRect prevFrameFirstImage;
+    CGRect prevFrameSecondImage;
+    IBOutlet UIImageView *firstImageViewFullScreen;
+    IBOutlet UIImageView *secondImageViewFullScreen;
+    IBOutlet UIView *fullScreenView;
 }
 
 @property(nonatomic,retain) IBOutlet UIImageView *firstImageView;
