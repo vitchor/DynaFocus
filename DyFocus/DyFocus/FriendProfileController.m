@@ -97,26 +97,36 @@
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
                                NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-                               NSLog(@"stringReply: %@",stringReply);
+                               NSLog(@"my stringReply: %@",stringReply);
                                
+                               NSDictionary *jsonValues = [stringReply JSONValue];                               
                                if(!error && data) {
-                                   //REMOVES, CASE IT IS A FRIEND
-                                   if(delegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB){
-                                       delegate.currentFriend.kind = NOT_FRIEND;
-                                       [delegate.dyFriendsFromFace removeObjectForKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
-//                                       [[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]]
-                                   }else if(delegate.currentFriend.kind == FRIENDS_ON_APP){
-                                       delegate.currentFriend.kind = NOT_FRIEND;
-                                       [delegate.dyFriendsAtFace removeObjectForKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
-                                   }else if(delegate.currentFriend.kind == NOT_FRIEND){
-                                       delegate.currentFriend.kind = FRIENDS_ON_APP;
-                                       
-                                       if (!delegate.dyFriendsAtFace) {
-                                           delegate.dyFriendsAtFace = [[NSMutableDictionary alloc] init];
+                                   if (jsonValues) {
+                                       NSString * jsonResult = [jsonValues valueForKey:@"result"];
+                                       if([jsonResult hasPrefix:@"ok:"]) {
+                                           NSLog(@"====PREFIX IS OK");
+                                           if(delegate.currentFriend.kind == FRIENDS_ON_APP_AND_FB){
+                                               delegate.currentFriend.kind = NOT_FRIEND;
+                                               [delegate.dyFriendsFromFace removeObjectForKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
+                                           }else if(delegate.currentFriend.kind == FRIENDS_ON_APP){
+                                               delegate.currentFriend.kind = NOT_FRIEND;
+                                               [delegate.dyFriendsAtFace removeObjectForKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
+                                           }else if(delegate.currentFriend.kind == NOT_FRIEND){
+                                               delegate.currentFriend.kind = FRIENDS_ON_APP;
+                                               
+                                               if (!delegate.dyFriendsAtFace) {
+                                                   delegate.dyFriendsAtFace = [[NSMutableDictionary alloc] init];
+                                               }
+                                               [delegate.dyFriendsAtFace setObject:delegate.currentFriend forKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
+                                           }
+                                       }else if([jsonResult hasPrefix:@"error:"]){
+                                           [delegate showAlertBaloon:@"Connection Error" andAlertMsg:jsonResult andAlertButton:@"Ok" andController:self];
                                        }
-                                       [delegate.dyFriendsAtFace setObject:delegate.currentFriend forKey:[NSNumber numberWithLong:[delegate.currentFriend.facebookId longLongValue]]];
                                    }
+                               }else{
+                                   [delegate showAlertBaloon:@"Connection Error" andAlertMsg:@"Please, Try again later" andAlertButton:@"Ok" andController:self];
                                }
+                               
                                [LoadView fadeAndRemoveFromView:self.view];
                                [self resolveUserType];
                            }
