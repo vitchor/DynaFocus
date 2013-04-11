@@ -20,7 +20,7 @@
 
 @implementation FriendProfileController
 
-@synthesize viewPicturesButton, userFacebookId, userName, userProfileImage, follow, unfollow;
+@synthesize viewPicturesButton, userFacebookId, userName, userProfileImage, follow, unfollow, followView, unfollowView;
 
 
 -(id) init {
@@ -37,20 +37,26 @@
     Person *user = delegate.currentFriend;
     if(user.kind == FRIENDS_ON_APP  ||  user.kind == FRIENDS_ON_APP_AND_FB){
         //FRIEND
-        [follow setEnabled:FALSE];
-        follow.alpha = 0.5f;
-        [unfollow setEnabled:TRUE];
-        unfollow.alpha = 1.0f;
+        //[follow setEnabled:FALSE];
+        [followView setHidden:TRUE];
+        //follow.alpha = 0.5f;
+        //[unfollow setEnabled:TRUE];
+        [unfollowView setHidden:FALSE];
+        //unfollow.alpha = 1.0f;
     }else if(user.kind == NOT_FRIEND){
-        [unfollow setEnabled:FALSE];
-        unfollow.alpha = 0.5f;
-        [follow setEnabled:TRUE];
-        follow.alpha = 1.0f;
+        //[unfollow setEnabled:FALSE];
+        //unfollow.alpha = 0.5f;
+        [unfollowView setHidden:TRUE];
+        //[follow setEnabled:TRUE];
+        //follow.alpha = 1.0f;
+        [followView setHidden:FALSE];
     } else if(user.kind == MYSELF){
-        [unfollow setEnabled:FALSE];
-        unfollow.alpha = 0.5f;
-        [follow setEnabled:FALSE];
-        follow.alpha = 0.5f;
+        //[unfollow setEnabled:FALSE];
+        [unfollowView setHidden:TRUE];
+        //unfollow.alpha = 0.5f;
+        //[follow setEnabled:FALSE];
+        //follow.alpha = 0.5f;
+        [followView setHidden:TRUE];
     }
 }
 
@@ -250,6 +256,8 @@
 - (void)dealloc {
     [_followingLabel release];
     [_followersLabel release];
+    //[_followView release];
+    //[_unfollowView release];
     [super dealloc];
 }
 @end

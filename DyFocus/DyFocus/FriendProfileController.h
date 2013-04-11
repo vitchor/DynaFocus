@@ -16,6 +16,8 @@
     IBOutlet UIButton *viewPicturesButton;
     IBOutlet UIButton *follow;
     IBOutlet UIButton *unfollow;
+    IBOutlet UIView *followView;
+    IBOutlet UIView *unfollowView;
     IBOutlet UIImageView *userProfileImage;
 }
 
@@ -27,6 +29,9 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *followingLabel;
 @property (strong, nonatomic) IBOutlet UILabel *followersLabel;
+
+@property (retain, nonatomic) IBOutlet UIView *followView;
+@property (retain, nonatomic) IBOutlet UIView *unfollowView;
 
 
 @property (strong, nonatomic) IBOutlet UIImageView *userProfileImage;
