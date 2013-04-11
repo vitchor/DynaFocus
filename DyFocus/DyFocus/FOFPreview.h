@@ -30,8 +30,6 @@
     UITapGestureRecognizer *tapScrollView;
     UITapGestureRecognizer *tapFullScreenView;
     BOOL isFullScreen;
-    CGRect prevFrameFirstImage;
-    CGRect prevFrameSecondImage;
     IBOutlet UIImageView *firstImageViewFullScreen;
     IBOutlet UIImageView *secondImageViewFullScreen;
     IBOutlet UIView *fullScreenView;

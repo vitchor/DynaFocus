@@ -49,6 +49,8 @@
     int row;
     float newHeight;
     
+    BOOL isFullScreen;
+    CGRect prevFrame;
 }
 
 -(void) loadImages;

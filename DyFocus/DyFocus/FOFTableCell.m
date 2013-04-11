@@ -172,6 +172,12 @@
         
         UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
         [lightGrayBrackgroundView addGestureRecognizer:singleTap];
+        
+        UITapGestureRecognizer *singleTapOnFrontImage = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnFOF:)] autorelease];
+        [imagefrontFrame addGestureRecognizer:singleTapOnFrontImage];
+        
+        UITapGestureRecognizer *singleTapOnBackImage = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnFOF:)] autorelease];
+        [imagebackFrame addGestureRecognizer:singleTapOnBackImage];
 
         
         [buttonComment addTarget:self action:@selector(commentButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -223,6 +229,23 @@
     [self showCommentView:FALSE];
 }
 
+- (void)singleTapOnFOF:(UITapGestureRecognizer *)gesture
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        [tableView.m_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+        
+    }completion:^(BOOL finished){
+        
+        [UIView animateWithDuration:0.0001 animations:^{
+           
+            CGPoint point = tableView.m_tableView.contentOffset;
+            point.y += 6.0;
+            [tableView.m_tableView setContentOffset:point animated:NO];
+        }];
+    }];
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
