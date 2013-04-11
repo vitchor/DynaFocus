@@ -15,8 +15,11 @@
 		042D101516F6A59D0056A7FC /* ProfileController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042D101416F6A59D0056A7FC /* ProfileController.xib */; };
 		042D101716F6B3F50056A7FC /* FriendProfileController-old.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042D101616F6B3F50056A7FC /* FriendProfileController-old.xib */; };
 		042D101916F6B5220056A7FC /* FriendProfileController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042D101816F6B5220056A7FC /* FriendProfileController_i5.xib */; };
+		042ECA721717452B00E823B4 /* Filter_Paint.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 042ECA701717452B00E823B4 /* Filter_Paint.jpg */; };
+		042ECA731717452B00E823B4 /* Filter_B&W.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 042ECA711717452B00E823B4 /* Filter_B&W.jpg */; };
 		0435D8C016C3238C00609475 /* NSDyfocusURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435D8BF16C3238C00609475 /* NSDyfocusURLRequest.m */; };
 		0435D8C316C32CA800609475 /* UIDyfocusImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435D8C216C32CA800609475 /* UIDyfocusImage.m */; };
+		046D3B0B17171C0700AA8A93 /* orange_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 046D3B0A17171C0600AA8A93 /* orange_gradient.png */; };
 		046FAAC316F94D6900790306 /* CameraView-ShootButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 046FAAC216F94D6900790306 /* CameraView-ShootButtonPressed.png */; };
 		046FD4E416B72BAB008F449F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046FD4E316B72BAB008F449F /* EGORefreshTableHeaderView.m */; };
 		0470578616B997C40025F1DD /* CommentViewerController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0470578516B997C40025F1DD /* CommentViewerController_i5.xib */; };
@@ -255,10 +258,13 @@
 		042D101416F6A59D0056A7FC /* ProfileController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileController.xib; sourceTree = "<group>"; };
 		042D101616F6B3F50056A7FC /* FriendProfileController-old.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "FriendProfileController-old.xib"; sourceTree = "<group>"; };
 		042D101816F6B5220056A7FC /* FriendProfileController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendProfileController_i5.xib; sourceTree = "<group>"; };
+		042ECA701717452B00E823B4 /* Filter_Paint.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Filter_Paint.jpg; sourceTree = "<group>"; };
+		042ECA711717452B00E823B4 /* Filter_B&W.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Filter_B&W.jpg"; sourceTree = "<group>"; };
 		0435D8BE16C3238C00609475 /* NSDyfocusURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDyfocusURLRequest.h; sourceTree = "<group>"; };
 		0435D8BF16C3238C00609475 /* NSDyfocusURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDyfocusURLRequest.m; sourceTree = "<group>"; };
 		0435D8C116C32CA800609475 /* UIDyfocusImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDyfocusImage.h; sourceTree = "<group>"; };
 		0435D8C216C32CA800609475 /* UIDyfocusImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDyfocusImage.m; sourceTree = "<group>"; };
+		046D3B0A17171C0600AA8A93 /* orange_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_gradient.png; sourceTree = "<group>"; };
 		046FAAC216F94D6900790306 /* CameraView-ShootButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButtonPressed.png"; sourceTree = "<group>"; };
 		046FD4E216B72BAB008F449F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		046FD4E316B72BAB008F449F /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
@@ -647,6 +653,8 @@
 		04D98B181707E5AF0093E056 /* Resources/Examples */ = {
 			isa = PBXGroup;
 			children = (
+				042ECA701717452B00E823B4 /* Filter_Paint.jpg */,
+				042ECA711717452B00E823B4 /* Filter_B&W.jpg */,
 				04D98B0A1707E4100093E056 /* Filter_Edges.jpg */,
 				04D98B0B1707E4100093E056 /* Filter_Invert.jpg */,
 				04D98B0C1707E4110093E056 /* Filter_None.jpg */,
@@ -1116,6 +1124,7 @@
 		7B3FEC3916B1019D004C8048 /* FriendProfileController */ = {
 			isa = PBXGroup;
 			children = (
+				046D3B0A17171C0600AA8A93 /* orange_gradient.png */,
 				7B3FEC3B16B1036A004C8048 /* FriendProfileController.h */,
 				7B3FEC3C16B10381004C8048 /* FriendProfileController.m */,
 				042D101616F6B3F50056A7FC /* FriendProfileController-old.xib */,
@@ -1421,6 +1430,9 @@
 				AC5FDBDB171647F600348478 /* UnfollowButton@2x.png in Resources */,
 				AC5FDBDD1716549A00348478 /* FriendProfileController_i5-old.xib in Resources */,
 				AC5FDBDF1716571200348478 /* ProfileView-i5@2x.png in Resources */,
+				046D3B0B17171C0700AA8A93 /* orange_gradient.png in Resources */,
+				042ECA721717452B00E823B4 /* Filter_Paint.jpg in Resources */,
+				042ECA731717452B00E823B4 /* Filter_B&W.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1623,8 +1635,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
+				PROVISIONING_PROFILE = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1654,8 +1666,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0E324F91-2EAF-4249-9793-36708944609B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E324F91-2EAF-4249-9793-36708944609B";
+				PROVISIONING_PROFILE = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;

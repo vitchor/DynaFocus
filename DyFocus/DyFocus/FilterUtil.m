@@ -11,17 +11,19 @@
 
 #define FILTER_NONE 0
 #define FILTER_SEPIA 1
-#define FILTER_BLUE_AND_RED_COLORS 2
-#define FILTER_INVERT_COLORS 3
-#define FILTER_TOON 4
-#define FILTER_SKETCH 5
-#define FILTER_EDGE_DETECTION 6
+#define FILTER_BLACK_AND_WHITE 2
+#define FILTER_BLUE_AND_RED_COLORS 3
+#define FILTER_INVERT_COLORS 4
+#define FILTER_TOON 5
+#define FILTER_SKETCH 6
+#define FILTER_PAINT 7
+#define FILTER_EDGE_DETECTION 8
 
 @implementation FilterUtil 
 
 
 +(int) getFiltersSize {
-    return 7;
+    return 9;
 }
     
 + (NSString *) getFilterName: (int)filter {
@@ -47,8 +49,15 @@
         filterName = @"Warm";
         
     } else if (filter == FILTER_TOON) {
-        filterName = @"Toon";        
+        filterName = @"Toon";
+        
+    } else if (filter == FILTER_BLACK_AND_WHITE) {
+        filterName = @"B&W";
+        
+    } else if (filter == FILTER_PAINT) {
+        filterName = @"Paint";
     }
+    
     
     return filterName;
     
@@ -83,6 +92,12 @@
         
     } else if (filterId == FILTER_TOON) {
         stillImageFilter = [[GPUImageToonFilter alloc] init];
+    
+    } else if (filterId == FILTER_BLACK_AND_WHITE) {
+        stillImageFilter = [[GPUImageGrayscaleFilter alloc] init];
+
+    } else if (filterId == FILTER_PAINT) {
+        stillImageFilter = [[GPUImageKuwaharaFilter alloc] init];
     }
     
     [stillImageSource addTarget:stillImageFilter];
