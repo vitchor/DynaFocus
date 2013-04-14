@@ -13,6 +13,11 @@
 #import "CustomBadge.h"
 #import "NotificationTableViewController.h"
 #import "UIImageLoaderDyfocus.h"
+#import "LoadView.h"
+
+#define FOLLOW 0
+#define UNFOLLOW 1
+
 
 @interface ProfileController ()
 
@@ -20,32 +25,145 @@
 
 @implementation ProfileController
 
+@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView;
 
-@synthesize logoutButton, myPicturesButton, userPicture, notificationButton;
+- (id) initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray {
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    if (screenBounds.size.height == 568) {
+        // code for 4-inch screen
+        return [self initWithNibName:@"ProfileController_i5" bundle:nil person:profilePerson personFofArray:profilePersonFOFArray];
+    } else {
+        // code for 3.5-inch screen
+        return [self initWithNibName:@"ProfileController" bundle:nil person:profilePerson personFofArray:profilePersonFOFArray];
+    }
+    
+}
+
+- (id) initWithFacebookId:(NSString *)facebookId {
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    if (screenBounds.size.height == 568) {
+        // code for 4-inch screen
+        return [self initWithNibName:@"ProfileController_i5" bundle:nil facebookId:facebookId];
+    } else {
+        // code for 3.5-inch screen
+        return [self initWithNibName:@"ProfileController" bundle:nil facebookId:facebookId];
+    }
+    
+}
+
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil facebookId:(NSString *)facebookId {
+    
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
     if (self) {
+        NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/user_info/",dyfocus_url] autorelease];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
         
+        NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+        
+        [jsonRequestObject setObject:facebookId forKey:@"user_facebook_id"];
+        
+        NSString *json = [(NSObject*)jsonRequestObject JSONRepresentation];
+        
+        [LoadView loadViewOnView:self.view withText:@"Loading..."];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                               json] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   
+                                   NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                                   
+                                   NSDictionary *jsonValues = [stringReply JSONValue];
+                                   
+                                   [LoadView fadeAndRemoveFromView:self.view];
+                                   
+                                   if(!error && data) {
+                                       
+                                       NSLog(@"stringReply: %@",stringReply);
+                                       
+                                       NSMutableDictionary * jsonPerson = [jsonValues valueForKey:@"person"];
+                                       
+                                       person = [[Person alloc] initWithDyfocusDic:jsonPerson];
+                                       
+                                       NSLog(@"PERSON NAME: %@", person.name);
+                                       
+                                       [self setUIPersonValues];
+                                       
+                                       
+                                       NSDictionary * FOFJSONArray = [jsonValues valueForKey:@"person_FOF_array"];
+                                       
+                                       if (FOFJSONArray) {
+                                           
+                                           NSMutableArray *FOFArray = [[NSMutableArray alloc] initWithCapacity:[FOFJSONArray count]];
+                                           
+                                           for (int i = 0; i < [FOFJSONArray count]; i++) {
+                                               NSDictionary *jsonFOF = [FOFJSONArray objectAtIndex:i];
+                                               
+                                               
+                                               FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
+                                               
+                                               
+                                               [FOFArray addObject:fof];
+                                           }
+                                           
+                                           personFOFArray = FOFArray;
+                                       }
+
+                                       
+                                   } else {
+                                       //TODO: show error
+                                   }
+                                   
+                               }
+         ];
     }
     return self;
 }
 
--(void) showPictures{
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray {
+    
+    if (!profilePersonFOFArray || [profilePersonFOFArray count] == 0) {
+
+        if (person) {
+            return [self initWithFacebookId:person.facebookId];
+        } else {
+            return nil;
+        }
+    } else {
+        
+        self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+        
+        if (self) {
+            personFOFArray = [profilePersonFOFArray retain];
+            person = [profilePerson retain];
+            userKind = profilePerson.kind;
+        } 
+        
+        return self;
+    }
+}
+
+-(void) showPictures {
     FOFTableController *tableController = [[FOFTableController alloc] init];
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     tableController.refreshString = refresh_user_url;
     
-    appDelegate.currentFriend = appDelegate.myself;
-    
-    
-    tableController.FOFArray = appDelegate.userFofArray;
+    tableController.FOFArray = personFOFArray;
     tableController.shouldHideNavigationBar = NO;
+    tableController.userFacebookId = person.facebookId;
     
-    tableController.navigationItem.title = @"My Pictures";
+    tableController.navigationItem.title = person.name;
     tableController.hidesBottomBarWhenPushed = YES;
-    appDelegate.insideUserProfile = YES;
     
     [self.navigationController pushViewController:tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
@@ -54,17 +172,65 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
+    if (person && person.kind == MYSELF) {
+        [self.navigationController setNavigationBarHidden:YES animated:FALSE];
+    }
     
     [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
     [notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
+
+    if (person) {
+        [self setUIPersonValues];
+    }
+}
+
+-(void)setUIPersonValues {
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    self.userNameLabel.text = appDelegate.myself.name;
+    if (person.kind == MYSELF) {
+        
+        [notificationView setHidden:NO];
+        [followView setHidden:YES];
+        [unfollowView setHidden:YES];
+        [logoutView setHidden:NO];
+
+    } else {
+        
+        [notificationView setHidden:YES];
+        [logoutView setHidden:YES];
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        
+        long long facebookId = [person.facebookId longLongValue];
+        
+        Person *user = [delegate getUserWithFacebookId:facebookId];
+        
+        if (user) {
+            [followView setHidden:YES];
+            [unfollowView setHidden:NO];
+        } else {
+            [followView setHidden:NO];
+            [unfollowView setHidden:YES];
+        }
+    }
     
-    // Load Profile Picture
-    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    [imageLoader loadPictureWithFaceId:appDelegate.myself.facebookId andImageView:userPicture andIsSmall:NO];
+    self.userNameLabel.text = person.name;
+   
+    [followersLabel setText:person.followersCount];
+    [followingLabel setText:person.followingCount];
+    
+    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%d&height=%d",person.facebookId, (int)userPicture.frame.size.width*5, (int)userPicture.frame.size.height*5] autorelease];
+ 
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+
+    [NSURLConnection sendAsynchronousRequest:request
+                                   queue:[NSOperationQueue mainQueue]
+                       completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                           if(!error && data) {                               
+                               UIImage *image = [[UIImage alloc] initWithData:data];
+                               [userPicture setImage:image];
+                           }                           
+                       }];
+
 }
 
 -(void) viewDidAppear:(BOOL)animated{
@@ -74,26 +240,34 @@
     
     [delegate logEvent:@"ProfileController.viewDidAppear"];
     
+    if (userKind == MYSELF) {
+        [self updateBadgeView];
+    }
+}
+
+-(void)updateBadgeView {
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
     if (delegate.unreadNotifications > 0) {
-        
         NSString *badgeLabel = [NSString stringWithFormat:@"%d", delegate.unreadNotifications];
         notificationBadge = [CustomBadge customBadgeWithString:badgeLabel
-                                                   withStringColor:[UIColor whiteColor]
-                                                    withInsetColor:[UIColor redColor]
-                                                    withBadgeFrame:YES
-                                               withBadgeFrameColor:[UIColor whiteColor]
-                                                         withScale:1.0
-                                                       withShining:YES];
-    
+                                               withStringColor:[UIColor whiteColor]
+                                                withInsetColor:[UIColor redColor]
+                                                withBadgeFrame:YES
+                                           withBadgeFrameColor:[UIColor whiteColor]
+                                                     withScale:1.0
+                                                   withShining:YES];
+        
         
         int badgeWidth = 25; int badgeheight = 25;
         
         if (delegate.unreadNotifications > 9) {
             badgeWidth = 30;
         }
-    
+        
         [notificationBadge setFrame:CGRectMake(notificationButton.frame.origin.x + notificationButton.frame.size.width - 3*badgeWidth/5, notificationButton.frame.origin.y - 2*badgeheight/5, badgeWidth, badgeheight)];
-    
+        
         [self.view addSubview:notificationBadge];
         
     } else {
@@ -104,7 +278,6 @@
         }
         
     }
-    delegate.insideUserProfile = NO;
 }
 
 -(void) showNotifications {
@@ -128,8 +301,13 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = @"Profile";
-
+    
+    [follow addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
+    [unfollow addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
+    
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -152,5 +330,79 @@
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     [appDelegate closeSession];
 }
+
+-(void)followUser{
+    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/follow/",dyfocus_url] autorelease];
+    [self sendRequest:url type:FOLLOW];
+}
+
+- (void)unfollowUser{
+    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/unfollow/",dyfocus_url] autorelease];
+    [self sendRequest:url type:UNFOLLOW];
+}
+
+- (void)sendRequest:(NSString*)url type:(int)requestType{
+    
+    [LoadView loadViewOnView:self.view withText:@"Loading..."];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+    AppDelegate* delegate = [UIApplication sharedApplication].delegate;
+    
+    [jsonRequestObject setObject:person.facebookId forKey:@"feed_facebook_id"];
+    [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"follower_facebook_id"];
+    
+    NSString *json = [(NSObject*)jsonRequestObject JSONRepresentation];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                           json] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               
+                               NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                               NSLog(@"my stringReply: %@",stringReply);
+                               
+                               NSDictionary *jsonValues = [stringReply JSONValue];
+                               if(!error && data) {
+                                   if (jsonValues) {
+                                       NSString * jsonResult = [jsonValues valueForKey:@"result"];
+                                       if([jsonResult hasPrefix:@"ok:"]) {
+                                           
+                                           if (requestType == FOLLOW) {
+                                               [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                                               
+                                               int newFollowersValue = [followersLabel.text intValue] + 1;
+                                               followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
+                                               
+                                               [followView setHidden:YES];
+                                               [unfollowView setHidden:NO];
+                                           } else {
+                                               
+                                               int newFollowersValue = [followersLabel.text intValue] - 1;
+                                               followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
+                                               
+                                               [delegate.friendsThatIFollow removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                                               [followView setHidden:NO];
+                                               [unfollowView setHidden:YES];
+                                           }
+                                           
+                                       }else if([jsonResult hasPrefix:@"error:"]){
+                                           [delegate showAlertBaloon:@"Connection Error" andAlertMsg:jsonResult andAlertButton:@"Ok" andController:self];
+                                       }
+                                   }
+                               }else{
+                                   [delegate showAlertBaloon:@"Connection Error" andAlertMsg:@"Please, Try again later" andAlertButton:@"Ok" andController:self];
+                               }
+                               
+                               [LoadView fadeAndRemoveFromView:self.view];
+                           }
+     ];
+}
+
 
 @end

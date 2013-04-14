@@ -276,10 +276,31 @@
 
 }
 
-- (void)loadUserProfile:(UITapGestureRecognizer *)gesture
-{
-    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    [imageLoader loadFriendControllerWithFaceId:fof.m_userId andUserName:fof.m_userName andNavigationController:tableView.navigationController];
+- (void)loadUserProfile:(UITapGestureRecognizer *)gesture {
+
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
+    ProfileController *profileController = nil;
+    
+    Person *person = [delegate getUserWithFacebookId:[fof.m_userId longLongValue]];
+    
+    if (person) {
+
+        // Person exists, so it's being followed.
+        NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.facebookId];
+        profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:userFOFArray];
+
+    } else {
+        
+        // Person is not being followed, there's no information we can get.
+        profileController = [[ProfileController alloc] initWithFacebookId:fof.m_userId];
+    }
+    
+    
+    profileController.hidesBottomBarWhenPushed = YES;
+    
+    [self.tableView.navigationController pushViewController:profileController animated:YES];
+    [self.tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
 }
 
 -(void)loadImages {

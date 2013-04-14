@@ -28,12 +28,12 @@
     NSString *m_idOrigin;
 }
 
-@property(nonatomic, readonly) long uid;
-@property(nonatomic, assign) int kind;
-@property(nonatomic, readonly) NSString *name;
-@property(nonatomic, readonly) NSString *facebookUserName;
-@property(nonatomic, readonly) NSString *email;
-@property(nonatomic, readonly) NSString *facebookId;
+@property(nonatomic, readwrite) long uid;
+@property(nonatomic, readwrite) int kind;
+@property(nonatomic, retain) NSString *name;
+@property(nonatomic, retain) NSString *facebookUserName;
+@property(nonatomic, retain) NSString *email;
+@property(nonatomic, retain) NSString *facebookId;
 @property(nonatomic, readonly) float timezone;
 @property(nonatomic, readonly) NSString *location;
 @property(nonatomic, assign) BOOL selected;
@@ -41,6 +41,8 @@
 @property(nonatomic, retain) NSString *followingCount;
 @property(nonatomic, retain) NSString *idOrigin;
 
+- (id)initWithDyfocusDic:(NSMutableDictionary*) facebookUser;
+    
 - (id) initWithId:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId;
 - (id)initWithIdAndKind:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId andKind:(int)iKind;
 - (id)initWithIdAndCounters:(long)iUid andName:(NSString *)iName andUserName:(NSString *)iUserName andfacebookId:(NSString *)iFacebookId andKind:(int)iKind andIdOrigin:(NSString *)iIdOrigin andFollowersCount:(NSString *)iFollowersCount andFollowingCount:(NSString *)iFollowingCount;

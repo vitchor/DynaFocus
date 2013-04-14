@@ -384,41 +384,28 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
    
     if (indexPath.section == 0) {
-        
-        NSMutableArray *selectedPersonFofs = [NSMutableArray array];
-        Person *person = nil;
+    
         NSNumber *personIdNumber = [m_visibleFriendsList objectAtIndex:indexPath.row];
         
-        if (personIdNumber) {
-            
-            long personId = [personIdNumber longValue];
-            
-            person = [m_friendInfo objectForKey:[NSNumber numberWithLong:personId]];
-            
-            AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-            
-            delegate.currentFriend = person;
-            
-            for (FOF *fof in delegate.feedFofArray) {
-                
-                if ([fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.facebookId]]) {
-                    
-                    [selectedPersonFofs addObject:fof];
-                    
-                }
-            }
-            
-            delegate.friendFofArray = selectedPersonFofs;
-
+        long personId = [personIdNumber longValue];
+        
+        Person *person = [m_friendInfo objectForKey:[NSNumber numberWithLong:personId]];
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        
+        NSMutableArray *fofArray = [delegate FOFsFromUser:person.facebookId];
+        
+        ProfileController *profileController = nil;
+        
+        if ([fofArray count] > 0) {
+            profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:fofArray];
+        } else {
+            profileController = [[ProfileController alloc] initWithFacebookId:person.facebookId];
         }
-                    
-        FriendProfileController *friendProfileController = [[FriendProfileController alloc] init];
         
-        friendProfileController.hidesBottomBarWhenPushed = YES;
+        profileController.hidesBottomBarWhenPushed = YES;
 
-        [friendProfileController clearCurrentUser];
-        
-        [self.navigationController pushViewController:friendProfileController animated:true];
+        [self.navigationController pushViewController:profileController animated:true];
         [self.navigationController setNavigationBarHidden:NO animated:TRUE];
 
         

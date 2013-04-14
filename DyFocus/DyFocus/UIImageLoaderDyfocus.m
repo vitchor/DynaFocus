@@ -40,54 +40,6 @@
     // Should never be called, but just here for clarity really.
 }
 
-// Calls profile of that user. Called from many classes
-- (void)loadFriendControllerWithFaceId:(NSString *)facebookId andUserName:(NSString *)userName andNavigationController:(UINavigationController *)navController{
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    
-    // Works only if you are not inside someones profile
-    if(!appDelegate.insideUserProfile || ![facebookId isEqualToString:appDelegate.currentFriend.facebookId]){
-        // needs userId, userName, NavigationController
-        NSMutableArray *selectedPersonFofs = [NSMutableArray array];
-        
-        // WHEN person is friend on app and fb:
-        Person *person = [appDelegate.dyFriendsFromFace objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
-        if(!person){
-            //WHEN person is friend on APP:
-            person = [appDelegate.dyFriendsAtFace objectForKey:[NSNumber numberWithLong:[facebookId longLongValue]]];
-        }
-        if(person){
-            appDelegate.currentFriend = person;
-            for (FOF *m_fof in appDelegate.feedFofArray) {
-                if ([m_fof.m_userId isEqualToString: [NSString stringWithFormat: @"%@", person.facebookId]]) {
-                    [selectedPersonFofs addObject:m_fof];
-                }
-            }
-            appDelegate.friendFofArray = selectedPersonFofs;
-            
-            FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
-            friendProfileController.hidesBottomBarWhenPushed = YES;
-            [friendProfileController clearCurrentUser];
-            
-            [navController pushViewController:friendProfileController animated:true];
-            [navController setNavigationBarHidden:NO animated:TRUE];
-        // WHEN THE COMMENT BELONGS TO A USER OTHER THAN MYSELF OR A FRIEND OF MINE:
-        } else{
-            if([facebookId isEqualToString:appDelegate.myself.facebookId]){
-                appDelegate.currentFriend = appDelegate.myself;
-            }else{
-                appDelegate.currentFriend = [[Person alloc] initWithId:[facebookId longLongValue] andName:userName andUserName:@"" andfacebookId:facebookId];
-            }
-            FriendProfileController *friendProfileController = [[[FriendProfileController alloc] init] autorelease];
-            friendProfileController.hidesBottomBarWhenPushed = YES;
-            friendProfileController.userFacebookId = [facebookId copy];
-            friendProfileController.userName = [userName copy];
-            
-            [navController pushViewController:friendProfileController animated:true];
-            [navController setNavigationBarHidden:NO animated:TRUE];
-        }
-    }
-}
-
 // Function that cashes picture right at the sign up
 -(void) cashProfilePicture{
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;

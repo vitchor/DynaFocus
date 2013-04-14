@@ -10,7 +10,7 @@
 
 @implementation Person
 
-@synthesize kind = m_kind, name = m_name, facebookUserName = m_facebookUserName, email = m_email, facebookId = m_facebookId, timezone = m_timezone, location = m_location, selected = m_selected, followersCount = m_followersCount, followingCount = m_followingCount, idOrigin = m_idOrigin;
+@synthesize kind = m_kind, name = m_name, facebookUserName = m_facebookUserName, email = m_email, facebookId = m_facebookId, timezone = m_timezone, location = m_location, selected = m_selected, followersCount = m_followersCount, followingCount = m_followingCount, idOrigin = m_idOrigin, uid = m_uid;
 
 // kind = 0: friend on both, App and  on  facebook
 // kind = 1: not a friend on App, just on facebook
@@ -62,7 +62,15 @@
 - (id)initWithDic:(NSMutableDictionary*) facebookUser {
     self = [super init];
     if (self) {
-        [self objectFromDictionary:facebookUser];
+        [self objectFromFacebookDictionary:facebookUser];
+    }
+    return self;
+}
+
+- (id)initWithDyfocusDic:(NSMutableDictionary*) dyfocusUser {
+    self = [super init];
+    if (self) {
+        [self objectFromDyfocusDictionary:dyfocusUser];
     }
     return self;
 }
@@ -70,14 +78,14 @@
 - (id)initWithDicAndKind:(NSMutableDictionary*) facebookUser andKind:(int)kind {
     self = [super init];
     if (self) {
-        [self objectFromDictionary:facebookUser];
+        [self objectFromFacebookDictionary:facebookUser];
         m_kind= kind;
     }
     return self;
 }
 
 //called from this class
-- (void)objectFromDictionary:(NSMutableDictionary*)facebookUser {
+- (void)objectFromFacebookDictionary:(NSMutableDictionary*)facebookUser {
     m_facebookId = [[facebookUser objectForKey:@"id"] retain];
     m_name = [[facebookUser objectForKey:@"name"] retain];
     m_selected = NO;
@@ -99,6 +107,18 @@
         m_location = [[facebookUser objectForKey:@"location"] retain];
         NSLog(@"!!! EXCEPTION on location attribute: %@", exception);
     }
+}
+
+- (void)objectFromDyfocusDictionary:(NSMutableDictionary*)dyfocusUser {
+    
+    NSLog(@"PERSSSSON %d", [[dyfocusUser objectForKey:@"id"] intValue]);
+    m_uid = [[dyfocusUser objectForKey:@"id"] intValue];
+    
+    m_facebookId = [[dyfocusUser objectForKey:@"facebook_id"] retain];
+    m_name = [[dyfocusUser objectForKey:@"name"] retain];
+
+    m_followingCount = [[[dyfocusUser objectForKey:@"following_count"] stringValue] retain];
+    m_followersCount = [[[dyfocusUser objectForKey:@"followers_count"] stringValue] retain];
 }
 
 - (void)dealloc {

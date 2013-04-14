@@ -152,7 +152,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friendsFromFb, myself, dyFriendsFromFace, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend, deviceId, notificationsArray, unreadNotifications, dyFriendsAtFace, insideUserProfile;
+@synthesize tabBarController, friendsFromFb, myself, featuredFofArray, userFofArray, feedFofArray, friendFofArray, currentFriend, deviceId, notificationsArray, unreadNotifications, friendsThatIFollow, insideUserProfile;
 
 - (void)dealloc
 {
@@ -321,13 +321,8 @@
     [friendsTab setFinishedSelectedImage:[UIImage imageNamed:@"df_friends_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_friends.png"]];
     [friendsNavigationController setTabBarItem:friendsTab];
     
-    
-    if (screenBounds.size.height == 568) {
-        // Profile Controller
-        profileController = [[ProfileController alloc] initWithNibName:@"ProfileController_i5" bundle:nil];
-    } else {
-        profileController = [[ProfileController alloc] initWithNibName:@"ProfileController" bundle:nil];
-    }
+    // Profile Controller
+    profileController = [[ProfileController alloc] initWithPerson:myself personFOFArray:userFofArray];
     
     DyfocusUINavigationController *profileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:profileController];
     //    profileController.hidesBottomBarWhenPushed = NO;
@@ -590,12 +585,6 @@
                          NSLog(@"JSON RESPONSE: %@",stringReply);
                         
                          
-                         if (!self.dyFriendsFromFace) {
-                             self.dyFriendsFromFace = [[NSMutableDictionary alloc] init];
-                         } else {
-                             [self.dyFriendsFromFace removeAllObjects];
-                         }
-                         
                          if (statusCode == 200) {
                              // Let's parse the response and create a NSMutableDictonary with the friends:
                              
@@ -801,14 +790,6 @@
              
              NSLog(@"JSON RESPONSE: %@",stringReply);
              
-             //Lets parse the response to get the dyfocus friends info
-             if (!self.dyFriendsFromFace) {
-                 self.dyFriendsFromFace = [[NSMutableDictionary alloc] init];
-             } else {
-                 [self.dyFriendsFromFace removeAllObjects];
-             }
-
-             
              if (statusCode == 200) {
                  // Let's parse the response and create a NSMutableDictonary with the friends:
                  
@@ -874,46 +855,42 @@
             }
         }
         
+        NSDictionary * followingFriendsList = [jsonValues valueForKey:@"friends_list"];
+    
+        if (followingFriendsList) {
+            
+            if (!self.friendsThatIFollow) {
+                self.friendsThatIFollow = [[NSMutableDictionary alloc] init];
+            } else {
+                [self.friendsThatIFollow removeAllObjects];
+            }
         
-        NSDictionary * jsonFriends = [jsonValues valueForKey:@"friends_list"];
-        NSMutableArray *justAppFriends = nil;
-        if (jsonFriends) {
-            for (int i = 0; i < [jsonFriends count]; i++) {
-                NSDictionary *jsonFriend = [jsonFriends objectAtIndex:i];
-                NSString *friendId = [jsonFriend valueForKey:@"facebook_id"];
-                NSString *friendName = [jsonFriend valueForKey:@"name"];
-                NSString *friendIdOrigin = [jsonFriend valueForKey:@"id_origin"];
-                NSString *friendFollowers = [jsonFriend valueForKey:@"followers"];
-                NSString *friendFollowing = [jsonFriend valueForKey:@"following"];
+            
+            for (int i = 0; i < [followingFriendsList count]; i++) {
+                
+                NSMutableDictionary *followingFriend = [followingFriendsList objectAtIndex:i];
+                
+                NSString *friendId = [followingFriend valueForKey:@"facebook_id"];
+                
+                Person *followingPerson = [[Person alloc] initWithDyfocusDic:followingFriend];
                 
                 // Intersection of appFriends with facebookFriends
-                Person *person = [self.friendsFromFb objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                Person *fbFriend = [self.friendsFromFb objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                 
-                if (person) {
-                    person.kind = FRIENDS_ON_APP_AND_FB;
-                    person.idOrigin = friendIdOrigin;
-                    person.followersCount = friendFollowers;
-                    person.followingCount = friendFollowing;
-                    NSLog(@"Name: %@. Followers: %@. Following: %@", person.name, person.followersCount, person.followingCount);
-                    // person.since
-                    [self.dyFriendsFromFace setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
-                    [self.friendsFromFb removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                
+                if (fbFriend) {
+                    followingPerson.kind = FRIENDS_ON_APP_AND_FB;
+                    [self.friendsFromFb removeObjectForKey:[NSNumber numberWithLong:[followingPerson.facebookId longLongValue]]];
+                    
                 }else{
-                    //NOT MY FRIEND ON FB
-                    [justAppFriends addObject:friendId];
-                    Person *dyFriend = [[Person alloc] initWithIdAndKind:[friendId longLongValue] andName:friendName andUserName:@"" andfacebookId:friendId andKind:FRIENDS_ON_APP];
-                    dyFriend.kind = FRIENDS_ON_APP;
-                    dyFriend.idOrigin = friendIdOrigin;
-                    dyFriend.followersCount = friendFollowers;
-                    dyFriend.followingCount = friendFollowing;
-                    NSLog(@"Name: %@. Followers: %@. Following: %@", dyFriend.name, dyFriend.followersCount, dyFriend.followingCount);
-                    if (!self.dyFriendsAtFace) {
-                        self.dyFriendsAtFace = [[NSMutableDictionary alloc] init];
-                    } else {
-                        [self.dyFriendsAtFace removeAllObjects];
-                    }
-                    [self.dyFriendsAtFace setObject:dyFriend forKey:[NSNumber numberWithLong:[dyFriend.facebookId longLongValue]]];
+                    followingPerson.kind = FRIENDS_ON_APP;
                 }
+                
+                
+                if (followingPerson.facebookId) {
+                    [self.friendsThatIFollow setObject:followingPerson forKey:[NSNumber numberWithLong:[followingPerson.facebookId longLongValue]]];
+                }
+
             }
             
         }
@@ -936,7 +913,6 @@
                 //NSLog(@"Adding FOf %@",fof.m_userName);
                 
             }
-            NSLog(@"FEATURED FOF COUNT: %d", [featuredFOFArray count]);
             
             self.featuredFofArray = featuredFOFArray;
             
@@ -991,6 +967,10 @@
             
         }
         
+        NSString *user_following_count = [[NSString alloc] initWithFormat:@"%@",[jsonValues valueForKey:@"user_following_count"]];
+        
+        myself.followingCount = user_following_count;
+        myself.followersCount = [[NSString alloc] initWithFormat:@"%d",[followingFriendsList count]];
         
         
     } else {
@@ -1211,13 +1191,24 @@
     } else {
         [self showNotificationView];
     }
-    
 
-   
-    
-
-    
 }
+
+-(NSMutableArray *) FOFsFromUser: (NSString *)facebookId {
+
+    NSMutableArray *userFOFArray = [[[NSMutableArray alloc] init] autorelease];
+    
+    NSLog(@"GOing to add fofs");
+    for (FOF *m_fof in self.feedFofArray) {
+        if ([m_fof.m_userId isEqualToString: facebookId]) {
+            [userFOFArray addObject:m_fof];
+            NSLog(@"Adding FoF");
+        }
+    }
+    
+    return userFOFArray;
+}
+
 
 -(void)showNotificationView {
     
@@ -1231,6 +1222,20 @@
     // call profile controller showNotifications
     
     
+}
+
+-(Person *) getUserWithFacebookId: (long long)facebookId {
+    
+    for (NSObject *key in [self.friendsThatIFollow allKeys]) {
+        
+        Person *person = [self.friendsThatIFollow objectForKey:key];
+        
+        if ([person.facebookId longLongValue] == facebookId) {
+            return person;
+        }
+    }
+    
+    return nil;
 }
 
 //- (void) setCurrentFriend:(long)friendId{

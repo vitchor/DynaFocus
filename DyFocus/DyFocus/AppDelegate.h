@@ -34,7 +34,7 @@
 #define NOTIFICATION_COMMENTED_ON_COMMENTED_FOF 3
 
 #define dyfocus_url @"http://dyfoc.us"
-//#define dyfocus_url @"http://192.168.100.164:8000"
+//#define dyfocus_url @"http://192.168.0.104:8000"
 //#define dyfocus_url @"http://192.168.0.112:8000"
 //#define dyfocus_url @"http://192.168.100.140:8000"
 //#define dyfocus_url @"http://192.168.0.109:8000"
@@ -131,8 +131,7 @@
     CameraView *cameraViewController;
     
     NSMutableDictionary *friendsFromFb;         // Friends only in facebook, not the app
-    NSMutableDictionary *dyFriendsFromFace;     // Dyfocus friends that are also FB friends
-    NSMutableDictionary *dyFriendsAtFace;       // Dyfocus friends that AREN'T   FB friends but we get their data from FB
+    NSMutableDictionary *friendsThatIFollow;       // Dyfocus friends that AREN'T   FB friends but we get their data from FB
     Person *myself;                             // My data
     
     NSMutableArray *featuredFofArray;
@@ -177,13 +176,15 @@ extern NSString *const FBSessionStateChangedNotification;
 
 -(void) clearNotifications;
 
+-(NSMutableArray *) FOFsFromUser: (NSString *)facebookId;
+-(Person *) getUserWithFacebookId: (long long)facebookId;
+
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
 
 @property (nonatomic, retain)  UIImage *myPicture;
 @property (nonatomic, retain)  NSMutableDictionary *friendsFromFb;
-@property (nonatomic, retain)  NSMutableDictionary *dyFriendsFromFace;
-@property (nonatomic, retain)  NSMutableDictionary *dyFriendsAtFace;
+@property (nonatomic, retain)  NSMutableDictionary *friendsThatIFollow;
 @property (nonatomic, retain)  Person *myself;
 @property (nonatomic, retain)  NSMutableArray *featuredFofArray;
 @property (nonatomic, retain)  NSMutableArray *userFofArray;
@@ -194,5 +195,6 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSMutableArray *notificationsArray;
 @property (nonatomic, readwrite) int unreadNotifications;
 @property (nonatomic, readwrite) BOOL insideUserProfile;
+
 
 @end

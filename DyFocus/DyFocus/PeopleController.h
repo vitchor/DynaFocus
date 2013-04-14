@@ -2,7 +2,6 @@
 #import <UIKit/UIKit.h>
 #import "UIStyledLabel.h"
 #import "InvitationController.h"
-#import "FriendProfileController.h"
 
 @interface PeopleController : UIViewController  /*Extends a Table of Cells */<
                                   UITableViewDataSource /*Used to edit table's content*/,

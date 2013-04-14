@@ -81,8 +81,23 @@
         [commentController hideKeyboard];
         commentController.isKeyboardHidden = YES;
     }else{
-        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadFriendControllerWithFaceId:m_comment.m_userId andUserName:m_comment.m_userName andNavigationController:commentController.navigationController];
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        
+        ProfileController *profileController = nil;
+        Person *person = [delegate getUserWithFacebookId: [m_comment.m_userId longLongValue]];
+        
+        
+        NSLog(@"FACEBOOK USER %lld", [m_comment.m_userId longLongValue]);
+        
+        if (person) {
+            profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:[delegate FOFsFromUser:person.facebookId]];
+        } else {
+            profileController = [[ProfileController alloc] initWithFacebookId:m_comment.m_userId];
+        }
+        
+        [commentController.navigationController pushViewController:profileController animated:YES];
+        
     }
 }
 
