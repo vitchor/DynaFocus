@@ -26,6 +26,11 @@
 		04989B721696232F003ECD93 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B711696232F003ECD93 /* close@2x.png */; };
 		04989B7516964E18003ECD93 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 04989B7416964E18003ECD93 /* close.png */; };
 		04B6027A171B6AE600CAE579 /* ProfileController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04B60279171B6AE600CAE579 /* ProfileController.xib */; };
+		04B6027E171B7FB400CAE579 /* FOF.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B6027D171B7FB400CAE579 /* FOF.m */; };
+		04B60281171B7FD100CAE579 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B60280171B7FD100CAE579 /* Comment.m */; };
+		04B60284171B7FDC00CAE579 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B60283171B7FDC00CAE579 /* Notification.m */; };
+		04B60287171B7FEA00CAE579 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B60286171B7FEA00CAE579 /* Like.m */; };
+		04B6028A171B804800CAE579 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B60289171B804800CAE579 /* Settings.m */; };
 		04C5F82316BABB4800E8C289 /* fb_share_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C5F82216BABB4800E8C289 /* fb_share_button.png */; };
 		04D6A4EC16B5FABB00C4A71D /* FOFTableNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D6A4EB16B5FABB00C4A71D /* FOFTableNavigationController.m */; };
 		04D6A4ED16B604E300C4A71D /* CommentViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048BA4C216B11EBA002DBD68 /* CommentViewerController.m */; };
@@ -274,6 +279,16 @@
 		04989B711696232F003ECD93 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		04989B7416964E18003ECD93 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		04B60279171B6AE600CAE579 /* ProfileController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileController.xib; sourceTree = "<group>"; };
+		04B6027C171B7FB400CAE579 /* FOF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOF.h; sourceTree = "<group>"; };
+		04B6027D171B7FB400CAE579 /* FOF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOF.m; sourceTree = "<group>"; };
+		04B6027F171B7FD100CAE579 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		04B60280171B7FD100CAE579 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		04B60282171B7FDC00CAE579 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		04B60283171B7FDC00CAE579 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
+		04B60285171B7FEA00CAE579 /* Like.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Like.h; sourceTree = "<group>"; };
+		04B60286171B7FEA00CAE579 /* Like.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Like.m; sourceTree = "<group>"; };
+		04B60288171B804800CAE579 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		04B60289171B804800CAE579 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 		04C5F82216BABB4800E8C289 /* fb_share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_share_button.png; sourceTree = "<group>"; };
 		04D6A4EA16B5FABB00C4A71D /* FOFTableNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOFTableNavigationController.h; sourceTree = "<group>"; };
 		04D6A4EB16B5FABB00C4A71D /* FOFTableNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOFTableNavigationController.m; sourceTree = "<group>"; };
@@ -600,6 +615,25 @@
 			name = "UIDevice+Hardware";
 			sourceTree = "<group>";
 		};
+		04B6027B171B7FA000CAE579 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				04B6027F171B7FD100CAE579 /* Comment.h */,
+				04B60280171B7FD100CAE579 /* Comment.m */,
+				04B6027C171B7FB400CAE579 /* FOF.h */,
+				04B6027D171B7FB400CAE579 /* FOF.m */,
+				04B60285171B7FEA00CAE579 /* Like.h */,
+				04B60286171B7FEA00CAE579 /* Like.m */,
+				04B60282171B7FDC00CAE579 /* Notification.h */,
+				04B60283171B7FDC00CAE579 /* Notification.m */,
+				4473693616F7E020001B80DE /* Person.h */,
+				4473693716F7E020001B80DE /* Person.m */,
+				04B60288171B804800CAE579 /* Settings.h */,
+				04B60289171B804800CAE579 /* Settings.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		04D98ACC17069E7B0093E056 /* GPUImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -735,9 +769,10 @@
 		441BFFB515B131D200E204D7 /* DyFocus */ = {
 			isa = PBXGroup;
 			children = (
-				44794AF1165147F10097824D /* Delegate */,
-				442B552315B2238800C952D1 /* Controllers */,
+				04B6027B171B7FA000CAE579 /* Models */,
 				44C8DA4D15B20FEC000D2947 /* Views */,
+				442B552315B2238800C952D1 /* Controllers */,
+				44794AF1165147F10097824D /* Delegate */,
 				4496800D164D80ED00F76FCF /* Utilities */,
 				AC8C262215DAA9BC0093FFD2 /* Resources */,
 				441BFFB615B131D200E204D7 /* Supporting Files */,
@@ -949,8 +984,6 @@
 		4473693516F7E009001B80DE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4473693616F7E020001B80DE /* Person.h */,
-				4473693716F7E020001B80DE /* Person.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1491,6 +1524,11 @@
 				04D98B0117077D240093E056 /* UIHorizontalTableViewCell.m in Sources */,
 				04D98B071707B1800093E056 /* FilterUtil.m in Sources */,
 				4473693816F7E020001B80DE /* Person.m in Sources */,
+				04B6027E171B7FB400CAE579 /* FOF.m in Sources */,
+				04B60281171B7FD100CAE579 /* Comment.m in Sources */,
+				04B60284171B7FDC00CAE579 /* Notification.m in Sources */,
+				04B60287171B7FEA00CAE579 /* Like.m in Sources */,
+				04B6028A171B804800CAE579 /* Settings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

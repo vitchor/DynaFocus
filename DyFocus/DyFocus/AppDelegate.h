@@ -6,117 +6,37 @@
 //  Copyright (c) 2012 Ufscar. All rights reserved.
 //
 
+
+// MODEL
+#import "Comment.h"
+#import "FOF.h"
+#import "Like.h"
+#import "Notification.h"
+#import "Person.h"
+
+#import "Settings.h"
+
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 
+// Overriden system classes
 #import "DyfocusUITabBarController.h"
 #import "DyfocusUINavigationController.h"
+#import "UIDyfocusImage.h"
 
+// Controllers
 #import "FacebookController.h"
 #import "ProfileController.h"
-
 #import "LoginController.h"
 #import "SplashScreenController.h"
 #import "CameraView.h"
 #import "FOFTableController.h"
-
 #import "FOFTableNavigationController.h"
-#import "UIDyfocusImage.h"
-#import "Person.h"
+
 
 #define UPLOADING 0
 #define SHARING 1
 #define FRIENDS 2
-
-#define NOTIFICATION_LIKED_FOF 0
-#define NOTIFICATION_COMMENTED_FOF 1
-#define NOTIFICATION_FOLLOWED_YOU 2
-#define NOTIFICATION_COMMENTED_ON_COMMENTED_FOF 3
-
-#define dyfocus_url @"http://dyfoc.us"
-//#define dyfocus_url @"http://192.168.0.104:8000"
-//#define dyfocus_url @"http://192.168.0.112:8000"
-//#define dyfocus_url @"http://192.168.100.140:8000"
-//#define dyfocus_url @"http://192.168.0.109:8000"
-
-#define app_fb_id @"417476174956036"
-
-#define refresh_user_url @"/uploader/json_user_fof/"
-#define refresh_featured_url @"/uploader/json_featured_fof/"
-#define refresh_feed_url @"/uploader/json_feed/"
-
-@interface Notification: NSObject {
-    NSString *m_message;
-    NSString *m_userId;
-    NSDecimalNumber *m_notificationId;
-    int m_triggerType;
-    int m_triggerId;
-    BOOL m_wasRead;
-}
-
-+(Notification *) notificationFromJSON: (NSDictionary *)json;
-
-@property (nonatomic, retain) NSString *m_message;
-@property (nonatomic, retain) NSString *m_userId;
-@property (nonatomic, retain) NSDecimalNumber *m_notificationId;
-@property (nonatomic, readwrite) int m_triggerType;
-@property (nonatomic, readwrite) int m_triggerId;
-@property (nonatomic, readwrite) BOOL m_wasRead;
-
-@end
-
-@interface Like: NSObject {
-	NSString *m_fofId;
-	NSString *m_userName;
-	NSString *m_userId;
-}
-
-@property (nonatomic, retain) NSString *m_fofId;
-@property (nonatomic, retain) NSString *m_userName;
-@property (nonatomic, retain) NSString *m_userId;
-@end
-
-@interface Comment: NSObject {
-	NSString *m_fofId;
-	NSString *m_message;
-	NSString *m_userName;
-	NSString *m_userId;
-	NSString *m_date;    
-}
-
-@property (nonatomic, retain) NSString *m_fofId;
-@property (nonatomic, retain) NSString *m_message;
-@property (nonatomic, retain) NSString *m_userName;
-@property (nonatomic, retain) NSString *m_userId;
-@property (nonatomic, retain) NSString *m_date;
-@end
-
-@interface FOF : NSObject {
-	NSString *m_name;
-	NSArray *m_frames;
-	NSString *m_comments;
-	NSString *m_likes;
-	NSString *m_userName;
-	NSString *m_userNickname;
-	NSString *m_date;
-	NSString *m_id;
-    bool m_liked;
-}
-
-+(FOF *)fofFromJSON: (NSDictionary *)json;
-
-@property (nonatomic, retain) NSArray *m_frames;
-@property (nonatomic, retain) NSString *m_comments;
-@property (nonatomic, retain) NSString *m_name;
-@property (nonatomic, retain) NSString *m_likes;
-@property (nonatomic, retain) NSString *m_userName;
-@property (nonatomic, retain) NSString *m_userNickname;
-@property (nonatomic, retain) NSString *m_userId;
-@property (nonatomic, retain) NSString *m_date;
-@property (nonatomic, retain) NSString *m_id;
-@property (nonatomic, readwrite) bool m_liked;
-@end
-
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     
@@ -125,6 +45,7 @@
 
     NSArray *permissions;
     FacebookController *friendsController;
+    
     FOFTableNavigationController *feedViewController;
     LoginController *loginController;
     SplashScreenController *splashScreenController;
@@ -139,9 +60,6 @@
     NSMutableArray *feedFofArray;
     NSMutableArray *notificationsArray;
     
-    NSMutableArray *friendFofArray;
-    Person *currentFriend;
-    
     NSString *deviceId;
     
     int unreadNotifications;
@@ -151,7 +69,6 @@
     ProfileController *profileController;
     
     bool showNotification;
-    BOOL insideUserProfile;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -188,13 +105,10 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  Person *myself;
 @property (nonatomic, retain)  NSMutableArray *featuredFofArray;
 @property (nonatomic, retain)  NSMutableArray *userFofArray;
-@property (nonatomic, retain)  NSMutableArray *feedFofArray;
-@property (nonatomic, retain)  NSMutableArray *friendFofArray;
-@property (nonatomic, retain)  Person *currentFriend;
+@property (nonatomic, retain)  NSMutableArray *feedFofArray; 
 @property (nonatomic, retain)  NSString *deviceId;
 @property (nonatomic, retain)  NSMutableArray *notificationsArray;
 @property (nonatomic, readwrite) int unreadNotifications;
-@property (nonatomic, readwrite) BOOL insideUserProfile;
 
 
 @end
