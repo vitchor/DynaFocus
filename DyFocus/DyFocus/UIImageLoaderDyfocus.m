@@ -106,6 +106,12 @@
                                            imageView.tag = 420;
                                        }
                                    }else{
+                                       
+                                       if (bufferPic) {
+                                           [bufferPic release];
+                                           bufferPic = nil;
+                                       }
+                                       
                                        bufferPic = [[UIDyfocusImage alloc] initWithData:data];
                                        bufferPic.faceId = faceId;
                                        if(imageView != nil){

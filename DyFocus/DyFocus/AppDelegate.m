@@ -754,7 +754,12 @@
                 
                 if (fbFriend) {
                     followingPerson.kind = FRIENDS_ON_APP_AND_FB;
-                    [self.friendsFromFb removeObjectForKey:[NSNumber numberWithLong:[followingPerson.facebookId longLongValue]]];
+                    
+                    NSNumber *key = [NSNumber numberWithLong:[followingPerson.facebookId longLongValue]];
+                    Person *person = [self.friendsFromFb objectForKey:key];
+                    
+                    [person release];
+                    [self.friendsFromFb removeObjectForKey:key];
                     
                 }else{
                     followingPerson.kind = FRIENDS_ON_APP;

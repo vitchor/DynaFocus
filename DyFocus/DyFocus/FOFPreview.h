@@ -14,32 +14,32 @@
     
     IBOutlet UIImageView *firstImageView;
     IBOutlet UIImageView *secondImageView;
-    IBOutlet NSMutableArray *frames;
-    IBOutlet NSMutableArray *displayedFrames;
-    IBOutlet NSMutableArray *focalPoints;
-    IBOutlet UIHorizontalTableView *firstTableView;
-    IBOutlet UIHorizontalTableView *secondTableView;    
-    NSString *fofName;
-    IBOutlet UIScrollView *scrollView;
-    
-    NSTimer *timer;
-    
-    int oldFrameIndex;
-    int timerPause;
-    
-    UITapGestureRecognizer *tapScrollView;
-    UITapGestureRecognizer *tapFullScreenView;
-    BOOL isFullScreen;
     IBOutlet UIImageView *firstImageViewFullScreen;
     IBOutlet UIImageView *secondImageViewFullScreen;
     IBOutlet UIView *fullScreenView;
+    IBOutlet UIHorizontalTableView *firstTableView;
+    IBOutlet UIHorizontalTableView *secondTableView;
+    IBOutlet UIScrollView *scrollView;
+    
+    NSMutableArray *frames;
+    NSMutableArray *displayedFrames;
+    NSMutableArray *focalPoints;
+    NSString *fofName;
+    NSTimer *timer;
+    UITapGestureRecognizer *tapScrollView;
+    UITapGestureRecognizer *tapFullScreenView;
+
+    
+    BOOL isFullScreen;
+    int oldFrameIndex;
+    int timerPause;
 }
 
 @property(nonatomic,retain) IBOutlet UIImageView *firstImageView;
 @property(nonatomic,retain) IBOutlet UIImageView *secondImageView;
-@property(nonatomic,retain) IBOutlet NSMutableArray *frames;
-@property(nonatomic,retain) IBOutlet NSMutableArray *displayedFrames;
-@property(nonatomic,retain) IBOutlet NSMutableArray *focalPoints;
+@property(nonatomic,retain) NSMutableArray *frames;
+@property(nonatomic,retain) NSMutableArray *displayedFrames;
+@property(nonatomic,retain) NSMutableArray *focalPoints;
 @property(nonatomic,retain) IBOutlet UIHorizontalTableView *firstTableView;
 @property(nonatomic,retain) IBOutlet UIHorizontalTableView *secondTableView;
 @property(nonatomic,retain) NSTimer *timer;

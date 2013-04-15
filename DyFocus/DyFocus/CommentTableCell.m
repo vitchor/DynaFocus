@@ -40,38 +40,32 @@
 
 - (void) refreshWithComment: (Comment *)comment {
     
-    if (!m_comment || ([m_comment.m_message isEqualToString:comment.m_message] && [m_comment.m_userId isEqualToString:comment.m_userId])) {
-        
-        [self clear];
-        
-        labelUserName.text = comment.m_userName;
-        commentTextView.text = comment.m_message;
+    labelUserName.text = comment.m_userName;
+    commentTextView.text = comment.m_message;
 
-        if (comment.m_date && ![comment.m_date isEqualToString:@"null"]) {
-            labelDate.text = comment.m_date;
-        }
-        
-        
-        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadPictureWithFaceId:comment.m_userId andImageView:imageUserPicture andIsSmall:YES];
-//        [imageLoader loadCommentProfilePicture:comment.m_userId andImageView:imageUserPicture];    
-        
-        if (m_comment) {
-            [m_comment release];
-            m_comment = nil;
-        }
-        
-        m_comment = [[Comment alloc] init];
-        m_comment.m_date = [[comment.m_date copy] autorelease];
-        m_comment.m_fofId = [[comment.m_fofId copy] autorelease];
-        m_comment.m_message = [[comment.m_message copy] autorelease];
-        m_comment.m_userId = [[comment.m_userId copy] autorelease];
-        m_comment.m_userName = [[comment.m_userName copy] autorelease];
-        
-        UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
-        [self addGestureRecognizer:singleTap];
-        
+    if (comment.m_date && ![comment.m_date isEqualToString:@"null"]) {
+        labelDate.text = comment.m_date;
     }
+    
+    
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+    [imageLoader loadPictureWithFaceId:comment.m_userId andImageView:imageUserPicture andIsSmall:YES];  
+    
+    if (m_comment) {
+        [m_comment release];
+        m_comment = nil;
+    }
+    
+    m_comment = [[Comment alloc] init];
+    m_comment.m_date = [[comment.m_date copy] autorelease];
+    m_comment.m_fofId = [[comment.m_fofId copy] autorelease];
+    m_comment.m_message = [[comment.m_message copy] autorelease];
+    m_comment.m_userId = [[comment.m_userId copy] autorelease];
+    m_comment.m_userName = [[comment.m_userName copy] autorelease];
+    
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
+    [self addGestureRecognizer:singleTap];
+    
 }
 
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture

@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#define NOTIFICATION_LIKED_FOF 0
+#define NOTIFICATION_COMMENTED_FOF 1
+#define NOTIFICATION_FOLLOWED_YOU 2
+#define NOTIFICATION_COMMENTED_ON_COMMENTED_FOF 3
+
 @interface Notification: NSObject {
     NSString *m_message;
     NSString *m_userId;

@@ -58,9 +58,7 @@
         filterName = @"Paint";
     }
     
-    
     return filterName;
-    
 }
 
 + (UIImage *)filterImage: (UIImage *)image withFilterId: (int)filterId {
@@ -68,7 +66,7 @@
     UIImage *filteredImage;
 
     
-    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+    GPUImagePicture *stillImageSource = [[[GPUImagePicture alloc] initWithImage:image] autorelease];
     GPUImageFilter *stillImageFilter = nil;
     
 
@@ -76,28 +74,28 @@
         return image;
         
     } else if (filterId == FILTER_SEPIA) {
-        stillImageFilter = [[GPUImageSepiaFilter alloc] init];
+        stillImageFilter = [[[GPUImageSepiaFilter alloc] init] autorelease];
         
     } else if (filterId == FILTER_SKETCH) {
-        stillImageFilter = [[GPUImageSketchFilter alloc] init];
+        stillImageFilter = [[[GPUImageSketchFilter alloc] init] autorelease];
         
     } else if (filterId == FILTER_INVERT_COLORS) {
-        stillImageFilter = [[GPUImageColorInvertFilter alloc] init];
+        stillImageFilter = [[[GPUImageColorInvertFilter alloc] init] autorelease];
         
     } else if (filterId == FILTER_EDGE_DETECTION) {
-        stillImageFilter = [[GPUImageSobelEdgeDetectionFilter alloc] init];
+        stillImageFilter = [[[GPUImageSobelEdgeDetectionFilter alloc] init] autorelease];
         
     } else if (filterId == FILTER_BLUE_AND_RED_COLORS) {
-        stillImageFilter = [[GPUImageFalseColorFilter alloc] init];
+        stillImageFilter = [[[GPUImageFalseColorFilter alloc] init] autorelease];
         
     } else if (filterId == FILTER_TOON) {
-        stillImageFilter = [[GPUImageToonFilter alloc] init];
+        stillImageFilter = [[[GPUImageToonFilter alloc] init] autorelease];
     
     } else if (filterId == FILTER_BLACK_AND_WHITE) {
-        stillImageFilter = [[GPUImageGrayscaleFilter alloc] init];
+        stillImageFilter = [[[GPUImageGrayscaleFilter alloc] init] autorelease];
 
     } else if (filterId == FILTER_PAINT) {
-        stillImageFilter = [[GPUImageKuwaharaFilter alloc] init];
+        stillImageFilter = [[[GPUImageKuwaharaFilter alloc] init] autorelease];
     }
     
     [stillImageSource addTarget:stillImageFilter];

@@ -72,7 +72,7 @@
     }
     
     for (UIImage *frame in frames) {
-        [displayedFrames addObject:[frame copy]];
+        [displayedFrames addObject:frame];
     }
     
     oldFrameIndex = 0;
@@ -126,13 +126,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
 		 cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    NSLog(@"CELL CELL CELL CELL");
+    
     UIHorizontalTableViewCell *cell;
     
     //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
     cell = [tableView dequeueReusableCellWithIdentifier:@"UIHorizontalTableViewCell"];
-    
     
     if (cell == nil) {
         NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"UIHorizontalTableViewCell" owner:self options:nil];
@@ -146,13 +144,14 @@
     NSString *filterName = [FilterUtil getFilterName:indexPath.row];
     
     NSString *filterImageName = [NSString stringWithFormat:@"Filter_%@.jpg", filterName];
-    NSLog(@"FILTER NAMMEEE: %@",filterName);
+
     [cell refreshWithImage:filterImageName andTitle:filterName];
     
     UIView *myBackView = [[UIView alloc] initWithFrame:cell.frame];
     myBackView.backgroundColor = [UIColor colorWithRed:0.28 green:0.28 blue:0.28 alpha:1];
     cell.selectedBackgroundView = myBackView;
     [myBackView release];
+    
     return cell;
 
 }
@@ -275,6 +274,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     } else if (tableView == secondTableView) {
         
         UIImage *filteredImage = [FilterUtil filterImage:[frames objectAtIndex:1] withFilterId:indexPath.row];
+
         
         [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];
         
@@ -291,17 +291,24 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //for (NSValue *point in self.focalPoints) {
     //    [point release];
     //}
-         
-    [self.frames release];
-    [self.focalPoints release];
-    [self.firstImageView release];
-    [self.secondImageView release];
+    
+    [displayedFrames release];
+    [frames release];
+    [focalPoints release];
+    [firstImageView release];
+    [secondImageView release];
     [tapScrollView release];
     [tapFullScreenView release];
     [firstImageViewFullScreen release];
     [secondImageViewFullScreen release];
     [scrollView release];
     [fullScreenView release];
+    
+    [firstTableView release];
+    [secondTableView release];
+    [timer release];
+    [fofName release];
+
     [super dealloc];
 }
 
