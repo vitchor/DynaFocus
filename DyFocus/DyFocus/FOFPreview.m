@@ -44,7 +44,6 @@
 
 - (void)viewDidLoad
 {
-    
     displayedFrames = [[NSMutableArray alloc] init];
     
     NSString *doneString = @"Next";
@@ -85,12 +84,12 @@
     //[firstTableView selectRowAtIndexPath: [NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
     
     
-    [firstTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    //[firstTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     
     //[secondTableView selectRowAtIndexPath: [NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
     
     [firstTableView setDelegate:self];
-    [secondTableView setDelegate:self];    
+    [secondTableView setDelegate:self];
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
@@ -127,10 +126,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
 		 cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UIHorizontalTableViewCell *cell;
-    
-    //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
-    cell = [tableView dequeueReusableCellWithIdentifier:@"UIHorizontalTableViewCell"];
+    UIHorizontalTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UIHorizontalTableViewCell"];
     
     if (cell == nil) {
         NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"UIHorizontalTableViewCell" owner:self options:nil];
@@ -138,18 +134,24 @@
         // Load the top-level objects from the custom cell XIB.
         cell = [topLevelObjects objectAtIndex:0];
         
+        topLevelObjects = nil;
+        
     }
     
-    //FOF *fof = (FOF *)[FOFArray objectAtIndex:indexPath.row];
+    
     NSString *filterName = [FilterUtil getFilterName:indexPath.row];
     
     NSString *filterImageName = [NSString stringWithFormat:@"Filter_%@.jpg", filterName];
 
     [cell refreshWithImage:filterImageName andTitle:filterName];
     
+    filterName = nil;
+    filterImageName = nil;
+    
     UIView *myBackView = [[UIView alloc] initWithFrame:cell.frame];
     myBackView.backgroundColor = [UIColor colorWithRed:0.28 green:0.28 blue:0.28 alpha:1];
     cell.selectedBackgroundView = myBackView;
+    
     [myBackView release];
     
     return cell;
@@ -225,15 +227,6 @@
     
 }
 
-- (void)viewDidUnload
-{
-
-    [self dealloc];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -294,18 +287,27 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [displayedFrames release];
     [frames release];
+    
     [focalPoints release];
     [firstImageView release];
     [secondImageView release];
-    [tapScrollView release];
-    [tapFullScreenView release];
+
     [firstImageViewFullScreen release];
     [secondImageViewFullScreen release];
     [scrollView release];
     [fullScreenView release];
     
+    [firstTableView setDataSource:nil];
+    [firstTableView reloadData];
     [firstTableView release];
+    firstTableView = nil;
+
+    [secondTableView setDataSource:nil];
+    [secondTableView reloadData];
     [secondTableView release];
+    secondTableView = nil;
+    
+
     [timer release];
     [fofName release];
 

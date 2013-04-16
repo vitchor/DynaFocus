@@ -1019,8 +1019,8 @@
 
     if (self.myself) {
         NSDictionary *articleParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                         [[NSString alloc] initWithFormat:@"%@",self.myself.facebookId], @"User ID", // Capture author info
-                         [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()], @"Time", // Capture user status
+                         [NSString stringWithFormat:@"%@",self.myself.facebookId], @"User ID", // Capture author info
+                         [NSString stringWithFormat:@"%f",CACurrentMediaTime()], @"Time", // Capture user status
                          nil];
         
         [Flurry logEvent:event withParameters:articleParams];

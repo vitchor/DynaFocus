@@ -167,8 +167,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLikesTableView)] autorelease];
-    [likesView addGestureRecognizer:singleTap];
+    //UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLikesTableView)] autorelease];
+    //[likesView addGestureRecognizer:singleTap];
 
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
@@ -538,13 +538,18 @@
 
 - (void) buildLikesText{
     int i = 0;
+    
+    NSMutableString *likeListUsers = nil;
+    
     for (Like *like in likes)
     {
         NSArray *array = [like.m_userName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
         
+
+        
         if (i == 0) {
-            likeListUsers = [[NSMutableString alloc] initWithString:@""];
+            likeListUsers = [NSMutableString stringWithString:@""];
             [likeListUsers appendString:[NSString stringWithFormat:@"%@", [array objectAtIndex:0]]];
         } else if ([likes count] > 1 && i == [likes count] -1) { // Last Time
             [likeListUsers appendString:[NSString stringWithFormat:@" and %@", [array objectAtIndex:0]]];
@@ -554,7 +559,7 @@
         i++;
     }
     if ([likes count] == 0) {
-        likeListUsers = [[NSMutableString alloc] initWithString:@"No one liked this yet."];
+        likeListUsers = [NSMutableString stringWithString:@"No one liked this yet."];
         
     } else if (([likes count] == 1) && ![likeListUsers isEqualToString:@"You"]) {
         [likeListUsers appendString:@" likes this."];
@@ -562,6 +567,7 @@
     } else {
         [likeListUsers appendString:@" like this."];
     }
+    
     [likesLabel setText:likeListUsers];
 }
 

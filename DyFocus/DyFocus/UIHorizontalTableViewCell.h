@@ -14,8 +14,8 @@
     IBOutlet UILabel *filterTitle;
 }
 
-@property (nonatomic,retain) IBOutlet UIImageView *filterImage;
-@property (nonatomic,retain) IBOutlet UILabel *filterTitle;
+@property (nonatomic,assign) IBOutlet UIImageView *filterImage;
+@property (nonatomic,assign) IBOutlet UILabel *filterTitle;
 
 -(void) refreshWithImage:(NSString *)imageName andTitle:(NSString *)title;
 

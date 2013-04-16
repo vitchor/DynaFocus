@@ -37,8 +37,7 @@
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
-{
-    assert([aDecoder isKindOfClass:[NSCoder class]]);
+{   
     
     self = [super initWithCoder:aDecoder];
     
@@ -55,7 +54,7 @@
     
     self.backgroundView = backView;
     
-    assert(self);
+
     return self;
 }
 

@@ -163,8 +163,10 @@
     
     for (int i = 0; i < [self.frames count]; i++)
     {
-        NSLog(@"Uploading image %d",i);
         UIImage *image = [[self.frames objectAtIndex:i] fixOrientation];
+        
+        NSLog(@"Uploading image %d with size: %f %f ", i, image.size.width, image.size.height);
+
         
         NSString *imagePath = [[NSString alloc] initWithFormat:@"Documents/image_%d.jpg", i];
         

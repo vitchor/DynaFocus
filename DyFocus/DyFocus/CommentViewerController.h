@@ -30,7 +30,6 @@
     
     NSMutableArray *comments;
     NSMutableArray *likes;
-    NSMutableString *likeListUsers;
     LikesTableViewController *likesController;
     IBOutlet UIView *likesView;
     

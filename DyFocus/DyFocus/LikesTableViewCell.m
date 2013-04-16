@@ -45,14 +45,14 @@
     [self clear];
 
     m_like = [[Like alloc] init];
-    m_like.m_userId = [like.m_userId copy];
+    m_like.m_userId = like.m_userId;
     
     if([like.m_userName isEqualToString:@"You"]){
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-        m_like.m_userName = [delegate.myself.name copy];
+        m_like.m_userName = delegate.myself.name;
         self.userNameLabel.text = delegate.myself.name;
     }else{
-        m_like.m_userName = [like.m_userName copy];
+        m_like.m_userName = like.m_userName;
         self.userNameLabel.text = like.m_userName;
     }
 
