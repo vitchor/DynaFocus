@@ -184,7 +184,7 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"Friends using dyfocus";
+        return @"Following";
     } else {
         return @"Select friends to invite";
     }
