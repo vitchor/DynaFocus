@@ -74,6 +74,9 @@
 {
     [self.view setUserInteractionEnabled:NO];
     
+    backImageView.transform = CGAffineTransformIdentity;
+    frontImageView.transform = CGAffineTransformIdentity;
+    
     CATransition* transition = [CATransition animation];
     transition.duration = 0.5;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
