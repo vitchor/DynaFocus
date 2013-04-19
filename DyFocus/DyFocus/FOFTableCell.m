@@ -236,21 +236,24 @@
 
 - (void)singleTapOnFOF:(UITapGestureRecognizer *)gesture
 {
-    [imagebackFrame setUserInteractionEnabled:NO];
-    [imagefrontFrame setUserInteractionEnabled:NO];
+    if(frames.count >=1){
     
-    FullscreenFOFViewController *fullScreenController = [[FullscreenFOFViewController alloc] initWithNibName:@"FullscreenFOFViewController" bundle:nil];
-    
-    fullScreenController.hidesBottomBarWhenPushed = YES;
-    
-    fullScreenController.frames = frames;
-    
-    [self pushViewController:fullScreenController withAnimationType:kCATransitionMoveIn];
-    
-    [fullScreenController release];
-    
-    [timer invalidate];
-    timer = nil;
+        [imagebackFrame setUserInteractionEnabled:NO];
+        [imagefrontFrame setUserInteractionEnabled:NO];
+        
+        FullscreenFOFViewController *fullScreenController = [[FullscreenFOFViewController alloc] initWithNibName:@"FullscreenFOFViewController" bundle:nil];
+        
+        fullScreenController.hidesBottomBarWhenPushed = YES;
+        
+        fullScreenController.frames = frames;
+        
+        [self pushViewController:fullScreenController withAnimationType:kCATransitionMoveIn];
+        
+        [fullScreenController release];
+        
+        [timer invalidate];
+        timer = nil;
+    }
 }
 
 - (void) pushViewController:(UIViewController*)controller withAnimationType:(NSString*)animationType {

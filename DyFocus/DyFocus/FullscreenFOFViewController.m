@@ -31,7 +31,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-
     [self.navigationController setNavigationBarHidden:YES];
     
     if ([frames count] > 0) {
@@ -41,23 +40,27 @@
         if ([frames count] > 1) {
             [frontImageView setImage: [frames objectAtIndex:1]];
         }
+    
+    
+        float scale = backImageView.image.size.width/backImageView.image.size.height;
+        
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        fullscreenImageWidth.constant = screenBounds.size.width;
+        fullscreenImageHeight.constant = screenBounds.size.width/scale;
+        
+        oldFrameIndex = 0;
+        timerPause = TIMER_INTERVAL;
+        
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+        [timer fire];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
+        
+        [self checkOrientation:scale isFirstTime:YES];
     }
-    
-    float scale = backImageView.image.size.width/backImageView.image.size.height;
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    fullscreenImageWidth.constant = screenBounds.size.width;
-    fullscreenImageHeight.constant = screenBounds.size.width/scale;
-    
-    oldFrameIndex = 0;
-    timerPause = TIMER_INTERVAL;
-    
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
-    [timer fire];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
-    
-    [self checkOrientation:scale isFirstTime:YES];
+    else{
+        [self popController];
+    }
 }
 
 - (void)viewDidLoad
