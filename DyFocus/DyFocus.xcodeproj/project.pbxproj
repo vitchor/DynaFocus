@@ -144,6 +144,8 @@
 		7B0EC6FF16F3864C00606626 /* CameraView-RightButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F516F3864C00606626 /* CameraView-RightButton.png */; };
 		7B0EC70016F3864C00606626 /* CameraView-RightButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */; };
 		7B0EC70116F3864C00606626 /* CameraView-ShootButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */; };
+		7B7C2F3C171D052A00C2A022 /* FullscreenFOFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7C2F39171D052A00C2A022 /* FullscreenFOFViewController.m */; };
+		7B7C2F3D171D052A00C2A022 /* FullscreenFOFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B7C2F3A171D052A00C2A022 /* FullscreenFOFViewController.xib */; };
 		7BEB1E6316BAA12C00BF7D49 /* share_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */; };
 		AC07F47915B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */; };
 		AC07F47C15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */; };
@@ -439,6 +441,9 @@
 		7B0EC6F516F3864C00606626 /* CameraView-RightButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButton.png"; sourceTree = "<group>"; };
 		7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButtonPressed.png"; sourceTree = "<group>"; };
 		7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButton.png"; sourceTree = "<group>"; };
+		7B7C2F39171D052A00C2A022 /* FullscreenFOFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenFOFViewController.m; sourceTree = "<group>"; };
+		7B7C2F3A171D052A00C2A022 /* FullscreenFOFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FullscreenFOFViewController.xib; sourceTree = "<group>"; };
+		7B7C2F3B171D052A00C2A022 /* FullscreenFOFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenFOFViewController.h; sourceTree = "<group>"; };
 		7BEB1E6216BAA12C00BF7D49 /* share_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_facebook.png; sourceTree = "<group>"; };
 		AC07F47815B4E8120003C56C /* dynafocus_icon_beta1_orange_nofill_72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_72x72.png; path = ../dynafocus_icon_beta1_orange_nofill_72x72.png; sourceTree = "<group>"; };
 		AC07F47B15B4E8A10003C56C /* dynafocus_icon_beta1_orange_nofill_144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dynafocus_icon_beta1_orange_nofill_144x144.png; path = ../dynafocus_icon_beta1_orange_nofill_144x144.png; sourceTree = "<group>"; };
@@ -797,6 +802,7 @@
 				04EEABE916EA925D001BCEE3 /* NotificationTableViewController */,
 				048BA4BA16B11E28002DBD68 /* CommentViewerController */,
 				04292BE2169902B0009CF50B /* FOFTableViewController */,
+				7B7C2F36171D04F600C2A022 /* FullscreenFOFViewController */,
 				44362AF9167E8D5B0007944B /* SplashScreenController */,
 				44B4A0C7167E4B5600956E0C /* LoginController */,
 				44794B271651A9180097824D /* CameraView */,
@@ -1143,6 +1149,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		7B7C2F36171D04F600C2A022 /* FullscreenFOFViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7B7C2F3B171D052A00C2A022 /* FullscreenFOFViewController.h */,
+				7B7C2F39171D052A00C2A022 /* FullscreenFOFViewController.m */,
+				7B7C2F3A171D052A00C2A022 /* FullscreenFOFViewController.xib */,
+			);
+			name = FullscreenFOFViewController;
+			sourceTree = "<group>";
+		};
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1437,6 +1453,7 @@
 				042ECA731717452B00E823B4 /* Filter_B&W.jpg in Resources */,
 				04420089171B55EB003E3EF5 /* ProfileController_i5.xib in Resources */,
 				04B6027A171B6AE600CAE579 /* ProfileController.xib in Resources */,
+				7B7C2F3D171D052A00C2A022 /* FullscreenFOFViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,6 +1546,7 @@
 				04B60284171B7FDC00CAE579 /* Notification.m in Sources */,
 				04B60287171B7FEA00CAE579 /* Like.m in Sources */,
 				04B6028A171B804800CAE579 /* Settings.m in Sources */,
+				7B7C2F3C171D052A00C2A022 /* FullscreenFOFViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

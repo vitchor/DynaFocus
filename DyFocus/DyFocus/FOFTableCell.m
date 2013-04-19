@@ -14,6 +14,7 @@
 #import "NSDyfocusURLRequest.h"
 #import "UIDyfocusImage.h"
 #import "UIImageLoaderDyfocus.h"
+#import "FullscreenFOFViewController.h"
 
 @implementation FOFTableCell
 @synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel, lightGrayBrackgroundView;
@@ -72,6 +73,9 @@
 }
 
 -(void) refreshImageSize {
+    
+    [imagefrontFrame setUserInteractionEnabled:YES];
+    [imagebackFrame setUserInteractionEnabled:YES];
     
     if(imagebackFrame && imagefrontFrame && newHeight != 0.0){
         
@@ -227,24 +231,54 @@
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
 {
     [self showCommentView:FALSE];
+    
 }
 
 - (void)singleTapOnFOF:(UITapGestureRecognizer *)gesture
 {
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-        [tableView.m_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-        
-    }completion:^(BOOL finished){
-        
-        [UIView animateWithDuration:0.0001 animations:^{
-           
-            CGPoint point = tableView.m_tableView.contentOffset;
-            point.y += 6.0;
-            [tableView.m_tableView setContentOffset:point animated:NO];
-        }];
-    }];
+    [imagebackFrame setUserInteractionEnabled:NO];
+    [imagefrontFrame setUserInteractionEnabled:NO];
+    
+    FullscreenFOFViewController *fullScreenController = [[FullscreenFOFViewController alloc] initWithNibName:@"FullscreenFOFViewController" bundle:nil];
+    
+    fullScreenController.hidesBottomBarWhenPushed = YES;
+    
+    fullScreenController.frames = frames;
+    
+    [self pushViewController:fullScreenController withAnimationType:kCATransitionMoveIn];
+    
+    [fullScreenController release];
+    
+    [timer invalidate];
+    timer = nil;
+}
+
+- (void) pushViewController:(UIViewController*)controller withAnimationType:(NSString*)animationType {
+    
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = animationType; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = [self getSubTypeTransition];
+    [tableView.navigationController.view.layer addAnimation:transition forKey:nil];
+    [tableView.navigationController pushViewController:controller animated:NO];
+}
+
+- (NSString*)getSubTypeTransition
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    CGRect rectOfCellInTableView = [tableView.m_tableView rectForRowAtIndexPath:indexPath];
+    CGRect rectOfCellInSuperview = [tableView.m_tableView convertRect:rectOfCellInTableView toView:[tableView.m_tableView superview]];
+    
+    float screenCenter = 0.0;
+    float tabBarOffSet = 65.0;
+    float tappedFofPosition = rectOfCellInSuperview.origin.y+tabBarOffSet;
+    
+    if(tappedFofPosition > screenCenter) {
+        return kCATransitionFromTop;
+    }else{
+        return kCATransitionFromBottom;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

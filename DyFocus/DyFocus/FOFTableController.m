@@ -9,7 +9,6 @@
 #import "FOFTableController.h"
 #import "FOFTableCell.h"
 #import "AppDelegate.h"
-#import "FOFTableCell.h"
 #import "JSON.h"
 #import "LoadView.h"
 
