@@ -62,20 +62,21 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Like *like = [likesArray objectAtIndex:indexPath.row];
         
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    
+
     ProfileController *profileController = nil;
     
-    Person *person = [delegate getUserWithFacebookId:[like.m_userId longLongValue]];
-    
-    
-    
+    Person *person;
+    if([like.m_userId isEqualToString:delegate.myself.facebookId]){
+        person = delegate.myself;
+    }else{
+        person = [delegate getUserWithFacebookId:[like.m_userId longLongValue]];
+    }
+
     if (person) {
-        NSLog(@"==== FRIEND");
         // Person exists, so it's being followed.
         NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.facebookId];
         profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:userFOFArray];
     } else {
-        NSLog(@"==== not a FRIEND");
         // Person is not being followed, there's no information we can get.
         profileController = [[ProfileController alloc] initWithFacebookId:like.m_userId];
     }

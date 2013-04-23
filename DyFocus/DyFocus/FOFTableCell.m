@@ -319,7 +319,12 @@
     
     ProfileController *profileController = nil;
     
-    Person *person = [delegate getUserWithFacebookId:[fof.m_userId longLongValue]];
+    Person *person;
+    if([fof.m_userId isEqualToString:delegate.myself.facebookId]){
+        person = delegate.myself;
+    }else{
+        person = [delegate getUserWithFacebookId:[fof.m_userId longLongValue]];
+    }
     
     if (person) {
 
