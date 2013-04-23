@@ -167,8 +167,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    //UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLikesTableView)] autorelease];
-    //[likesView addGestureRecognizer:singleTap];
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLikesTableView)] autorelease];
+    [likesView addGestureRecognizer:singleTap];
 
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
@@ -176,14 +176,13 @@
 }
 
 -(void) showLikesTableView{
-    if (!likesController) {
-        likesController = [[LikesTableViewController alloc] init];
+    if ([likes count] > 0) {
+        LikesTableViewController *likesController = [[LikesTableViewController alloc] init];
         likesController.likesArray = likes;
+        
+        [self.navigationController pushViewController:likesController animated:true];
+        [self.navigationController setNavigationBarHidden:NO animated:TRUE];
     }
-    
-    [self.navigationController pushViewController:likesController animated:true];
-    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-    
 }
 
 - (void)viewDidLoad
@@ -416,7 +415,11 @@
                                    
                                    if(!error && data) {
                                        
+                                       [comments release];
+                                       comments = nil;
                                        comments = [[NSMutableArray alloc] init];
+                                       [likes release];
+                                       likes = nil;
                                        likes = [[NSMutableArray alloc] init];                                   
                                        
                          
@@ -767,6 +770,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [activityIndicator release];
     [sharingLabel release];
     [sharingCompletedLabel release];
+    [comments release];
+    [likes release];
     [super dealloc];
 }
 @end

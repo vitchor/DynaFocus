@@ -131,16 +131,16 @@
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray {
-    
     if (!profilePersonFOFArray || [profilePersonFOFArray count] == 0) {
-
-        if (person) {
+        if (profilePerson) {
+            person = [profilePerson retain];
+            userKind = profilePerson.kind;
             return [self initWithFacebookId:person.facebookId];
         } else {
             return nil;
         }
     } else {
-        
+                   
         self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
         
         if (self) {

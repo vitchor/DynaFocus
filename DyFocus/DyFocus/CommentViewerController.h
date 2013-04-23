@@ -30,7 +30,6 @@
     
     NSMutableArray *comments;
     NSMutableArray *likes;
-    LikesTableViewController *likesController;
     IBOutlet UIView *likesView;
     
     BOOL isKeyboardHidden;
