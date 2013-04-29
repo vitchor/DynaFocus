@@ -176,7 +176,11 @@
 }
 
 -(void) showLikesTableView{
-    if ([likes count] > 0) {
+    if(!self.isKeyboardHidden){
+        //hides it
+        [self hideKeyboard];
+        self.isKeyboardHidden = YES;
+    }else if ([likes count] > 0) {
         LikesTableViewController *likesController = [[LikesTableViewController alloc] init];
         likesController.likesArray = likes;
         
