@@ -94,6 +94,10 @@
                                        
                                        person = [[Person alloc] initWithDyfocusDic:jsonPerson];
                                        
+                                       if (userKind == MYSELF) {
+                                           person.kind = MYSELF;
+                                       }
+                                       
                                        NSLog(@"PERSON NAME: %@", person.name);
                                        
                                        [self setUIPersonValues];
@@ -133,14 +137,15 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray {
     
     if (!profilePersonFOFArray || [profilePersonFOFArray count] == 0) {
-
-        if (person) {
+        if (profilePerson) {
+            person = [profilePerson retain];
+            userKind = profilePerson.kind;
             return [self initWithFacebookId:person.facebookId];
         } else {
             return nil;
         }
     } else {
-        
+                   
         self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
         
         if (self) {
@@ -266,7 +271,7 @@
             badgeWidth = 30;
         }
         
-        [notificationBadge setFrame:CGRectMake(notificationButton.frame.origin.x + notificationButton.frame.size.width - 3*badgeWidth/5, notificationButton.frame.origin.y - 2*badgeheight/5, badgeWidth, badgeheight)];
+        [notificationBadge setFrame:CGRectMake(notificationView.frame.origin.x + notificationView.frame.size.width - 3*badgeWidth/5, notificationView.frame.origin.y - 2*badgeheight/5, badgeWidth, badgeheight)];
         
         [self.view addSubview:notificationBadge];
         

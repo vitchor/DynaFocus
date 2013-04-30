@@ -79,7 +79,12 @@
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
         ProfileController *profileController = nil;
-        Person *person = [delegate getUserWithFacebookId: [m_comment.m_userId longLongValue]];
+        Person *person;
+        if([m_comment.m_userId isEqualToString:delegate.myself.facebookId]){
+            person = delegate.myself;
+        }else{
+            person = [delegate getUserWithFacebookId:[m_comment.m_userId longLongValue]];
+        }
         
         
         NSLog(@"FACEBOOK USER %lld", [m_comment.m_userId longLongValue]);
@@ -90,8 +95,10 @@
             profileController = [[ProfileController alloc] initWithFacebookId:m_comment.m_userId];
         }
         
-        [commentController.navigationController pushViewController:profileController animated:YES];
+        profileController.hidesBottomBarWhenPushed = YES;
         
+        [commentController.navigationController pushViewController:profileController animated:YES];
+        [commentController.navigationController setNavigationBarHidden:NO animated:TRUE];
     }
 }
 

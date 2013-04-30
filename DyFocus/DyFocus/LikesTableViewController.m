@@ -43,7 +43,16 @@
     
 //    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
 //    [delegate logEvent:@"LikesTableViewController.viewDidAppear"];
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    // Unselect the selected row if any
+    NSIndexPath* selection = [self.likesTableView indexPathForSelectedRow];
+    if (selection) {
+        [self.likesTableView deselectRowAtIndexPath:selection animated:YES];
+    }
 }
 
 #pragma mark -
@@ -51,8 +60,31 @@
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
     Like *like = [likesArray objectAtIndex:indexPath.row];
-    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    [imageLoader loadFriendControllerWithFaceId:like.m_userId andUserName:like.m_userName andNavigationController:self.navigationController];
+        
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+
+    ProfileController *profileController = nil;
+    
+    Person *person;
+    if([like.m_userId isEqualToString:delegate.myself.facebookId]){
+        person = delegate.myself;
+    }else{
+        person = [delegate getUserWithFacebookId:[like.m_userId longLongValue]];
+    }
+
+    if (person) {
+        // Person exists, so it's being followed.
+        NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.facebookId];
+        profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:userFOFArray];
+    } else {
+        // Person is not being followed, there's no information we can get.
+        profileController = [[ProfileController alloc] initWithFacebookId:like.m_userId];
+    }
+
+    profileController.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:profileController animated:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -92,138 +124,5 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//
-//
-//#pragma mark -
-//#pragma mark Table Data Source Methods
-//- (NSInteger)tableView:(UITableView *)tableView
-// numberOfRowsInSection:(NSInteger)section {
-//    
-//    if (notifications && [notifications count] != 0) {
-//        isTableEmpty = NO;
-//        return [notifications count];
-//    } else {
-//        isTableEmpty = YES;
-//        return 1;
-//    }
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView
-//		 cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    
-//    if (isTableEmpty) {
-//        UITableViewCell *cell;
-//        
-//        NSString *cellId = @"empty";
-//        cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-//        
-//        if (cell == nil) {
-//            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
-//        }
-//        
-//        cell.textLabel.text = @"No Likes were found";
-//        cell.textLabel.textColor = [UIColor lightGrayColor];
-//        cell.textLabel.textAlignment = UITextAlignmentCenter;
-//        cell.textLabel.font = [UIFont systemFontOfSize:20];
-//        cell.accessoryType = UITableViewCellAccessoryNone;
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.accessoryView = nil;
-//        cell.imageView.image = nil;
-//        
-//        return cell;
-//        
-//    } else {
-//        
-//        LikesTableViewCell *cell;
-//        
-//        
-//        NSString *cellId = @"LikesTableViewCell";
-//        cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-//        if (cell == nil) {
-//            NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"LikesTableViewCell" owner:self options:nil];
-//            
-//            // Load the top-level objects from the custom cell XIB.
-//            cell = [topLevelObjects objectAtIndex:0];
-//            
-//        }
-//        
-//        Notification *notification = (Notification *) [notifications objectAtIndex:indexPath.row];
-//        
-//        [cell refreshWithNotification:notification];
-//        
-//        return cell;
-//    }
-//    
-//    
-//}
-//
-//-(void)refreshImages {
-//    if (!isTableEmpty) {
-//		NSArray *visibleCells = [notificationsTableView visibleCells];
-//		if (visibleCells) {
-//			NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
-//			for (LikesTableViewCell *cell in visibleCellsCopy) {
-//                [cell loadImage];
-//			}
-//			[visibleCellsCopy release];
-//		}
-//	}
-//}
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return 63;
-//}
-//
-//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-//	[self refreshImages];
-//}
-//
-//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-//	if (decelerate == NO) {
-//		[self refreshImages];
-//	}
-//}
-//
-//#pragma mark -
-//#pragma mark Table Delegate Methods
-//- (void)tableView:(UITableView *)tableView
-//didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    Notification *notification = [notifications objectAtIndex:indexPath.row];
-//    
-//    if (notification.m_triggerType == NOTIFICATION_LIKED_FOF || notification.m_triggerType == NOTIFICATION_COMMENTED_FOF) {
-//     
-//        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-//        
-//        for (FOF *fof in delegate.userFofArray) {
-//         
-//            if ([fof.m_id intValue] == notification.m_triggerId) {
-//                
-//                FOFTableController *tableController = [[FOFTableController alloc] init];
-//                
-//                NSMutableArray *array = [NSMutableArray arrayWithObject:fof];
-//                tableController.FOFArray = array;
-//                tableController.shouldHideNavigationBar = NO;
-//                
-//                tableController.navigationItem.title = @"Likes";
-//                tableController.hidesBottomBarWhenPushed = YES;
-//                
-//                [self.navigationController pushViewController:tableController animated:true];
-//                [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-//                
-//                break;
-//            }
-//        }
-//    }
-//}
-//
-//-(void)viewDidDisappear:(BOOL)animated {
-//    
-//    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-//
-//    [delegate clearNotifications];
-//    [super viewDidDisappear:animated];
-//}
-
 
 @end
