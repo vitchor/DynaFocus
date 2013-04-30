@@ -85,9 +85,13 @@
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
     if (screenBounds.size.height == 568) {
-        UITapGestureRecognizer *tapMainView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fofToFullScreen)];
-        [self.view addGestureRecognizer:tapMainView];
-        [tapMainView release];
+        UITapGestureRecognizer *tapfirstImageView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fofToFullScreen)];
+        [firstImageView addGestureRecognizer:tapfirstImageView];
+        [tapfirstImageView release];
+        
+        UITapGestureRecognizer *tapsecondImageView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fofToFullScreen)];
+        [secondImageView addGestureRecognizer:tapsecondImageView];
+        [tapsecondImageView release];
     }
     else{
         UITapGestureRecognizer *tapScrollView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fofToFullScreen)];
