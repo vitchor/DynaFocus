@@ -84,7 +84,11 @@
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
-    if (screenBounds.size.height == 568) {}
+    if (screenBounds.size.height == 568) {
+        UITapGestureRecognizer *tapMainView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fofToFullScreen)];
+        [self.view addGestureRecognizer:tapMainView];
+        [tapMainView release];
+    }
     else{
         UITapGestureRecognizer *tapScrollView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fofToFullScreen)];
         [scrollView addGestureRecognizer:tapScrollView];
@@ -95,7 +99,7 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     //TODO start fade out timer
     timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
     [timer fire];
