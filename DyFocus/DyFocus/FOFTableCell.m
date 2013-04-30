@@ -87,6 +87,8 @@
         imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
                                        imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newHeight);
 
+//        [imagefrontFrame setNeedsDisplay];
+        
     }
     
 }
@@ -247,42 +249,50 @@
         
         fullScreenController.frames = frames;
         
-        [self pushViewController:fullScreenController withAnimationType:kCATransitionMoveIn];
+        [UIView beginAnimations:@"View Flip" context:nil];
+        [UIView setAnimationDuration:0.80];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        
+        [UIView setAnimationTransition:
+         UIViewAnimationTransitionFlipFromRight
+                               forView:tableView.navigationController.view cache:NO];
+        
+        
+        [tableView.navigationController pushViewController:fullScreenController animated:YES];
+        [UIView commitAnimations];
         
         [fullScreenController release];
-        
-        [timer invalidate];
-        timer = nil;
+    
     }
 }
 
-- (void) pushViewController:(UIViewController*)controller withAnimationType:(NSString*)animationType {
-    
-    CATransition* transition = [CATransition animation];
-    transition.duration = 0.5;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = animationType; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
-    transition.subtype = [self getSubTypeTransition];
-    [tableView.navigationController.view.layer addAnimation:transition forKey:nil];
-    [tableView.navigationController pushViewController:controller animated:NO];
-}
+//- (void) pushViewController:(UIViewController*)controller withAnimationType:(NSString*)animationType {
+//    
+//    CATransition* transition = [CATransition animation];
+//    transition.duration = 0.5;
+//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    transition.type = animationType; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+//    transition.subtype = kCATransitionFromRight;
+//    [tableView.navigationController.view.layer addAnimation:transition forKey:nil];
+//    [tableView.navigationController pushViewController:controller animated:NO];
+//}
 
-- (NSString*)getSubTypeTransition
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-    CGRect rectOfCellInTableView = [tableView.m_tableView rectForRowAtIndexPath:indexPath];
-    CGRect rectOfCellInSuperview = [tableView.m_tableView convertRect:rectOfCellInTableView toView:[tableView.m_tableView superview]];
-    
-    float screenCenter = 0.0;
-    float tabBarOffSet = 65.0;
-    float tappedFofPosition = rectOfCellInSuperview.origin.y+tabBarOffSet;
-    
-    if(tappedFofPosition > screenCenter) {
-        return kCATransitionFromTop;
-    }else{
-        return kCATransitionFromBottom;
-    }
-}
+//- (NSString*)getSubTypeTransition
+//{
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+//    CGRect rectOfCellInTableView = [tableView.m_tableView rectForRowAtIndexPath:indexPath];
+//    CGRect rectOfCellInSuperview = [tableView.m_tableView convertRect:rectOfCellInTableView toView:[tableView.m_tableView superview]];
+//    
+//    float screenCenter = 0.0;
+//    float tabBarOffSet = 65.0;
+//    float tappedFofPosition = rectOfCellInSuperview.origin.y+tabBarOffSet;
+//    
+//    if(tappedFofPosition > screenCenter) {
+//        return ©;
+//    }else{
+//        return kCATransitionFromBottom;
+//    }
+//}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -338,6 +348,7 @@
     
     [self.tableView.navigationController pushViewController:profileController animated:YES];
     [self.tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
+    [profileController release];
 }
 
 -(void)loadImages {
@@ -453,7 +464,6 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
 
     imageUserPicture.tag = 0;
 
-    
     if (frames) {
         [frames removeAllObjects];
     
@@ -527,5 +537,11 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
     
     [super release];
 }*/
+
+- (void)dealloc
+{
+    [frames release];
+    [super dealloc];
+}
 
 @end

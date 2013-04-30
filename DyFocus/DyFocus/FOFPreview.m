@@ -11,13 +11,14 @@
 #import "SharingController.h"
 #import "AppDelegate.h"
 #import "FilterUtil.h"
+#import "FullscreenFOFViewController.h"
 
 #import "GPUImage.h"
 
 #define CANCEL 0
 @implementation FOFPreview
 
-@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames, scrollView;
+@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -32,16 +33,7 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
-
 - (void)viewDidLoad
 {
     displayedFrames = [[NSMutableArray alloc] init];
@@ -64,7 +56,6 @@
     self.navigationItem.title = @"Preview";
     
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
-    [firstImageViewFullScreen setImage:[self.frames objectAtIndex:0]];
     
     if ([self.frames count] > 1) {
         [self.secondImageView setImage: [self.frames objectAtIndex:1]];
@@ -93,22 +84,95 @@
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
+    if (screenBounds.size.height == 568) {}
+    else{
+        UITapGestureRecognizer *tapScrollView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fofToFullScreen)];
+        [scrollView addGestureRecognizer:tapScrollView];
+        [tapScrollView release];
+    }
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    //TODO start fade out timer
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+    [timer fire];
+    
+    [scrollView setUserInteractionEnabled:YES];
+    
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
     if (screenBounds.size.height == 568) {
     } else {
-        isFullScreen = false;
         
-        tapScrollView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imgToFullScreen)];
-        tapScrollView.delegate = self;
+        CGSize size = ((UIImage *)[frames objectAtIndex:0]).size;
         
-        tapFullScreenView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imgToFullScreen)];
-        tapFullScreenView.delegate = self;
+        CGFloat height = (size.height/size.width) * firstImageView.frame.size.width;
         
-        [scrollView addGestureRecognizer:tapScrollView];
-        [scrollView setUserInteractionEnabled:YES];
-        [fullScreenView addGestureRecognizer:tapFullScreenView];
-        [fullScreenView setUserInteractionEnabled:NO];
+        [scrollView setContentSize:CGSizeMake(screenBounds.size.width, height)];
+        
     }
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"FOFPreview.viewDidAppear"];
+}
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [timer invalidate];
+    timer = nil;
+    [super viewWillDisappear:animated];
+}
+
+- (void) dealloc
+{
+    //for (UIImage *frame in self.frames) {
+    //    [frame release];
+    //}
+    
+    //for (NSValue *point in self.focalPoints) {
+    //    [point release];
+    //}
+    
+    [displayedFrames release];
+    [frames release];
+    
+    [focalPoints release];
+    [firstImageView release];
+    [secondImageView release];
+    
+    [scrollView release];
+    
+    [firstTableView setDataSource:nil];
+    [firstTableView reloadData];
+    [firstTableView release];
+    firstTableView = nil;
+    
+    [secondTableView setDataSource:nil];
+    [secondTableView reloadData];
+    [secondTableView release];
+    secondTableView = nil;
+    
+    [timer release];
+    [fofName release];
+    
+    [super dealloc];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    // Release any cached data, images, etc that aren't in use.
 }
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
@@ -135,9 +199,7 @@
         cell = [topLevelObjects objectAtIndex:0];
         
         topLevelObjects = nil;
-        
     }
-    
     
     NSString *filterName = [FilterUtil getFilterName:indexPath.row];
     
@@ -155,10 +217,10 @@
     [myBackView release];
     
     return cell;
-
 }
 
-- (void) next {
+- (void) next
+{    
     SharingController *sharingController;
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
@@ -174,10 +236,8 @@
     sharingController.frames = displayedFrames;
     
     [self.navigationController pushViewController:sharingController animated:true];
-    
     [sharingController release];
 }
-
 
 - (void)fadeImages
 {
@@ -190,39 +250,32 @@
             
             timerPause = TIMER_PAUSE;
             
-            if (oldFrameIndex >= [self.displayedFrames count] - 1) {
+            if (oldFrameIndex >= [frames count] - 1) {
                 oldFrameIndex = 0;
             } else {
                 oldFrameIndex += 1;
             }
             
-            
             [self.secondImageView setImage:[self.displayedFrames objectAtIndex:oldFrameIndex]];
-            [secondImageViewFullScreen setImage:[self.displayedFrames objectAtIndex:oldFrameIndex]];
             
             [self.secondImageView setNeedsDisplay];
-            [secondImageViewFullScreen setNeedsDisplay];
             
             [self.firstImageView setAlpha:0.0];
-            [firstImageViewFullScreen setAlpha:0.0];
             
             [self.firstImageView setNeedsDisplay];
-            [firstImageViewFullScreen setNeedsDisplay];
             
             int newIndex;
-            if (oldFrameIndex == [self.displayedFrames count] - 1) {
+            if (oldFrameIndex == [frames count] - 1) {
                 newIndex = 0;
             } else {
                 newIndex = oldFrameIndex + 1;
             }
-            
-            [self.firstImageView setImage: [self.displayedFrames objectAtIndex: newIndex]];
-            [firstImageViewFullScreen setImage: [self.displayedFrames objectAtIndex: newIndex]];
+
+            [self.firstImageView setImage: [self.displayedFrames objectAtIndex:newIndex]];
         }
             
     } else {
         [self.firstImageView setAlpha:self.firstImageView.alpha + 0.01];
-        [firstImageViewFullScreen setAlpha:firstImageView.alpha];
     }
     
 }
@@ -231,26 +284,6 @@
 {
     // Return YES for supported orientations
     return NO;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    
-    if (screenBounds.size.height == 568) {
-    } else {
-        
-        CGSize size = ((UIImage *)[frames objectAtIndex:0]).size;
-        
-        CGFloat height = (size.height/size.width) * firstImageView.frame.size.width;
-        
-        [scrollView setContentSize:CGSizeMake(320, height + 18)];
-    }
-    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    [delegate logEvent:@"FOFPreview.viewDidAppear"];
 }
 
 #pragma mark -
@@ -268,50 +301,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         
         UIImage *filteredImage = [FilterUtil filterImage:[frames objectAtIndex:1] withFilterId:indexPath.row];
 
-        
-        [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];
-        
+        [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];        
     }
-	
-}
-
-- (void) dealloc
-{
-    //for (UIImage *frame in self.frames) {
-    //    [frame release];
-    //}
-    
-    //for (NSValue *point in self.focalPoints) {
-    //    [point release];
-    //}
-    
-    [displayedFrames release];
-    [frames release];
-    
-    [focalPoints release];
-    [firstImageView release];
-    [secondImageView release];
-
-    [firstImageViewFullScreen release];
-    [secondImageViewFullScreen release];
-    [scrollView release];
-    [fullScreenView release];
-    
-    [firstTableView setDataSource:nil];
-    [firstTableView reloadData];
-    [firstTableView release];
-    firstTableView = nil;
-
-    [secondTableView setDataSource:nil];
-    [secondTableView reloadData];
-    [secondTableView release];
-    secondTableView = nil;
-    
-
-    [timer release];
-    [fofName release];
-
-    [super dealloc];
 }
 
 - (void) cancel {
@@ -330,7 +321,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[alertMsg release];
 	[alertButton1 release];
 	[alertButton2 release];
-	
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
@@ -341,51 +331,46 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-    
-
-- (void) viewWillAppear:(BOOL)animated
+-(void)fofToFullScreen
 {
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
-    //TODO start fade out timer
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
-    [timer fire];
-    [super viewWillAppear:animated];
-//    [fullScreenView setHidden:YES];
-}
-
-- (void) viewWillDisappear:(BOOL)animated
-{
-    [timer invalidate];
-    timer = nil;
-    [super viewWillDisappear:animated];
+    if(frames.count > 0){
+        
+        [scrollView setUserInteractionEnabled:NO];
     
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch;
-{
-    BOOL shouldReceiveTouch = YES;
-    
-    if (gestureRecognizer == tapScrollView || gestureRecognizer==tapFullScreenView) {
-         shouldReceiveTouch = (touch.view == scrollView || touch.view == fullScreenView);
-    }
-    
-    return shouldReceiveTouch;
-}
-
--(void)imgToFullScreen{
-    
-    if (!isFullScreen) {
-            [fullScreenView setHidden:NO];
-            [fullScreenView setUserInteractionEnabled:YES];
-            isFullScreen = true;
-        return;
-    }
-    else{
-            [fullScreenView setHidden:YES];
-            [fullScreenView setUserInteractionEnabled:NO];
-            isFullScreen = false;;
-        return;
+        FullscreenFOFViewController *fullScreenController = [[FullscreenFOFViewController alloc] initWithNibName:@"FullscreenFOFViewController" bundle:nil];
+        
+        
+        fullScreenController.hidesBottomBarWhenPushed = YES;
+        
+        fullScreenController.frames = displayedFrames;
+        
+        [UIView beginAnimations:@"View Flip" context:nil];
+        [UIView setAnimationDuration:0.80];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        
+        [UIView setAnimationTransition:
+         UIViewAnimationTransitionFlipFromRight
+                               forView:self.navigationController.view cache:NO];
+        
+        
+        [self.navigationController pushViewController:fullScreenController animated:YES];
+        [UIView commitAnimations];
+        
+        
+        [fullScreenController release];
     }
 }
+
+//- (void) pushViewController:(UIViewController*)controller withAnimationType:(NSString*)animationType {
+//    
+//    CATransition* transition = [CATransition animation];
+//    transition.duration = 0.5;
+//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    transition.type = animationType;
+//    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+//    [self.navigationController pushViewController:controller animated:NO];
+//    
+//    
+//}
 
 @end

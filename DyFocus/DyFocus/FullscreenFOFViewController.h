@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppDelegate.h"
-#import "FOFTableCell.h"
 
 @interface FullscreenFOFViewController : UIViewController <UIGestureRecognizerDelegate>{
     
@@ -24,6 +22,6 @@
     int timerPause;
 }
 
-@property(nonatomic,retain) IBOutlet NSMutableArray *frames;
+@property(nonatomic,assign) NSMutableArray *frames;
 
 @end
