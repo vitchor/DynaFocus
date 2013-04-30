@@ -106,7 +106,7 @@
         
         CGRect screenBounds = [[UIScreen mainScreen] bounds];
         if (screenBounds.size.height == 568) {
-            loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5" bundle:nil];
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5_new" bundle:nil];
         } else {
             loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
         }
@@ -419,7 +419,7 @@
                          // Sets the model object myself
                          self.myself = [[Person alloc] initWithDicAndKind:user andKind:MYSELF];
                          
-                         NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
+                         NSLog(@"My name is %@ and my id is %@ and my kind %d", [user objectForKey:@"name"], [user objectForKey:@"id"], myself.kind);
                         
                          // Lets create the json, with all the user info, that will be used in the request
                          NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
@@ -515,7 +515,7 @@
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     if (screenBounds.size.height == 568) {
-        loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5" bundle:nil];
+        loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5_new" bundle:nil];
     } else {
         loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
     }
@@ -998,7 +998,7 @@
     if(!loginController) {
         CGRect screenBounds = [[UIScreen mainScreen] bounds];
         if (screenBounds.size.height == 568) {
-            loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5" bundle:nil];
+            loginController = [[LoginController alloc] initWithNibName:@"LoginController_i5_new" bundle:nil];
         } else {
             loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
         }

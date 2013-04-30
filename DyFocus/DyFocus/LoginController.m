@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
 #import "DyfocusSettings.h"
+#import "PageControlFOFViewController.h"
 
 @interface LoginController ()
 
@@ -17,10 +18,8 @@
 
 @implementation LoginController
 
-@synthesize firstImageView,secondImageView, frames, timer, borderView, facebookConnectButton, leftButton, rightButton, fofs;
+@synthesize borderView, facebookConnectButton, leftButton, rightButton, fofs, scrollView, pageControl, viewControllers;
 
-#define TIMER_INTERVAL 0.1;
-#define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,42 +38,26 @@
 - (void)initializeFofs{
     fofs = [[NSMutableArray alloc] initWithCapacity:3];
 
-    NSMutableArray *m_frames0 = [[NSMutableArray alloc] initWithCapacity:3];
-    UIImage *frame = [UIImage imageNamed:@"fof_example_00_1.jpeg"];
+    NSMutableArray *m_frames0 = [[NSMutableArray alloc] initWithCapacity:2];
+    UIImage *frame = [UIImage imageNamed:@"fof_example_0_0_i5.jpg"];
     [m_frames0 addObject:frame];
-    frame = [UIImage imageNamed:@"fof_example_00_2.jpeg"];
-    [m_frames0 addObject:frame];
-    frame = [UIImage imageNamed:@"fof_example_00_3.jpeg"];
+    frame = [UIImage imageNamed:@"fof_example_0_1_i5.jpg"];
     [m_frames0 addObject:frame];
     [fofs addObject:m_frames0];
     
     NSMutableArray *m_frames1 = [[NSMutableArray alloc] initWithCapacity:2];
-    frame = [UIImage imageNamed:@"fof_example_01_1.jpeg"];
+    frame = [UIImage imageNamed:@"fof_example_1_0_i5.jpg"];
     [m_frames1 addObject:frame];
-    frame = [UIImage imageNamed:@"fof_example_01_2.jpeg"];
+    frame = [UIImage imageNamed:@"fof_example_1_1_i5.jpg"];
     [m_frames1 addObject:frame];
     [fofs addObject:m_frames1];
 
     NSMutableArray *m_frames2 = [[NSMutableArray alloc] initWithCapacity:2];
-    frame = [UIImage imageNamed:@"fof_example_02_1.jpeg"];
+    frame = [UIImage imageNamed:@"fof_example_2_0_i5.jpg"];
     [m_frames2 addObject:frame];
-    frame = [UIImage imageNamed:@"fof_example_02_2.jpeg"];
+    frame = [UIImage imageNamed:@"fof_example_2_1_i5.jpg"];
     [m_frames2 addObject:frame];
     [fofs addObject:m_frames2];
-    
-    NSMutableArray *m_frames3 = [[NSMutableArray alloc] initWithCapacity:2];
-    frame = [UIImage imageNamed:@"fof_example_03_1.jpeg"];
-    [m_frames3 addObject:frame];
-    frame = [UIImage imageNamed:@"fof_example_03_2.jpeg"];
-    [m_frames3 addObject:frame];
-    [fofs addObject:m_frames3];
-
-    fofIndex = 1;
-    [self refreshFrames];
-}
-
-- (void) refreshFrames{
-    frames = [fofs objectAtIndex:fofIndex];
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -86,30 +69,69 @@
 }
 - (void)viewDidLoad
 {
-    NSMutableArray *frames = [fofs objectAtIndex:0];
     [super viewDidLoad];
-
-    [self.firstImageView setImage: [self.frames objectAtIndex:0]];
-    
-    if ([self.frames count] > 1) {
-        [self.secondImageView setImage: [self.frames objectAtIndex:1]];
-    }
     
     borderView.layer.cornerRadius = 3.0;
     borderView.layer.masksToBounds = YES;
     
-    oldFrameIndex = 0;
-    timerPause = TIMER_INTERVAL;
+ 
     
     [facebookConnectButton addTarget:self action:@selector(connectWithFacebook) forControlEvents:UIControlEventTouchUpInside];
     [leftButton addTarget:self action:@selector(showsPreviousFof) forControlEvents:UIControlEventTouchUpInside];
     [rightButton addTarget:self action:@selector(showsNextFof) forControlEvents:UIControlEventTouchUpInside];
     
 
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
-    [timer fire];
+ 
 
     
+    NSMutableArray *controllers = [[NSMutableArray alloc] init];
+    for (unsigned i = 0; i < kNumberOfPages; i++) {
+        [controllers addObject:[NSNull null]];
+    }
+    self.viewControllers = controllers;
+    [controllers release];
+	
+    // a page is the width of the scroll view
+    scrollView.pagingEnabled = YES;
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * kNumberOfPages, scrollView.frame.size.height);
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.showsVerticalScrollIndicator = NO;
+    scrollView.scrollsToTop = NO;
+    scrollView.delegate = self;
+	
+    pageControl.numberOfPages = kNumberOfPages;
+    pageControl.currentPage = 0;
+	
+    // pages are created on demand
+    // load the visible page
+    // load the page on either side to avoid flashes when the user starts scrolling
+    [self loadScrollViewWithPage:0];
+    [self loadScrollViewWithPage:1];
+    
+}
+
+- (void)loadScrollViewWithPage:(int)page {
+    if (page < 0) return;
+    if (page >= kNumberOfPages) return;
+	
+    // replace the placeholder if necessary
+    PageControlFOFViewController *controller = [viewControllers objectAtIndex:page];
+    if ((NSNull *)controller == [NSNull null]) {
+        controller = [[PageControlFOFViewController alloc] initWithPageNumber:page];
+        controller.frames = [fofs objectAtIndex:page];
+        
+        [viewControllers replaceObjectAtIndex:page withObject:controller];
+        [controller release];
+    }
+	
+    // add the controller's view to the scroll view
+    if (nil == controller.view.superview) {
+        CGRect frame = scrollView.frame;
+        frame.origin.x = frame.size.width * page;
+        frame.origin.y = 0;
+        controller.view.frame = frame;
+        [scrollView addSubview:controller.view];
+    }
 }
 
 - (void) connectWithFacebook {
@@ -120,7 +142,7 @@
     [appDelegate signin];
 }
 
-- (void) showsPreviousFof {
+/*- (void) showsPreviousFof {
     int fofSize = [fofs count];
     fofIndex = fofIndex - 1;
     if (fofIndex < 0) {
@@ -146,51 +168,8 @@
     
     [self.secondImageView setImage:[self.frames objectAtIndex:0]];
     [self.firstImageView setImage:[self.frames objectAtIndex:1]];
-}
+}*/
 
-- (void)fadeImages
-{
-    if ([frames count] > 0) {
-        if (self.firstImageView.alpha >= 1.0) {
-            
-            if (timerPause > 0) {
-                timerPause -= 1;
-                
-            } else {
-                
-                timerPause = TIMER_PAUSE;
-                
-                if (oldFrameIndex >= [self.frames count] - 1) {
-                    oldFrameIndex = 0;
-                } else {
-                    oldFrameIndex += 1;
-                }
-                
-                
-                [self.secondImageView setImage:[self.frames objectAtIndex:oldFrameIndex]];
-                
-                [self.secondImageView setNeedsDisplay];
-                
-                [self.firstImageView setAlpha:0.0];
-                
-                [self.firstImageView setNeedsDisplay];
-                
-                int newIndex;
-                if (oldFrameIndex == [self.frames count] - 1) {
-                    newIndex = 0;
-                } else {
-                    newIndex = oldFrameIndex + 1;
-                }
-                
-                [self.firstImageView setImage: [self.frames objectAtIndex: newIndex]];
-                
-            }
-            
-        } else {
-            [self.firstImageView setAlpha:self.firstImageView.alpha + 0.01];
-        }
-    }
-}
 
 -(NSUInteger)supportedInterfaceOrientations
 {
@@ -202,5 +181,47 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+    // We don't want a "feedback loop" between the UIPageControl and the scroll delegate in
+    // which a scroll event generated from the user hitting the page control triggers updates from
+    // the delegate method. We use a boolean to disable the delegate logic when the page control is used.
+    if (pageControlUsed) {
+        // do nothing - the scroll was initiated from the page control, not the user dragging
+        return;
+    }
+    // Switch the indicator when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = scrollView.frame.size.width;
+    int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    pageControl.currentPage = page;
+	
+    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    [self loadScrollViewWithPage:page - 1];
+    [self loadScrollViewWithPage:page];
+    [self loadScrollViewWithPage:page + 1];
+	
+    // A possible optimization would be to unload the views+controllers which are no longer visible
+}
+
+// At the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    pageControlUsed = NO;
+}
+
+- (IBAction)changePage:(id)sender {
+    int page = pageControl.currentPage;
+    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    [self loadScrollViewWithPage:page - 1];
+    [self loadScrollViewWithPage:page];
+    [self loadScrollViewWithPage:page + 1];
+    // update the scroll view to the appropriate page
+    CGRect frame = scrollView.frame;
+    frame.origin.x = frame.size.width * page;
+    frame.origin.y = 0;
+    [scrollView scrollRectToVisible:frame animated:YES];
+    // Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
+    pageControlUsed = YES;
+}
+
 
 @end
