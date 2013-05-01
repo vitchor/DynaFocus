@@ -197,6 +197,7 @@
     
     // Profile Controller
     profileController = [[ProfileController alloc] initWithPerson:myself personFOFArray:userFofArray];
+    profileController.forceHideNavigationBar = YES;
     
     DyfocusUINavigationController *profileNavigationController = [[DyfocusUINavigationController alloc] initWithRootViewController:profileController];
     //    profileController.hidesBottomBarWhenPushed = NO;
