@@ -20,8 +20,6 @@
 	NSString *m_facebookUserName; // facebookUserName
 	NSString *m_email;
     NSString *m_facebookId;
-    float m_timezone;
-    NSString *m_location;
 	BOOL m_selected;
     NSString *m_followersCount;
     NSString *m_followingCount;
@@ -34,8 +32,6 @@
 @property(nonatomic, retain) NSString *facebookUserName;
 @property(nonatomic, retain) NSString *email;
 @property(nonatomic, retain) NSString *facebookId;
-@property(nonatomic, readonly) float timezone;
-@property(nonatomic, readonly) NSString *location;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, retain) NSString *followersCount;
 @property(nonatomic, retain) NSString *followingCount;

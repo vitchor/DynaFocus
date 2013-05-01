@@ -10,7 +10,7 @@
 
 @implementation Person
 
-@synthesize kind = m_kind, name = m_name, facebookUserName = m_facebookUserName, email = m_email, facebookId = m_facebookId, timezone = m_timezone, location = m_location, selected = m_selected, followersCount = m_followersCount, followingCount = m_followingCount, idOrigin = m_idOrigin, uid = m_uid;
+@synthesize kind = m_kind, name = m_name, facebookUserName = m_facebookUserName, email = m_email, facebookId = m_facebookId, selected = m_selected, followersCount = m_followersCount, followingCount = m_followingCount, idOrigin = m_idOrigin, uid = m_uid;
 
 // kind = 0: friend on both, App and  on  facebook
 // kind = 1: not a friend on App, just on facebook
@@ -55,8 +55,6 @@
     m_selected = NO;
     m_uid = iUid;
     m_email = @"";
-    m_location = @"";
-    m_timezone = 0;
 }
 
 - (id)initWithDic:(NSMutableDictionary*) facebookUser {
@@ -92,21 +90,6 @@
     m_uid = [[facebookUser objectForKey:@"id"] longLongValue];
     m_email = [[facebookUser objectForKey:@"email"] retain];
     m_facebookUserName = [[facebookUser objectForKey:@"username"] retain];
-    @try {
-        m_timezone = [[facebookUser objectForKey:@"timezone"] floatValue];
-    }
-    @catch (NSException *exception) {
-        m_timezone = 0;
-        NSLog(@"!!! EXCEPTION on timezone attribute: %@", exception);
-    }
-    
-    @try {
-        m_location = [[[facebookUser objectForKey:@"location"] objectForKey:@"name"] retain];
-    }
-    @catch (NSException *exception) {
-        m_location = [[facebookUser objectForKey:@"location"] retain];
-        NSLog(@"!!! EXCEPTION on location attribute: %@", exception);
-    }
 }
 
 - (void)objectFromDyfocusDictionary:(NSMutableDictionary*)dyfocusUser {
@@ -122,11 +105,13 @@
 }
 
 - (void)dealloc {
+    [m_followersCount release];
+    [m_followingCount release];
+    [m_idOrigin release];
     [m_name release];
     [m_facebookUserName release];
-    [m_facebookId release];
     [m_email release];
-    [m_location release];
+    [m_facebookId release];
 	[super dealloc];
 }
 

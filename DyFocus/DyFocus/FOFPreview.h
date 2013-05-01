@@ -10,27 +10,20 @@
 #import "UIHorizontalTableView.h"
 #import "UIHorizontalTableViewCell.h"
 
-@interface FOFPreview : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate> {
+@interface FOFPreview : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate> {
     
     IBOutlet UIImageView *firstImageView;
     IBOutlet UIImageView *secondImageView;
-    IBOutlet UIImageView *firstImageViewFullScreen;
-    IBOutlet UIImageView *secondImageViewFullScreen;
-    IBOutlet UIView *fullScreenView;
     IBOutlet UIHorizontalTableView *firstTableView;
     IBOutlet UIHorizontalTableView *secondTableView;
     IBOutlet UIScrollView *scrollView;
-    
+        
     NSMutableArray *frames;
     NSMutableArray *displayedFrames;
     NSMutableArray *focalPoints;
     NSString *fofName;
     NSTimer *timer;
-    UITapGestureRecognizer *tapScrollView;
-    UITapGestureRecognizer *tapFullScreenView;
 
-    
-    BOOL isFullScreen;
     int oldFrameIndex;
     int timerPause;
 }
@@ -43,7 +36,6 @@
 @property(nonatomic,retain) IBOutlet UIHorizontalTableView *firstTableView;
 @property(nonatomic,retain) IBOutlet UIHorizontalTableView *secondTableView;
 @property(nonatomic,retain) NSTimer *timer;
-@property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 
 -(IBAction)changeSlider:(id)sender;
 
