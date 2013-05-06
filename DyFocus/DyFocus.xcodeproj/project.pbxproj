@@ -222,6 +222,8 @@
 		ACBAC90416B63FAB00AB85C0 /* dyfocus-instructions.png in Resources */ = {isa = PBXBuildFile; fileRef = ACBAC8FA16B63FAB00AB85C0 /* dyfocus-instructions.png */; };
 		ACBAC90A16B642F600AB85C0 /* selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ACBAC90816B642F600AB85C0 /* selected@2x.png */; };
 		ACBAC90B16B642F600AB85C0 /* tabbar-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ACBAC90916B642F600AB85C0 /* tabbar-background@2x.png */; };
+		ACCF49E217372BB0000253DD /* dyfocus_2.0_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = ACCF49E117372BB0000253DD /* dyfocus_2.0_57x57.png */; };
+		ACCF49E417372BB6000253DD /* dyfocus_2.0_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = ACCF49E317372BB6000253DD /* dyfocus_2.0_114x114.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -521,6 +523,8 @@
 		ACBAC8FA16B63FAB00AB85C0 /* dyfocus-instructions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dyfocus-instructions.png"; sourceTree = "<group>"; };
 		ACBAC90816B642F600AB85C0 /* selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected@2x.png"; sourceTree = "<group>"; };
 		ACBAC90916B642F600AB85C0 /* tabbar-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-background@2x.png"; sourceTree = "<group>"; };
+		ACCF49E117372BB0000253DD /* dyfocus_2.0_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dyfocus_2.0_57x57.png; path = ../dyfocus_2.0_57x57.png; sourceTree = "<group>"; };
+		ACCF49E317372BB6000253DD /* dyfocus_2.0_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dyfocus_2.0_114x114.png; path = ../dyfocus_2.0_114x114.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1162,6 +1166,8 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				ACCF49E317372BB6000253DD /* dyfocus_2.0_114x114.png */,
+				ACCF49E117372BB0000253DD /* dyfocus_2.0_57x57.png */,
 				AC5FDBDA171647F600348478 /* UnfollowButton@2x.png */,
 				AC5FDBD81716456200348478 /* FollowButton@2x.png */,
 				AC5FDBD217163F7E00348478 /* ProfileView@2x.png */,
@@ -1454,6 +1460,8 @@
 				04420089171B55EB003E3EF5 /* ProfileController_i5.xib in Resources */,
 				04B6027A171B6AE600CAE579 /* ProfileController.xib in Resources */,
 				7B7C2F3D171D052A00C2A022 /* FullscreenFOFViewController.xib in Resources */,
+				ACCF49E217372BB0000253DD /* dyfocus_2.0_57x57.png in Resources */,
+				ACCF49E417372BB6000253DD /* dyfocus_2.0_114x114.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1661,8 +1669,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
+				PROVISIONING_PROFILE = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -1692,8 +1700,8 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09B6CD66-4323-4F86-A483-2F5E14E72C8C";
+				PROVISIONING_PROFILE = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
