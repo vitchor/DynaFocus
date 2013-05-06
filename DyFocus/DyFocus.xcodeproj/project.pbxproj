@@ -37,8 +37,6 @@
 		04D6A4EE16B605B400C4A71D /* CommentViewerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048BA4C316B11EBA002DBD68 /* CommentViewerController.xib */; };
 		04D6A4EF16B6063200C4A71D /* CommentTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048BA4CD16B12A5D002DBD68 /* CommentTableCell.xib */; };
 		04D6A4F716B65EFD00C4A71D /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 048BA4CB16B12A35002DBD68 /* CommentTableCell.m */; };
-		04D98AD817069EC40093E056 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D98AD717069EC40093E056 /* CoreVideo.framework */; };
-		04D98ADA17069ED10093E056 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D98AD917069ED10093E056 /* OpenGLES.framework */; };
 		04D98AF51706A5DE0093E056 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D98AF21706A5D00093E056 /* libGPUImage.a */; };
 		04D98AFE17077CF80093E056 /* UIHorizontalTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D98AFD17077CF80093E056 /* UIHorizontalTableView.m */; };
 		04D98B0117077D240093E056 /* UIHorizontalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D98B0017077D240093E056 /* UIHorizontalTableViewCell.m */; };
@@ -58,6 +56,11 @@
 		04EEABF116EA9367001BCEE3 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EEABF016EA9367001BCEE3 /* NotificationTableViewCell.m */; };
 		04EEABF316EA938A001BCEE3 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EEABF216EA938A001BCEE3 /* NotificationTableViewCell.xib */; };
 		04EEABF516EA978B001BCEE3 /* CameraViewInfoButtonBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EEABF416EA978B001BCEE3 /* CameraViewInfoButtonBlack.png */; };
+		1F551BD31737E8CC00855D75 /* libDyOpenCv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F551BCB1737E81000855D75 /* libDyOpenCv.a */; };
+		1F551BD61737EBB900855D75 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F551BD41737EB8600855D75 /* opencv2.framework */; };
+		1F551BD71737EBC400855D75 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D98AD917069ED10093E056 /* OpenGLES.framework */; };
+		1F551BD81737EBCE00855D75 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D98AD717069EC40093E056 /* CoreVideo.framework */; };
+		1F551BD91737EBDD00855D75 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447D7ED1166E6264002599EE /* MessageUI.framework */; };
 		1F59C19C1707F1250070D3C4 /* InvitationController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C19A1707F1250070D3C4 /* InvitationController_i5.xib */; };
 		1F59C19D1707F1250070D3C4 /* InvitationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C19B1707F1250070D3C4 /* InvitationController.xib */; };
 		1F59C1A317080BB30070D3C4 /* FOFPreview_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59C1A217080BB30070D3C4 /* FOFPreview_i5.xib */; };
@@ -101,7 +104,6 @@
 		44798EAE15E433B700D5BC53 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EAD15E433B700D5BC53 /* WebViewController.m */; };
 		44798EB215E4355100D5BC53 /* LoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB115E4355100D5BC53 /* LoadView.m */; };
 		44798EB515E4362000D5BC53 /* ActivityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44798EB415E4362000D5BC53 /* ActivityLabel.m */; };
-		447D7ED2166E6264002599EE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447D7ED1166E6264002599EE /* MessageUI.framework */; };
 		4495E69515EEB368009C2B9F /* SharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495E69315EEB368009C2B9F /* SharingController.m */; };
 		4495E69A15EEBCC7009C2B9F /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495E69915EEBCC7009C2B9F /* libsqlite3.0.dylib */; };
 		4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4495E69B15EEDFCF009C2B9F /* FacebookSDKResources.bundle */; };
@@ -248,6 +250,20 @@
 			remoteGlobalIDString = BCF1A33314DDB1EC00852800;
 			remoteInfo = GPUImage;
 		};
+		1F551BCA1737E81000855D75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F551BC61737E81000855D75 /* DyOpenCv.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F545A49172ABBC50025F9BD;
+			remoteInfo = DyOpenCv;
+		};
+		1F551BD11737E8B700855D75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F551BC61737E81000855D75 /* DyOpenCv.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F545A48172ABBC50025F9BD;
+			remoteInfo = DyOpenCv;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -323,6 +339,8 @@
 		04EEABF016EA9367001BCEE3 /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewCell.m; sourceTree = "<group>"; };
 		04EEABF216EA938A001BCEE3 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		04EEABF416EA978B001BCEE3 /* CameraViewInfoButtonBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraViewInfoButtonBlack.png; sourceTree = "<group>"; };
+		1F551BC61737E81000855D75 /* DyOpenCv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DyOpenCv.xcodeproj; path = DyOpenCv/DyOpenCv.xcodeproj; sourceTree = "<group>"; };
+		1F551BD41737EB8600855D75 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = DyOpenCv/opencv2.framework; sourceTree = "<group>"; };
 		1F59C19A1707F1250070D3C4 /* InvitationController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController_i5.xib; sourceTree = "<group>"; };
 		1F59C19B1707F1250070D3C4 /* InvitationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationController.xib; sourceTree = "<group>"; };
 		1F59C1A217080BB30070D3C4 /* FOFPreview_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFPreview_i5.xib; sourceTree = "<group>"; };
@@ -532,13 +550,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F551BD91737EBDD00855D75 /* MessageUI.framework in Frameworks */,
+				1F551BD81737EBCE00855D75 /* CoreVideo.framework in Frameworks */,
+				1F551BD71737EBC400855D75 /* OpenGLES.framework in Frameworks */,
+				1F551BD61737EBB900855D75 /* opencv2.framework in Frameworks */,
+				1F551BD31737E8CC00855D75 /* libDyOpenCv.a in Frameworks */,
 				04D98AF51706A5DE0093E056 /* libGPUImage.a in Frameworks */,
 				AC606B6B15DC492F008FDF8F /* QuartzCore.framework in Frameworks */,
 				441BFFCC15B1328300E204D7 /* AVFoundation.framework in Frameworks */,
-				04D98ADA17069ED10093E056 /* OpenGLES.framework in Frameworks */,
-				04D98AD817069EC40093E056 /* CoreVideo.framework in Frameworks */,
 				441BFFCE15B1329B00E204D7 /* CoreMedia.framework in Frameworks */,
-				447D7ED2166E6264002599EE /* MessageUI.framework in Frameworks */,
 				AC8D7B6615DB403700058949 /* SystemConfiguration.framework in Frameworks */,
 				4495E69A15EEBCC7009C2B9F /* libsqlite3.0.dylib in Frameworks */,
 				AC8D7B6A15DB408600058949 /* libz.1.2.5.dylib in Frameworks */,
@@ -720,6 +740,22 @@
 			name = NotificationTableViewController;
 			sourceTree = "<group>";
 		};
+		1F551BC31737E80400855D75 /* DyOpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				1F551BC61737E81000855D75 /* DyOpenCv.xcodeproj */,
+			);
+			name = DyOpenCV;
+			sourceTree = "<group>";
+		};
+		1F551BC71737E81000855D75 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F551BCB1737E81000855D75 /* libDyOpenCv.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1F59C1A91708CE7E0070D3C4 /* Likes */ = {
 			isa = PBXGroup;
 			children = (
@@ -736,9 +772,6 @@
 		441BFFA015B131D200E204D7 = {
 			isa = PBXGroup;
 			children = (
-				04D98AD917069ED10093E056 /* OpenGLES.framework */,
-				04D98AD717069EC40093E056 /* CoreVideo.framework */,
-				447D7ED1166E6264002599EE /* MessageUI.framework */,
 				441BFFB515B131D200E204D7 /* DyFocus */,
 				441BFFAE15B131D200E204D7 /* Frameworks */,
 				441BFFAC15B131D200E204D7 /* Products */,
@@ -756,9 +789,14 @@
 		441BFFAE15B131D200E204D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F551BC31737E80400855D75 /* DyOpenCV */,
 				04D98ACC17069E7B0093E056 /* GPUImage */,
 				444C504C1659375B006C8CD3 /* Lib */,
 				44794AF01651472F0097824D /* Bundles */,
+				04D98AD917069ED10093E056 /* OpenGLES.framework */,
+				04D98AD717069EC40093E056 /* CoreVideo.framework */,
+				447D7ED1166E6264002599EE /* MessageUI.framework */,
+				1F551BD41737EB8600855D75 /* opencv2.framework */,
 				AC8D7B6715DB406200058949 /* MobileCoreServices.framework */,
 				AC8D7B6515DB403700058949 /* SystemConfiguration.framework */,
 				AC8D7B6215DB3F6300058949 /* CFNetwork.framework */,
@@ -1285,6 +1323,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1F551BD21737E8B700855D75 /* PBXTargetDependency */,
 				04D98AF71706A5E50093E056 /* PBXTargetDependency */,
 			);
 			name = dyfocus;
@@ -1313,6 +1352,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 1F551BC71737E81000855D75 /* Products */;
+					ProjectRef = 1F551BC61737E81000855D75 /* DyOpenCv.xcodeproj */;
+				},
+				{
 					ProductGroup = 04D98AEC1706A5D00093E056 /* Products */;
 					ProjectRef = 04D98AEB1706A5D00093E056 /* GPUImage.xcodeproj */;
 				},
@@ -1337,6 +1380,13 @@
 			fileType = wrapper.cfbundle;
 			path = GPUImageTests.octest;
 			remoteRef = 04D98AF31706A5D00093E056 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F551BCB1737E81000855D75 /* libDyOpenCv.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDyOpenCv.a;
+			remoteRef = 1F551BCA1737E81000855D75 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1566,6 +1616,11 @@
 			name = GPUImage;
 			targetProxy = 04D98AF61706A5E50093E056 /* PBXContainerItemProxy */;
 		};
+		1F551BD21737E8B700855D75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DyOpenCv;
+			targetProxy = 1F551BD11737E8B700855D75 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1657,6 +1712,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/DyOpenCv\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
@@ -1667,7 +1723,10 @@
 					"\"$(SRCROOT)/DyFocus/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/DyFocus/Flurry\"",
 				);
-				OTHER_LDFLAGS = "-lsqlite3.0";
+				OTHER_LDFLAGS = (
+					"-lsqlite3.0",
+					"-lc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
@@ -1688,6 +1747,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/DyOpenCv\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
@@ -1698,7 +1758,10 @@
 					"\"$(SRCROOT)/DyFocus/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/DyFocus/Flurry\"",
 				);
-				OTHER_LDFLAGS = "-lsqlite3.0";
+				OTHER_LDFLAGS = (
+					"-lsqlite3.0",
+					"-lc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";

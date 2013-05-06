@@ -12,8 +12,8 @@
 #import "AppDelegate.h"
 #import "FilterUtil.h"
 #import "FullscreenFOFViewController.h"
-
 #import "GPUImage.h"
+#import <DyOpenCv/DyOpenCv.h>
 
 #define CANCEL 0
 @implementation FOFPreview
@@ -54,6 +54,9 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Preview";
+    
+    DyOpenCv *dyOpenCV = [DyOpenCv alloc];
+    [dyOpenCV release];
     
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
     

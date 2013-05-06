@@ -1,0 +1,342 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1F545A4D172ABBC50025F9BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F545A4C172ABBC50025F9BD /* Foundation.framework */; };
+		1F545A5D172ABC6E0025F9BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F545A5C172ABC6E0025F9BD /* UIKit.framework */; };
+		1F545A64172ABDCB0025F9BD /* DyOpenCv.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A53172ABBC50025F9BD /* DyOpenCv.mm */; };
+		1F545A68172ABE7E0025F9BD /* ColorHistogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A66172ABE7E0025F9BD /* ColorHistogram.cpp */; };
+		1F545A6B172ABEA20025F9BD /* Histogram1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A69172ABEA20025F9BD /* Histogram1D.cpp */; };
+		1F545A6E172ABEB30025F9BD /* ObjectiveCppFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A6D172ABEB30025F9BD /* ObjectiveCppFunctions.mm */; };
+		1F545A71172ABED00025F9BD /* PointInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A6F172ABED00025F9BD /* PointInfo.cpp */; };
+		1F545A74172ABEDB0025F9BD /* UIImageCVMatConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A73172ABEDB0025F9BD /* UIImageCVMatConverter.mm */; };
+		1F551BD01737E89700855D75 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F551BCE1737E87F00855D75 /* opencv2.framework */; };
+		1F9BE8DA172AD402001517B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9BE8D9172AD402001517B9 /* CoreGraphics.framework */; };
+		1F9BE8DC172AD408001517B9 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9BE8DB172AD408001517B9 /* AssetsLibrary.framework */; };
+		1F9BE8E1172AD442001517B9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9BE8DD172AD442001517B9 /* AVFoundation.framework */; };
+		1F9BE8E2172AD442001517B9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9BE8DE172AD442001517B9 /* CoreImage.framework */; };
+		1F9BE8E3172AD442001517B9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9BE8DF172AD442001517B9 /* CoreMedia.framework */; };
+		1F9BE8E4172AD442001517B9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9BE8E0172AD442001517B9 /* CoreVideo.framework */; };
+		1F9BE8E6172AD458001517B9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9BE8E5172AD458001517B9 /* QuartzCore.framework */; };
+		1FBE2B67172C516600B6708F /* DyOpenCv.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F545A51172ABBC50025F9BD /* DyOpenCv.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1F545A47172ABBC50025F9BD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				1FBE2B67172C516600B6708F /* DyOpenCv.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1F545A49172ABBC50025F9BD /* libDyOpenCv.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDyOpenCv.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F545A4C172ABBC50025F9BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1F545A50172ABBC50025F9BD /* DyOpenCv-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DyOpenCv-Prefix.pch"; sourceTree = "<group>"; };
+		1F545A51172ABBC50025F9BD /* DyOpenCv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DyOpenCv.h; sourceTree = "<group>"; };
+		1F545A53172ABBC50025F9BD /* DyOpenCv.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DyOpenCv.mm; sourceTree = "<group>"; };
+		1F545A5C172ABC6E0025F9BD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1F545A66172ABE7E0025F9BD /* ColorHistogram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorHistogram.cpp; path = ../ColorHistogram.cpp; sourceTree = "<group>"; };
+		1F545A67172ABE7E0025F9BD /* ColorHistogram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorHistogram.h; path = ../ColorHistogram.h; sourceTree = "<group>"; };
+		1F545A69172ABEA20025F9BD /* Histogram1D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Histogram1D.cpp; path = ../Histogram1D.cpp; sourceTree = "<group>"; };
+		1F545A6A172ABEA20025F9BD /* Histogram1D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Histogram1D.h; path = ../Histogram1D.h; sourceTree = "<group>"; };
+		1F545A6C172ABEB30025F9BD /* ObjectiveCppFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectiveCppFunctions.h; path = ../ObjectiveCppFunctions.h; sourceTree = "<group>"; };
+		1F545A6D172ABEB30025F9BD /* ObjectiveCppFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ObjectiveCppFunctions.mm; path = ../ObjectiveCppFunctions.mm; sourceTree = "<group>"; };
+		1F545A6F172ABED00025F9BD /* PointInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PointInfo.cpp; path = ../PointInfo.cpp; sourceTree = "<group>"; };
+		1F545A70172ABED00025F9BD /* PointInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointInfo.h; path = ../PointInfo.h; sourceTree = "<group>"; };
+		1F545A72172ABEDB0025F9BD /* UIImageCVMatConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImageCVMatConverter.h; path = ../UIImageCVMatConverter.h; sourceTree = "<group>"; };
+		1F545A73172ABEDB0025F9BD /* UIImageCVMatConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = UIImageCVMatConverter.mm; path = ../UIImageCVMatConverter.mm; sourceTree = "<group>"; };
+		1F551BCE1737E87F00855D75 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		1F9BE8D9172AD402001517B9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1F9BE8DB172AD408001517B9 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		1F9BE8DD172AD442001517B9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1F9BE8DE172AD442001517B9 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		1F9BE8DF172AD442001517B9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		1F9BE8E0172AD442001517B9 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		1F9BE8E5172AD458001517B9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1F545A46172ABBC50025F9BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F551BD01737E89700855D75 /* opencv2.framework in Frameworks */,
+				1F9BE8E6172AD458001517B9 /* QuartzCore.framework in Frameworks */,
+				1F9BE8E1172AD442001517B9 /* AVFoundation.framework in Frameworks */,
+				1F9BE8E2172AD442001517B9 /* CoreImage.framework in Frameworks */,
+				1F9BE8E3172AD442001517B9 /* CoreMedia.framework in Frameworks */,
+				1F9BE8E4172AD442001517B9 /* CoreVideo.framework in Frameworks */,
+				1F9BE8DC172AD408001517B9 /* AssetsLibrary.framework in Frameworks */,
+				1F9BE8DA172AD402001517B9 /* CoreGraphics.framework in Frameworks */,
+				1F545A5D172ABC6E0025F9BD /* UIKit.framework in Frameworks */,
+				1F545A4D172ABBC50025F9BD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1F545A40172ABBC50025F9BD = {
+			isa = PBXGroup;
+			children = (
+				1F545A4E172ABBC50025F9BD /* DyOpenCv */,
+				1F545A4B172ABBC50025F9BD /* Frameworks */,
+				1F545A4A172ABBC50025F9BD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1F545A4A172ABBC50025F9BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F545A49172ABBC50025F9BD /* libDyOpenCv.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1F545A4B172ABBC50025F9BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1F551BCE1737E87F00855D75 /* opencv2.framework */,
+				1F9BE8E5172AD458001517B9 /* QuartzCore.framework */,
+				1F9BE8DD172AD442001517B9 /* AVFoundation.framework */,
+				1F9BE8DE172AD442001517B9 /* CoreImage.framework */,
+				1F9BE8DF172AD442001517B9 /* CoreMedia.framework */,
+				1F9BE8E0172AD442001517B9 /* CoreVideo.framework */,
+				1F9BE8DB172AD408001517B9 /* AssetsLibrary.framework */,
+				1F9BE8D9172AD402001517B9 /* CoreGraphics.framework */,
+				1F545A5C172ABC6E0025F9BD /* UIKit.framework */,
+				1F545A4C172ABBC50025F9BD /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1F545A4E172ABBC50025F9BD /* DyOpenCv */ = {
+			isa = PBXGroup;
+			children = (
+				1FBE2B59172B0BD200B6708F /* Util */,
+				1F545A51172ABBC50025F9BD /* DyOpenCv.h */,
+				1F545A53172ABBC50025F9BD /* DyOpenCv.mm */,
+				1F545A4F172ABBC50025F9BD /* Supporting Files */,
+			);
+			path = DyOpenCv;
+			sourceTree = "<group>";
+		};
+		1F545A4F172ABBC50025F9BD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1F545A50172ABBC50025F9BD /* DyOpenCv-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1FBE2B59172B0BD200B6708F /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				1F545A72172ABEDB0025F9BD /* UIImageCVMatConverter.h */,
+				1F545A73172ABEDB0025F9BD /* UIImageCVMatConverter.mm */,
+				1F545A6F172ABED00025F9BD /* PointInfo.cpp */,
+				1F545A70172ABED00025F9BD /* PointInfo.h */,
+				1F545A6C172ABEB30025F9BD /* ObjectiveCppFunctions.h */,
+				1F545A6D172ABEB30025F9BD /* ObjectiveCppFunctions.mm */,
+				1F545A69172ABEA20025F9BD /* Histogram1D.cpp */,
+				1F545A6A172ABEA20025F9BD /* Histogram1D.h */,
+				1F545A66172ABE7E0025F9BD /* ColorHistogram.cpp */,
+				1F545A67172ABE7E0025F9BD /* ColorHistogram.h */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1F545A48172ABBC50025F9BD /* DyOpenCv */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F545A57172ABBC50025F9BD /* Build configuration list for PBXNativeTarget "DyOpenCv" */;
+			buildPhases = (
+				1F545A45172ABBC50025F9BD /* Sources */,
+				1F545A46172ABBC50025F9BD /* Frameworks */,
+				1F545A47172ABBC50025F9BD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DyOpenCv;
+			productName = DyOpenCv;
+			productReference = 1F545A49172ABBC50025F9BD /* libDyOpenCv.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1F545A41172ABBC50025F9BD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Marcelo Salloum";
+			};
+			buildConfigurationList = 1F545A44172ABBC50025F9BD /* Build configuration list for PBXProject "DyOpenCv" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1F545A40172ABBC50025F9BD;
+			productRefGroup = 1F545A4A172ABBC50025F9BD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1F545A48172ABBC50025F9BD /* DyOpenCv */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1F545A45172ABBC50025F9BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F545A64172ABDCB0025F9BD /* DyOpenCv.mm in Sources */,
+				1F545A68172ABE7E0025F9BD /* ColorHistogram.cpp in Sources */,
+				1F545A6B172ABEA20025F9BD /* Histogram1D.cpp in Sources */,
+				1F545A6E172ABEB30025F9BD /* ObjectiveCppFunctions.mm in Sources */,
+				1F545A71172ABED00025F9BD /* PointInfo.cpp in Sources */,
+				1F545A74172ABEDB0025F9BD /* UIImageCVMatConverter.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1F545A55172ABBC50025F9BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
+			};
+			name = Debug;
+		};
+		1F545A56172ABBC50025F9BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
+			};
+			name = Release;
+		};
+		1F545A58172ABBC50025F9BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/DyOpenCv.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/DyOpenCv\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/..\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DyOpenCv/DyOpenCv-Prefix.pch";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = armv7;
+			};
+			name = Debug;
+		};
+		1F545A59172ABBC50025F9BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/DyOpenCv.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/DyOpenCv\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/..\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DyOpenCv/DyOpenCv-Prefix.pch";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = armv7;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1F545A44172ABBC50025F9BD /* Build configuration list for PBXProject "DyOpenCv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F545A55172ABBC50025F9BD /* Debug */,
+				1F545A56172ABBC50025F9BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F545A57172ABBC50025F9BD /* Build configuration list for PBXNativeTarget "DyOpenCv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F545A58172ABBC50025F9BD /* Debug */,
+				1F545A59172ABBC50025F9BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1F545A41172ABBC50025F9BD /* Project object */;
+}
