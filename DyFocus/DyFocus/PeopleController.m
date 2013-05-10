@@ -81,13 +81,13 @@
 		UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
         flex.width = 30;
 		// Swith All/Selected buttons
-		m_swithSelectedButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"All", @"Selected", nil]];
-		m_swithSelectedButton.segmentedControlStyle = UISegmentedControlStyleBar;
-		m_swithSelectedButton.selectedSegmentIndex = 0;
-		m_swithSelectedButton.tintColor = [UIColor colorWithRed:100.0/255 green:100.0/255 blue:100.0/255 alpha:1.0];
-		m_swithSelectedButton.frame = CGRectMake(35, 0, 170, 33);
-		[m_swithSelectedButton addTarget:self action:@selector(switchSelectedClicked:) forControlEvents:UIControlEventValueChanged];
-		UIBarButtonItem *switchSelected = [[[UIBarButtonItem alloc] initWithCustomView:m_swithSelectedButton] autorelease];
+		m_switchSelectedButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"All", @"Selected", nil]];
+		m_switchSelectedButton.segmentedControlStyle = UISegmentedControlStyleBar;
+		m_switchSelectedButton.selectedSegmentIndex = 0;
+		m_switchSelectedButton.tintColor = [UIColor colorWithRed:100.0/255 green:100.0/255 blue:100.0/255 alpha:1.0];
+		m_switchSelectedButton.frame = CGRectMake(35, 0, 170, 33);
+		[m_switchSelectedButton addTarget:self action:@selector(switchSelectedClicked:) forControlEvents:UIControlEventValueChanged];
+		UIBarButtonItem *switchSelected = [[[UIBarButtonItem alloc] initWithCustomView:m_switchSelectedButton] autorelease];
         
 		// Set items on toolbar
 		[m_controlToolbar setItems:[NSArray arrayWithObjects: switchSelected, customMessageViewItem, nil]];
@@ -504,12 +504,18 @@
     [m_visibleFriendsList setArray:[m_friendInfo allKeys]]; //visible friends = array of keys of m_friendInfo
 	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_friendInfo];
     
-	[m_swithSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];
-	[m_swithSelectedButton setEnabled:NO forSegmentAtIndex:1];
+    int selectedCount = [[self selectedIds] count];
+	[m_switchSelectedButton setTitle:[NSString stringWithFormat:@"Selected (%d)", selectedCount] forSegmentAtIndex:1];
+    [m_switchSelectedButton setEnabled:(selectedCount > 0) forSegmentAtIndex:1];
     
-    [m_customMessageLabel setEnabled:NO];
-    [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
-    [m_customMessageLabel invalidateIntrinsicContentSize];
+    if (selectedCount > 0) {
+        [m_customMessageLabel setEnabled:YES];
+        [m_customMessageLabel setTextColor:[UIColor colorWithRed:23.0f/255.0f green:68.0f/255.0f blue:117.0f/255.0f alpha:1.0]];
+    } else {
+        [m_customMessageLabel setEnabled:NO];
+        [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
+    }
+    
 	[self.tableView reloadData];
 	[self refreshImages];
 }
@@ -538,7 +544,7 @@
 	Person *person = [m_peopleInfo objectForKey:[m_visiblePeopleList objectAtIndex:index]];
 	person.selected = !person.selected;
 	int selectedCount = [[self selectedIds] count];
-	[m_swithSelectedButton setTitle:[NSString stringWithFormat:@"Selected (%d)", selectedCount] forSegmentAtIndex:1];
+	[m_switchSelectedButton setTitle:[NSString stringWithFormat:@"Selected (%d)", selectedCount] forSegmentAtIndex:1];
     
     if (selectedCount > 0) {
         [m_customMessageLabel setEnabled:YES];
@@ -548,7 +554,7 @@
         [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
     }
     
-	[m_swithSelectedButton setEnabled:(selectedCount > 0) forSegmentAtIndex:1];
+	[m_switchSelectedButton setEnabled:(selectedCount > 0) forSegmentAtIndex:1];
 	[self.tableView reloadData];
 }
 
@@ -575,8 +581,8 @@
 		person.selected = NO;
 	}
     
-	[m_swithSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];
-	[m_swithSelectedButton setEnabled:NO forSegmentAtIndex:1];
+	[m_switchSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];
+	[m_switchSelectedButton setEnabled:NO forSegmentAtIndex:1];
     
     [m_customMessageLabel setEnabled:NO];
     [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
@@ -593,14 +599,14 @@
 }
 
 - (void)showAll {
-	m_swithSelectedButton.selectedSegmentIndex = 0;
+	m_switchSelectedButton.selectedSegmentIndex = 0;
 	[self filterWithText:[m_searchBar text]];
 	[self.tableView reloadData];
 	[self refreshImages];
 }
 
 - (void)showSelected {
-	m_swithSelectedButton.selectedSegmentIndex = 1;
+	m_switchSelectedButton.selectedSegmentIndex = 1;
 	[m_visiblePeopleList setArray:[self selectedIds]];
 	[m_visiblePeopleList sortUsingFunction:comparePerson context:m_peopleInfo];
 	[self.tableView reloadData];
