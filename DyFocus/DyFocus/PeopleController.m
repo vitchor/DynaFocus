@@ -74,6 +74,10 @@
 		m_customMessageLabel.backgroundColor = [UIColor colorWithWhite:0.0/255 alpha:0.0];
 		m_customMessageLabel.text = @"Send Invitations >";
         
+        [m_customMessageLabel setEnabled:NO];
+        [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
+        [m_customMessageLabel invalidateIntrinsicContentSize];
+        
         //m_customMessageLabel.textAlignment = kCTRightTextAlignment;
 		[customMessageView addSubview:m_customMessageLabel];
 		UIBarButtonItem *customMessageViewItem = [[[UIBarButtonItem alloc] initWithCustomView:customMessageView] autorelease];
@@ -81,13 +85,14 @@
 		UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
         flex.width = 30;
 		// Swith All/Selected buttons
-		m_switchSelectedButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"All", @"Selected", nil]];
+		m_switchSelectedButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"All", @"Selected (0)", nil]];
 		m_switchSelectedButton.segmentedControlStyle = UISegmentedControlStyleBar;
 		m_switchSelectedButton.selectedSegmentIndex = 0;
+        [m_switchSelectedButton setEnabled:NO forSegmentAtIndex:1];
 		m_switchSelectedButton.tintColor = [UIColor colorWithRed:100.0/255 green:100.0/255 blue:100.0/255 alpha:1.0];
 		m_switchSelectedButton.frame = CGRectMake(35, 0, 170, 33);
 		[m_switchSelectedButton addTarget:self action:@selector(switchSelectedClicked:) forControlEvents:UIControlEventValueChanged];
-		UIBarButtonItem *switchSelected = [[[UIBarButtonItem alloc] initWithCustomView:m_switchSelectedButton] autorelease];
+        UIBarButtonItem *switchSelected = [[[UIBarButtonItem alloc] initWithCustomView:m_switchSelectedButton] autorelease];
         
 		// Set items on toolbar
 		[m_controlToolbar setItems:[NSArray arrayWithObjects: switchSelected, customMessageViewItem, nil]];
@@ -504,20 +509,15 @@
     [m_visibleFriendsList setArray:[m_friendInfo allKeys]]; //visible friends = array of keys of m_friendInfo
 	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_friendInfo];
     
-    int selectedCount = [[self selectedIds] count];
-	[m_switchSelectedButton setTitle:[NSString stringWithFormat:@"Selected (%d)", selectedCount] forSegmentAtIndex:1];
-    [m_switchSelectedButton setEnabled:(selectedCount > 0) forSegmentAtIndex:1];
-    
-    if (selectedCount > 0) {
-        [m_customMessageLabel setEnabled:YES];
-        [m_customMessageLabel setTextColor:[UIColor colorWithRed:23.0f/255.0f green:68.0f/255.0f blue:117.0f/255.0f alpha:1.0]];
-    } else {
-        [m_customMessageLabel setEnabled:NO];
-        [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
+    if(m_switchSelectedButton.selectedSegmentIndex == 1)
+    {
+        [self showSelected];
+        [self refreshImages];
     }
-    
-	[self.tableView reloadData];
-	[self refreshImages];
+    else
+    {
+        [self showAll];
+    }
 }
 
 - (int)cellStyle {
