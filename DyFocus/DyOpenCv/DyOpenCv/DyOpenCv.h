@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface DyOpenCv : NSObject
-- (NSMutableArray*)warp2PicturesWithNSMutableArray:(NSMutableArray *)images;
+- (NSMutableArray*)antiShake:(NSMutableArray *)images;
 @end

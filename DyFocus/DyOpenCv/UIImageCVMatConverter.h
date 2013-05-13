@@ -8,7 +8,7 @@
     
 }
 
-+ (UIImage *)UIImageFromCVMat:(const cv::Mat&)cvMat;
++ (UIImage *)UIImageFromCVMat:(const cv::Mat&)cvMat withOrientation:(UIImageOrientation) orientation;
 + (UIImage *)UIImageFromCVMat:(cv::Mat)cvMat withUIImage:(UIImage*)image;
 + (cv::Mat)cvMatFromUIImage:(UIImage *)image;
 + (cv::Mat)cvMatGrayFromUIImage:(UIImage *)image;

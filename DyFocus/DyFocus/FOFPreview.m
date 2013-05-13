@@ -36,7 +36,7 @@
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
-    displayedFrames = [[NSMutableArray alloc] init];
+    self.displayedFrames = [[NSMutableArray alloc] init];
     
     NSString *doneString = @"Next";
 	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
@@ -48,7 +48,7 @@
 
     NSString *cancelString = @"Cancel";
 	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
-									   initWithTitle:cancelString style:UIBarButtonItemStyleBordered target:self action:@selector(cancel)];
+						 			   initWithTitle:cancelString style:UIBarButtonItemStyleBordered target:self action:@selector(cancel)];
 	self.navigationItem.leftBarButtonItem = cancelButton;
     
     [super viewDidLoad];
@@ -56,6 +56,17 @@
     self.navigationItem.title = @"Preview";
     
     DyOpenCv *dyOpenCV = [DyOpenCv alloc];
+    
+    NSMutableArray *warpedImages = [dyOpenCV antiShake:self.frames];
+    [self.frames setObject:warpedImages[0] atIndexedSubscript:0];
+    [self.frames setObject:warpedImages[1] atIndexedSubscript:1];
+//    [self.frames removeAllObjects];
+//    [self.frames release];
+//    self.frames = warpedImages;
+    
+//    [warpedImages removeAllObjects];
+//    [warpedImages release];
+    
     [dyOpenCV release];
     
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
@@ -64,7 +75,7 @@
         [self.secondImageView setImage: [self.frames objectAtIndex:1]];
     }
     
-    for (UIImage *frame in frames) {
+    for (UIImage *frame in self.frames) {
         [displayedFrames addObject:frame];
     }
     
@@ -125,7 +136,7 @@
     if (screenBounds.size.height == 568) {
     } else {
         
-        CGSize size = ((UIImage *)[frames objectAtIndex:0]).size;
+        CGSize size = ((UIImage *)[self.frames objectAtIndex:0]).size;
         
         CGFloat height = (size.height/size.width) * firstImageView.frame.size.width;
         
@@ -146,14 +157,6 @@
 
 - (void) dealloc
 {
-    //for (UIImage *frame in self.frames) {
-    //    [frame release];
-    //}
-    
-    //for (NSValue *point in self.focalPoints) {
-    //    [point release];
-    //}
-    
     [displayedFrames release];
     [frames release];
     
@@ -243,8 +246,8 @@
         sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
     }
     
-    sharingController.focalPoints = focalPoints;
-    sharingController.frames = displayedFrames;
+    sharingController.focalPoints = self.focalPoints;
+    sharingController.frames = self.displayedFrames;
     
     [self.navigationController pushViewController:sharingController animated:true];
     [sharingController release];
@@ -261,7 +264,7 @@
             
             timerPause = TIMER_PAUSE;
             
-            if (oldFrameIndex >= [frames count] - 1) {
+            if (oldFrameIndex >= [self.frames count] - 1) {
                 oldFrameIndex = 0;
             } else {
                 oldFrameIndex += 1;
@@ -276,7 +279,7 @@
             [self.firstImageView setNeedsDisplay];
             
             int newIndex;
-            if (oldFrameIndex == [frames count] - 1) {
+            if (oldFrameIndex == [self.frames count] - 1) {
                 newIndex = 0;
             } else {
                 newIndex = oldFrameIndex + 1;
@@ -304,13 +307,13 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (tableView == firstTableView) {
         
-        UIImage *filteredImage = [FilterUtil filterImage:[frames objectAtIndex:0] withFilterId:indexPath.row];
+        UIImage *filteredImage = [FilterUtil filterImage:[self.frames objectAtIndex:0] withFilterId:indexPath.row];
         
         [self.displayedFrames setObject:filteredImage atIndexedSubscript:0];
         
     } else if (tableView == secondTableView) {
         
-        UIImage *filteredImage = [FilterUtil filterImage:[frames objectAtIndex:1] withFilterId:indexPath.row];
+        UIImage *filteredImage = [FilterUtil filterImage:[self.frames objectAtIndex:1] withFilterId:indexPath.row];
 
         [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];        
     }
@@ -344,7 +347,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 -(void)fofToFullScreen
 {
-    if(frames.count > 0){
+    if(self.frames.count > 0){
         
         [scrollView setUserInteractionEnabled:NO];
     
@@ -353,7 +356,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         
         fullScreenController.hidesBottomBarWhenPushed = YES;
         
-        fullScreenController.frames = displayedFrames;
+        fullScreenController.frames = self.displayedFrames;
         
         [UIView beginAnimations:@"View Flip" context:nil];
         [UIView setAnimationDuration:0.80];

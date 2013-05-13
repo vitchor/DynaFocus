@@ -12,8 +12,7 @@
 		1F545A64172ABDCB0025F9BD /* DyOpenCv.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A53172ABBC50025F9BD /* DyOpenCv.mm */; };
 		1F545A68172ABE7E0025F9BD /* ColorHistogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A66172ABE7E0025F9BD /* ColorHistogram.cpp */; };
 		1F545A6B172ABEA20025F9BD /* Histogram1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A69172ABEA20025F9BD /* Histogram1D.cpp */; };
-		1F545A6E172ABEB30025F9BD /* ObjectiveCppFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A6D172ABEB30025F9BD /* ObjectiveCppFunctions.mm */; };
-		1F545A71172ABED00025F9BD /* PointInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A6F172ABED00025F9BD /* PointInfo.cpp */; };
+		1F545A71172ABED00025F9BD /* AntiShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A6F172ABED00025F9BD /* AntiShake.cpp */; };
 		1F545A74172ABEDB0025F9BD /* UIImageCVMatConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F545A73172ABEDB0025F9BD /* UIImageCVMatConverter.mm */; };
 		1F551BD01737E89700855D75 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F551BCE1737E87F00855D75 /* opencv2.framework */; };
 		1F9BE8DA172AD402001517B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9BE8D9172AD402001517B9 /* CoreGraphics.framework */; };
@@ -50,10 +49,8 @@
 		1F545A67172ABE7E0025F9BD /* ColorHistogram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorHistogram.h; path = ../ColorHistogram.h; sourceTree = "<group>"; };
 		1F545A69172ABEA20025F9BD /* Histogram1D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Histogram1D.cpp; path = ../Histogram1D.cpp; sourceTree = "<group>"; };
 		1F545A6A172ABEA20025F9BD /* Histogram1D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Histogram1D.h; path = ../Histogram1D.h; sourceTree = "<group>"; };
-		1F545A6C172ABEB30025F9BD /* ObjectiveCppFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectiveCppFunctions.h; path = ../ObjectiveCppFunctions.h; sourceTree = "<group>"; };
-		1F545A6D172ABEB30025F9BD /* ObjectiveCppFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ObjectiveCppFunctions.mm; path = ../ObjectiveCppFunctions.mm; sourceTree = "<group>"; };
-		1F545A6F172ABED00025F9BD /* PointInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PointInfo.cpp; path = ../PointInfo.cpp; sourceTree = "<group>"; };
-		1F545A70172ABED00025F9BD /* PointInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointInfo.h; path = ../PointInfo.h; sourceTree = "<group>"; };
+		1F545A6F172ABED00025F9BD /* AntiShake.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AntiShake.cpp; path = ../AntiShake.cpp; sourceTree = "<group>"; };
+		1F545A70172ABED00025F9BD /* AntiShake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AntiShake.h; path = ../AntiShake.h; sourceTree = "<group>"; };
 		1F545A72172ABEDB0025F9BD /* UIImageCVMatConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImageCVMatConverter.h; path = ../UIImageCVMatConverter.h; sourceTree = "<group>"; };
 		1F545A73172ABEDB0025F9BD /* UIImageCVMatConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = UIImageCVMatConverter.mm; path = ../UIImageCVMatConverter.mm; sourceTree = "<group>"; };
 		1F551BCE1737E87F00855D75 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
@@ -145,10 +142,8 @@
 			children = (
 				1F545A72172ABEDB0025F9BD /* UIImageCVMatConverter.h */,
 				1F545A73172ABEDB0025F9BD /* UIImageCVMatConverter.mm */,
-				1F545A6F172ABED00025F9BD /* PointInfo.cpp */,
-				1F545A70172ABED00025F9BD /* PointInfo.h */,
-				1F545A6C172ABEB30025F9BD /* ObjectiveCppFunctions.h */,
-				1F545A6D172ABEB30025F9BD /* ObjectiveCppFunctions.mm */,
+				1F545A6F172ABED00025F9BD /* AntiShake.cpp */,
+				1F545A70172ABED00025F9BD /* AntiShake.h */,
 				1F545A69172ABEA20025F9BD /* Histogram1D.cpp */,
 				1F545A6A172ABEA20025F9BD /* Histogram1D.h */,
 				1F545A66172ABE7E0025F9BD /* ColorHistogram.cpp */,
@@ -211,8 +206,7 @@
 				1F545A64172ABDCB0025F9BD /* DyOpenCv.mm in Sources */,
 				1F545A68172ABE7E0025F9BD /* ColorHistogram.cpp in Sources */,
 				1F545A6B172ABEA20025F9BD /* Histogram1D.cpp in Sources */,
-				1F545A6E172ABEB30025F9BD /* ObjectiveCppFunctions.mm in Sources */,
-				1F545A71172ABED00025F9BD /* PointInfo.cpp in Sources */,
+				1F545A71172ABED00025F9BD /* AntiShake.cpp in Sources */,
 				1F545A74172ABEDB0025F9BD /* UIImageCVMatConverter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

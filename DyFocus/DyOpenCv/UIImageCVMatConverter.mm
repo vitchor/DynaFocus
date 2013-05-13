@@ -1,3 +1,5 @@
+
+
 //
 //  UIImageCVMatConverter.mm
 //
@@ -23,7 +25,7 @@
     return result;
 }
 
-+ (UIImage *)UIImageFromCVMat:(const cv::Mat&)cvMat{
++ (UIImage *)UIImageFromCVMat:(const cv::Mat&)cvMat withOrientation:(UIImageOrientation) orientation{
     NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize() * cvMat.total()];
     
     CGColorSpaceRef colorSpace;
@@ -48,14 +50,14 @@
                                         false,                                          // Should interpolate
                                         kCGRenderingIntentDefault);                     // Intent
     
-    UIImage *image = [[UIImage alloc] initWithCGImage:imageRef];
+    UIImage *image = [[UIImage alloc] initWithCGImage:imageRef scale:1.0 orientation:orientation];
     CGImageRelease(imageRef);
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
     
     
-    NSLog(@"==== 3 cvMatFromUIImage == COLS: %i, ROWS: %i", cvMat.cols, cvMat.rows);
-    NSLog(@"==== 4 cvMatFromUIImage == COLS: %f, ROWS: %f", image.size.width, image.size.height);
+    NSLog(@"==== 3 - cvMat - UIImageFromCVMat == COLS: %i, ROWS: %i", cvMat.cols, cvMat.rows);
+    NSLog(@"==== 4 - image - UIImageFromCVMat == COLS: %f, ROWS: %f", image.size.width, image.size.height);
     
     
     return image;
@@ -64,15 +66,20 @@
 + (cv::Mat)cvMatFromUIImage:(UIImage *)image
 {
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
-    CGFloat cols = image.size.width;
-    CGFloat rows = image.size.height;
     
-    NSLog(@"==== 1 cvMatFromUIImage == COLS: %f, ROWS: %f", cols, rows);
-    
-    cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 4 channels
+    CGFloat cols, rows;
+    if  (image.imageOrientation == UIImageOrientationLeft
+         || image.imageOrientation == UIImageOrientationRight) {
+        NSLog(@"==== invert because it is a portrait");
+        cols = image.size.height;
+        rows = image.size.width;
+    }else{
+        NSLog(@"==== OK, LANDSCAPE =)");
+        cols = image.size.width;
+        rows = image.size.height;
+    }
 
-    NSLog(@"==== 2 cvMatFromUIImage == COLS: %i, ROWS: %i", cvMat.cols, cvMat.rows);
-    
+    cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 4 channels
     
     CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to backing data
                                                     cols,                       // Width of bitmap
@@ -85,6 +92,9 @@
     
     CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
     CGContextRelease(contextRef);
+    
+    NSLog(@"==== 1 - image - cvMatFromUIImage == COLS: %f, ROWS: %f", cols, rows);
+    NSLog(@"==== 2 - cvMat - cvMatFromUIImage == COLS: %i, ROWS: %i", cvMat.cols, cvMat.rows);
     
     return cvMat;
 }
