@@ -478,8 +478,7 @@
 //                                               like.m_userName = fofUserName;//todo
                                                
                                                AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-                                               NSString *myFacebookId = appDelegate.myself.facebookId;
-                                               if([fofFriendId isEqualToString:myFacebookId]){
+                                               if([fofFriendId isEqualToString:appDelegate.myself.facebookId]){
                                                    like.m_userName = @"You";
                                                }else{
                                                    like.m_userName = fofUserName;
@@ -547,14 +546,17 @@
     int i = 0;
     
     NSMutableString *likeListUsers = nil;
+    NSMutableString *likeListReference = nil;
     
     for (Like *like in likes)
     {
         NSArray *array = [like.m_userName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
         
-
-        
+        if(likeListUsers) {
+            likeListReference = [NSMutableString stringWithString:likeListUsers];
+        }
+            
         if (i == 0) {
             likeListUsers = [NSMutableString stringWithString:@""];
             [likeListUsers appendString:[NSString stringWithFormat:@"%@", [array objectAtIndex:0]]];
@@ -563,8 +565,21 @@
         } else {
             [likeListUsers appendString:[NSString stringWithFormat:@", %@", [array objectAtIndex:0]]];
         }
+        
+        if(likeListUsers.length >= 45){
+            NSLog(@"==== BIGGER THAN 45 CHARACTERS");
+            likeListUsers = likeListReference;
+            
+            NSString *likesCounter = [NSString stringWithFormat:@"%d", ([likes count] - i)];
+            [likeListUsers appendString:@" and "];
+            [likeListUsers appendString:likesCounter];
+            [likeListUsers appendString:@" more"];
+            break;
+        }
+        
         i++;
     }
+    
     if ([likes count] == 0) {
         likeListUsers = [NSMutableString stringWithString:@"No one liked this yet."];
         

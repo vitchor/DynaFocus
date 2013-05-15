@@ -59,7 +59,7 @@
         commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
     }
         
-    commentController.navigationItem.title = @"Info";
+    commentController.navigationItem.title = @"Comments";
     commentController.hidesBottomBarWhenPushed = YES;
     commentController.isCommenting = isCommenting;
     if(!isCommenting){
