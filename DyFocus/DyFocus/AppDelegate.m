@@ -847,11 +847,8 @@
             
         }
         
-        NSString *user_following_count = [[NSString alloc] initWithFormat:@"%@",[jsonValues valueForKey:@"user_following_count"]];
-        
-        myself.followingCount = user_following_count;
-        myself.followersCount = [[NSString alloc] initWithFormat:@"%d",[followingFriendsList count]];
-        
+        self.myself.followingCount = [NSString stringWithFormat:@"%@",[jsonValues valueForKey:@"user_following_count"]];
+        self.myself.followersCount = [NSString stringWithFormat:@"%@",[jsonValues valueForKey:@"user_followers_count"]];
         
     } else {
         [self showConnectionError];

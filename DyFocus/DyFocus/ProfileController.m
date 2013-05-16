@@ -384,6 +384,7 @@
 
                                                person.followersCount = followersLabel.text;
                                                [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                                               delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] + 1];
                                                
                                                [followView setHidden:YES];
                                                [unfollowView setHidden:NO];
@@ -394,6 +395,7 @@
                                                
                                                person.followersCount = followersLabel.text;
                                                [delegate.friendsThatIFollow removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                                               delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] - 1];
                                                
                                                [followView setHidden:NO];
                                                [unfollowView setHidden:YES];
