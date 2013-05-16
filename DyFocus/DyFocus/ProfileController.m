@@ -379,10 +379,11 @@
                                        if([jsonResult hasPrefix:@"ok:"]) {
                                            
                                            if (requestType == FOLLOW) {
-                                               [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
-                                               
                                                int newFollowersValue = [followersLabel.text intValue] + 1;
                                                followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
+
+                                               person.followersCount = followersLabel.text;
+                                               [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
                                                
                                                [followView setHidden:YES];
                                                [unfollowView setHidden:NO];
@@ -391,7 +392,9 @@
                                                int newFollowersValue = [followersLabel.text intValue] - 1;
                                                followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
                                                
+                                               person.followersCount = followersLabel.text;
                                                [delegate.friendsThatIFollow removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                                               
                                                [followView setHidden:NO];
                                                [unfollowView setHidden:YES];
                                            }
