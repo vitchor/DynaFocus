@@ -235,14 +235,14 @@
         [timer invalidate];
         timer = nil;
         
-        [playPauseButton setImage:[UIImage imageNamed:@"Play-Button-Orange.png"] forState:UIControlStateNormal];
+        [playPauseButton setImage:[UIImage imageNamed:@"Play-Button-NoStroke.png"] forState:UIControlStateNormal];
     }
     else
     {
         timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
         [timer fire];
         
-        [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button.png"] forState:UIControlStateNormal];
+        [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
     }
 }
 
@@ -337,7 +337,7 @@
     timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
     [timer fire];
     
-    [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button.png"] forState:UIControlStateNormal];
+    [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
     [playPauseButton setHidden:NO];
 
 }
