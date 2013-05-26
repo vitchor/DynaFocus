@@ -379,10 +379,12 @@
                                        if([jsonResult hasPrefix:@"ok:"]) {
                                            
                                            if (requestType == FOLLOW) {
-                                               [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
-                                               
                                                int newFollowersValue = [followersLabel.text intValue] + 1;
                                                followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
+
+                                               person.followersCount = followersLabel.text;
+                                               [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                                               delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] + 1];
                                                
                                                [followView setHidden:YES];
                                                [unfollowView setHidden:NO];
@@ -391,7 +393,10 @@
                                                int newFollowersValue = [followersLabel.text intValue] - 1;
                                                followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
                                                
+                                               person.followersCount = followersLabel.text;
                                                [delegate.friendsThatIFollow removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                                               delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] - 1];
+                                               
                                                [followView setHidden:NO];
                                                [unfollowView setHidden:YES];
                                            }
