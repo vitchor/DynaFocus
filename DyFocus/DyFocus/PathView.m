@@ -164,7 +164,12 @@
     
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+- (NSUInteger) supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (BOOL)shouldAutorotate {
     return YES;
 }
 
@@ -462,9 +467,7 @@
             torchTwoX.constant = 22.0-17;
             torchTwoY.constant = 382.0-(61.0/2)-3;
         }
-        else if(orientation == UIDeviceOrientationLandscapeLeft ||
-                orientation == UIDeviceOrientationFaceUp ||
-                orientation == UIDeviceOrientationFaceDown)
+        else if(orientation == UIDeviceOrientationLandscapeLeft)
         {
             torchOneX.constant = 298.0-17;
             torchOneY.constant = 78.0-(61.0/2)+2;
@@ -496,9 +499,7 @@
             torchTwoX.constant = 22.0-17;
             torchTwoY.constant = 334.0-(61.0/2)-3;
         }
-        else if(orientation == UIDeviceOrientationLandscapeLeft ||
-                orientation == UIDeviceOrientationFaceUp ||
-                orientation == UIDeviceOrientationFaceDown)
+        else if(orientation == UIDeviceOrientationLandscapeLeft)
         {
             torchOneX.constant = 298.0-17;
             torchOneY.constant = 36.0-(61.0/2);

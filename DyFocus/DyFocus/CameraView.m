@@ -732,16 +732,8 @@
     //[error release];
 }
 
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-//{
-//    return YES;
-//}
-
 - (NSUInteger) supportedInterfaceOrientations
 {
-    //Because your app is only landscape, your view controller for the view in your
-    // popover needs to support only landscape
-//    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait ;
     return UIInterfaceOrientationMaskAll;
 }
 

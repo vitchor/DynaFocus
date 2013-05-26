@@ -48,6 +48,7 @@
    
     int row;
     float newHeight;
+    IBOutlet UIButton *playPauseButton;
 }
 
 -(void) loadImages;
@@ -77,5 +78,6 @@
 
 - (void) clearImages;
 - (void) refreshWithFof:(FOF *)fof;
+- (IBAction)playPauseAction:(UIButton *)sender;
 
 @end

@@ -86,8 +86,6 @@
 
         imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
                                        imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newHeight);
-
-//        [imagefrontFrame setNeedsDisplay];
         
     }
     
@@ -230,6 +228,24 @@
     }
 }
 
+- (IBAction)playPauseAction:(UIButton *)sender {
+    
+    if (timer)
+    {
+        [timer invalidate];
+        timer = nil;
+        
+        [playPauseButton setImage:[UIImage imageNamed:@"Play-Button-Orange.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+        [timer fire];
+        
+        [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button.png"] forState:UIControlStateNormal];
+    }
+}
+
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
 {
     [self showCommentView:FALSE];
@@ -320,6 +336,9 @@
     //TODO start fade out timer
     timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
     [timer fire];
+    
+    [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button.png"] forState:UIControlStateNormal];
+    [playPauseButton setHidden:NO];
 
 }
 
@@ -357,6 +376,7 @@
 }
 
 -(void)loadImages {
+    
     UITapGestureRecognizer *singleTapUserName = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)] autorelease];
     imageUserPicture.userInteractionEnabled = YES;
     [imageUserPicture addGestureRecognizer:singleTapUserName];
@@ -454,6 +474,8 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
 
 -(void) clearImages {
     
+    [playPauseButton setHidden:YES];
+    
     [imageUserPicture setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
 
     imagebackFrame.image = nil;
@@ -546,6 +568,7 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
 - (void)dealloc
 {
     [frames release];
+    [playPauseButton release];
     [super dealloc];
 }
 
