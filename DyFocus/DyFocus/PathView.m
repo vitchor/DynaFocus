@@ -375,8 +375,6 @@
     [cancelIcon release];
     [cameraIcon release];
     [helpIcon release];
-    [torchOneButton release];
-    [torchTwoButton release];
     [super dealloc];
 }
 
