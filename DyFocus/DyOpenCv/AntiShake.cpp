@@ -298,20 +298,19 @@ void AntiShake::getBestMatches(int nthNumber, std::vector<DMatch> &matches,
 	}
 	meanDistance = meanDistance/matches.size();
 	cout << " ==== mean distance = " << meanDistance << endl;
-	Mat new_matches;
+	std::vector<DMatch> new_matches;
 	//	cout<< "mean distance = (px) " << meanDistance << endl;
-//	cout<< "mean distance = (px) " << meanDistance << endl;
 	for (unsigned int i = 0; i < matches.size(); i++) {
 		Point2f p1 = keypoints_1[matches[i].queryIdx].pt;
 		Point2f p2 = keypoints_2[matches[i].trainIdx].pt;
-		double dist = sqrt(pow((p1.x - p2.x),2) + abs(p1.y - p2.y));
-		if(dist <= 2*meanDistance){
+		double dist = sqrt(pow((p1.x - p2.x),2) + pow((p1.y - p2.y),2));
+		if(dist <= 0.4*meanDistance){ // TODO
 			pts1.push_back(keypoints_1[matches[i].queryIdx].pt);
 			pts2.push_back(keypoints_2[matches[i].trainIdx].pt);
+			new_matches.push_back(matches[i]);
 		}
 	}
-//	cout<< "goodMatches>size: " << matches.size() << endl;
-//	cout<< "pts1.size() " << pts1.size() << endl;
+    matches = new_matches;
 }
 
 // Shows the image in a window, allowing it to be saved in a
