@@ -23,12 +23,13 @@
     AntiShake *antiShake = AntiShake::getInstance();
     antiShake->antiShake(img_1, img_2);
     
+    NSLog(@"==== FINISHED ANTISHAKE");
     UIImage *image3= [UIImageCVMatConverter UIImageFromCVMat:img_1 withOrientation:image1.imageOrientation];
     UIImage *image4= [UIImageCVMatConverter UIImageFromCVMat:img_2 withOrientation:image2.imageOrientation];
-
-    
-    img_1.release();
-    img_2.release();
+    NSLog(@"==== FINISHED CONVERSION");
+//    
+//    img_1.release();
+//    img_2.release();
 
      
     NSMutableArray *warpedImages = [[NSMutableArray alloc] init];
