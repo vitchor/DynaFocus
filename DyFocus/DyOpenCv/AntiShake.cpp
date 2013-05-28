@@ -272,31 +272,34 @@ void AntiShake::antiShake(Mat &img_1, Mat &img_2) {
 
 // FILLS matches, points1 and points 2 vectors
 void AntiShake::getBestMatches(int nthNumber, std::vector<DMatch> &matches,
-		vector<Point2f> &pts1, vector<Point2f> &pts2, Mat descriptors_1,
-		Mat descriptors_2, vector<KeyPoint> keypoints_1,
-		vector<KeyPoint> keypoints_2) {
-	
-    //-- STEP A: Matching descriptor vectors using BruteForceMatcher
+                               vector<Point2f> &pts1, vector<Point2f> &pts2, Mat descriptors_1,
+                               Mat descriptors_2, vector<KeyPoint> keypoints_1,
+                               vector<KeyPoint> keypoints_2) {
+    cout << "step A "<< endl;
+	//-- STEP A: Matching descriptor vectors using BruteForceMatcher
 	BFMatcher matcher(NORM_L1, true);
-    //	FlannBasedMatcher matcher;
+	//	FlannBasedMatcher matcher;
 	matcher.match(descriptors_1, descriptors_2, matches);
-
+    
+    cout << "step B "<< endl;
 	//-- STEP B: gets just the first N matches with the smaller value for distance (N=nthNumber)
 	std::nth_element(matches.begin(),    					// initial position
-			matches.begin() + nthNumber - 1, // position of the sorted element
-			matches.end());     								// end position
+                     matches.begin() + nthNumber - 1, // position of the sorted element
+                     matches.end());     								// end position
 	matches.erase(matches.begin() + nthNumber, matches.end()); // remove all elements after the nthNumber(th)
-
+    cout << "step C "<< endl;
 	//-- STEP C: Eliminates the worst fetched points
 	double meanDistance = 0;
 	for (unsigned int i = 0; i < matches.size(); i++) {
 		Point2f p1 = keypoints_1[matches[i].queryIdx].pt;
 		Point2f p2 = keypoints_2[matches[i].trainIdx].pt;
-		double dist = sqrt(pow((p1.x - p2.x),2) + abs(p1.y - p2.y));
+		double dist = sqrt(pow((p1.x - p2.x),2) + pow((p1.y - p2.y),2));
 		meanDistance += dist;
 	}
 	meanDistance = meanDistance/matches.size();
-
+	cout << " ==== mean distance = " << meanDistance << endl;
+	Mat new_matches;
+	//	cout<< "mean distance = (px) " << meanDistance << endl;
 //	cout<< "mean distance = (px) " << meanDistance << endl;
 	for (unsigned int i = 0; i < matches.size(); i++) {
 		Point2f p1 = keypoints_1[matches[i].queryIdx].pt;
