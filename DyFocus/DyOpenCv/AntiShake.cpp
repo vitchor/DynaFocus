@@ -96,10 +96,6 @@ void compensateBrightness(Mat &src1, Mat &src2, Mat &output1, Mat &output2){
 
 // Blur both images so blurriness will not continue to be a difference but a common caracteristic
 void blurImages(Mat &src1, Mat &src2, Mat &output1, Mat &output2, int oddNumber){
-	//	GaussianBlur( img_1, img_1, Size( oddNumber, oddNumber ), 0, 0 );
-	//	medianBlur ( img_1, img_1, oddNumber );
-	//	bilateralFilter ( img_2, img_2, oddNumber, oddNumber, oddNumber );
-    
 	blur( src1, output1, Size( oddNumber, oddNumber ), Point(-1,-1) );
 	blur( src2, output2, Size( oddNumber, oddNumber ), Point(-1,-1) );
 }
@@ -131,6 +127,11 @@ void sobelOperator(Mat &src1, Mat &output1, Mat &src2, Mat &output2, int scale, 
 	addWeighted( abs_grad_x, 0.5, abs_grad_y, 0.5, 0, grad );
 	output1 = grad;
     
+    grad_x.release();
+    grad_y.release();
+    abs_grad_x.release();
+    abs_grad_y.release();
+    
 	GaussianBlur( src2, src2, Size(3,3), 0, 0, BORDER_DEFAULT );
     
 	/// Convert it to gray
@@ -153,13 +154,18 @@ void sobelOperator(Mat &src1, Mat &output1, Mat &src2, Mat &output2, int scale, 
 	/// Total Gradient (approximate)
 	addWeighted( abs_grad_x2, 0.5, abs_grad_y2, 0.5, 0, grad2 );
 	output2 = grad2;
+    
+    grad_x2.release();
+    grad_y2.release();
+    abs_grad_x2.release();
+    abs_grad_y2.release();
 }
 
 
 // WARP 2 PICTURES
 void AntiShake::antiShake(Mat &img_1, Mat &img_2) {
     
-	// STEP 0: RE-ESCALE SO THE BIGGEST RESOLUTION IS 590x(something smaller than 590)
+	// STEP 1: RE-ESCALE SO THE BIGGEST RESOLUTION IS 590x(something smaller than 590)
 	Mat workImage1, workImage2;
 	double scale = 1.0/(MAX(img_1.rows,img_1.cols)/590.0);
     
@@ -170,22 +176,24 @@ void AntiShake::antiShake(Mat &img_1, Mat &img_2) {
     
 	cv::resize(img_1, workImage1, workImage1.size());
 	cv::resize(img_2, workImage2, workImage2.size());
+    cout << "=== STEP 1 complete: RE-ESCALE" << endl;
     
-	// STEP 1: COMPENSATE BRIGHTNES
+    
+	// STEP 2: COMPENSATE BRIGHTNES
 	compensateBrightness(workImage1, workImage2, workImage1, workImage2);
-	cout << "=== STEP 1 complete: compensateBrightness" << endl;
-    
-	// STEP 1.5: BLUR EVERYTHING TO NORMALIZE THE SOURCE IMAGES
-	blurImages(workImage1, workImage2, workImage1, workImage2, 5);
-	cout << "=== STEP 1.5 complete: compensate Blurriness" << endl;
-    
-	// STEP 2: SOBEL OPERATOR
-	sobelOperator(workImage1, workImage1, workImage2, workImage2, 3, 1);
 	cout << "=== STEP 2 complete: compensateBrightness" << endl;
     
-	// STEP 3: KeyPoint Detection:
+    
+	// STEP 3: BLUR EVERYTHING TO NORMALIZE THE SOURCE IMAGES
+	blurImages(workImage1, workImage2, workImage1, workImage2, 5);
+	cout << "=== STEP 3 complete: compensate Blurriness" << endl;
+    
+	// STEP 4: SOBEL OPERATOR
+	sobelOperator(workImage1, workImage1, workImage2, workImage2, 3, 1);
+	cout << "=== STEP 4 complete: compensateBrightness" << endl;
+    
+	// STEP 5: KeyPoint Detection:
 	//	cv::FeatureDetector *detector = new cv::DenseFeatureDetector()
-	cv::FeatureDetector *detector = new cv::FastFeatureDetector(5, true);//TODO
 	//	cv::FeatureDetector *detector = new cv::GFTTDetector();
 	//	cv::FeatureDetector *detector = new cv::MSER();
 	//	cv::FeatureDetector *detector = new cv::OTB();
@@ -193,29 +201,29 @@ void AntiShake::antiShake(Mat &img_1, Mat &img_2) {
 	//	cv::FeatureDetector *detector = new cv::StarFeatureDetector();
 	//	cv::FeatureDetector *detector = new cv::SURF(400);
 	//	cv::FeatureDetector *detector = new cv::BRISK();
+    cv::FeatureDetector *detector = new cv::FastFeatureDetector(5, true);//TODO
 	std::vector<KeyPoint> keypoints_1, keypoints_2;
 	detector->detect(workImage1, keypoints_1);
 	detector->detect(workImage2, keypoints_2);
-	cout << "==== STEP 3 complete: keypoints detected, (keypoints1.size(), keypoints2.size()) = (" << keypoints_1.size() << ", " << keypoints_2.size() << ")" << endl;
+	cout << "==== STEP 5 complete: keypoints detected, (keypoints1.size(), keypoints2.size()) = (" << keypoints_1.size() << ", " << keypoints_2.size() << ")" << endl;
 	delete(detector);
     
-	// STEP 4: Calculate descriptors (feature vectors)
+	// STEP 6: Calculate descriptors (feature vectors)
 	// The extractor can be any of (see OpenCV features2d.hpp):
-	cv:: DescriptorExtractor *extractor = new cv::BriefDescriptorExtractor();
 	//	cv:: DescriptorExtractor *extractor = new cv::ORB();
 	//	cv:: DescriptorExtractor *extractor = new cv::SIFT();
 	//	cv:: DescriptorExtractor *extractor = new cv::SURF(400);
 	//	cv:: DescriptorExtractor *extractor = new cv::BRISK();
 	//	cv:: DescriptorExtractor *extractor = new cv::FREAK();
+    cv:: DescriptorExtractor *extractor = new cv::BriefDescriptorExtractor();
 	Mat descriptors_1, descriptors_2;
-	//	BriefDescriptorExtractor extractor;
 	extractor->compute(workImage1, keypoints_1, descriptors_1);
 	extractor->compute(workImage2, keypoints_2, descriptors_2);
-	cout << "==== STEP 4 complete: extract descriptors" << endl;
+	cout << "==== STEP 6 complete: extract descriptors" << endl;
 	delete(extractor);
     
     
-	// STEP 5: Get Matches
+	// STEP 7: Get Matches
 	// Tries the algorithm in one direction
 	vector<DMatch> good_matches;
 	std::vector<Point2f> pts1, pts2;
@@ -228,18 +236,18 @@ void AntiShake::antiShake(Mat &img_1, Mat &img_2) {
     //                img_matches, Scalar::all(-1), Scalar::all(-1), vector<char>(),
     //                DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
     //	displayWindow(img_matches, "MATCHES");
-	cout << "==== STEP 5 complete: finished matching descriptors: " << numberOfMatches << endl;
+	cout << "==== STEP 7 complete: finished matching descriptors: " << numberOfMatches << endl;
     
     
-	// STEP 6: Find Homography:
+	// STEP 8: Find Homography:
 	int index = 0;
 	vector<uchar> inliers(pts1.size(), 0);
 	Mat homography = getHomography(pts1, pts2, inliers, index);
 	//	Mat H12 = findHomography(Mat(pts1), Mat(pts2), inliers, CV_RANSAC, 1);
-	cout << "==== STEP 6 complete: finished calculating right homography = " << endl << " " << homography << endl << endl;
+	cout << "==== STEP 8 complete: finished calculating right homography = " << endl << " " << homography << endl << endl;
     
 	Mat original, compensated;
-	// STEP 7: Warp the right picture
+	// STEP 9: Warp the right picture
 	switch (index) {
         case 0:  // H12 // Warp image 1 to image 2
             cout << "==== Case 0" << endl;
@@ -264,7 +272,7 @@ void AntiShake::antiShake(Mat &img_1, Mat &img_2) {
         default: // NO ONE
             break;
 	}
-	cout << "++==== STEP 7 complete: distortions were fixed" << endl;
+	cout << "++==== STEP 9 complete: distortions were fixed" << endl;
     
     //	displayWindow(img_1, "aux/Wrapped/img1", true);
     //	displayWindow(img_2, "aux/Wrapped/img2", true);
@@ -275,19 +283,19 @@ void AntiShake::getBestMatches(int nthNumber, std::vector<DMatch> &matches,
                                vector<Point2f> &pts1, vector<Point2f> &pts2, Mat descriptors_1,
                                Mat descriptors_2, vector<KeyPoint> keypoints_1,
                                vector<KeyPoint> keypoints_2) {
-    cout << "step A "<< endl;
+    cout << "step 7.A "<< endl;
 	//-- STEP A: Matching descriptor vectors using BruteForceMatcher
 	BFMatcher matcher(NORM_L1, true);
 	//	FlannBasedMatcher matcher;
 	matcher.match(descriptors_1, descriptors_2, matches);
     
-    cout << "step B "<< endl;
+    cout << "step 7.B "<< endl;
 	//-- STEP B: gets just the first N matches with the smaller value for distance (N=nthNumber)
 	std::nth_element(matches.begin(),    					// initial position
                      matches.begin() + nthNumber - 1, // position of the sorted element
                      matches.end());     								// end position
 	matches.erase(matches.begin() + nthNumber, matches.end()); // remove all elements after the nthNumber(th)
-    cout << "step C "<< endl;
+    cout << "step 7.C "<< endl;
 	//-- STEP C: Eliminates the worst fetched points
 	double meanDistance = 0;
 	for (unsigned int i = 0; i < matches.size(); i++) {
