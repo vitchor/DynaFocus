@@ -19,7 +19,7 @@
     
     NSString *refreshString;
     
-    NSString *userFacebookId;
+    long userId;
     
     BOOL _reloading;
     BOOL m_isFOFTableEmpty;
@@ -30,7 +30,7 @@
 @property (nonatomic, retain) IBOutlet NSMutableArray *FOFArray;
 @property (nonatomic, readwrite) BOOL shouldHideNavigationBar;
 @property (nonatomic, readwrite) NSString *refreshString;
-@property (nonatomic, readwrite) NSString *userFacebookId;
+@property (nonatomic, readwrite) long userId;
 @property(assign,getter=isReloading) BOOL reloading;
 @property(nonatomic,readonly) EGORefreshTableHeaderView *refreshHeaderView;
 

@@ -18,6 +18,7 @@
 	NSString *m_date;
 	NSString *m_id;
     bool m_liked;
+    long m_userId;
 }
 
 +(FOF *)fofFromJSON: (NSDictionary *)json;
@@ -28,9 +29,10 @@
 @property (nonatomic, retain) NSString *m_likes;
 @property (nonatomic, retain) NSString *m_userName;
 @property (nonatomic, retain) NSString *m_userNickname;
-@property (nonatomic, retain) NSString *m_userId;
+@property (nonatomic, retain) NSString *m_userFacebookId;
 @property (nonatomic, retain) NSString *m_date;
 @property (nonatomic, retain) NSString *m_id;
 @property (nonatomic, readwrite) bool m_liked;
+@property (nonatomic, readwrite) long m_userId;
 @end
 

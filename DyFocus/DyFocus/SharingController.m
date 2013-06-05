@@ -140,13 +140,11 @@
     
     [commentField resignFirstResponder]; // hides keyboard
     
-    NSURL *webServiceUrl = [NSURL URLWithString:[[[NSString alloc] initWithFormat: @"%@/uploader/image/", dyfocus_url] autorelease]];
+    NSURL *webServiceUrl = [NSURL URLWithString:[[[NSString alloc] initWithFormat: @"%@/uploader/upload_image/", dyfocus_url] autorelease]];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    NSString *savedFacebookId = appDelegate.myself.facebookId;
-    NSString *savedFacebookName = appDelegate.myself.name;
-    NSString *savedFacebookEmail = appDelegate.myself.email;
+    NSString *userId = [NSString stringWithFormat:@"%ld",appDelegate.myself.uid];
     
     request = [[ASIFormDataRequest requestWithURL:webServiceUrl] retain];
     [request setDelegate:self];
@@ -154,12 +152,9 @@
     fofName = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
     NSString *fof_size = [[[NSString alloc] initWithFormat:@"%d",[self.frames count]] autorelease];
     
-    [request setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
     [request setPostValue:fofName forKey:@"fof_name"];
     [request setPostValue:fof_size forKey:@"fof_size"];
-    [request setPostValue:savedFacebookId forKey:@"facebook_id"];
-    [request setPostValue:savedFacebookName forKey:@"facebook_name"];
-    [request setPostValue:savedFacebookEmail forKey:@"facebook_email"];
+    [request setPostValue:userId forKey:@"user_id"];
     
     for (int i = 0; i < [self.frames count]; i++)
     {
@@ -209,10 +204,11 @@
 
     }
     
-
-    
     [request startAsynchronous];
-    NSLog(@"MESSAGE %@",[request responseString]);
+    
+    //request.responseString
+    
+    NSLog(@"MESSAGE %@",request.responseString);
     
 }
 

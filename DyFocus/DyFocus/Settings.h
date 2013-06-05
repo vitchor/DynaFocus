@@ -8,19 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-
-
 #define dyfocus_url @"http://dyfoc.us"
-//#define dyfocus_url @"http://192.168.0.104:8000"
+//#define dyfocus_url @"http://192.168.0.103:8000"
 //#define dyfocus_url @"http://192.168.0.112:8000"
 //#define dyfocus_url @"http://192.168.100.140:8000"
-//#define dyfocus_url @"http://192.168.0.109:8000"
+//#define dyfocus_url @"http://172.20.10.2:8000"
 
 #define app_fb_id @"417476174956036"
 
-#define refresh_user_url @"/uploader/json_user_fof/"
-#define refresh_featured_url @"/uploader/json_featured_fof/"
-#define refresh_feed_url @"/uploader/json_feed/"
+#define refresh_user_url @"/uploader/json_user_id_fof/"
+#define refresh_featured_url @"/uploader/user_json_featured_fof/"
+#define refresh_feed_url @"/uploader/user_json_feed/"
 
 @interface Settings : NSObject
 
