@@ -10,13 +10,13 @@
 
 @implementation Comment
 
-@synthesize m_message, m_userName, m_userId, m_fofId, m_date;
+@synthesize m_message, m_userId, m_userName, m_userFacebookId, m_fofId, m_date;
 
 - (void)dealloc {
     [m_message release];
     [m_userName release];
     [m_fofId release];
-    [m_userId release];
+    [m_userFacebookId release];
     [m_date release];
 	[super dealloc];
 }

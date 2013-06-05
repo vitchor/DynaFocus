@@ -10,13 +10,16 @@
 
 @implementation FOF
 
-@synthesize m_name, m_frames, m_comments, m_likes, m_userName, m_userId, m_date, m_userNickname, m_id, m_liked;
+@synthesize m_name, m_userId, m_frames, m_comments, m_likes, m_userName, m_userFacebookId, m_date, m_userNickname, m_id, m_liked;
 
 +(FOF *)fofFromJSON: (NSDictionary *)json {
     
     FOF *fof = [FOF alloc];
     
     NSString *facebook_id = [json valueForKey:@"user_facebook_id"];
+
+    long user_id = [[json valueForKey:@"user_id"] longLongValue];
+    
     NSString *name = [json valueForKey:@"user_name"];
     
     NSString *fofId = [json valueForKey:@"id"];
@@ -52,11 +55,12 @@
     fof.m_name = fofName;
     fof.m_liked = [liked isEqualToString:@"1"];
     fof.m_userName = name;
-    fof.m_userId = facebook_id;
+    fof.m_userFacebookId = facebook_id;
     fof.m_frames = framesData;
     fof.m_likes = likes;
     fof.m_comments = comments;
     fof.m_date = pubDate;
+    fof.m_userId = user_id;
     
     liked = nil;
     
@@ -71,7 +75,7 @@
     [m_date release];
     [m_userNickname release];
     [m_likes release];
-    [m_userId release];
+    [m_userFacebookId release];
     [m_id release];
 	[super dealloc];
 }

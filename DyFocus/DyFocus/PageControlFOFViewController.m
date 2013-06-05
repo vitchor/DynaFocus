@@ -34,11 +34,11 @@ static NSArray *__pageControlColorList = nil;
     //self.view.backgroundColor = [PageControlFOFViewController pageControlColorWithIndex:pageNumber];
     
     if (pageNumber == 0) {
-        [messageLabel setText:@"Capture a scene with different focus points..."];
+        [messageLabel setText:@"Capture a scene with different focus distances."];
     } else if (pageNumber == 1) {
-        [messageLabel setText:@"Try out capturing different exposure points as well..."];
+        [messageLabel setText:@"Try out capturing different exposure points as well."];
     } else {
-        [messageLabel setText:@"Add multiple animated filters and have fun!"];
+        [messageLabel setText:@"Apply multiple filters and have fun!"];
     }
     
     oldFrameIndex = 0;

@@ -45,6 +45,7 @@
     [self clear];
 
     m_like = [[Like alloc] init];
+    m_like.m_userFacebookId = like.m_userFacebookId;
     m_like.m_userId = like.m_userId;
     
     if([like.m_userName isEqualToString:@"You"]){
@@ -63,7 +64,7 @@
 -(void) loadImage{
     if (userImage.tag != 420) {
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadPictureWithFaceId:m_like.m_userId andImageView:userImage andIsSmall:YES];
+        [imageLoader loadPictureWithFaceId:m_like.m_userFacebookId andImageView:userImage andIsSmall:YES];
     }
 }
 

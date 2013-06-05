@@ -66,19 +66,19 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ProfileController *profileController = nil;
     
     Person *person;
-    if([like.m_userId isEqualToString:delegate.myself.facebookId]){
+    if(like.m_userId == delegate.myself.uid){
         person = delegate.myself;
     }else{
-        person = [delegate getUserWithFacebookId:[like.m_userId longLongValue]];
+        person = [delegate getUserWithId:like.m_userId];
     }
 
     if (person) {
         // Person exists, so it's being followed.
-        NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.facebookId];
+        NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.uid];
         profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:userFOFArray];
     } else {
         // Person is not being followed, there's no information we can get.
-        profileController = [[ProfileController alloc] initWithFacebookId:like.m_userId];
+        profileController = [[ProfileController alloc] initWithUserId:like.m_userId];
     }
 
     profileController.hidesBottomBarWhenPushed = YES;

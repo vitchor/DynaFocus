@@ -49,7 +49,7 @@
     self.notifications = delegate.notificationsArray;
     
     
-    NSString *requestUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/read_notification/",dyfocus_url] autorelease];
+    NSString *requestUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/user_read_notification/",dyfocus_url] autorelease];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     
@@ -66,9 +66,11 @@
         [jsonRequestObject setObject:@"0" forKey:@"notification_id"];
     }
     
-   
+    NSString *userId = [NSString stringWithFormat:@"%ld", delegate.myself.uid];
     
-    [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"user_id"];
+    NSLog(@"USER ID %@", userId);
+    
+    [jsonRequestObject setObject:userId forKey:@"user_id"];
     [jsonRequestObject setObject:@"1" forKey:@"read_all"];
     
     NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
@@ -84,6 +86,7 @@
                                    
                                    NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
                                    
+                                   NSLog(@"lalalal %@", stringReply);
                                    
                                    NSDictionary *jsonValues = [stringReply JSONValue];
                                    

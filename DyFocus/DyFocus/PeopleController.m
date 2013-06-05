@@ -393,14 +393,14 @@
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
-        NSMutableArray *fofArray = [delegate FOFsFromUser:person.facebookId];
+        NSMutableArray *fofArray = [delegate FOFsFromUser:person.uid];
         
         ProfileController *profileController = nil;
         
         if ([fofArray count] > 0) {
             profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:fofArray];
         } else {
-            profileController = [[ProfileController alloc] initWithFacebookId:person.facebookId];
+            profileController = [[ProfileController alloc] initWithUserId:person.uid];
         }
         
         profileController.hidesBottomBarWhenPushed = YES;
@@ -431,19 +431,18 @@
 }
 
 - (void)refreshImages {
-	if (!m_isFacebookTableEmpty) {
-		NSArray *visibleCells = [self.tableView visibleCells];
-		if (visibleCells) {
-			NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
-			for (UITableViewCell *cell in visibleCellsCopy) {
-				UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithInt:cell.tag]];
-				if (image == nil) {
-					[self loadImage:cell.tag]; // Load user image for each Cell
-				}
-			}
-			[visibleCellsCopy release];
-		}
-	}
+    
+    NSArray *visibleCells = [self.tableView visibleCells];
+    if (visibleCells) {
+        NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
+        for (UITableViewCell *cell in visibleCellsCopy) {
+            UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithInt:cell.tag]];
+            if (image == nil) {
+                [self loadImage:cell.tag]; // Load user image for each Cell
+            }
+        }
+        [visibleCellsCopy release];
+    }
 }
 
 - (void)clearImageCache {

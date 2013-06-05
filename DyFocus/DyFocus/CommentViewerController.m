@@ -232,7 +232,7 @@
     
     NSString *message = self.fbCommentTextView.text;
     
-    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg", fof.m_userId, fof.m_name];
+    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%ld_%@_0.jpeg", fof.m_userId, fof.m_name];
     
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    urlLink, @"link",
@@ -321,7 +321,7 @@
 -(void)shareOnFacebook{
         
     NSLog(@"FOF  NAMEEEEEE %@", fof.m_name);
-    NSLog(@"FOF  IIDDDDDDD %@", fof.m_userId);
+    NSLog(@"FOF  IIDDDDDDD %@", fof.m_userFacebookId);
     
     self.navigationItem.title = @"Comment";
     
@@ -353,18 +353,22 @@
 
 - (void)setFbShareButton {
     
-    UIImage *faceImage = [UIImage imageNamed:@"fb_share_button.png"];
-    UIButton *face = [UIButton buttonWithType:UIButtonTypeCustom];
-    face.bounds = CGRectMake( 0, 0, faceImage.size.width * 0.65, faceImage.size.height * 0.65);
-    [face setImage:faceImage forState:UIControlStateNormal];
+    AppDelegate * delegate = [UIApplication sharedApplication].delegate;
     
-    UIBarButtonItem *faceBtn = [[[UIBarButtonItem alloc] initWithCustomView:face] autorelease];
-    
-    [face addTarget:self action:@selector(shareOnFacebook) forControlEvents:UIControlEventTouchUpInside];
-    
-    [faceBtn setCustomView:face];
-    
-    [self.navigationItem setRightBarButtonItem:faceBtn];
+    if (!(delegate.myself.facebookId == (id)[NSNull null] || delegate.myself.facebookId.length == 0)) {
+        UIImage *faceImage = [UIImage imageNamed:@"fb_share_button.png"];
+        UIButton *face = [UIButton buttonWithType:UIButtonTypeCustom];
+        face.bounds = CGRectMake( 0, 0, faceImage.size.width * 0.65, faceImage.size.height * 0.65);
+        [face setImage:faceImage forState:UIControlStateNormal];
+        
+        UIBarButtonItem *faceBtn = [[[UIBarButtonItem alloc] initWithCustomView:face] autorelease];
+        
+        [face addTarget:self action:@selector(shareOnFacebook) forControlEvents:UIControlEventTouchUpInside];
+        
+        [faceBtn setCustomView:face];
+        
+        [self.navigationItem setRightBarButtonItem:faceBtn];
+    }
 
 }
 
@@ -445,15 +449,17 @@
                                                NSString *fofId = [jsonComment valueForKey:@"fof_id"];
                                                NSString *fofComment = [jsonComment valueForKey:@"comment"];
                                                NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
+                                               NSString *fofUserId = [jsonComment valueForKey:@"user_id"];
                                                
                                                NSString *commentPubDate = [jsonComment valueForKey:@"pub_date"];
                                                
                                                Comment *comment = [[Comment alloc] init];
-                                               comment.m_userId = fofFriendId;
+                                               comment.m_userFacebookId = fofFriendId;
                                                comment.m_message = fofComment;
                                                comment.m_userName = fofUserName;
                                                comment.m_fofId = fofId;
                                                comment.m_date = commentPubDate;
+                                               comment.m_userId = [fofUserId longLongValue];
                                             
                                                [comments addObject:comment];
                                                   NSLog(@"Commentario: %@", comment.m_message);
@@ -468,18 +474,23 @@
                                                
                                                NSDictionary *jsonComment = [jsonLikes objectAtIndex:i];  // jsonComment? why not jonLike?
                                                
-                                               NSString *fofFriendId = [jsonComment valueForKey:@"user_facebook_id"];
+                                               NSString *fofUserId = [jsonComment valueForKey:@"user_id"];
+                                               NSString *fofUserFacebookId = [jsonComment valueForKey:@"user_facebook_id"];
                                                NSString *fofId = [jsonComment valueForKey:@"fof_id"];
+                                               long userId = [[jsonComment valueForKey:@"user_id"] longLongValue];
                                                NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
                                                
                                                Like *like = [[Like alloc] init];
-                                               like.m_userId = fofFriendId;
+                                               like.m_userFacebookId = fofUserFacebookId;
+                                               like.m_userId = [fofUserId longLongValue];
                                                like.m_fofId = fofId;
+                                               like.m_userId = userId;
+                                               
 //                                               like.m_userName = fofUserName;//todo
                                                
                                                AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-                                               NSString *myFacebookId = appDelegate.myself.facebookId;
-                                               if([fofFriendId isEqualToString:myFacebookId]){
+                                               
+                                               if([fofUserId longLongValue] == appDelegate.myself.uid){
                                                    like.m_userName = @"You";
                                                }else{
                                                    like.m_userName = fofUserName;
@@ -685,14 +696,14 @@
     /*
      
      {
-     "facebook_id": "100000370417687",
+     "user_id": "2",
      "fof_id": "96964.057167",
      "comment_message": "QUE LEGAAAL! "
      }
      
      */
     
-    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/comment/",dyfocus_url] autorelease];
+    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/user_comment/",dyfocus_url] autorelease];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     
@@ -701,7 +712,8 @@
     [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"facebook_id"];
+    
+    [jsonRequestObject setObject:[NSString stringWithFormat:@"%ld", delegate.myself.uid] forKey:@"user_id"];
     
     [jsonRequestObject setObject:searchBar.text forKey:@"comment_message"];
     
@@ -725,11 +737,12 @@
                                    Person *myself = delegate.myself;
                                    
                                    Comment *comment = [[Comment alloc] init];
-                                   comment.m_userId = myself.facebookId;
+                                   comment.m_userFacebookId = myself.facebookId;
                                    comment.m_message = searchBar.text;
                                    comment.m_userName = myself.name;
                                    comment.m_fofId = fof.m_id;
                                    comment.m_date = @"Today";
+                                   comment.m_userId = myself.uid;
                                    
                                    [comments addObject:comment];
                                    [tableView reloadData];
