@@ -489,12 +489,10 @@
 //                                               like.m_userName = fofUserName;//todo
                                                
                                                AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-<<<<<<< HEAD
-                                               if([fofFriendId isEqualToString:appDelegate.myself.facebookId]){
-=======
+
                                                
                                                if([fofUserId longLongValue] == appDelegate.myself.uid){
->>>>>>> origin/new_signup_view
+
                                                    like.m_userName = @"You";
                                                }else{
                                                    like.m_userName = fofUserName;
