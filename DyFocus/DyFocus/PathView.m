@@ -63,7 +63,9 @@
         [firstImage setHidden:YES];
         [secondImage setHidden:YES];
         [self setNeedsDisplay];
-	}
+        
+        [cameraViewController clearPoints];
+    }
 }
 
 - (void)addPoint:(CGPoint)actualTouchPoint {
@@ -82,6 +84,27 @@
     }
 }
 
+// Old getPoints method
+//- (NSMutableArray *)getPoints {
+//	
+//    if(!focusPoints){
+//        focusPoints = [[NSMutableArray alloc] init];
+//    } else {
+//        [focusPoints removeAllObjects];
+//    }
+//    
+//    for (NSObject *point in touchPoints) {
+//        CGPoint touchPoint = [(NSValue *)point CGPointValue];
+//        
+//        NSValue *pointValue = [NSValue valueWithCGPoint:CGPointMake(touchPoint.y / self.frame.size.height, 1 - touchPoint.x / self.frame.size.width)];
+//        [focusPoints  addObject:pointValue];
+//    }
+//    
+//    return focusPoints;
+//}
+
+
+// New getPoints method, now it returns a reversed array of focus points (ex: n, n-1,...3, 2, 1)
 - (NSMutableArray *)getPoints {
 	
     if(!focusPoints){
@@ -90,11 +113,13 @@
         [focusPoints removeAllObjects];
     }
     
+    NSEnumerator *enumerator = [touchPoints reverseObjectEnumerator];
+    
     for (NSObject *point in touchPoints) {
-        CGPoint touchPoint = [(NSValue *)point CGPointValue];
+        CGPoint touchPoint = [(NSValue *)enumerator.nextObject CGPointValue];
         
         NSValue *pointValue = [NSValue valueWithCGPoint:CGPointMake(touchPoint.y / self.frame.size.height, 1 - touchPoint.x / self.frame.size.width)];
-        [focusPoints addObject:pointValue];
+        [focusPoints  addObject:pointValue];
     }
     
     return focusPoints;
@@ -122,10 +147,9 @@
         [self addPoint:touchPoint];
         [self setNeedsDisplay];
         
-        if ([touchPoints count] == 1) {
-            cameraViewController.mFocalPoints = [self getPoints];
-            [cameraViewController updateFocusPoint];
-        }
+        cameraViewController.mFocalPoints = [self getPoints];
+        [cameraViewController updateFocusPoint];
+
     }
     else if (enabled && [touchPoints count] == 2) {
         [self clearPoints];

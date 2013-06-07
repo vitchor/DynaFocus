@@ -70,7 +70,10 @@
     [infoButton setEnabled:true];
     [cancelButton setEnabled:true];
     
-    [self setTorchOn:(torchOnFocusPoints==1||torchOnFocusPoints==3)];
+    if(mFocalPoints.count==1)
+        [self setTorchOn:(torchOnFocusPoints==2||torchOnFocusPoints==3)];
+    else if(mFocalPoints.count==2)
+        [self setTorchOn:(torchOnFocusPoints==1||torchOnFocusPoints==3)];
     
     mFOFIndex = 0;
     
@@ -188,7 +191,20 @@
     
     if ([mCaptureDevice lockForConfiguration:&error]) {
         
-        if (mFOFIndex > 0) {
+        if (mFocalPoints.count == 2) {
+            NSLog(@"On Focus Update - current value for torchOnFocusPoints: %d",torchOnFocusPoints);
+            if (torchOnFocusPoints == 1 || torchOnFocusPoints == 3) {
+                NSLog(@"Turning freaking torch on!");
+                isTorchOn = false;
+                [self setTorchOn:!isTorchOn];
+            } else {
+                NSLog(@"Turning freaking torch off!");
+                isTorchOn = true;
+                [self setTorchOn:!isTorchOn];
+            }
+        }
+        
+        if (mFocalPoints.count == 1 || mFOFIndex == 1) {
             NSLog(@"On Focus Update - current value for torchOnFocusPoints: %d",torchOnFocusPoints);
             if (torchOnFocusPoints == 2 || torchOnFocusPoints == 3) {
                 NSLog(@"Turning freaking torch on!");
@@ -201,7 +217,6 @@
             }
         }
         
-    
         if ([mCaptureDevice isExposurePointOfInterestSupported]) {
             [mCaptureDevice setExposurePointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
             
@@ -525,24 +540,24 @@
 
 // Logic for variable torchOnFocusPoints:
 // 0: no torch on any point
-// 1: torch on focus point 1
-// 2: torch on focus point 2
+// 1: torch on focus point 2
+// 2: torch on focus point 1
 // 3: torch on both focus points
 
--(void) toggleTorchForFocusOne {
+-(void) toggleTorchForFocusTwo {
     
     if (torchOnFocusPoints == 1 || torchOnFocusPoints == 3) {
-        // torch for focus point 1 is on, turn it off immediately
+        // torch for focus point 2 is on, turn it off immediately
         isTorchOn = true;
         [self setTorchOn:!isTorchOn];
-        [torchOneButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
+        [torchTwoButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
         torchOnFocusPoints -= 1;
     } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 2) {
-        // torch for focus point 1 is off, turn it on immediately
+        // torch for focus point 2 is off, turn it on immediately
         torchOnFocusPoints += 1;
         isTorchOn = false;
         [self setTorchOn:!isTorchOn];
-        [torchOneButton setImage:[UIImage imageNamed:@"Torch-Button-On-NoStroke.png"] forState:UIControlStateNormal];
+        [torchTwoButton setImage:[UIImage imageNamed:@"Torch-Button-On-NoStroke.png"] forState:UIControlStateNormal];
     } else {
         torchOnFocusPoints = 1;
         isTorchOn = false;
@@ -551,15 +566,25 @@
     NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
 }
 
--(void) toggleTorchForFocusTwo {
+-(void) toggleTorchForFocusOne {
     if (torchOnFocusPoints == 2 || torchOnFocusPoints == 3) {
-        // torch for focus point 2 is on, turn it off when taking second pic
+        // torch for focus point 1 is on, turn it off when taking second pic
         torchOnFocusPoints -= 2;
-        [torchTwoButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
+        [torchOneButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
+        
+        if(mFocalPoints.count==1){
+            isTorchOn=true;
+            [self setTorchOn:!isTorchOn];
+        }
     } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 1) {
-        // torch for focus point 2 is off, turn it on when taking second pic
+        // torch for focus point 1 is off, turn it on when taking second pic
         torchOnFocusPoints += 2;
-        [torchTwoButton setImage:[UIImage imageNamed:@"Torch-Button-On-NoStroke.png"] forState:UIControlStateNormal];
+        [torchOneButton setImage:[UIImage imageNamed:@"Torch-Button-On-NoStroke.png"] forState:UIControlStateNormal];
+        
+        if(mFocalPoints.count==1){
+            isTorchOn=false;
+            [self setTorchOn:!isTorchOn];
+        }
     }
     NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
 }
@@ -598,10 +623,10 @@
 
 -(void)clearPoints
 {
-    [pathView clearPoints];
+    if(mFocalPoints!=nil)
+        [mFocalPoints removeAllObjects];
     
-//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-//    [appDelegate logEvent:@"Clear Points Button"];
+    [self setTorchOn:NO];
 }
 
 -(void)addObserverToFocus
