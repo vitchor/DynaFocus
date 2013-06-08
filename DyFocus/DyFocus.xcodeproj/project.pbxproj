@@ -155,6 +155,8 @@
 		7B0EC6FF16F3864C00606626 /* CameraView-RightButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F516F3864C00606626 /* CameraView-RightButton.png */; };
 		7B0EC70016F3864C00606626 /* CameraView-RightButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */; };
 		7B0EC70116F3864C00606626 /* CameraView-ShootButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */; };
+		7B18FA19176120D8005F3B22 /* dyfocus_icon_57x57b.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B18FA17176120D8005F3B22 /* dyfocus_icon_57x57b.png */; };
+		7B18FA1A176120D8005F3B22 /* dyfocus_icon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B18FA18176120D8005F3B22 /* dyfocus_icon_114x114.png */; };
 		7B7C2F3C171D052A00C2A022 /* FullscreenFOFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7C2F39171D052A00C2A022 /* FullscreenFOFViewController.m */; };
 		7B7C2F3D171D052A00C2A022 /* FullscreenFOFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B7C2F3A171D052A00C2A022 /* FullscreenFOFViewController.xib */; };
 		7BBE360F17519BF60002DA95 /* Pause-Button-NoStroke.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BBE360B17519BF60002DA95 /* Pause-Button-NoStroke.png */; };
@@ -478,6 +480,8 @@
 		7B0EC6F516F3864C00606626 /* CameraView-RightButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButton.png"; sourceTree = "<group>"; };
 		7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButtonPressed.png"; sourceTree = "<group>"; };
 		7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButton.png"; sourceTree = "<group>"; };
+		7B18FA17176120D8005F3B22 /* dyfocus_icon_57x57b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_57x57b.png; sourceTree = "<group>"; };
+		7B18FA18176120D8005F3B22 /* dyfocus_icon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_114x114.png; sourceTree = "<group>"; };
 		7B7C2F39171D052A00C2A022 /* FullscreenFOFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenFOFViewController.m; sourceTree = "<group>"; };
 		7B7C2F3A171D052A00C2A022 /* FullscreenFOFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FullscreenFOFViewController.xib; sourceTree = "<group>"; };
 		7B7C2F3B171D052A00C2A022 /* FullscreenFOFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenFOFViewController.h; sourceTree = "<group>"; };
@@ -1233,6 +1237,8 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7B18FA17176120D8005F3B22 /* dyfocus_icon_57x57b.png */,
+				7B18FA18176120D8005F3B22 /* dyfocus_icon_114x114.png */,
 				7BBE361B17519C150002DA95 /* Torch-Button-Off-NoStroke.png */,
 				7BBE361C17519C150002DA95 /* Torch-Button-Off.png */,
 				7BBE361D17519C150002DA95 /* Torch-Button-On-NoStroke.png */,
@@ -1562,8 +1568,9 @@
 				04DE3707172E24C2006CD4DE /* fof_example_1_1_i5.jpg in Resources */,
 				04DE3708172E24C2006CD4DE /* fof_example_2_0_i5.jpg in Resources */,
 				04DE3709172E24C2006CD4DE /* fof_example_2_1_i5.jpg in Resources */,
-				042BBFCD17376B80003DF182 /* dyfocus_2.0_114x114.png in Resources */,
 				04CD4502175FC64A009E79FC /* LoginController_i5.xib in Resources */,
+				7B18FA19176120D8005F3B22 /* dyfocus_icon_57x57b.png in Resources */,
+				7B18FA1A176120D8005F3B22 /* dyfocus_icon_114x114.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,7 +56,8 @@
 - (void)showToast:(NSString *)text;
 - (void)updateFocusPoint;
 - (void)setInitialFocusPoint:(CGPoint)point;
-- (void) setProximityEnabled:(BOOL)isOn;
+- (void)setProximityEnabled:(BOOL)isOn;
+- (void)clearPoints;
 
 @property(nonatomic,retain) IBOutlet UIButton *shootButton;
 @property(nonatomic,retain) IBOutlet UIButton *cancelButton;
