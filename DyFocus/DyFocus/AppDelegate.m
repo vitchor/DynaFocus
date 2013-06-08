@@ -1075,7 +1075,7 @@
 
     if (self.myself) {
         NSDictionary *articleParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                         [NSString stringWithFormat:@"%@",self.myself.facebookId], @"User ID", // Capture author info
+                         [NSString stringWithFormat:@"%ld",self.myself.uid], @"User ID", // Capture author info
                          [NSString stringWithFormat:@"%f",CACurrentMediaTime()], @"Time", // Capture user status
                          nil];
         
