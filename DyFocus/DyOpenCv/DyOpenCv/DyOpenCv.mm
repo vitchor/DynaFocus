@@ -21,7 +21,18 @@
     cv::Mat img_2 = [UIImageCVMatConverter cvMatFromUIImage:image2];
 
     AntiShake *antiShake = AntiShake::getInstance();
-    antiShake->antiShake(img_1, img_2);
+    cv::Mat H = antiShake->fixPictures(img_1,img_2,1);
+    
+    // Transforming data from mat to std::string. Later it will become the NSMutableString
+    cv::Mat eigenvalues;
+    eigen(H, eigenvalues);
+	std::stringstream bufferMatrix, bufferEigenvalues;
+	bufferMatrix << H;
+    bufferEigenvalues << eigenvalues;
+
+    NSString *matrixValues = [NSString stringWithFormat:@"\n MATRIX: \n %@ \n DET(H) = %f \n Eigenvalues = %@", [NSString stringWithCString:bufferMatrix.str().c_str() encoding:NSASCIIStringEncoding], cv::determinant(H), [NSString stringWithCString:bufferEigenvalues.str().c_str() encoding:NSASCIIStringEncoding]];
+    
+    NSLog(@"++++ %@", matrixValues);
     
     NSLog(@"==== FINISHED ANTISHAKE");
     UIImage *image3= [UIImageCVMatConverter UIImageFromCVMat:img_1 withOrientation:image1.imageOrientation];
@@ -35,6 +46,7 @@
     NSMutableArray *warpedImages = [[NSMutableArray alloc] init];
     [warpedImages addObject:image3];
     [warpedImages addObject:image4];
+    [warpedImages addObject:matrixValues];
     return warpedImages;
 }
 @end

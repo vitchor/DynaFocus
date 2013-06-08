@@ -17,7 +17,8 @@
     IBOutlet UIHorizontalTableView *firstTableView;
     IBOutlet UIHorizontalTableView *secondTableView;
     IBOutlet UIScrollView *scrollView;
-        
+    
+    NSMutableArray *fixedFrames;
     NSMutableArray *frames;
     NSMutableArray *displayedFrames;
     NSMutableArray *focalPoints;
@@ -30,6 +31,7 @@
 
 @property(nonatomic,retain) IBOutlet UIImageView *firstImageView;
 @property(nonatomic,retain) IBOutlet UIImageView *secondImageView;
+@property(nonatomic,retain) NSMutableArray *fixedFrames;
 @property(nonatomic,retain) NSMutableArray *frames;
 @property(nonatomic,retain) NSMutableArray *displayedFrames;
 @property(nonatomic,retain) NSMutableArray *focalPoints;

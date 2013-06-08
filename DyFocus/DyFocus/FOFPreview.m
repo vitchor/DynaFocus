@@ -18,7 +18,7 @@
 #define CANCEL 0
 @implementation FOFPreview
 
-@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames;
+@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames, fixedFrames;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -57,16 +57,12 @@
     
     DyOpenCv *dyOpenCV = [DyOpenCv alloc];
     
+    
     NSMutableArray *warpedImages = [dyOpenCV antiShake:self.frames];
     [self.frames setObject:warpedImages[0] atIndexedSubscript:0];
     [self.frames setObject:warpedImages[1] atIndexedSubscript:1];
-//    [self.frames removeAllObjects];
-//    [self.frames release];
-//    self.frames = warpedImages;
-    
-//    [warpedImages removeAllObjects];
-//    [warpedImages release];
-    
+    self.fixedFrames = warpedImages;
+
     [dyOpenCV release];
     
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
@@ -142,6 +138,15 @@
         
         [scrollView setContentSize:CGSizeMake(screenBounds.size.width, height)];
         
+    }
+    
+    if(fixedFrames){
+        NSString *alertButton = @"OK";
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Matrix" message:fixedFrames[2] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+        [alert setTag:1];
+        [alert show];
+        
+        [alertButton release];
     }
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
