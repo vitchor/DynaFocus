@@ -19,7 +19,7 @@
 
 @implementation SharingController
 
-@synthesize facebookSwitch, activityIndicator, commentField, frames, focalPoints, spinner, backButton, fofName, fofUserFbId;
+@synthesize facebookSwitch, activityIndicator, commentField, frames, focalPoints, spinner, backButton, fofName, fofUserFbId, matrixString;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,7 +48,18 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     
     [delegate logEvent:@"SharingController.viewDidAppear"];
+    
+    if(matrixString){
+        NSString *alertButton = @"OK";
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Matrix" message:matrixString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+        [alert setTag:1];
+        [alert show];
+        
+        [alertButton release];
+    }
 }
+
+
 
 - (void)viewDidLoad
 {
@@ -344,6 +355,13 @@
     [spinner release];
     [commentField release];
     [placeHolderLabel release];
+    
+    [backButton release];
+    [fofUserFbId release];
+    [facebook release];
+    [request release];
+    [matrixString release];
+    
     [super dealloc];
 }
 

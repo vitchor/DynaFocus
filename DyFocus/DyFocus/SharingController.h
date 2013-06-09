@@ -13,20 +13,22 @@
 @interface SharingController : UIViewController {
     
     IBOutlet UILabel *shareLabel;
+    IBOutlet UILabel *placeHolderLabel;
+    FBSession *facebook;
+    ASIFormDataRequest *request;
+    
+    
     IBOutlet UISwitch *facebookSwitch;
     IBOutlet UIView *activityIndicator;
     IBOutlet UIActivityIndicatorView *spinner;
     IBOutlet UITextView *commentField;
-    IBOutlet UILabel *placeHolderLabel;
-    
 
-    FBSession *facebook;
-    ASIFormDataRequest *request;
     NSMutableArray *frames;
     NSMutableArray *focalPoints;
+    UIBarButtonItem *backButton;
     NSString *fofName;
     NSString *fofUserFbId;
-    UIBarButtonItem *backButton;
+    NSString *matrixString;
     
 }
 
@@ -43,5 +45,5 @@
 @property(nonatomic,retain) UIBarButtonItem *backButton;
 @property(nonatomic,retain) NSString *fofName;
 @property(nonatomic,retain) NSString *fofUserFbId;
-
+@property(nonatomic,retain) NSString *matrixString;
 @end

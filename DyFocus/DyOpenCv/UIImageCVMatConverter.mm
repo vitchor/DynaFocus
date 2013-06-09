@@ -40,10 +40,10 @@
     
     CGImageRef imageRef = CGImageCreate(cvMat.cols,                                     // Width
                                         cvMat.rows,                                     // Height
-                                        8,                                              // Bits per component
-                                        8 * cvMat.elemSize(),                           // Bits per pixel
-                                        cvMat.step[0],                                  // Bytes per row
-                                        colorSpace,                                     // Colorspace
+                                        8,                                              // Bits per component - ok
+                                        8 * cvMat.elemSize(),                           // Bits per pixel - ok
+                                        cvMat.step[0],                                  // Bytes per row - ok
+                                        colorSpace,                                     // Colorspace - ok
                                         kCGImageAlphaNone | kCGBitmapByteOrderDefault,  // Bitmap info flags
                                         provider,                                       // CGDataProviderRef
                                         NULL,                                           // Decode
@@ -54,11 +54,6 @@
     CGImageRelease(imageRef);
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
-    
-    
-    NSLog(@"==== 3 - cvMat - UIImageFromCVMat == COLS: %i, ROWS: %i", cvMat.cols, cvMat.rows);
-    NSLog(@"==== 4 - image - UIImageFromCVMat == COLS: %f, ROWS: %f", image.size.width, image.size.height);
-    
     
     return image;
 }
@@ -92,9 +87,6 @@
     
     CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
     CGContextRelease(contextRef);
-    
-    NSLog(@"==== 1 - image - cvMatFromUIImage == COLS: %f, ROWS: %f", cols, rows);
-    NSLog(@"==== 2 - cvMat - cvMatFromUIImage == COLS: %i, ROWS: %i", cvMat.cols, cvMat.rows);
     
     return cvMat;
 }

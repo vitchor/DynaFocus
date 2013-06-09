@@ -21,7 +21,7 @@
     cv::Mat img_2 = [UIImageCVMatConverter cvMatFromUIImage:image2];
 
     AntiShake *antiShake = AntiShake::getInstance();
-    cv::Mat H = antiShake->fixPictures(img_1,img_2,1);
+    cv::Mat H = antiShake->fixPictures(img_1, img_2, 1);
     
     // Transforming data from mat to std::string. Later it will become the NSMutableString
     cv::Mat eigenvalues;
@@ -32,21 +32,22 @@
 
     NSString *matrixValues = [NSString stringWithFormat:@"\n MATRIX: \n %@ \n DET(H) = %f \n Eigenvalues = %@", [NSString stringWithCString:bufferMatrix.str().c_str() encoding:NSASCIIStringEncoding], cv::determinant(H), [NSString stringWithCString:bufferEigenvalues.str().c_str() encoding:NSASCIIStringEncoding]];
     
-    NSLog(@"++++ %@", matrixValues);
-    
     NSLog(@"==== FINISHED ANTISHAKE");
-    UIImage *image3= [UIImageCVMatConverter UIImageFromCVMat:img_1 withOrientation:image1.imageOrientation];
-    UIImage *image4= [UIImageCVMatConverter UIImageFromCVMat:img_2 withOrientation:image2.imageOrientation];
+    UIImage *image3= [[UIImageCVMatConverter UIImageFromCVMat:img_1 withOrientation:image1.imageOrientation] autorelease];
+    UIImage *image4= [[UIImageCVMatConverter UIImageFromCVMat:img_2 withOrientation:image2.imageOrientation] autorelease];
     NSLog(@"==== FINISHED CONVERSION");
-//    
-//    img_1.release();
-//    img_2.release();
 
-     
-    NSMutableArray *warpedImages = [[NSMutableArray alloc] init];
+    //    [image1 release], image1 = image3;
+    //    [image2 release], image2 = image4;
+    
+    img_1.release();
+    img_2.release();
+    
+    NSMutableArray *warpedImages = [[[NSMutableArray alloc] init] autorelease];
     [warpedImages addObject:image3];
     [warpedImages addObject:image4];
     [warpedImages addObject:matrixValues];
+    
     return warpedImages;
 }
 @end

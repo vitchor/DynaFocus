@@ -18,7 +18,7 @@
 #define CANCEL 0
 @implementation FOFPreview
 
-@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames, fixedFrames;
+@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames, fixedFrames, scrollView, fofName, timerPause, oldFrameIndex;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -36,8 +36,6 @@
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
-    self.displayedFrames = [[NSMutableArray alloc] init];
-    
     NSString *doneString = @"Next";
 	UIBarButtonItem *continueButton = [[UIBarButtonItem alloc]
 									   initWithTitle:doneString style:UIBarButtonItemStyleDone target:self action:@selector(next)];
@@ -56,20 +54,29 @@
     self.navigationItem.title = @"Preview";
     
     DyOpenCv *dyOpenCV = [DyOpenCv alloc];
-    
-    
-    NSMutableArray *warpedImages = [dyOpenCV antiShake:self.frames];
-    [self.frames setObject:warpedImages[0] atIndexedSubscript:0];
-    [self.frames setObject:warpedImages[1] atIndexedSubscript:1];
-    self.fixedFrames = warpedImages;
-
+    self.fixedFrames = [dyOpenCV antiShake:self.frames];
     [dyOpenCV release];
+    
+    
+//    [warpedImages release];
+//    [warpedImages removeAllObjects], [warpedImages release], warpedImages = nil;
+//    [self.frames setObject:warpedImages[0] atIndexedSubscript:0];
+//    [self.frames setObject:warpedImages[1] atIndexedSubscript:1];
+//    self.fixedFrames = warpedImages;
+
+//    [warpedImages removeAllObjects];
+//    [warpedImages release];
     
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
     
     if ([self.frames count] > 1) {
         [self.secondImageView setImage: [self.frames objectAtIndex:1]];
     }
+    
+    if(self.displayedFrames){
+        [displayedFrames removeAllObjects], [displayedFrames release], displayedFrames = nil;
+    }
+    self.displayedFrames = [[[NSMutableArray alloc] init] autorelease];
     
     for (UIImage *frame in self.frames) {
         [displayedFrames addObject:frame];
@@ -80,15 +87,7 @@
     
     [firstTableView setDataSource:self];
     [secondTableView setDataSource:self];
-    
-    
-    //[firstTableView selectRowAtIndexPath: [NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-    
-    
-    //[firstTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    
-    //[secondTableView selectRowAtIndexPath: [NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-    
+
     [firstTableView setDelegate:self];
     [secondTableView setDelegate:self];
     
@@ -140,14 +139,14 @@
         
     }
     
-    if(fixedFrames){
-        NSString *alertButton = @"OK";
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Matrix" message:fixedFrames[2] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
-        [alert setTag:1];
-        [alert show];
-        
-        [alertButton release];
-    }
+//    if(fixedFrames){
+//        NSString *alertButton = @"OK";
+//        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Matrix" message:fixedFrames[2] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+//        [alert setTag:1];
+//        [alert show];
+//        
+//        [alertButton release];
+//    }
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FOFPreview.viewDidAppear"];
@@ -162,15 +161,6 @@
 
 - (void) dealloc
 {
-    [displayedFrames release];
-    [frames release];
-    
-    [focalPoints release];
-    [firstImageView release];
-    [secondImageView release];
-    
-    [scrollView release];
-    
     [firstTableView setDataSource:nil];
     [firstTableView reloadData];
     [firstTableView release];
@@ -180,6 +170,15 @@
     [secondTableView reloadData];
     [secondTableView release];
     secondTableView = nil;
+    
+    [firstImageView release];
+    [secondImageView release];
+    [scrollView release];
+
+    [fixedFrames removeAllObjects], [fixedFrames release], fixedFrames = nil;
+    [frames removeAllObjects], [frames release], frames = nil;
+    [displayedFrames removeAllObjects], [displayedFrames release], displayedFrames = nil;
+    [focalPoints removeAllObjects], [focalPoints release], focalPoints = nil;
     
     [timer release];
     [fofName release];
@@ -253,6 +252,7 @@
     
     sharingController.focalPoints = self.focalPoints;
     sharingController.frames = self.displayedFrames;
+    sharingController.matrixString = [self.fixedFrames[2] copy];
     
     [self.navigationController pushViewController:sharingController animated:true];
     [sharingController release];
