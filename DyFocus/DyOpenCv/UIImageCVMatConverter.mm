@@ -37,6 +37,7 @@
     }
     
     CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+    [data release];
     
     CGImageRef imageRef = CGImageCreate(cvMat.cols,                                     // Width
                                         cvMat.rows,                                     // Height
@@ -50,10 +51,13 @@
                                         false,                                          // Should interpolate
                                         kCGRenderingIntentDefault);                     // Intent
     
-    UIImage *image = [[UIImage alloc] initWithCGImage:imageRef scale:1.0 orientation:orientation];
+    UIImage *bufferImage = [[[UIImage alloc] initWithCGImage:imageRef scale:1.0f orientation:orientation] autorelease];
+    
     CGImageRelease(imageRef);
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
+    
+    UIImage *image = [UIImage imageWithData:UIImageJPEGRepresentation([bufferImage copy], 1.0)];
     
     return image;
 }

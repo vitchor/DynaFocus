@@ -33,8 +33,8 @@
     NSString *matrixValues = [NSString stringWithFormat:@"\n MATRIX: \n %@ \n DET(H) = %f \n Eigenvalues = %@", [NSString stringWithCString:bufferMatrix.str().c_str() encoding:NSASCIIStringEncoding], cv::determinant(H), [NSString stringWithCString:bufferEigenvalues.str().c_str() encoding:NSASCIIStringEncoding]];
     
     NSLog(@"==== FINISHED ANTISHAKE");
-    UIImage *image3= [[UIImageCVMatConverter UIImageFromCVMat:img_1 withOrientation:image1.imageOrientation] autorelease];
-    UIImage *image4= [[UIImageCVMatConverter UIImageFromCVMat:img_2 withOrientation:image2.imageOrientation] autorelease];
+    UIImage *image3= [UIImageCVMatConverter UIImageFromCVMat:img_1 withOrientation:image1.imageOrientation];
+    UIImage *image4= [UIImageCVMatConverter UIImageFromCVMat:img_2 withOrientation:image2.imageOrientation];
     NSLog(@"==== FINISHED CONVERSION");
 
     //    [image1 release], image1 = image3;
