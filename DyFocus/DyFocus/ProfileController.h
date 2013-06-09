@@ -47,7 +47,7 @@
 
 - (id)initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray;
 
-- (id) initWithFacebookId:(NSString *)facebookId;
+- (id) initWithUserId:(long) userId;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray;
 

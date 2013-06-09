@@ -27,6 +27,7 @@
 
     int oldFrameIndex;
     int timerPause;
+    IBOutlet UIButton *playPauseButton;
 }
 
 @property(nonatomic,retain) IBOutlet UIHorizontalTableView *firstTableView;
@@ -44,6 +45,7 @@
 @property(nonatomic, assign) int oldFrameIndex;
 @property(nonatomic, assign) int timerPause;
 
--(IBAction)changeSlider:(id)sender;
+- (IBAction)changeSlider:(id)sender;
+- (IBAction)playPauseAction:(UIButton *)sender;
 
 @end

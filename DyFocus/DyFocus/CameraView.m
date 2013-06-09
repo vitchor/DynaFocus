@@ -24,13 +24,187 @@
 
 @synthesize cameraView, pathView, shootButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchOneButton, torchTwoButton, instructionsImageView;
 
+#pragma mark - View lifecycle
+- (void)viewDidLoad
+{
+    pathView.enabled = true;
+    isObserving = false;
+    
+    [torchOneButton addTarget:self action:@selector(toggleTorchForFocusOne) forControlEvents:UIControlEventTouchUpInside];
+    [torchTwoButton addTarget:self action:@selector(toggleTorchForFocusTwo) forControlEvents:UIControlEventTouchUpInside];
+    
+    [torchOneButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
+    [torchTwoButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
+    
+    [cancelButton setImage:[UIImage imageNamed:@"CameraView-LeftButtonPressed.png"] forState:UIControlStateHighlighted];
+    
+    [shootButton setImage:[UIImage imageNamed:@"CameraView-ShootButtonPressed.png"] forState:UIControlStateHighlighted];
+    
+    [infoButton setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"] forState:UIControlStateHighlighted];
+    
+    
+    [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImage *redButtonImage = [UIImage imageNamed:@"close.png"];
+    
+    [popupCloseButton setBackgroundImage:redButtonImage forState:UIControlStateNormal];
+    [popupCloseButton addTarget:self action:@selector(closePopup) forControlEvents:UIControlEventTouchUpInside];
+    
+    [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    
+    DyfocusSettings *settings = [DyfocusSettings sharedSettings];
+    if(!settings.isFirstLogin && !popupView.isHidden){
+        [popupView setHidden:YES];
+        settings.isFirstLogin = NO;
+    }
+    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
+    [spinner startAnimating];
+    [loadingView setHidden:NO];
+    
+    [super viewWillAppear:animated];
+    
+    [infoButton setEnabled:true];
+    [cancelButton setEnabled:true];
+    
+    if(mFocalPoints.count==1)
+        [self setTorchOn:(torchOnFocusPoints==2||torchOnFocusPoints==3)];
+    else if(mFocalPoints.count==2)
+        [self setTorchOn:(torchOnFocusPoints==1||torchOnFocusPoints==3)];
+    
+    mFOFIndex = 0;
+    
+    if (!mFrames) {
+        mFrames = [[NSMutableArray alloc] init];
+    } else {
+        [mFrames removeAllObjects];
+    }
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeChanged:) name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
+    
+    pathView.cameraViewController = self;
+    
+    popupDarkView.layer.cornerRadius = 9.0;
+    [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
+    popupDarkView.clipsToBounds = YES;
+    popupDarkView.layer.masksToBounds = YES;
+    [popupDarkView setNeedsDisplay];
+    [popupDarkView setNeedsLayout];
+    
+    [pathView resetOrientations];
+    
+    currentOrientation = [UIDevice currentDevice].orientation;
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"CameraView.viewDidAppear"];
+    
+    //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
+    if(popupView.tag != 420) {
+        //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
+        //[[mToastMessage setDuration:iToastDurationNormal] show];
+        
+        [popupView setHidden:NO];
+        [popupView setTag:420];
+        
+    }
+    
+    [shootButton setEnabled:true];
+    
+    if (!captureSession) {
+        [self startCaptureSession];
+    } else {
+        [captureSession startRunning];
+        
+        if (mCaptureDevice) {
+            if (![mCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus] || ![mCaptureDevice isFocusPointOfInterestSupported]) {
+                [self disablePictureTaking];
+            }
+        }
+        
+        [spinner stopAnimating];
+        [loadingView setHidden:YES];
+    }
+    
+    [super viewDidAppear:animated];
+    
+    if([mFocalPoints count] > 0)
+        [self updateFocusPoint];
+    
+    if([mFocalPoints count] > 1)
+        [self setProximityEnabled:YES];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if (mToastMessage) {
+        [mToastMessage removeToast:nil];
+    }
+    
+	[super viewWillDisappear:animated];
+    [captureSession stopRunning];
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    
+	[super viewDidDisappear:animated];
+    [self setProximityEnabled:NO];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+-(void)dealloc
+{
+    [mFocalPoints release];
+    [mFrames release];
+    [cancelButton release];
+    [shootButton release];
+    [infoButton release];
+    [super dealloc];
+}
+
 - (void)updateFocusPoint {
     NSLog(@"UPDATE POINT: %d", mFOFIndex);
     NSError *error = nil;
     
     if ([mCaptureDevice lockForConfiguration:&error]) {
         
-        if (mFOFIndex > 0) {
+        if (mFocalPoints.count == 2) {
+            NSLog(@"On Focus Update - current value for torchOnFocusPoints: %d",torchOnFocusPoints);
+            if (torchOnFocusPoints == 1 || torchOnFocusPoints == 3) {
+                NSLog(@"Turning freaking torch on!");
+                isTorchOn = false;
+                [self setTorchOn:!isTorchOn];
+            } else {
+                NSLog(@"Turning freaking torch off!");
+                isTorchOn = true;
+                [self setTorchOn:!isTorchOn];
+            }
+        }
+        
+        if (mFocalPoints.count == 1 || mFOFIndex == 1) {
             NSLog(@"On Focus Update - current value for torchOnFocusPoints: %d",torchOnFocusPoints);
             if (torchOnFocusPoints == 2 || torchOnFocusPoints == 3) {
                 NSLog(@"Turning freaking torch on!");
@@ -41,11 +215,8 @@
                 isTorchOn = true;
                 [self setTorchOn:!isTorchOn];
             }
-            
-            torchOnFocusPoints = 0;
         }
         
-    
         if ([mCaptureDevice isExposurePointOfInterestSupported]) {
             [mCaptureDevice setExposurePointOfInterest:[[mFocalPoints objectAtIndex:mFOFIndex] CGPointValue]];
             
@@ -103,7 +274,6 @@
         [self showOkAlertWithMessage:@"Your device does not support focus point settings." andTitle:@"Sorry"];
     }
 }
-
 
 - (void)startCaptureSession {
 	
@@ -241,7 +411,6 @@
     }
 }
 
-
 - (void) capture {
     
     if (mVideoConnection && [mVideoConnection isVideoOrientationSupported]){
@@ -371,24 +540,24 @@
 
 // Logic for variable torchOnFocusPoints:
 // 0: no torch on any point
-// 1: torch on focus point 1
-// 2: torch on focus point 2
+// 1: torch on focus point 2
+// 2: torch on focus point 1
 // 3: torch on both focus points
 
--(void) toggleTorchForFocusOne {
+-(void) toggleTorchForFocusTwo {
     
     if (torchOnFocusPoints == 1 || torchOnFocusPoints == 3) {
-        // torch for focus point 1 is on, turn it off immediately
+        // torch for focus point 2 is on, turn it off immediately
         isTorchOn = true;
         [self setTorchOn:!isTorchOn];
-        [torchOneButton setImage:[UIImage imageNamed:@"CameraView-TorchOneOff.png"] forState:UIControlStateNormal];
+        [torchTwoButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
         torchOnFocusPoints -= 1;
     } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 2) {
-        // torch for focus point 1 is off, turn it on immediately
+        // torch for focus point 2 is off, turn it on immediately
         torchOnFocusPoints += 1;
         isTorchOn = false;
         [self setTorchOn:!isTorchOn];
-        [torchOneButton setImage:[UIImage imageNamed:@"CameraView-TorchOneOn.png"] forState:UIControlStateNormal];
+        [torchTwoButton setImage:[UIImage imageNamed:@"Torch-Button-On-NoStroke.png"] forState:UIControlStateNormal];
     } else {
         torchOnFocusPoints = 1;
         isTorchOn = false;
@@ -397,46 +566,27 @@
     NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
 }
 
--(void) toggleTorchForFocusTwo {
+-(void) toggleTorchForFocusOne {
     if (torchOnFocusPoints == 2 || torchOnFocusPoints == 3) {
-        // torch for focus point 2 is on, turn it off when taking second pic
+        // torch for focus point 1 is on, turn it off when taking second pic
         torchOnFocusPoints -= 2;
-        [torchTwoButton setImage:[UIImage imageNamed:@"CameraView-TorchTwoOff.png"] forState:UIControlStateNormal];
+        [torchOneButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
+        
+        if(mFocalPoints.count==1){
+            isTorchOn=true;
+            [self setTorchOn:!isTorchOn];
+        }
     } else if (torchOnFocusPoints == 0 || torchOnFocusPoints == 1) {
-        // torch for focus point 2 is off, turn it on when taking second pic
+        // torch for focus point 1 is off, turn it on when taking second pic
         torchOnFocusPoints += 2;
-        [torchTwoButton setImage:[UIImage imageNamed:@"CameraView-TorchTwoOn.png"] forState:UIControlStateNormal];
+        [torchOneButton setImage:[UIImage imageNamed:@"Torch-Button-On-NoStroke.png"] forState:UIControlStateNormal];
+        
+        if(mFocalPoints.count==1){
+            isTorchOn=false;
+            [self setTorchOn:!isTorchOn];
+        }
     }
     NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
-}
-
-
-#pragma mark - View lifecycle
-- (void)viewDidLoad
-{
-    pathView.enabled = true;
-    isObserving = false;
-        
-    [torchOneButton addTarget:self action:@selector(toggleTorchForFocusOne) forControlEvents:UIControlEventTouchUpInside];
-    [torchTwoButton addTarget:self action:@selector(toggleTorchForFocusTwo) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    [cancelButton setImage:[UIImage imageNamed:@"CameraView-LeftButtonPressed.png"] forState:UIControlStateHighlighted];
-    
-    [shootButton setImage:[UIImage imageNamed:@"CameraView-ShootButtonPressed.png"] forState:UIControlStateHighlighted];
-    
-    [infoButton setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"] forState:UIControlStateHighlighted];
-
-    
-    [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIImage *redButtonImage = [UIImage imageNamed:@"close.png"];
-    
-    [popupCloseButton setBackgroundImage:redButtonImage forState:UIControlStateNormal];
-    [popupCloseButton addTarget:self action:@selector(closePopup) forControlEvents:UIControlEventTouchUpInside];
-    
-    [super viewDidLoad];
-    
 }
 
 -(void)closePopup {
@@ -473,10 +623,10 @@
 
 -(void)clearPoints
 {
-    [pathView clearPoints];
+    if(mFocalPoints!=nil)
+        [mFocalPoints removeAllObjects];
     
-//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-//    [appDelegate logEvent:@"Clear Points Button"];
+    [self setTorchOn:NO];
 }
 
 -(void)addObserverToFocus
@@ -512,7 +662,6 @@
     }
 }
 
-
 - (void) showAlertBaloon {
     
 	NSString *alertTitle = @"Add more points";
@@ -547,63 +696,6 @@
     [alertButton release];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    DyfocusSettings *settings = [DyfocusSettings sharedSettings];
-    if(!settings.isFirstLogin && !popupView.isHidden){
-        [popupView setHidden:YES];
-        settings.isFirstLogin = NO;
-    }
-    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
-    [spinner startAnimating];
-    [loadingView setHidden:NO];
-    
-    [super viewWillAppear:animated];
-    
-    [infoButton setEnabled:true];
-    [cancelButton setEnabled:true];
-    [torchOneButton setImage:[UIImage imageNamed:@"CameraView-TorchOneOff.png"] forState:UIControlStateNormal];
-    [torchTwoButton setImage:[UIImage imageNamed:@"CameraView-TorchTwoOff.png"] forState:UIControlStateNormal];
-    
-    mFOFIndex = 0;
-    
-    if (mFocalPoints){
-       [mFocalPoints removeAllObjects];
-    }
-    
-    if (!mFrames) {
-        mFrames = [[NSMutableArray alloc] init];
-    } else {
-        [mFrames removeAllObjects];
-    }
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeChanged:) name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
-    
-    pathView.cameraViewController = self;
-    
-    popupDarkView.layer.cornerRadius = 9.0;
-    [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
-    popupDarkView.clipsToBounds = YES;
-    popupDarkView.layer.masksToBounds = YES;
-    [popupDarkView setNeedsDisplay];
-    [popupDarkView setNeedsLayout];
-    
-    [pathView resetOrientations];
-    
-    currentOrientation = [UIDevice currentDevice].orientation;
-    
-}
-
 -(void) setProximityEnabled:(BOOL)isOn{
     UIDevice *device = [UIDevice currentDevice];
     
@@ -633,42 +725,6 @@
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    [delegate logEvent:@"CameraView.viewDidAppear"];
-  
-    //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
-    if(popupView.tag != 420) {
-        //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
-        //[[mToastMessage setDuration:iToastDurationNormal] show];
-        
-        [popupView setHidden:NO];
-        [popupView setTag:420];
-        
-    }
-
-    [shootButton setEnabled:true];
-    
-    if (!captureSession) {
-        [self startCaptureSession];
-    } else {
-        [captureSession startRunning];
-        
-        if (mCaptureDevice) {
-            if (![mCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus] || ![mCaptureDevice isFocusPointOfInterestSupported]) {
-                [self disablePictureTaking];
-            }
-        }
-        
-        [spinner stopAnimating];
-        [loadingView setHidden:YES];
-    }
-    
-    [super viewDidAppear:animated];
-
-}
-
 - (IBAction)cancelAction:(UIButton *)sender {
     
    [self goBackToLastController];
@@ -684,39 +740,11 @@
     [self showInfoView];
 }
 
-
 - (void)showToast:(NSString *)text {
 
     iToast *toastMessage = [iToast makeText:NSLocalizedString(text, @"")];
     [[toastMessage setDuration:iToastDurationNormal] show];
     
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    if (mToastMessage) {
-        [mToastMessage removeToast:nil];
-    }
-    
-    [pathView clearPoints];
-    
-	[super viewWillDisappear:animated];
-    [captureSession stopRunning];    
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-    [self setProximityEnabled:NO];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
-}
-
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -732,24 +760,10 @@
     //[error release];
 }
 
--(void)dealloc
-{
-    [mFocalPoints release];
-    [mFrames release];
-    [cancelButton release];
-    [shootButton release];
-    [infoButton release];
-    [super dealloc];
-}
-
 - (NSUInteger) supportedInterfaceOrientations
 {
-    //Because your app is only landscape, your view controller for the view in your
-    // popover needs to support only landscape
-//    return UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait ;
     return UIInterfaceOrientationMaskAll;
 }
-
 
 - (BOOL)shouldAutorotate {
     return YES;
@@ -770,12 +784,10 @@
     [pathView checkOrientations];
 }
 
-
 -(IBAction)volumeChanged:(id)sender{
     if(shootButton.isEnabled)
         [self addObserverToFocus];
 }
-
 
 - (void) setTorchOn:(BOOL)isOn
 {

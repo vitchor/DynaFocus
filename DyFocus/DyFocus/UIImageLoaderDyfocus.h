@@ -12,11 +12,9 @@
 @interface UIImageLoaderDyfocus : NSObject{
     //variables
     UIDyfocusImage *myPicture;
-    UIDyfocusImage *bufferPic;
 }
 
 @property(nonatomic, retain) UIDyfocusImage *myPicture;
-@property(nonatomic, retain) UIDyfocusImage *bufferPic;
 
 // Singleton:
 + (id) sharedUIImageLoader;

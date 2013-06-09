@@ -41,31 +41,31 @@
     
 }
 
-- (id) initWithFacebookId:(NSString *)facebookId {
+- (id) initWithUserId:(long)userId {
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
     if (screenBounds.size.height == 568) {
         // code for 4-inch screen
-        return [self initWithNibName:@"ProfileController_i5" bundle:nil facebookId:facebookId];
+        return [self initWithNibName:@"ProfileController_i5" bundle:nil userId:userId];
     } else {
         // code for 3.5-inch screen
-        return [self initWithNibName:@"ProfileController" bundle:nil facebookId:facebookId];
+        return [self initWithNibName:@"ProfileController" bundle:nil userId:userId];
     }
     
 }
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil facebookId:(NSString *)facebookId {
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil userId:(long)userId {
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self) {
-        NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/user_info/",dyfocus_url] autorelease];
+        NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/user_id_info/", dyfocus_url] autorelease];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
         
         NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
         
-        [jsonRequestObject setObject:facebookId forKey:@"user_facebook_id"];
+        [jsonRequestObject setObject:[NSString stringWithFormat:@"%ld", userId] forKey:@"user_id"];
         
         NSString *json = [(NSObject*)jsonRequestObject JSONRepresentation];
         
@@ -136,11 +136,11 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray {
     
-    if (!profilePersonFOFArray || [profilePersonFOFArray count] == 0) {
+    if (!(profilePerson.kind == MYSELF) && (!profilePersonFOFArray || [profilePersonFOFArray count] == 0)) {
         if (profilePerson) {
             person = [profilePerson retain];
             userKind = profilePerson.kind;
-            return [self initWithFacebookId:person.facebookId];
+            return [self initWithUserId:person.uid];
         } else {
             return nil;
         }
@@ -165,7 +165,8 @@
     
     tableController.FOFArray = personFOFArray;
     tableController.shouldHideNavigationBar = NO;
-    tableController.userFacebookId = person.facebookId;
+    
+    tableController.userId = person.uid;
     
     tableController.navigationItem.title = person.name;
     tableController.hidesBottomBarWhenPushed = YES;
@@ -205,9 +206,7 @@
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
-        long long facebookId = [person.facebookId longLongValue];
-        
-        Person *user = [delegate getUserWithFacebookId:facebookId];
+        Person *user = [delegate getUserWithId:person.uid];
         
         if (user) {
             [followView setHidden:YES];
@@ -223,18 +222,21 @@
     [followersLabel setText:person.followersCount];
     [followingLabel setText:person.followingCount];
     
-    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%d&height=%d",person.facebookId, (int)userPicture.frame.size.width*5, (int)userPicture.frame.size.height*5] autorelease];
- 
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+   if (!(person.facebookId == (id)[NSNull null] || person.facebookId.length == 0)) {
+        
+        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%d&height=%d",person.facebookId, (int)userPicture.frame.size.width*5, (int)userPicture.frame.size.height*5] autorelease];
+     
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
 
-    [NSURLConnection sendAsynchronousRequest:request
-                                   queue:[NSOperationQueue mainQueue]
-                       completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                           if(!error && data) {                               
-                               UIImage *image = [[[UIImage alloc] initWithData:data] autorelease];
-                               [userPicture setImage:image];
-                           }                           
-                       }];
+        [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if(!error && data) {                               
+                                   UIImage *image = [[[UIImage alloc] initWithData:data] autorelease];
+                                   [userPicture setImage:image];
+                               }                           
+                           }];
+    }
 
 }
 
@@ -337,12 +339,12 @@
 }
 
 -(void)followUser{
-    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/follow/",dyfocus_url] autorelease];
+    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/user_follow/",dyfocus_url] autorelease];
     [self sendRequest:url type:FOLLOW];
 }
 
 - (void)unfollowUser{
-    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/unfollow/",dyfocus_url] autorelease];
+    NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/user_unfollow/",dyfocus_url] autorelease];
     [self sendRequest:url type:UNFOLLOW];
 }
 
@@ -355,8 +357,20 @@
     NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
     AppDelegate* delegate = [UIApplication sharedApplication].delegate;
     
-    [jsonRequestObject setObject:person.facebookId forKey:@"feed_facebook_id"];
-    [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"follower_facebook_id"];
+    
+    NSString *person_id = [NSString stringWithFormat:@"%ld", person.uid];
+    NSString *my_id = [NSString stringWithFormat:@"%ld", delegate.myself.uid];
+
+    NSLog(@"FOLLOW REQUEST: %@ to %@", person_id, my_id);
+
+    
+    [jsonRequestObject setObject:person_id forKey:@"person_id"];
+    
+    if (requestType == FOLLOW) {
+        [jsonRequestObject setObject:my_id forKey:@"follower_id"];
+    } else if (requestType == UNFOLLOW) {
+        [jsonRequestObject setObject:my_id forKey:@"unfollower_id"];
+    }
     
     NSString *json = [(NSObject*)jsonRequestObject JSONRepresentation];
     
@@ -379,10 +393,12 @@
                                        if([jsonResult hasPrefix:@"ok:"]) {
                                            
                                            if (requestType == FOLLOW) {
-                                               [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
-                                               
                                                int newFollowersValue = [followersLabel.text intValue] + 1;
                                                followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
+
+                                               person.followersCount = followersLabel.text;
+                                               [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:person.uid]];
+                                               delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] + 1];
                                                
                                                [followView setHidden:YES];
                                                [unfollowView setHidden:NO];
@@ -391,7 +407,10 @@
                                                int newFollowersValue = [followersLabel.text intValue] - 1;
                                                followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
                                                
-                                               [delegate.friendsThatIFollow removeObjectForKey:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+                                               person.followersCount = followersLabel.text;
+                                               [delegate.friendsThatIFollow removeObjectForKey:[NSNumber numberWithLong:person.uid]];
+                                               delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] - 1];
+                                               
                                                [followView setHidden:NO];
                                                [unfollowView setHidden:YES];
                                            }

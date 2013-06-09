@@ -23,20 +23,20 @@
     
     CameraView *cameraViewController;
     
-    IBOutlet UIImageView* firstImage;
-    IBOutlet UIImageView* secondImage;
+    IBOutlet UIView* firstImage;
+    IBOutlet UIView* secondImage;
     IBOutlet NSLayoutConstraint *firstFocusX;
     IBOutlet NSLayoutConstraint *firstFocusY;
+    IBOutlet NSLayoutConstraint *firstFocusX2;
+    IBOutlet NSLayoutConstraint *firstFocusY2;
     IBOutlet NSLayoutConstraint *secondFocusX;
     IBOutlet NSLayoutConstraint *secondFocusY;
+    IBOutlet NSLayoutConstraint *secondFocusX2;
+    IBOutlet NSLayoutConstraint *secondFocusY2;
     
     IBOutlet UIButton *torchOneButton;
     IBOutlet UIButton *torchTwoButton;
-    IBOutlet NSLayoutConstraint *torchOneX;
-    IBOutlet NSLayoutConstraint *torchOneY;
-    IBOutlet NSLayoutConstraint *torchTwoX;
-    IBOutlet NSLayoutConstraint *torchTwoY;
-
+  
     IBOutlet UIButton *cancelIcon;
     IBOutlet UIButton *cameraIcon;
     IBOutlet UIButton *helpIcon;

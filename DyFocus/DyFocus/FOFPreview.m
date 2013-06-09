@@ -119,6 +119,8 @@
     
     [scrollView setUserInteractionEnabled:YES];
     
+    [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
+    
     [super viewWillAppear:animated];
 }
 
@@ -183,6 +185,7 @@
     [timer release];
     [fofName release];
     
+    [playPauseButton release];
     [super dealloc];
 }
 
@@ -392,4 +395,21 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //    
 //}
 
+- (IBAction)playPauseAction:(UIButton *)sender {
+    
+    if (timer)
+    {
+        [timer invalidate];
+        timer = nil;
+        
+        [playPauseButton setImage:[UIImage imageNamed:@"Play-Button-NoStroke.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+        [timer fire];
+        
+        [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
+    }
+}
 @end

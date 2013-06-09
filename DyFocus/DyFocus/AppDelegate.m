@@ -250,28 +250,6 @@
     }
 }
 
--(void)updateModelWithFofArray:(NSArray *) fofs andUrl: (NSString *)refreshString andUserId: (NSString *)userId {
-    
-    if ([refreshString isEqualToString:refresh_featured_url]) {
-        featuredFofArray = fofs;
-        
-    } else if ([refreshString isEqualToString:refresh_feed_url]) {
-        feedFofArray = fofs;
-        
-    } else if ([refreshString isEqualToString:refresh_user_url]) {
-        
-        if (!userId || [userId isEqualToString:self.myself.facebookId]) {
-            //It's me!
-            userFofArray = fofs;
-        }
-
-        
-    }
-    
-    //[fofs release];
-    
-}
-
 - (void)resetCameraUINavigationController {
     NSArray *viewControllers = cameraNavigationController.viewControllers;
     UIViewController *rootViewController = [viewControllers objectAtIndex:0];
@@ -420,7 +398,7 @@
                          // Sets the model object myself
                          self.myself = [[Person alloc] initWithDicAndKind:user andKind:MYSELF];
                          
-                         NSLog(@"My name is %@ and my id is %@", [user objectForKey:@"name"], [user objectForKey:@"id"]);
+                         NSLog(@"My name is %@ and my id is %@ and my kind %d", [user objectForKey:@"name"], [user objectForKey:@"id"], myself.kind);
                         
                          // Lets create the json, with all the user info, that will be used in the request
                          NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
@@ -510,6 +488,11 @@
     [FBSession.activeSession closeAndClearTokenInformation];
     //[FBSession.activeSession close];
     [FBSession setActiveSession:nil];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:nil forKey:@"savedEmail"];
+	[userDefaults setObject:nil forKey:@"savedPassword"];
+	[userDefaults synchronize];
     
     //[self.tabBarController removeFromParentViewController];
     [self.tabBarController.view removeFromSuperview];
@@ -704,9 +687,15 @@
     
 }
 
+
 -(bool)parseServerInfo:(NSString *)stringReply {
     
     NSDictionary *jsonValues = [stringReply JSONValue];
+    
+    return [self parseServerInfoWithDic:jsonValues];
+}
+
+-(bool)parseServerInfoWithDic:(NSDictionary *)jsonValues {
     
     if (jsonValues) {
         
@@ -745,32 +734,31 @@
                 
                 NSMutableDictionary *followingFriend = [followingFriendsList objectAtIndex:i];
                 
-                NSString *friendId = [followingFriend valueForKey:@"facebook_id"];
-                
                 Person *followingPerson = [[Person alloc] initWithDyfocusDic:followingFriend];
                 
-                // Intersection of appFriends with facebookFriends
-                Person *fbFriend = [self.friendsFromFb objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
+                NSString *friendId = [followingFriend valueForKey:@"facebook_id"];
                 
-                
-                if (fbFriend) {
-                    followingPerson.kind = FRIENDS_ON_APP_AND_FB;
+                if (!(friendId == (id)[NSNull null] || friendId.length == 0)) {
+                    // Intersection of appFriends with facebookFriends
+                    Person *fbFriend = [self.friendsFromFb objectForKey:[NSNumber numberWithLong:[friendId longLongValue]]];
                     
-                    NSNumber *key = [NSNumber numberWithLong:[followingPerson.facebookId longLongValue]];
-                    Person *person = [self.friendsFromFb objectForKey:key];
                     
-                    [person release];
-                    [self.friendsFromFb removeObjectForKey:key];
+                    if (fbFriend) {
+                        followingPerson.kind = FRIENDS_ON_APP_AND_FB;
+                        
+                        NSNumber *key = [NSNumber numberWithLong:[followingPerson.facebookId longLongValue]];
+                        Person *person = [self.friendsFromFb objectForKey:key];
+                        
+                        [person release];
+                        [self.friendsFromFb removeObjectForKey:key];
+                        
+                    }else{
+                        followingPerson.kind = FRIENDS_ON_APP;
+                    }
                     
-                }else{
-                    followingPerson.kind = FRIENDS_ON_APP;
                 }
                 
-                
-                if (followingPerson.facebookId) {
-                    [self.friendsThatIFollow setObject:followingPerson forKey:[NSNumber numberWithLong:[followingPerson.facebookId longLongValue]]];
-                }
-
+                [self.friendsThatIFollow setObject:followingPerson forKey:[NSNumber numberWithLong:followingPerson.uid]];
             }
             
         }
@@ -847,11 +835,12 @@
             
         }
         
-        NSString *user_following_count = [[NSString alloc] initWithFormat:@"%@",[jsonValues valueForKey:@"user_following_count"]];
-        
-        myself.followingCount = user_following_count;
-        myself.followersCount = [[NSString alloc] initWithFormat:@"%d",[followingFriendsList count]];
-        
+
+        self.myself.followingCount = [NSString stringWithFormat:@"%@",[jsonValues valueForKey:@"user_following_count"]];
+        self.myself.followersCount = [NSString stringWithFormat:@"%@",[jsonValues valueForKey:@"user_followers_count"]];
+
+        myself.uid = [[jsonValues valueForKey:@"user_id"] longLongValue];
+
         
     } else {
         [self showConnectionError];
@@ -920,39 +909,105 @@
     
     // this means the user switched back to this app without completing
     // a login in Safari/Facebook App
-    [FBSession setDefaultAppID:app_fb_id];
-    if (FBSession.activeSession.state == FBSessionStateCreatedOpening) {
-        [FBSession.activeSession close]; // so we close our session and start over
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *savedEmail = [defaults stringForKey:@"savedEmail"];
+    NSString *savedPassword = [defaults stringForKey:@"savedPassword"];
+    
+    if (savedEmail && savedPassword) {
         
-    } else if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        [self showSplashScreen];
         
-        /* Steps:
-         - show splash screen
-         - open the session (this won't display any UX)
-         - get the user info
-         - send user info to our servers.
-         - enable the app flow
-         */
+        NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/login_user/",dyfocus_url] autorelease];
         
-        CGRect screenBounds = [[UIScreen mainScreen] bounds];
-        if (screenBounds.size.height == 568) {
-            // code for 4-inch screen
-            splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController_5" bundle:nil];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+        
+        NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:4] autorelease];
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        
+        if (delegate.deviceId) {
+            [jsonRequestObject setObject:delegate.deviceId forKey:@"device_id"];
         } else {
-            // code for 3.5-inch screen
-            splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
+            [jsonRequestObject setObject:@"null" forKey:@"device_id"];
         }
         
-        [self.window addSubview:splashScreenController.view];
+        [jsonRequestObject setObject:savedEmail forKey:@"user_email"];
+        [jsonRequestObject setObject:savedPassword forKey:@"user_password"];
         
-        [self reopenSession];
+        
+        NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                               json] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSLog(@"SENDING");
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   
+                                   [splashScreenController.view removeFromSuperview];
+                                   
+                                   if(!error && data) {
+                                       
+                                       NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                                       
+                                       NSLog(@"stringReply: %@",stringReply);
+                                       
+                                       NSDictionary *jsonValues = [stringReply JSONValue];
+                                       
+                                       NSString *error = [jsonValues valueForKey:@"error"];
+                                       
+                                       if (!error) {
+                                           
+                                           [delegate parseSignupRequest:jsonValues];
+                                           
+                                       } else { // nothing yet
+                                       }
+                                           
+                                           [splashScreenController.view removeFromSuperview];
+                                           
+                                           
+                                       } else {
+                                           [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
+                                       }
+                                       
+                                       NSLog(@"ERROR");
+                                   }
+                                   ];
+        
+            
+        
+        
+    } else {
+    
+        [FBSession setDefaultAppID:app_fb_id];
+        if (FBSession.activeSession.state == FBSessionStateCreatedOpening) {
+            [FBSession.activeSession close]; // so we close our session and start over
+            
+        } else if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+            
+            /* Steps:
+             - show splash screen
+             - open the session (this won't display any UX)
+             - get the user info
+             - send user info to our servers.
+             - enable the app flow
+             */
+            
+            [self showSplashScreen];
+            
+            [self reopenSession];
+        }
     }
-    
-    
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
 }
+
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
@@ -1020,7 +1075,7 @@
 
     if (self.myself) {
         NSDictionary *articleParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                         [NSString stringWithFormat:@"%@",self.myself.facebookId], @"User ID", // Capture author info
+                         [NSString stringWithFormat:@"%ld",self.myself.uid], @"User ID", // Capture author info
                          [NSString stringWithFormat:@"%f",CACurrentMediaTime()], @"Time", // Capture user status
                          nil];
         
@@ -1074,13 +1129,13 @@
 
 }
 
--(NSMutableArray *) FOFsFromUser: (NSString *)facebookId {
+-(NSMutableArray *) FOFsFromUser: (long) userId {
 
     NSMutableArray *userFOFArray = [[[NSMutableArray alloc] init] autorelease];
     
     NSLog(@"GOing to add fofs");
     for (FOF *m_fof in self.feedFofArray) {
-        if ([m_fof.m_userId isEqualToString: facebookId]) {
+        if (m_fof.m_userId == userId) {
             [userFOFArray addObject:m_fof];
             NSLog(@"Adding FoF");
         }
@@ -1104,13 +1159,38 @@
     
 }
 
--(Person *) getUserWithFacebookId: (long long)facebookId {
+-(void)parseSignupRequest: (NSDictionary *) jsonValues {
+    
+    [self parseServerInfoWithDic:jsonValues];
+    
+    NSString *name = [jsonValues objectForKey:@"user_name"];
+    NSString *email = [jsonValues objectForKey:@"user_email"];
+    NSNumber *id = [jsonValues objectForKey:@"user_id"];
+    NSString *following_count = [jsonValues objectForKey:@"user_following_count"];
+    NSString *followers_count = [jsonValues objectForKey:@"user_followers_count"];
+    
+    myself = [[Person alloc] init];
+    myself.uid = [id longValue];
+    myself.kind = MYSELF;
+    myself.name = name;
+    myself.email = email;
+    myself.followersCount = [NSString stringWithFormat:@"%@",followers_count];
+    myself.followingCount = [NSString stringWithFormat:@"%@",following_count];
+    
+    [loginController.view removeFromSuperview];
+    
+    NSLog(@"MYSELF USER ID: %ld", myself.uid);
+    
+    [self setupTabController];    
+}
+
+-(Person *) getUserWithId: (long long) userId {
     
     for (NSObject *key in [self.friendsThatIFollow allKeys]) {
         
         Person *person = [self.friendsThatIFollow objectForKey:key];
         
-        if ([person.facebookId longLongValue] == facebookId) {
+        if (person.uid == userId) {
             return person;
         }
     }

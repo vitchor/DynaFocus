@@ -74,6 +74,10 @@
 		m_customMessageLabel.backgroundColor = [UIColor colorWithWhite:0.0/255 alpha:0.0];
 		m_customMessageLabel.text = @"Send Invitations >";
         
+        [m_customMessageLabel setEnabled:NO];
+        [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
+        [m_customMessageLabel invalidateIntrinsicContentSize];
+        
         //m_customMessageLabel.textAlignment = kCTRightTextAlignment;
 		[customMessageView addSubview:m_customMessageLabel];
 		UIBarButtonItem *customMessageViewItem = [[[UIBarButtonItem alloc] initWithCustomView:customMessageView] autorelease];
@@ -81,13 +85,14 @@
 		UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
         flex.width = 30;
 		// Swith All/Selected buttons
-		m_swithSelectedButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"All", @"Selected", nil]];
-		m_swithSelectedButton.segmentedControlStyle = UISegmentedControlStyleBar;
-		m_swithSelectedButton.selectedSegmentIndex = 0;
-		m_swithSelectedButton.tintColor = [UIColor colorWithRed:100.0/255 green:100.0/255 blue:100.0/255 alpha:1.0];
-		m_swithSelectedButton.frame = CGRectMake(35, 0, 170, 33);
-		[m_swithSelectedButton addTarget:self action:@selector(switchSelectedClicked:) forControlEvents:UIControlEventValueChanged];
-		UIBarButtonItem *switchSelected = [[[UIBarButtonItem alloc] initWithCustomView:m_swithSelectedButton] autorelease];
+		m_switchSelectedButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"All", @"Selected (0)", nil]];
+		m_switchSelectedButton.segmentedControlStyle = UISegmentedControlStyleBar;
+		m_switchSelectedButton.selectedSegmentIndex = 0;
+        [m_switchSelectedButton setEnabled:NO forSegmentAtIndex:1];
+		m_switchSelectedButton.tintColor = [UIColor colorWithRed:100.0/255 green:100.0/255 blue:100.0/255 alpha:1.0];
+		m_switchSelectedButton.frame = CGRectMake(35, 0, 170, 33);
+		[m_switchSelectedButton addTarget:self action:@selector(switchSelectedClicked:) forControlEvents:UIControlEventValueChanged];
+        UIBarButtonItem *switchSelected = [[[UIBarButtonItem alloc] initWithCustomView:m_switchSelectedButton] autorelease];
         
 		// Set items on toolbar
 		[m_controlToolbar setItems:[NSArray arrayWithObjects: switchSelected, customMessageViewItem, nil]];
@@ -393,14 +398,14 @@
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
-        NSMutableArray *fofArray = [delegate FOFsFromUser:person.facebookId];
+        NSMutableArray *fofArray = [delegate FOFsFromUser:person.uid];
         
         ProfileController *profileController = nil;
         
         if ([fofArray count] > 0) {
             profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:fofArray];
         } else {
-            profileController = [[ProfileController alloc] initWithFacebookId:person.facebookId];
+            profileController = [[ProfileController alloc] initWithUserId:person.uid];
         }
         
         profileController.hidesBottomBarWhenPushed = YES;
@@ -431,19 +436,18 @@
 }
 
 - (void)refreshImages {
-	if (!m_isFacebookTableEmpty) {
-		NSArray *visibleCells = [self.tableView visibleCells];
-		if (visibleCells) {
-			NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
-			for (UITableViewCell *cell in visibleCellsCopy) {
-				UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithInt:cell.tag]];
-				if (image == nil) {
-					[self loadImage:cell.tag]; // Load user image for each Cell
-				}
-			}
-			[visibleCellsCopy release];
-		}
-	}
+    
+    NSArray *visibleCells = [self.tableView visibleCells];
+    if (visibleCells) {
+        NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
+        for (UITableViewCell *cell in visibleCellsCopy) {
+            UIImage *image = [m_imageCache objectForKey:[NSNumber numberWithInt:cell.tag]];
+            if (image == nil) {
+                [self loadImage:cell.tag]; // Load user image for each Cell
+            }
+        }
+        [visibleCellsCopy release];
+    }
 }
 
 - (void)clearImageCache {
@@ -466,7 +470,7 @@
         
 		NSString *personName = [person.name lowercaseString];
 		if ([lowerText length] == 0 || [personName rangeOfString:lowerText].location != NSNotFound) {
-			[m_visiblePeopleList addObject:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+			[m_visiblePeopleList addObject:[NSNumber numberWithLong:person.uid]];
 		}
 	}
 	[m_visiblePeopleList sortUsingFunction:comparePerson context:m_peopleInfo];
@@ -477,7 +481,7 @@
 		Person *person = [m_friendInfo objectForKey:[NSNumber numberWithLong:uid]];
 		NSString *personName = [person.name lowercaseString];
 		if ([lowerText length] == 0 || [personName rangeOfString:lowerText].location != NSNotFound) {
-			[m_visibleFriendsList addObject:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+			[m_visibleFriendsList addObject:[NSNumber numberWithLong:person.uid]];
 		}
 	}
    	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_friendInfo];
@@ -504,14 +508,15 @@
     [m_visibleFriendsList setArray:[m_friendInfo allKeys]]; //visible friends = array of keys of m_friendInfo
 	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_friendInfo];
     
-	[m_swithSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];
-	[m_swithSelectedButton setEnabled:NO forSegmentAtIndex:1];
-    
-    [m_customMessageLabel setEnabled:NO];
-    [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
-    [m_customMessageLabel invalidateIntrinsicContentSize];
-	[self.tableView reloadData];
-	[self refreshImages];
+    if(m_switchSelectedButton.selectedSegmentIndex == 1)
+    {
+        [self showSelected];
+        [self refreshImages];
+    }
+    else
+    {
+        [self showAll];
+    }
 }
 
 - (int)cellStyle {
@@ -538,7 +543,7 @@
 	Person *person = [m_peopleInfo objectForKey:[m_visiblePeopleList objectAtIndex:index]];
 	person.selected = !person.selected;
 	int selectedCount = [[self selectedIds] count];
-	[m_swithSelectedButton setTitle:[NSString stringWithFormat:@"Selected (%d)", selectedCount] forSegmentAtIndex:1];
+	[m_switchSelectedButton setTitle:[NSString stringWithFormat:@"Selected (%d)", selectedCount] forSegmentAtIndex:1];
     
     if (selectedCount > 0) {
         [m_customMessageLabel setEnabled:YES];
@@ -548,7 +553,7 @@
         [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
     }
     
-	[m_swithSelectedButton setEnabled:(selectedCount > 0) forSegmentAtIndex:1];
+	[m_switchSelectedButton setEnabled:(selectedCount > 0) forSegmentAtIndex:1];
 	[self.tableView reloadData];
 }
 
@@ -575,8 +580,8 @@
 		person.selected = NO;
 	}
     
-	[m_swithSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];
-	[m_swithSelectedButton setEnabled:NO forSegmentAtIndex:1];
+	[m_switchSelectedButton setTitle:@"Selected (0)" forSegmentAtIndex:1];
+	[m_switchSelectedButton setEnabled:NO forSegmentAtIndex:1];
     
     [m_customMessageLabel setEnabled:NO];
     [m_customMessageLabel setTextColor:[UIColor lightGrayColor]];
@@ -593,14 +598,14 @@
 }
 
 - (void)showAll {
-	m_swithSelectedButton.selectedSegmentIndex = 0;
+	m_switchSelectedButton.selectedSegmentIndex = 0;
 	[self filterWithText:[m_searchBar text]];
 	[self.tableView reloadData];
 	[self refreshImages];
 }
 
 - (void)showSelected {
-	m_swithSelectedButton.selectedSegmentIndex = 1;
+	m_switchSelectedButton.selectedSegmentIndex = 1;
 	[m_visiblePeopleList setArray:[self selectedIds]];
 	[m_visiblePeopleList sortUsingFunction:comparePerson context:m_peopleInfo];
 	[self.tableView reloadData];

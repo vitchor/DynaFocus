@@ -14,14 +14,20 @@
     IBOutlet NSLayoutConstraint *fullscreenImageWidth;
     IBOutlet UIImageView *frontImageView;
     IBOutlet UIImageView *backImageView;
-    
+    IBOutlet UIButton *playPauseButton;
+    IBOutlet NSLayoutConstraint *playPauseButtonX;
+    IBOutlet NSLayoutConstraint *playPauseButtonY;
+
+    UIDeviceOrientation lastOrientation;
     NSMutableArray *frames;
-    
     NSTimer *timer;
+    
     int oldFrameIndex;
     int timerPause;
 }
 
 @property(nonatomic,assign) NSMutableArray *frames;
+
+- (IBAction)playPauseAction:(UIButton *)sender;
 
 @end

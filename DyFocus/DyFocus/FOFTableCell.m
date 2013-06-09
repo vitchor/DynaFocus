@@ -59,7 +59,7 @@
         commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
     }
         
-    commentController.navigationItem.title = @"Info";
+    commentController.navigationItem.title = @"Comments";
     commentController.hidesBottomBarWhenPushed = YES;
     commentController.isCommenting = isCommenting;
     if(!isCommenting){
@@ -86,8 +86,6 @@
 
         imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
                                        imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newHeight);
-
-//        [imagefrontFrame setNeedsDisplay];
         
     }
     
@@ -104,7 +102,7 @@
         NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [likesCountLabel.text intValue] + 1] autorelease];
         [likesCountLabel setText:newCount];
         
-        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/like/",dyfocus_url] autorelease];
+        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/user_like/",dyfocus_url] autorelease];
         
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
         
@@ -113,7 +111,8 @@
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
         [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
-        [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"facebook_id"];
+
+        [jsonRequestObject setObject:[NSString stringWithFormat:@"%ld", delegate.myself.uid] forKey:@"user_id"];
         
         NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
         
@@ -169,10 +168,11 @@
         fof.m_comments = [[fofObject.m_comments copy] autorelease];
         fof.m_date = [[fofObject.m_date copy] autorelease];
         fof.m_id = [[fofObject.m_id copy] autorelease];
+        fof.m_userId = fofObject.m_userId;
         fof.m_liked = fofObject.m_liked;
         fof.m_likes = [[fofObject.m_likes copy] autorelease];
         fof.m_name = [[fofObject.m_name copy] autorelease];
-        fof.m_userId = [[fofObject.m_userId copy] autorelease];
+        fof.m_userFacebookId = [[fofObject.m_userFacebookId copy] autorelease];
         fof.m_userName = [[fofObject.m_userName copy] autorelease];
         fof.m_userNickname = [[fofObject.m_userNickname copy] autorelease];
         
@@ -227,6 +227,24 @@
             [buttonLike setTitle:@"Liked" forState:UIControlStateNormal];
             //buttonLike.titleLabel.font = [UIFont systemFontOfSize:11];
         }
+    }
+}
+
+- (IBAction)playPauseAction:(UIButton *)sender {
+    
+    if (timer)
+    {
+        [timer invalidate];
+        timer = nil;
+        
+        [playPauseButton setImage:[UIImage imageNamed:@"Play-Button-NoStroke.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+        [timer fire];
+        
+        [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
     }
 }
 
@@ -320,6 +338,9 @@
     //TODO start fade out timer
     timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
     [timer fire];
+    
+    [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
+    [playPauseButton setHidden:NO];
 
 }
 
@@ -330,22 +351,22 @@
     ProfileController *profileController = nil;
     
     Person *person;
-    if([fof.m_userId isEqualToString:delegate.myself.facebookId]){
+    if(fof.m_userId ==delegate.myself.uid){
         person = delegate.myself;
     }else{
-        person = [delegate getUserWithFacebookId:[fof.m_userId longLongValue]];
+        person = [delegate getUserWithId:fof.m_userId];
     }
     
     if (person) {
 
         // Person exists, so it's being followed.
-        NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.facebookId];
+        NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.uid];
         profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:userFOFArray];
 
     } else {
         
         // Person is not being followed, there's no information we can get.
-        profileController = [[ProfileController alloc] initWithFacebookId:fof.m_userId];
+        profileController = [[ProfileController alloc] initWithUserId:fof.m_userId];
     }
     
     
@@ -357,6 +378,7 @@
 }
 
 -(void)loadImages {
+    
     UITapGestureRecognizer *singleTapUserName = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)] autorelease];
     imageUserPicture.userInteractionEnabled = YES;
     [imageUserPicture addGestureRecognizer:singleTapUserName];
@@ -364,7 +386,8 @@
     if (imageUserPicture.tag != 420) {
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
 //        [imageLoader loadPictureWithFaceId:fof.m_userId andImageView:imageUserPicture andIsSmall:YES];
-        [imageLoader loadFofTableCellUserPicture:fof.m_userId andFOFId:fof.m_id andImageView:imageUserPicture];
+        
+        [imageLoader loadFofTableCellUserPicture:fof.m_userFacebookId andFOFId:fof.m_id andImageView:imageUserPicture];
     }
     
     
@@ -453,6 +476,8 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
 }
 
 -(void) clearImages {
+    
+    [playPauseButton setHidden:YES];
     
     [imageUserPicture setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
 
@@ -546,6 +571,7 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
 - (void)dealloc
 {
     [frames release];
+    [playPauseButton release];
     [super dealloc];
 }
 

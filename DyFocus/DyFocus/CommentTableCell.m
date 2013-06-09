@@ -49,7 +49,7 @@
     
     
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    [imageLoader loadPictureWithFaceId:comment.m_userId andImageView:imageUserPicture andIsSmall:YES];  
+    [imageLoader loadPictureWithFaceId:comment.m_userFacebookId andImageView:imageUserPicture andIsSmall:YES];  
     
     if (m_comment) {
         [m_comment release];
@@ -60,8 +60,9 @@
     m_comment.m_date = [[comment.m_date copy] autorelease];
     m_comment.m_fofId = [[comment.m_fofId copy] autorelease];
     m_comment.m_message = [[comment.m_message copy] autorelease];
-    m_comment.m_userId = [[comment.m_userId copy] autorelease];
+    m_comment.m_userFacebookId = [[comment.m_userFacebookId copy] autorelease];
     m_comment.m_userName = [[comment.m_userName copy] autorelease];
+    m_comment.m_userId = comment.m_userId;
     
     UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
     [self addGestureRecognizer:singleTap];
@@ -80,19 +81,16 @@
         
         ProfileController *profileController = nil;
         Person *person;
-        if([m_comment.m_userId isEqualToString:delegate.myself.facebookId]){
+        if(m_comment.m_userId == delegate.myself.uid){
             person = delegate.myself;
         }else{
-            person = [delegate getUserWithFacebookId:[m_comment.m_userId longLongValue]];
+            person = [delegate getUserWithId:m_comment.m_userId];
         }
         
-        
-        NSLog(@"FACEBOOK USER %lld", [m_comment.m_userId longLongValue]);
-        
         if (person) {
-            profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:[delegate FOFsFromUser:person.facebookId]];
+            profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:[delegate FOFsFromUser:person.uid]];
         } else {
-            profileController = [[ProfileController alloc] initWithFacebookId:m_comment.m_userId];
+            profileController = [[ProfileController alloc] initWithUserId:m_comment.m_userId];
         }
         
         profileController.hidesBottomBarWhenPushed = YES;

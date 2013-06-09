@@ -93,8 +93,10 @@ extern NSString *const FBSessionStateChangedNotification;
 
 -(void) clearNotifications;
 
--(NSMutableArray *) FOFsFromUser: (NSString *)facebookId;
--(Person *) getUserWithFacebookId: (long long)facebookId;
+-(void)parseSignupRequest: (NSDictionary *) jsonValues;
+
+-(NSMutableArray *) FOFsFromUser: (long)userId;
+-(Person *) getUserWithId: (long long)userId;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;

@@ -27,66 +27,32 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-	
-//    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    
-//    context = UIGraphicsGetCurrentContext();
-	
-//	ref =  [[UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:0.3] CGColor];
-	
-	if ([touchPoints count] >= 1) {
-		
-        // Old codes used when the "point" and the "line" were drawn:
-        //
-//        CGContextSetLineWidth(context, 8);
-//		CGContextSetStrokeColorWithColor(context, ref);
-//        CGContextSetFillColor(context, CGColorGetComponents([UIColor colorWithRed:255/255 green:50/255 blue:50/255 alpha:0.9].CGColor));
         
-        if ([touchPoints count] >= 1){
-           
-            for (NSObject *point in touchPoints) {
-                
-                CGPoint cgPoint = [(NSValue *)point CGPointValue];
-                CGRect screenBounds = [[UIScreen mainScreen] bounds];
-                
-                if ([touchPoints indexOfObject:point] == 0) {
-                    
-//                  firstImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, firstImage.frame.size};
-//                  firstImage.center = CGPointMake(cgPoint.x, cgPoint.y);
-                   
-                    
-                    if (screenBounds.size.height == 568) {
-                        firstFocusX.constant = cgPoint.x-40;
-                        firstFocusY.constant = cgPoint.y-40-44;
-                    }else{
-                        firstFocusX.constant = cgPoint.x-40;
-                        firstFocusY.constant = cgPoint.y-40;
-                    }
-                    
-                    [firstImage setHidden:NO];
-                    
-                }
-                else {
-                    
-//                  secondImage.frame = (CGRect){{cgPoint.x-40, cgPoint.y-40}, secondImage.frame.size};
-//                  secondImage.center = CGPointMake(cgPoint.x, cgPoint.y);
-                    
-                    
-                    if (screenBounds.size.height == 568) {
-                        secondFocusX.constant = cgPoint.x-40;
-                        secondFocusY.constant = cgPoint.y-40-44;
-                    }else{
-                        secondFocusX.constant = cgPoint.x-40;
-                        secondFocusY.constant = cgPoint.y-40;
-                    }
-                    [secondImage setHidden:NO];
-                }
-            }
+    if ([touchPoints count] >= 1){
+       
+        for (NSObject *point in touchPoints) {
             
+            CGPoint cgPoint = [(NSValue *)point CGPointValue];
+            
+            if ([touchPoints indexOfObject:point] == 0) {
+                
+                firstFocusX.constant = cgPoint.x-40;
+                firstFocusY.constant = cgPoint.y-40;
+                firstFocusX2.constant = self.frame.size.width - firstFocusX.constant - 80;
+                firstFocusY2.constant = self.frame.size.height - firstFocusY.constant - 80;
+                
+                [firstImage setHidden:NO];
+            }
+            else {
+                secondFocusX.constant = cgPoint.x-40;
+                secondFocusY.constant = cgPoint.y-40;
+                secondFocusX2.constant = self.frame.size.width - secondFocusX.constant - 80;
+                secondFocusY2.constant = self.frame.size.height - secondFocusY.constant - 80;
+                
+                [secondImage setHidden:NO];
+            }
         }
-        
-	}
-	
+    }
 }
 
 
@@ -97,7 +63,9 @@
         [firstImage setHidden:YES];
         [secondImage setHidden:YES];
         [self setNeedsDisplay];
-	}
+        
+        [cameraViewController clearPoints];
+    }
 }
 
 - (void)addPoint:(CGPoint)actualTouchPoint {
@@ -116,6 +84,27 @@
     }
 }
 
+// Old getPoints method
+//- (NSMutableArray *)getPoints {
+//	
+//    if(!focusPoints){
+//        focusPoints = [[NSMutableArray alloc] init];
+//    } else {
+//        [focusPoints removeAllObjects];
+//    }
+//    
+//    for (NSObject *point in touchPoints) {
+//        CGPoint touchPoint = [(NSValue *)point CGPointValue];
+//        
+//        NSValue *pointValue = [NSValue valueWithCGPoint:CGPointMake(touchPoint.y / self.frame.size.height, 1 - touchPoint.x / self.frame.size.width)];
+//        [focusPoints  addObject:pointValue];
+//    }
+//    
+//    return focusPoints;
+//}
+
+
+// New getPoints method, now it returns a reversed array of focus points (ex: n, n-1,...3, 2, 1)
 - (NSMutableArray *)getPoints {
 	
     if(!focusPoints){
@@ -124,11 +113,13 @@
         [focusPoints removeAllObjects];
     }
     
+    NSEnumerator *enumerator = [touchPoints reverseObjectEnumerator];
+    
     for (NSObject *point in touchPoints) {
-        CGPoint touchPoint = [(NSValue *)point CGPointValue];
+        CGPoint touchPoint = [(NSValue *)enumerator.nextObject CGPointValue];
         
         NSValue *pointValue = [NSValue valueWithCGPoint:CGPointMake(touchPoint.y / self.frame.size.height, 1 - touchPoint.x / self.frame.size.width)];
-        [focusPoints addObject:pointValue];
+        [focusPoints  addObject:pointValue];
     }
     
     return focusPoints;
@@ -138,13 +129,27 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     if (enabled && [touchPoints count] < 2) {
         CGPoint touchPoint = [[touches anyObject] locationInView:self];
+        
+        float focusPointWidth = firstImage.frame.size.width;
+        float focusPointHeight = firstImage.frame.size.height;
+        
+        //The code below limits the touching area.
+        if(touchPoint.x<focusPointWidth/2)
+            touchPoint.x =  focusPointWidth/2;
+        else if (touchPoint.x>self.frame.size.width-focusPointWidth/2)
+            touchPoint.x = self.frame.size.width-focusPointWidth/2;
+        
+        if(touchPoint.y<focusPointHeight/2)
+            touchPoint.y =  focusPointHeight/2;
+        else if (touchPoint.y>self.frame.size.height-focusPointHeight/2)
+            touchPoint.y = self.frame.size.height-focusPointHeight/2;
+        
         [self addPoint:touchPoint];
         [self setNeedsDisplay];
         
-        if ([touchPoints count] == 1) {
-            cameraViewController.mFocalPoints = [self getPoints];
-            [cameraViewController updateFocusPoint];
-        }
+        cameraViewController.mFocalPoints = [self getPoints];
+        [cameraViewController updateFocusPoint];
+
     }
     else if (enabled && [touchPoints count] == 2) {
         [self clearPoints];
@@ -164,7 +169,12 @@
     
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+- (NSUInteger) supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (BOOL)shouldAutorotate {
     return YES;
 }
 
@@ -175,16 +185,10 @@
     cancelIcon.transform = CGAffineTransformIdentity;
     cameraIcon.transform = CGAffineTransformIdentity;
     helpIcon.transform = CGAffineTransformIdentity;
-    torchOneButton.transform = CGAffineTransformIdentity;
-    torchTwoButton.transform = CGAffineTransformIdentity;
-        
+    
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     
-    if (orientation == UIDeviceOrientationPortrait)
-    {
-        [self setTorchButtonsPlace:orientation];
-    }
-    else if (orientation == UIDeviceOrientationPortraitUpsideDown)
+    if (orientation == UIDeviceOrientationPortraitUpsideDown)
     {
         [self rotateImagesHalfMoon:orientation];
     }
@@ -199,11 +203,7 @@
     else if(orientation == UIDeviceOrientationFaceUp ||
             orientation == UIDeviceOrientationFaceDown){
         
-        if (lastOrientation == UIDeviceOrientationPortrait)
-        {
-            [self setTorchButtonsPlace:lastOrientation];
-        }
-        else if (lastOrientation == UIDeviceOrientationPortraitUpsideDown)
+        if (lastOrientation == UIDeviceOrientationPortraitUpsideDown)
         {
             [self rotateImagesHalfMoon:lastOrientation];
         }
@@ -215,14 +215,6 @@
         {
             [self rotateImagesToTheRight:lastOrientation];
         }
-        else
-        {
-            [self setTorchButtonsPlace:UIDeviceOrientationPortrait];
-        }
-    }
-    else
-    {
-        [self setTorchButtonsPlace:UIDeviceOrientationPortrait];
     }
 
     if(!(orientation==UIDeviceOrientationFaceUp||
@@ -240,8 +232,6 @@
 
 - (void) checkOrientations
 {
-    fadeDuration = 0.15;
-    
     double duration = 0.3;
 
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
@@ -375,24 +365,7 @@
     secondImage.transform = CGAffineTransformRotate(secondImage.transform, M_PI_2);
     cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, M_PI_2);
     cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, M_PI_2);
-    helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI_2);
-    
-    [UIView animateWithDuration:fadeDuration animations:^{
-        torchOneButton.alpha = 0.0;
-        torchTwoButton.alpha = 0.0;
-    } completion: ^(BOOL finished) {
-        [UIView animateWithDuration:0 animations:^{
-            torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, M_PI_2);
-            torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, M_PI_2);
-        } completion: ^(BOOL finished) {
-            [self setTorchButtonsPlace:orientation];
-        }];
-    }];
-//    CGAffineTransform rotateOne = CGAffineTransformRotate(torchOneView.transform, M_PI_2);
-//    CGAffineTransform translateOne = CGAffineTransformMakeTranslation(toneX, toneY);
-//    CGAffineTransform finalTransformOne = CGAffineTransformConcat(rotateOne, translateOne);
-//    torchOneView.transform = finalTransformOne;
-    
+    helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI_2);    
 }
 -(void)rotateImagesToTheLeft: (UIDeviceOrientation) orientation
 {
@@ -401,18 +374,6 @@
     cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, -M_PI_2);
     cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, -M_PI_2);
     helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, -M_PI_2);
-    
-    [UIView animateWithDuration:fadeDuration animations:^{
-        torchOneButton.alpha = 0.0;
-        torchTwoButton.alpha = 0.0;
-    } completion: ^(BOOL finished) {
-        [UIView animateWithDuration:0 animations:^{
-            torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, -M_PI_2);
-            torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, -M_PI_2);
-        } completion: ^(BOOL finished) {
-            [self setTorchButtonsPlace:orientation];
-        }];
-    }];
 }
 -(void)rotateImagesHalfMoon: (UIDeviceOrientation) orientation
 {
@@ -421,96 +382,6 @@
     cancelIcon.transform = CGAffineTransformRotate(cancelIcon.transform, M_PI);
     cameraIcon.transform = CGAffineTransformRotate(cameraIcon.transform, M_PI);
     helpIcon.transform = CGAffineTransformRotate(helpIcon.transform, M_PI);
-    
-    [UIView animateWithDuration:fadeDuration animations:^{
-        torchOneButton.alpha = 0.0;
-        torchTwoButton.alpha = 0.0;
-    } completion: ^(BOOL finished) {
-        [UIView animateWithDuration:0 animations:^{
-            torchOneButton.transform = CGAffineTransformRotate(torchOneButton.transform, M_PI);
-            torchTwoButton.transform = CGAffineTransformRotate(torchTwoButton.transform, M_PI);
-        } completion: ^(BOOL finished) {
-            [self setTorchButtonsPlace:orientation];
-        }];
-    }];
-}
-
--(void) setTorchButtonsPlace:(UIDeviceOrientation) orientation {
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    
-    if (screenBounds.size.height == 568) {
-        
-        if (orientation == UIDeviceOrientationPortrait)
-        {
-            torchOneX.constant = 36.0-(61.0/2);
-            torchOneY.constant = 22.0-17.0;
-            torchTwoX.constant = 100.0-(61.0/2);
-            torchTwoY.constant = 22.0-17.0;
-        }
-        else if (orientation == UIDeviceOrientationPortraitUpsideDown)
-        {
-            torchOneX.constant = 284.0-(61.0/2);
-            torchOneY.constant = 22.0-17.0;
-            torchTwoX.constant = 220.0-(61.0/2);
-            torchTwoY.constant = 22.0-17.0;
-        }
-        else if(orientation == UIDeviceOrientationLandscapeRight)
-        {
-            torchOneX.constant = 22.0-17;
-            torchOneY.constant = 446.0-(61.0/2)-3;
-            torchTwoX.constant = 22.0-17;
-            torchTwoY.constant = 382.0-(61.0/2)-3;
-        }
-        else if(orientation == UIDeviceOrientationLandscapeLeft ||
-                orientation == UIDeviceOrientationFaceUp ||
-                orientation == UIDeviceOrientationFaceDown)
-        {
-            torchOneX.constant = 298.0-17;
-            torchOneY.constant = 78.0-(61.0/2)+2;
-            torchTwoX.constant = 298.0-17;
-            torchTwoY.constant = 142.0-(61.0/2)+2;
-        }
-        
-    } else {
-        
-        if (orientation == UIDeviceOrientationPortrait)
-        {
-            torchOneX.constant = 36.0-(61.0/2);
-            torchOneY.constant = 22.0-17.0;
-            torchTwoX.constant = 100.0-(61.0/2);
-            torchTwoY.constant = 22.0-17.0;
-            
-        }
-        else if (orientation == UIDeviceOrientationPortraitUpsideDown)
-        {
-            torchOneX.constant = 284.0-(61.0/2);
-            torchOneY.constant = 22.0-17.0;
-            torchTwoX.constant = 220.0-(61.0/2);
-            torchTwoY.constant = 22.0-17.0;
-        }
-        else if(orientation == UIDeviceOrientationLandscapeRight)
-        {
-            torchOneX.constant = 22.0-17;
-            torchOneY.constant = 398.0-(61.0/2)-3;
-            torchTwoX.constant = 22.0-17;
-            torchTwoY.constant = 334.0-(61.0/2)-3;
-        }
-        else if(orientation == UIDeviceOrientationLandscapeLeft ||
-                orientation == UIDeviceOrientationFaceUp ||
-                orientation == UIDeviceOrientationFaceDown)
-        {
-            torchOneX.constant = 298.0-17;
-            torchOneY.constant = 36.0-(61.0/2);
-            torchTwoX.constant = 298.0-17;
-            torchTwoY.constant = 100.0-(61.0/2);
-        }
-    }
-    
-    [UIView animateWithDuration:fadeDuration animations:^{
-        torchOneButton.alpha = 0.5;
-        torchTwoButton.alpha = 0.5;
-    }];
 }
 
 -(void)dealloc
@@ -519,17 +390,15 @@
     [secondImage release];
     [firstFocusX release];
     [firstFocusY release];
+    [firstFocusX2 release];
+    [firstFocusY2 release];
     [secondFocusX release];
     [secondFocusY release];
+    [secondFocusX2 release];
+    [secondFocusY2 release];
     [cancelIcon release];
     [cameraIcon release];
     [helpIcon release];
-    [torchOneButton release];
-    [torchTwoButton release];
-    [torchOneX release];
-    [torchOneY release];
-    [torchTwoX release];
-    [torchTwoY release];
     [super dealloc];
 }
 

@@ -10,12 +10,13 @@
 
 @implementation Like
 
-@synthesize m_userName, m_userId, m_fofId;
+@synthesize m_userName, m_userFacebookId, m_fofId, m_userId;
 
 - (void)dealloc {
     [m_userName release];
     [m_fofId release];
-    [m_userId release];
+    [m_fofId release];
+    [m_fofId release];    
 	[super dealloc];
 }
 

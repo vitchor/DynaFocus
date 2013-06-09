@@ -17,7 +17,7 @@
 @end
 
 @implementation FOFTableController
-@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userFacebookId, loadingView;
+@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -356,14 +356,16 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     
-    if (userFacebookId) {
-        [jsonRequestObject setObject:userFacebookId forKey:@"user_facebook_id"];
-        
+    NSString *userIdString = nil;
+    if (userId && userId != 0) {
+        userIdString = [NSString stringWithFormat:@"%ld", userId];
     } else {
-        [jsonRequestObject setObject:delegate.myself.facebookId forKey:@"user_facebook_id"];
+        userIdString = [NSString stringWithFormat:@"%ld", delegate.myself.uid];
     }
-
     
+    [jsonRequestObject setObject:userIdString forKey:@"user_id"];
+
+
     
     NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
     

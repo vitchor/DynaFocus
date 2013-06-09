@@ -43,6 +43,8 @@
 {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
+    [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
+    
     if ([frames count] > 0) {
         [backImageView setImage: [frames objectAtIndex:0]];
 
@@ -96,7 +98,16 @@
     [backImageView release];
     [frames release];
 
+    [playPauseButton release];
+    [playPauseButtonX release];
+    [playPauseButtonY release];
     [super dealloc];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void) popController
@@ -166,7 +177,6 @@
     return UIInterfaceOrientationMaskAll;
 }
 
-
 - (BOOL)shouldAutorotate {
     return YES;
 }
@@ -182,57 +192,198 @@
 {
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationRepeatCount:1];
-    
-    if (orientation == UIDeviceOrientationPortrait)
-    {
-        backImageView.transform = CGAffineTransformIdentity;
-        frontImageView.transform = CGAffineTransformIdentity;
-    }
-    else if (orientation == UIDeviceOrientationPortraitUpsideDown)
-    {
-        backImageView.transform = CGAffineTransformMakeRotation(M_PI);
-        frontImageView.transform = CGAffineTransformMakeRotation(M_PI);
-    }
-    else if(orientation == UIDeviceOrientationLandscapeRight)
-    {
-        CGAffineTransform transfRotation = CGAffineTransformMakeRotation(-M_PI_2);
-        CGAffineTransform transfScale = CGAffineTransformMakeScale(scale, scale);
-        CGAffineTransform transfConcat = CGAffineTransformConcat(transfScale, transfRotation);
+    if(orientation != lastOrientation || orientation == UIDeviceOrientationUnknown){
         
-        backImageView.transform = transfConcat;
-        frontImageView.transform = transfConcat;
-    }
-    else if(orientation == UIDeviceOrientationLandscapeLeft)
-    {
-        CGAffineTransform transfRotation = CGAffineTransformMakeRotation(M_PI_2);
-        CGAffineTransform transfScale = CGAffineTransformMakeScale(scale, scale);
-        CGAffineTransform transfConcat = CGAffineTransformConcat(transfRotation, transfScale);
+        if(orientation==UIDeviceOrientationPortrait ||
+           orientation==UIDeviceOrientationPortraitUpsideDown ||
+           orientation==UIDeviceOrientationLandscapeLeft ||
+           orientation==UIDeviceOrientationLandscapeRight)
+        {
+            lastOrientation = orientation;
+        }
         
-        backImageView.transform = transfConcat;
-        frontImageView.transform = transfConcat;
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationRepeatCount:1];
+        
+        if (orientation == UIDeviceOrientationPortrait)
+        {
+            
+            backImageView.transform = CGAffineTransformIdentity;
+            frontImageView.transform = CGAffineTransformIdentity;
+            
+            [UIView animateWithDuration:0.15 animations:^{
+                playPauseButton.alpha = 0.0;
+            } completion: ^(BOOL finished) {
+                [UIView animateWithDuration:0 animations:^{
+                    playPauseButton.transform = CGAffineTransformIdentity;
+                } completion: ^(BOOL finished) {
+                    [self setPlayPauseButtonPlace:orientation];
+                }];
+            }];
+        }
+        else if (orientation == UIDeviceOrientationPortraitUpsideDown)
+        {
+            backImageView.transform = CGAffineTransformMakeRotation(M_PI);
+            frontImageView.transform = CGAffineTransformMakeRotation(M_PI);
+            
+            [UIView animateWithDuration:0.15 animations:^{
+                playPauseButton.alpha = 0.0;
+            } completion: ^(BOOL finished) {
+                [UIView animateWithDuration:0 animations:^{
+                    playPauseButton.transform = CGAffineTransformMakeRotation(M_PI);;
+                } completion: ^(BOOL finished) {
+                    [self setPlayPauseButtonPlace:orientation];
+                }];
+            }];
+        }
+        else if(orientation == UIDeviceOrientationLandscapeRight)
+        {
+            CGAffineTransform transfRotation = CGAffineTransformMakeRotation(-M_PI_2);
+            CGAffineTransform transfScale = CGAffineTransformMakeScale(scale, scale);
+            CGAffineTransform transfConcat = CGAffineTransformConcat(transfScale, transfRotation);
+            
+            backImageView.transform = transfConcat;
+            frontImageView.transform = transfConcat;
+            
+            [UIView animateWithDuration:0.15 animations:^{
+                playPauseButton.alpha = 0.0;
+            } completion: ^(BOOL finished) {
+                [UIView animateWithDuration:0 animations:^{
+                    playPauseButton.transform = transfRotation;
+                } completion: ^(BOOL finished) {
+                    [self setPlayPauseButtonPlace:orientation];
+                }];
+            }];
+        }
+        else if(orientation == UIDeviceOrientationLandscapeLeft)
+        {
+            CGAffineTransform transfRotation = CGAffineTransformMakeRotation(M_PI_2);
+            CGAffineTransform transfScale = CGAffineTransformMakeScale(scale, scale);
+            CGAffineTransform transfConcat = CGAffineTransformConcat(transfRotation, transfScale);
+            
+            backImageView.transform = transfConcat;
+            frontImageView.transform = transfConcat;
+            
+            [UIView animateWithDuration:0.15 animations:^{
+                playPauseButton.alpha = 0.0;
+            } completion: ^(BOOL finished) {
+                [UIView animateWithDuration:0 animations:^{
+                    playPauseButton.transform = transfRotation;
+                } completion: ^(BOOL finished) {
+                    [self setPlayPauseButtonPlace:orientation];
+                }];
+            }];
+        }
+        else if(orientation == UIDeviceOrientationUnknown)
+        {
+            backImageView.transform = CGAffineTransformIdentity;
+            frontImageView.transform = CGAffineTransformIdentity;
+            
+            [UIView animateWithDuration:0.15 animations:^{
+                playPauseButton.alpha = 0.0;
+            } completion: ^(BOOL finished) {
+                [UIView animateWithDuration:0 animations:^{
+                    playPauseButton.transform = CGAffineTransformIdentity;
+                } completion: ^(BOOL finished) {
+                    [self setPlayPauseButtonPlace:orientation];
+                }];
+            }];
+        }
+        else if(firstTime && (orientation == UIDeviceOrientationFaceUp || orientation == UIDeviceOrientationFaceDown))
+        {
+            backImageView.transform = CGAffineTransformIdentity;
+            frontImageView.transform = CGAffineTransformIdentity;
+            
+            [UIView animateWithDuration:0.15 animations:^{
+                playPauseButton.alpha = 0.0;
+            } completion: ^(BOOL finished) {
+                [UIView animateWithDuration:0 animations:^{
+                    playPauseButton.transform = CGAffineTransformIdentity;
+                } completion: ^(BOOL finished) {
+                    [self setPlayPauseButtonPlace:UIDeviceOrientationPortrait];
+                }];
+            }];
+        }
+        
+        [UIView commitAnimations];
     }
-    else if(orientation == UIDeviceOrientationUnknown)
-    {
-        backImageView.transform = CGAffineTransformIdentity;
-        frontImageView.transform = CGAffineTransformIdentity;
-    }
-    else if(firstTime && (orientation == UIDeviceOrientationFaceUp || orientation == UIDeviceOrientationFaceDown))
-    {
-        backImageView.transform = CGAffineTransformIdentity;
-        frontImageView.transform = CGAffineTransformIdentity;
-    }
-    
-    [UIView commitAnimations];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+-(void) setPlayPauseButtonPlace:(UIDeviceOrientation) orientation {
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    if (screenBounds.size.height == 568) {
+
+        if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationUnknown)
+        {
+            playPauseButtonX.constant = 6.0;
+            playPauseButtonY.constant = 6.0;//+65.0
+        }
+        else if (orientation == UIDeviceOrientationPortraitUpsideDown)
+        {
+            playPauseButtonX.constant = 274.0;
+            playPauseButtonY.constant = 435.0+22.0+65.0;
+        }
+        else if(orientation == UIDeviceOrientationLandscapeRight)
+        {
+            playPauseButtonX.constant = 6.0;
+            playPauseButtonY.constant = 434.0+88.0;
+        }
+        else if(orientation == UIDeviceOrientationLandscapeLeft)
+        {
+            playPauseButtonX.constant = 274.0;
+            playPauseButtonY.constant = 6.0;
+        }
+
+    } else {
+    
+        if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationUnknown)
+        {
+            playPauseButtonX.constant = 6.0;
+            playPauseButtonY.constant = 27.0;
+        }
+        else if (orientation == UIDeviceOrientationPortraitUpsideDown)
+        {
+            playPauseButtonX.constant = 274.0;
+            playPauseButtonY.constant = 435.0-22.0;
+        }
+        else if(orientation == UIDeviceOrientationLandscapeRight)
+        {
+            playPauseButtonX.constant = 6.0;
+            playPauseButtonY.constant = 434.0;
+        }
+        else if(orientation == UIDeviceOrientationLandscapeLeft)
+        {
+            playPauseButtonX.constant = 274.0;
+            playPauseButtonY.constant = 6.0;
+        }
+    }
+
+    [UIView animateWithDuration:0.15 animations:^{
+        playPauseButton.alpha = 0.5;
+    }];
 }
 
+
+- (IBAction)playPauseAction:(UIButton *)sender {
+    
+    if (timer)
+    {
+        [timer invalidate];
+        timer = nil;
+        
+        [playPauseButton setImage:[UIImage imageNamed:@"Play-Button-NoStroke.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+        [timer fire];
+        
+        [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
+    }
+}
 @end
