@@ -499,7 +499,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         if(![view isKindOfClass:[UINavigationBar class]]){
             
             [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
-                                      view.frame.size.width, screenBounds.size.height+88)];
+                                      view.frame.size.width, screenBounds.size.height+44+49)];
         }
     }
     
