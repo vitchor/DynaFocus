@@ -87,7 +87,7 @@
     self.actualControllerIndex = [self.viewControllers indexOfObject:viewController];
     NSLog(@"Updating actualControllerIndex: %d", actualControllerIndex);
     
-//    if(actualControllerIndex == 4)
+    if(actualControllerIndex == 4)
         [self resetTabBarControllerTransitionView];
 }
 
