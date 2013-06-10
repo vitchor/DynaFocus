@@ -223,7 +223,7 @@
     [followersLabel setText:person.followersCount];
     [followingLabel setText:person.followingCount];
     
-    if (person.facebookId) {
+   if (!(person.facebookId == (id)[NSNull null] || person.facebookId.length == 0)) {
         
         NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%d&height=%d",person.facebookId, (int)userPicture.frame.size.width*5, (int)userPicture.frame.size.height*5] autorelease];
      

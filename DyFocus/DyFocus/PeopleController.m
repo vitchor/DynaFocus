@@ -470,7 +470,7 @@
         
 		NSString *personName = [person.name lowercaseString];
 		if ([lowerText length] == 0 || [personName rangeOfString:lowerText].location != NSNotFound) {
-			[m_visiblePeopleList addObject:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+			[m_visiblePeopleList addObject:[NSNumber numberWithLong:person.uid]];
 		}
 	}
 	[m_visiblePeopleList sortUsingFunction:comparePerson context:m_peopleInfo];
@@ -481,7 +481,7 @@
 		Person *person = [m_friendInfo objectForKey:[NSNumber numberWithLong:uid]];
 		NSString *personName = [person.name lowercaseString];
 		if ([lowerText length] == 0 || [personName rangeOfString:lowerText].location != NSNotFound) {
-			[m_visibleFriendsList addObject:[NSNumber numberWithLong:[person.facebookId longLongValue]]];
+			[m_visibleFriendsList addObject:[NSNumber numberWithLong:person.uid]];
 		}
 	}
    	[m_visibleFriendsList sortUsingFunction:comparePerson context:m_friendInfo];

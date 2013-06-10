@@ -86,13 +86,12 @@
 -(void)shareWithFacebook {
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    NSString *savedFacebookId = appDelegate.myself.facebookId;
     
     NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fofName];
     
     NSString *message = self.commentField.text;
     
-    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%@_%@_0.jpeg",savedFacebookId, fofName];
+    NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%ld_%@_0.jpeg",appDelegate.myself.uid, fofName];
     
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    urlLink, @"link",

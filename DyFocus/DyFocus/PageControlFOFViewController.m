@@ -17,9 +17,19 @@ static NSArray *__pageControlColorList = nil;
 // Load the view nib and initialize the pageNumber ivar.
 - (id)initWithPageNumber:(int)page {
     
-    if (self = [super initWithNibName:@"PageControlFOFViewController" bundle:nil]) {
-        pageNumber = page;
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        
+        if (self = [super initWithNibName:@"PageControlFOFViewController_i5" bundle:nil]) {
+            pageNumber = page;
+        }
+    } else {
+        if (self = [super initWithNibName:@"PageControlFOFViewController" bundle:nil]) {
+            pageNumber = page;
+        }
     }
+
+    
     return self;
 }
 
