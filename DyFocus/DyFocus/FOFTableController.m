@@ -17,7 +17,7 @@
 @end
 
 @implementation FOFTableController
-@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView;
+@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -78,7 +78,18 @@
     }
     
     else m_isFOFTableEmpty = FALSE;
+ 
+    if(shouldShowSegmentedBar)
+        [self showSegmentedBar];
     
+    if(shouldHideTabBarWhenScrolling)
+        [self showTabBar:self.tabBarController];
+    
+    for(UIView *view in self.tabBarController.view.subviews)
+    {
+        NSLog(@"TABAAAARRR  : %@",view);
+    }
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -92,6 +103,14 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FOFTableController.viewDidAppear"];
 }
+
+-(void) viewWillDisappear:(BOOL)animated{
+    if(shouldShowSegmentedBar)
+        [self hideSegmentedBar];
+    
+    [self resetNavigationControllerFrame];
+}
+
 
 -(void) refreshCellsImageSizes {
     
@@ -274,7 +293,29 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 			[refreshHeaderView setState:EGOOPullRefreshPulling];
 		}
 	}
+    
+    if (scrollView.contentOffset.y > lastOffset) {
+        
+        if(shouldHideNavigationBarWhenScrolling)
+            [self hideNavigationBar:self.navigationController];
+
+        if(shouldHideTabBarWhenScrolling)
+            [self hideTabBar:self.tabBarController];
+    } else {
+        
+        if(shouldHideNavigationBarWhenScrolling)
+            [self showNavigationBar:self.navigationController];
+
+        if(shouldHideTabBarWhenScrolling)
+            [self showTabBar:self.tabBarController];
+    }
 }
+
+
+-(void) scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    lastOffset = scrollView.contentOffset.y;
+}
+
 
 - (void)dataSourceDidFinishLoadingNewData{
     
@@ -421,6 +462,104 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                }
                            }];
     
+}
+
+-(void) showSegmentedBar
+{
+    [(FOFTableNavigationController*)self.navigationController setSegmentedControlHidden:NO];
+}
+
+- (void)hideSegmentedBar
+{
+    [(FOFTableNavigationController*)self.navigationController setSegmentedControlHidden:YES];
+}
+
+- (void)hideNavigationBar:(UINavigationController *) navigationController
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        
+    for(UIView *view in navigationController.view.subviews)
+    {
+        if(![view isKindOfClass:[UINavigationBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height)];
+        }
+    }
+
+    [navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)showNavigationBar:(UINavigationController *) navigationController
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    for(UIView *view in navigationController.view.subviews)
+    {
+        if(![view isKindOfClass:[UINavigationBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height+88)];
+        }
+    }
+    
+    [navigationController setNavigationBarHidden:NO animated:YES];
+    
+}
+
+- (void)hideTabBar:(UITabBarController *) tabBarController
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        for(UIView *view in tabBarController.view.subviews)
+        {
+            if([view isKindOfClass:[UITabBar class]])
+            {
+                [view setFrame:CGRectMake(view.frame.origin.x, screenBounds.size.height, view.frame.size.width,
+                                          view.frame.size.height)];
+            }
+            else
+            {
+                [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y,
+                                          view.frame.size.width, screenBounds.size.height)];
+            }
+        }
+        
+    }];    
+}
+
+- (void)showTabBar:(UITabBarController *) tabBarController
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        for(UIView *view in tabBarController.view.subviews)
+        {
+            if([view isKindOfClass:[UITabBar class]])
+            {
+                [view setFrame:CGRectMake(view.frame.origin.x, screenBounds.size.height - tabBarController.tabBar.frame.size.height, view.frame.size.width, view.frame.size.height)];
+                
+            }
+        }
+        
+    }];
+}
+
+-(void)resetNavigationControllerFrame
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    for(UIView *view in self.navigationController.view.subviews)
+    {
+        if(![view isKindOfClass:[UINavigationBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height)];
+        }
+    }
 }
 
 @end
