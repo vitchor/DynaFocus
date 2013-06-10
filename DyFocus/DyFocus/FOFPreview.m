@@ -303,16 +303,22 @@
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (tableView == firstTableView) {
+//        UIImage *bufferImage = [FilterUtil filterImage:[frames objectAtIndex:0] withFilterId:indexPath.row];
+        UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[frames objectAtIndex:0] withFilterId:indexPath.row], 1.0)];
         
-        UIImage *filteredImage = [FilterUtil filterImage:[frames objectAtIndex:0] withFilterId:indexPath.row];
-        
-        [self.displayedFrames setObject:filteredImage atIndexedSubscript:0];
+        if(self.displayedFrames[0]){
+            [self.displayedFrames replaceObjectAtIndex:0 withObject:filteredImage];
+        }else{
+            [self.displayedFrames setObject:filteredImage atIndexedSubscript:0];
+        }
         
     } else if (tableView == secondTableView) {
-        
-        UIImage *filteredImage = [FilterUtil filterImage:[frames objectAtIndex:1] withFilterId:indexPath.row];
-
-        [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];        
+        UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[frames objectAtIndex:1] withFilterId:indexPath.row], 1.0)];
+        if(self.displayedFrames[1]){
+            [self.displayedFrames replaceObjectAtIndex:1 withObject:filteredImage];
+        }else{
+            [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];
+        }
     }
 }
 

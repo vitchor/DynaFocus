@@ -167,16 +167,19 @@
     
     
     // Featured Controller
-    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray andUrl:refresh_featured_url];
+//    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray andUrl:refresh_featured_url];
+    
+    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithTopRatedFOFArray:self.featuredFofArray andTopRatedUrl:refresh_featured_url andTrendingFOFArray:self.feedFofArray andTrendingUrl:refresh_feed_url];
+    
     
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured.png"] tag:1];
     [galleryTab setFinishedSelectedImage:[UIImage imageNamed:@"df_featured_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_featured.png"]];
     [featuredWebViewController setTabBarItem:galleryTab];
     
     // Feed Controller
+    
     feedViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.feedFofArray andUrl:refresh_feed_url];
 
-    
     //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
     

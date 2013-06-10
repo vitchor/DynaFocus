@@ -8,6 +8,7 @@
 
 #import "DyfocusUITabBarController.h"
 #import "WebViewController.h"
+#import "AppDelegate.h"
 
 @interface DyfocusUITabBarController ()
 
@@ -85,6 +86,9 @@
     
     self.actualControllerIndex = [self.viewControllers indexOfObject:viewController];
     NSLog(@"Updating actualControllerIndex: %d", actualControllerIndex);
+    
+//    if(actualControllerIndex == 4)
+        [self resetTabBarControllerTransitionView];
 }
 
 -(NSUInteger)supportedInterfaceOrientations
@@ -99,8 +103,22 @@
 
 - (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
 {
-    
     return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+-(void)resetTabBarControllerTransitionView
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    AppDelegate* delegate = [UIApplication sharedApplication].delegate;
+    
+    for(UIView *view in delegate.tabBarController.view.subviews)
+    {
+        if(![view isKindOfClass:[UITabBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height-delegate.tabBarController.tabBar.frame.size.height)];
+        }
+    }
 }
 
 @end

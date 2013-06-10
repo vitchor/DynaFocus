@@ -160,11 +160,12 @@
 
 -(void) showPictures {
     FOFTableController *tableController = [[FOFTableController alloc] init];
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     tableController.refreshString = refresh_user_url;
     
     tableController.FOFArray = personFOFArray;
     tableController.shouldHideNavigationBar = NO;
+    tableController.shouldHideNavigationBarWhenScrolling = YES;
     
     tableController.userId = person.uid;
     
@@ -314,7 +315,6 @@
     
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -427,6 +427,5 @@
                            }
      ];
 }
-
 
 @end
