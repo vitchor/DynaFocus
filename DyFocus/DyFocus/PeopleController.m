@@ -388,7 +388,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
    
-    if (indexPath.section == 0) {
+    if (indexPath.section == 0 && !m_isDyfocusTableEmpty) {
     
         NSNumber *personIdNumber = [m_visibleFriendsList objectAtIndex:indexPath.row];
         
@@ -414,7 +414,7 @@
         [self.navigationController setNavigationBarHidden:NO animated:TRUE];
 
         
-    } else {
+    } else if (!m_isFacebookTableEmpty) {
         [self switchSelect:indexPath.row];
         [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     }
