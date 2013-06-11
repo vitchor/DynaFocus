@@ -84,12 +84,6 @@
     
     if(shouldHideTabBarWhenScrolling)
         [self showTabBar:self.tabBarController];
-    
-    for(UIView *view in self.tabBarController.view.subviews)
-    {
-        NSLog(@"TABAAAARRR  : %@",view);
-    }
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {

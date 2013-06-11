@@ -38,9 +38,8 @@
     return [self initWithRootViewController:self.tableController];
 }
 
--(id) initWithTopRatedFOFArray:(NSArray *)topRatedFOFArray andTopRatedUrl:(NSString *)refreshTopRatedUrl andTrendingFOFArray:(NSArray *)itrendingFOFArray andTrendingUrl:(NSString *)irefreshTrendingUrl{
+-(id) initWithTopRatedFOFArray:(NSArray *)topRatedFOFArray andTopRatedUrl:(NSString *)refreshTopRatedUrl andTrendingFOFArray:(NSArray *)trendingFOFArray andTrendingUrl:(NSString *)irefreshTrendingUrl{
 
-    trendingFOFArray = itrendingFOFArray;
     refreshTrendingUrl = irefreshTrendingUrl;
     
     self.tableController = [[FOFTableController alloc] init];
@@ -51,6 +50,20 @@
     self.tableController.shouldHideTabBarWhenScrolling = YES;
     self.tableController.shouldShowSegmentedBar = YES;
     
+    self.trendingTableController = [[FOFTableController alloc] init];
+    
+    if(trendingFOFArray)
+        self.trendingTableController.FOFArray = trendingFOFArray;
+    else
+        self.trendingTableController.FOFArray = [NSMutableArray array];
+    
+    self.trendingTableController.refreshString = irefreshTrendingUrl;
+    self.trendingTableController.shouldHideNavigationBar = NO;
+    self.trendingTableController.shouldHideNavigationBarWhenScrolling = YES;
+    self.trendingTableController.shouldHideTabBarWhenScrolling = YES;
+    self.trendingTableController.shouldShowSegmentedBar = YES;
+    self.trendingTableController.navigationItem.hidesBackButton = YES;
+
     [self setNavigationBarHidden:NO];
 
     return [self initWithRootViewController:self.tableController];
@@ -60,7 +73,7 @@
     
     self.navigationBar.barStyle = UIBarStyleBlackOpaque;
     
-    if(trendingFOFArray){
+    if(refreshTrendingUrl){
         [self loadSegmentedBar];
     }
     [super viewDidLoad];
@@ -109,21 +122,11 @@
     
     if(segmentedControl.selectedSegmentIndex == 0){
         [self popViewControllerAnimated:YES];
+        
     }else{
-        
-        FOFTableController * trendingTableController = [[FOFTableController alloc] init];
-        trendingTableController.FOFArray = trendingFOFArray;
-        trendingTableController.refreshString = refreshTrendingUrl;
-        trendingTableController.shouldHideNavigationBar = NO;
-        trendingTableController.shouldHideNavigationBarWhenScrolling = YES;
-        trendingTableController.shouldHideTabBarWhenScrolling = YES;
-        trendingTableController.shouldShowSegmentedBar = YES;
-        trendingTableController.navigationItem.hidesBackButton = YES;
-        
-        [self pushViewController:trendingTableController animated:YES];
-        [trendingTableController release];
+        [self pushViewController:self.trendingTableController animated:YES];
+        [self.trendingTableController release];
     }
-
 }
 
 -(void)resetSegmentedBarIndex{

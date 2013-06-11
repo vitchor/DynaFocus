@@ -12,10 +12,10 @@
 @interface FOFTableNavigationController : UINavigationController {
     
     FOFTableController *tableController;
+    FOFTableController *trendingTableController;
     
     UISegmentedControl *segmentedControl;
 
-    NSArray *trendingFOFArray;
     NSString *refreshTrendingUrl;
 }
 
@@ -25,5 +25,6 @@
 -(void) setSegmentedControlHidden:(BOOL)hidden;
 
 @property(nonatomic, retain) FOFTableController *tableController;
+@property(nonatomic, retain) FOFTableController *trendingTableController;
 
 @end
