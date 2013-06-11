@@ -17,6 +17,8 @@
     UISegmentedControl *segmentedControl;
 
     NSString *refreshTrendingUrl;
+    
+    BOOL isFirstTimeLoading;
 }
 
 -(id) initWithFOFArray:(NSArray *)FOFArray andUrl:(NSString *)refreshUrl;

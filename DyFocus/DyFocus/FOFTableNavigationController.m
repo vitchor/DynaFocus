@@ -66,6 +66,8 @@
 
     [self setNavigationBarHidden:NO];
 
+    isFirstTimeLoading = YES;
+    
     return [self initWithRootViewController:self.tableController];
 }
 
@@ -86,7 +88,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self resetSegmentedBarIndex];
+    
+    if(isFirstTimeLoading){
+        [self resetSegmentedBarIndex];
+        isFirstTimeLoading = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning
