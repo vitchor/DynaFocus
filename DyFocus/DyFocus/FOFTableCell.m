@@ -331,6 +331,7 @@
                                        if(m_fof.m_id == fof.m_id){
                                            [tableView.FOFArray removeObject:m_fof];
                                            [tableView.m_tableView reloadData];
+                                           break;
                                        }
                                    }
                                    [LoadView fadeAndRemoveFromView:tableView.view];

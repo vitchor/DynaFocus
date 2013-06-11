@@ -75,6 +75,8 @@
         deleteCommentBtn.hidden = NO;
         UITapGestureRecognizer *singleTapDelete = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteCommentPressed)] autorelease];
         [deleteCommentBtn addGestureRecognizer:singleTapDelete];
+    }else{
+        deleteCommentBtn.hidden = YES;
     }
 }
 
@@ -158,7 +160,6 @@
                                            queue:[NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                    if(!error && data) {
-                                       deleteCommentBtn.hidden = YES;
                                        // Lets REFRESH COMMENT TABLE:
                                        for (Comment *comment in commentController.comments) {
                                            if([comment.m_uid longLongValue] == [m_comment.m_uid longLongValue]){
