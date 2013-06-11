@@ -82,10 +82,6 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -128,10 +124,8 @@
     
     if(segmentedControl.selectedSegmentIndex == 0){
         [self popViewControllerAnimated:YES];
-        
     }else{
         [self pushViewController:self.trendingTableController animated:YES];
-        [self.trendingTableController release];
     }
 }
 
@@ -141,6 +135,18 @@
 
 -(void)setSegmentedControlHidden:(BOOL)hidden{
     [segmentedControl setHidden:hidden];
+}
+
+-(void) enableSegmentedControl:(BOOL)enable{
+    segmentedControl.enabled = enable;
+}
+
+-(void)dealloc{
+    
+    [tableController release];
+    [trendingTableController release];
+    
+    [super dealloc];
 }
 
 @end

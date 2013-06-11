@@ -96,11 +96,16 @@
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FOFTableController.viewDidAppear"];
+    
+    if(shouldShowSegmentedBar)
+        [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:YES];
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
-    if(shouldShowSegmentedBar)
+    if(shouldShowSegmentedBar){
         [self hideSegmentedBar];
+        [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:NO];
+    }
     
     [self resetNavigationControllerFrame];
 }
