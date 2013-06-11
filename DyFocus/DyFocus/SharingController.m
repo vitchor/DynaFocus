@@ -19,7 +19,7 @@
 
 @implementation SharingController
 
-@synthesize facebookSwitch, activityIndicator, commentField, frames, focalPoints, spinner, backButton, fofName, fofUserFbId;
+@synthesize facebookSwitch, activityIndicator, commentField, frames, focalPoints, spinner, backButton, fofName, fofUserFbId, titleMessage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -253,6 +253,19 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSString *facebookId = delegate.myself.facebookId;
+    
+   if (facebookId == (id)[NSNull null] || facebookId.length == 0) {
+       
+       [shareLabel setHidden:YES];
+       [facebookSwitch setHidden:YES];
+       
+       [titleMessage setText:@"The option to synchronize your account to social medias is coming soon, stay tuned."];
+       
+   }
     
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
