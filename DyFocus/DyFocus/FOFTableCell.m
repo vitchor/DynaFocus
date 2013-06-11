@@ -455,35 +455,37 @@
 
 - (void)loadUserProfile:(UITapGestureRecognizer *)gesture {
 
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    
-    ProfileController *profileController = nil;
-    
-    Person *person;
-    if(fof.m_userId ==delegate.myself.uid){
-        person = delegate.myself;
+    if(tableView.userId){
+        NSLog(@"==== U ARE already inside this person's profile");
     }else{
-        person = [delegate getUserWithId:fof.m_userId];
-    }
-    
-    if (person) {
-
-        // Person exists, so it's being followed.
-        NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.uid];
-        profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:userFOFArray];
-
-    } else {
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
-        // Person is not being followed, there's no information we can get.
-        profileController = [[ProfileController alloc] initWithUserId:fof.m_userId];
+        ProfileController *profileController = nil;
+        
+        Person *person;
+        if(fof.m_userId == delegate.myself.uid){
+            person = delegate.myself;
+        }else{
+            person = [delegate getUserWithId:fof.m_userId];
+        }
+        
+        if (person) {
+            // Person exists, so it's being followed.
+            NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.uid];
+            profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:userFOFArray];
+            
+        } else {
+            // Person is not being followed, there's no information we can get.
+            profileController = [[ProfileController alloc] initWithUserId:fof.m_userId];
+        }
+        
+        
+        profileController.hidesBottomBarWhenPushed = YES;
+        
+        [self.tableView.navigationController pushViewController:profileController animated:YES];
+        [self.tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
+        [profileController release];
     }
-    
-    
-    profileController.hidesBottomBarWhenPushed = YES;
-    
-    [self.tableView.navigationController pushViewController:profileController animated:YES];
-    [self.tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
-    [profileController release];
 }
 
 -(void)loadImages {
