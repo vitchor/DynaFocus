@@ -15,9 +15,10 @@
 #import "UIDyfocusImage.h"
 #import "UIImageLoaderDyfocus.h"
 #import "FullscreenFOFViewController.h"
+#import "LoadView.h"
 
 @implementation FOFTableCell
-@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel, lightGrayBrackgroundView;
+@synthesize labelUserName ,labelDate, buttonLike, buttonComment, imagefrontFrame, imagebackFrame, imageUserPicture, timer, spinner, whiteView, tableView, row, commentsCountLabel, likesCountLabel, lightGrayBrackgroundView, deleteFOFButton;
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -96,6 +97,11 @@
     [commentsCountLabel setText:newCount];
 }
 
+- (void) decreaseCommentsCounter{
+    NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [commentsCountLabel.text intValue] - 1] autorelease];
+    [commentsCountLabel setText:newCount];
+}
+
 - (void) likeButtonPressed {
     if (!fof.m_liked) {
     
@@ -129,16 +135,54 @@
 
         [buttonLike setTitle:@"Liked" forState:UIControlStateNormal];
         fof.m_liked = YES;
-        fof.m_likes = [[NSString alloc] initWithFormat:@"%d",[fof.m_likes intValue] + 1];
+        fof.m_likes = [NSString stringWithFormat:@"%d",[fof.m_likes intValue] + 1];
         
         for (FOF *m_fof in tableView.FOFArray) {
             if(m_fof.m_id == fof.m_id){
-                m_fof.m_likes = [[NSString alloc] initWithFormat:@"%d", [m_fof.m_likes intValue] + 1];
+                m_fof.m_likes = [NSString stringWithFormat:@"%d", [m_fof.m_likes intValue] + 1];
                 m_fof.m_liked = YES;
             }
         }      
     } else {
-        //implement liked   
+        NSString *newLikeCount = [[[NSString alloc] initWithFormat:@"%d", [likesCountLabel.text intValue] - 1] autorelease];
+        [likesCountLabel setText:newLikeCount];
+        
+        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/delete_like/",dyfocus_url] autorelease];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+        
+        NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        
+//        curl -d json='{"user_id": 74, "fof_id": 352}' http://localhost:8000/uploader/delete_like/
+        [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
+        
+        [jsonRequestObject setObject:[NSString stringWithFormat:@"%ld", delegate.myself.uid] forKey:@"user_id"];
+        
+        NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                               json] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   if(!error && data) {
+                                   }
+                               }];
+        
+        [buttonLike setTitle:@"Like" forState:UIControlStateNormal];
+        fof.m_liked = NO;
+        fof.m_likes = [NSString stringWithFormat:@"%d",[fof.m_likes intValue] - 1];
+
+        for (FOF *m_fof in tableView.FOFArray) {
+            if(m_fof.m_id == fof.m_id){
+                m_fof.m_likes = [NSString stringWithFormat:@"%d", [m_fof.m_likes intValue] - 1];
+                m_fof.m_liked = NO;
+            }
+        }
     }
 }
 
@@ -200,17 +244,21 @@
         labelUserName.userInteractionEnabled = YES;
         [labelUserName addGestureRecognizer:singleTapUserName];
         
-//        labelUserName
-        
         [labelDate setText:fof.m_date];
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        if(tableView.userId && (tableView.userId == delegate.myself.uid)){
+            deleteFOFButton.hidden = NO;
+            
+            UITapGestureRecognizer *deleteFOFGesture = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteFOFClicked)] autorelease];
+            
+            [deleteFOFButton addGestureRecognizer:deleteFOFGesture];
+        }
         
         //[buttonLike setTitle: [[[NSString alloc] initWithFormat:@"Like (%@)", fof.m_likes]autorelease] forState:UIControlStateNormal];
         
         [likesCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_likes] autorelease]];
         [commentsCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_comments] autorelease]];    
-        
-     
-        
         
         if(!fofUrls) {
             fofUrls = [[NSMutableArray alloc] init];
@@ -228,6 +276,67 @@
             //buttonLike.titleLabel.font = [UIFont systemFontOfSize:11];
         }
     }
+}
+
+-(void) deleteFOFClicked{
+    NSString *alertTitle = @"Delete?";
+    NSString *alertMsg =@"You're about to delete this picture. Are you sure?";
+    NSString *alertButton1 = @"Yes";
+    NSString *alertButton2 =@"No";
+    
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton1 otherButtonTitles:nil] autorelease];
+    [alert setTag:1];
+    [alert addButtonWithTitle:alertButton2];
+    [alert show];
+    
+    [alertTitle release];
+    [alertMsg release];
+    [alertButton1 release];
+    [alertButton2 release];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if ([alertView tag] == 1) {
+        if (buttonIndex == 0) {
+            [self eraseFOF];
+        }
+    }
+}
+
+-(void) eraseFOF {
+    [LoadView loadViewOnView:tableView.view withText:@"Deleting..."];
+    
+    NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [likesCountLabel.text intValue] + 1] autorelease];
+    [likesCountLabel setText:newCount];
+    
+    NSString *imageUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/delete_fof/",dyfocus_url] autorelease];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+    
+    NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
+    
+    [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
+    
+    NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                           json] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if(!error && data) {
+                                   for (FOF *m_fof in tableView.FOFArray) {
+                                       if(m_fof.m_id == fof.m_id){
+                                           [tableView.FOFArray removeObject:m_fof];
+                                           [tableView.m_tableView reloadData];
+                                           break;
+                                       }
+                                   }
+                                   [LoadView fadeAndRemoveFromView:tableView.view];
+                               }
+                           }];
 }
 
 - (IBAction)playPauseAction:(UIButton *)sender {
@@ -346,35 +455,37 @@
 
 - (void)loadUserProfile:(UITapGestureRecognizer *)gesture {
 
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    
-    ProfileController *profileController = nil;
-    
-    Person *person;
-    if(fof.m_userId ==delegate.myself.uid){
-        person = delegate.myself;
+    if(tableView.userId){
+        NSLog(@"==== U ARE already inside this person's profile");
     }else{
-        person = [delegate getUserWithId:fof.m_userId];
-    }
-    
-    if (person) {
-
-        // Person exists, so it's being followed.
-        NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.uid];
-        profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:userFOFArray];
-
-    } else {
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
-        // Person is not being followed, there's no information we can get.
-        profileController = [[ProfileController alloc] initWithUserId:fof.m_userId];
+        ProfileController *profileController = nil;
+        
+        Person *person;
+        if(fof.m_userId == delegate.myself.uid){
+            person = delegate.myself;
+        }else{
+            person = [delegate getUserWithId:fof.m_userId];
+        }
+        
+        if (person) {
+            // Person exists, so it's being followed.
+            NSMutableArray *userFOFArray = [delegate FOFsFromUser:person.uid];
+            profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:userFOFArray];
+            
+        } else {
+            // Person is not being followed, there's no information we can get.
+            profileController = [[ProfileController alloc] initWithUserId:fof.m_userId];
+        }
+        
+        
+        profileController.hidesBottomBarWhenPushed = YES;
+        
+        [self.tableView.navigationController pushViewController:profileController animated:YES];
+        [self.tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
+        [profileController release];
     }
-    
-    
-    profileController.hidesBottomBarWhenPushed = YES;
-    
-    [self.tableView.navigationController pushViewController:profileController animated:YES];
-    [self.tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
-    [profileController release];
 }
 
 -(void)loadImages {

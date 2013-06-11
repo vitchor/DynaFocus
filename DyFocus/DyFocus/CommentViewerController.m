@@ -15,7 +15,7 @@
 
 @implementation CommentViewerController
 
-@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView, isCommenting, tableCell, likesView;
+@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView, isCommenting, tableCell, likesView, comments;
 
 -(void)keyboardWillShow:(NSNotification*)aNotification
 {
@@ -450,7 +450,7 @@
                                                NSString *fofComment = [jsonComment valueForKey:@"comment"];
                                                NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
                                                NSString *fofUserId = [jsonComment valueForKey:@"user_id"];
-                                               
+                                               NSString *commentUid = [jsonComment valueForKey:@"comment_id"];
                                                NSString *commentPubDate = [jsonComment valueForKey:@"pub_date"];
                                                
                                                Comment *comment = [[Comment alloc] init];
@@ -460,6 +460,7 @@
                                                comment.m_fofId = fofId;
                                                comment.m_date = commentPubDate;
                                                comment.m_userId = [fofUserId longLongValue];
+                                               comment.m_uid = commentUid;
                                             
                                                [comments addObject:comment];
                                                   NSLog(@"Commentario: %@", comment.m_message);
@@ -472,19 +473,21 @@
                                            // TODO GET THE LIST OF USERS THAT LIKED
                                            for (int i = 0; i < [jsonLikes count]; i++) {
                                                
-                                               NSDictionary *jsonComment = [jsonLikes objectAtIndex:i];  // jsonComment? why not jonLike?
+                                               NSDictionary *jsonLike = [jsonLikes objectAtIndex:i];  // jsonComment? why not jonLike?
                                                
-                                               NSString *fofUserId = [jsonComment valueForKey:@"user_id"];
-                                               NSString *fofUserFacebookId = [jsonComment valueForKey:@"user_facebook_id"];
-                                               NSString *fofId = [jsonComment valueForKey:@"fof_id"];
-                                               long userId = [[jsonComment valueForKey:@"user_id"] longLongValue];
-                                               NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
+                                               NSString *fofUserId = [jsonLike valueForKey:@"user_id"];
+                                               NSString *fofUserFacebookId = [jsonLike valueForKey:@"user_facebook_id"];
+                                               NSString *fofId = [jsonLike valueForKey:@"fof_id"];
+                                               long userId = [[jsonLike valueForKey:@"user_id"] longLongValue];
+                                               NSString *fofUserName = [jsonLike valueForKey:@"user_name"];
+                                               NSString *likeId = [jsonLike valueForKey:@"like_id"];
                                                
                                                Like *like = [[Like alloc] init];
                                                like.m_userFacebookId = fofUserFacebookId;
                                                like.m_userId = [fofUserId longLongValue];
                                                like.m_fofId = fofId;
                                                like.m_userId = userId;
+                                               like.m_uid = likeId;
                                                
 //                                               like.m_userName = fofUserName;//todo
                                                
@@ -581,7 +584,6 @@
         }
         
         if(likeListUsers.length >= 45){
-            NSLog(@"==== BIGGER THAN 45 CHARACTERS");
             likeListUsers = likeListReference;
             
             NSString *likesCounter = [NSString stringWithFormat:@"%d", ([likes count] - i)];
@@ -747,6 +749,10 @@
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
+                               NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                               NSDictionary *jsonValues = [stringReply JSONValue];
+                               
+                               
                                if(!error && data) {
                                    [LoadView fadeAndRemoveFromView:self.view];
                                    
@@ -761,15 +767,16 @@
                                    comment.m_fofId = fof.m_id;
                                    comment.m_date = @"Today";
                                    comment.m_userId = myself.uid;
+                                   comment.m_uid = [jsonValues valueForKey:@"comment_id"];
                                    
                                    [comments addObject:comment];
                                    [tableView reloadData];
                                    
-                                   fof.m_comments = [[NSString alloc] initWithFormat: @"%d",[fof.m_comments intValue] + 1];
+                                   fof.m_comments = [NSString stringWithFormat: @"%d",[fof.m_comments intValue] + 1];
                                    
                                    for (FOF *m_fof in tableCell.tableView.FOFArray) {
                                        if(m_fof.m_id == fof.m_id){
-                                           m_fof.m_comments = [[NSString alloc] initWithFormat:@"%d", [m_fof.m_comments intValue] + 1];
+                                           m_fof.m_comments = [NSString stringWithFormat:@"%d", [m_fof.m_comments intValue] + 1];
                                            [tableCell increaseCommentsCounter];
                                        }
                                    }

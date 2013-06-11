@@ -56,4 +56,7 @@
 @property (nonatomic, retain) IBOutlet UITextView *fbCommentTextView;
 @property (nonatomic) BOOL isKeyboardHidden;
 @property (nonatomic,readwrite) BOOL isCommenting;
+@property (nonatomic, retain) NSMutableArray *comments;
+
+
 @end

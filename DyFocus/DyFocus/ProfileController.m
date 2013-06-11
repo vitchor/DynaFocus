@@ -120,6 +120,13 @@
                                            }
                                            
                                            personFOFArray = FOFArray;
+                                           
+                                           NSString *buttonPicturesString = [NSString stringWithFormat:@"Pictures (%i)", FOFArray.count];
+                                           
+                                           [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateNormal];
+                                           [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateHighlighted];
+                                           [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateDisabled];
+                                           [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateSelected];
                                        }
 
                                        
@@ -137,6 +144,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray {
     
     if (!(profilePerson.kind == MYSELF) && (!profilePersonFOFArray || [profilePersonFOFArray count] == 0)) {
+        
         if (profilePerson) {
             person = [profilePerson retain];
             userKind = profilePerson.kind;
@@ -144,6 +152,8 @@
         } else {
             return nil;
         }
+        
+        
     } else {
                    
         self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -152,7 +162,7 @@
             personFOFArray = [profilePersonFOFArray retain];
             person = [profilePerson retain];
             userKind = profilePerson.kind;
-        } 
+        }
         
         return self;
     }
@@ -185,9 +195,21 @@
     
     [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
     [notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
+    
 
     if (person) {
         [self setUIPersonValues];
+    }
+    
+    if (personFOFArray) {
+        
+        NSString *buttonPicturesString = [NSString stringWithFormat:@"Pictures (%i)", personFOFArray.count];
+        
+        [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateNormal];
+        [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateHighlighted];
+        [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateDisabled];
+        [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateSelected];
+        
     }
 }
 
@@ -251,6 +273,7 @@
     if (userKind == MYSELF) {
         [self updateBadgeView];
     }
+    
 }
 
 -(void)updateBadgeView {
