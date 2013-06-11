@@ -18,7 +18,7 @@
     IBOutlet UIActivityIndicatorView *spinner;
     IBOutlet UITextView *commentField;
     IBOutlet UILabel *placeHolderLabel;
-    
+    IBOutlet UILabel *titleMessage;
 
     FBSession *facebook;
     ASIFormDataRequest *request;
@@ -37,6 +37,7 @@
 @property(nonatomic,retain) IBOutlet UIView *activityIndicator;
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic,retain) IBOutlet UITextView *commentField;
+@property(nonatomic,retain) IBOutlet UILabel *titleMessage;
 
 @property(nonatomic,retain) NSMutableArray *frames;
 @property(nonatomic,retain) NSMutableArray *focalPoints;
