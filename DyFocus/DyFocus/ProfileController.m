@@ -121,10 +121,6 @@
                                            
                                            personFOFArray = FOFArray;
                                            
-                                           if (FOFArray.count == 0) {
-                                               [myPicturesButton setEnabled:NO];
-                                           }
-                                           
                                            NSString *buttonPicturesString = [NSString stringWithFormat:@"Pictures (%i)", FOFArray.count];
                                            
                                            [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateNormal];
