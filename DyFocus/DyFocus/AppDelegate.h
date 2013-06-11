@@ -47,6 +47,7 @@
     FacebookController *friendsController;
     
     FOFTableNavigationController *feedViewController;
+    FOFTableNavigationController *featuredViewController;
     LoginController *loginController;
     SplashScreenController *splashScreenController;
     CameraView *cameraViewController;
@@ -55,9 +56,10 @@
     NSMutableDictionary *friendsThatIFollow;       // Dyfocus friends that AREN'T   FB friends but we get their data from FB
     Person *myself;                             // My data
     
-    NSMutableArray *featuredFofArray;
     NSMutableArray *userFofArray;
+    NSMutableArray *featuredFofArray;
     NSMutableArray *feedFofArray;
+    NSMutableArray *trendingFofArray;
     NSMutableArray *notificationsArray;
     
     NSString *deviceId;
@@ -105,11 +107,13 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSMutableDictionary *friendsFromFb;
 @property (nonatomic, retain)  NSMutableDictionary *friendsThatIFollow;
 @property (nonatomic, retain)  Person *myself;
-@property (nonatomic, retain)  NSMutableArray *featuredFofArray;
 @property (nonatomic, retain)  NSMutableArray *userFofArray;
-@property (nonatomic, retain)  NSMutableArray *feedFofArray; 
-@property (nonatomic, retain)  NSString *deviceId;
+@property (nonatomic, retain)  NSMutableArray *featuredFofArray;
+@property (nonatomic, retain)  NSMutableArray *feedFofArray;
+@property (nonatomic, retain)  NSMutableArray *trendingFofArray;
 @property (nonatomic, retain)  NSMutableArray *notificationsArray;
+@property (nonatomic, retain)  NSString *deviceId;
+
 @property (nonatomic, readwrite) int unreadNotifications;
 
 

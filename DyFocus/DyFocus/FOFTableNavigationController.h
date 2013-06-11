@@ -12,11 +12,21 @@
 @interface FOFTableNavigationController : UINavigationController {
     
     FOFTableController *tableController;
+    FOFTableController *trendingTableController;
+    
+    UISegmentedControl *segmentedControl;
 
+    NSString *refreshTrendingUrl;
+    
+    BOOL isFirstTimeLoading;
 }
 
 -(id) initWithFOFArray:(NSArray *)FOFArray andUrl:(NSString *)refreshUrl;
+-(id) initWithTopRatedFOFArray:(NSArray *)topRatedFOFArray andTopRatedUrl:(NSString *)refreshTopRatedUrl andTrendingFOFArray:(NSArray *)trendingFOFArray andTrendingUrl:(NSString *)refreshTrendingUrl;
+
+-(void) setSegmentedControlHidden:(BOOL)hidden;
 
 @property(nonatomic, retain) FOFTableController *tableController;
+@property(nonatomic, retain) FOFTableController *trendingTableController;
 
 @end

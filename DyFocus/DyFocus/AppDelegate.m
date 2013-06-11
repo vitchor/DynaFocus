@@ -26,7 +26,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friendsFromFb, myself, featuredFofArray, userFofArray, feedFofArray, deviceId, notificationsArray, unreadNotifications, friendsThatIFollow;
+@synthesize tabBarController, friendsFromFb, myself, featuredFofArray, userFofArray, feedFofArray, deviceId, notificationsArray, unreadNotifications, friendsThatIFollow, trendingFofArray;
 
 - (void)dealloc
 {
@@ -167,16 +167,19 @@
     
     
     // Featured Controller
-    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray andUrl:refresh_featured_url];
+//    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray andUrl:refresh_featured_url];
+    
+    featuredViewController = [[FOFTableNavigationController alloc] initWithTopRatedFOFArray:self.featuredFofArray andTopRatedUrl:refresh_featured_url andTrendingFOFArray:self.trendingFofArray andTrendingUrl:refresh_trending_url];
+    
     
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured.png"] tag:1];
     [galleryTab setFinishedSelectedImage:[UIImage imageNamed:@"df_featured_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_featured.png"]];
-    [featuredWebViewController setTabBarItem:galleryTab];
+    [featuredViewController setTabBarItem:galleryTab];
     
     // Feed Controller
+    
     feedViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.feedFofArray andUrl:refresh_feed_url];
 
-    
     //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
     
     
@@ -230,11 +233,11 @@
     [[[self tabBarController] tabBar] setSelectionIndicatorImage:[UIImage imageNamed:@"selected-black"]];
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedViewController, cameraNavigationController, friendsNavigationController, profileNavigationController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:featuredViewController, feedViewController, cameraNavigationController, friendsNavigationController, profileNavigationController, nil];
     
     self.tabBarController.viewControllers = controllers;
     
-    self.tabBarController.featuredWebController = featuredWebViewController;
+    self.tabBarController.featuredWebController = featuredViewController;
     self.tabBarController.feedWebController = feedViewController;
     
     
@@ -248,6 +251,8 @@
         [self showNotificationView];
         showNotification = NO;
     }
+    
+    [self loadTrendingTab];
 }
 
 - (void)resetCameraUINavigationController {
@@ -273,6 +278,10 @@
     tabBarController.lastControllerIndex = 1;
     tabBarController.actualControllerIndex = 1;
     [tabBarController setSelectedIndex:1];
+}
+
+-(void)loadTrendingTab{ 
+    [featuredViewController.trendingTableController refreshWithAction:NO];
 }
 
 -(void)goBackToLastController {
@@ -835,6 +844,28 @@
             
         }
         
+        //creating array trending fof list
+        NSDictionary * trendingFOFList = [jsonValues valueForKey:@"fof_list"];
+        
+        if (trendingFOFList) {
+            
+            NSMutableArray *trendingFOFArray = [NSMutableArray array];
+            
+            for (int i = 0; i < [trendingFOFList count]; i++) {
+                NSDictionary *jsonFOF = [trendingFOFList objectAtIndex:i];
+                
+                FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
+                
+                [trendingFOFArray addObject:fof];
+                
+                //NSLog(@"Adding FOf %@",fof.m_userName);
+                
+            }
+            NSLog(@"TRENDING FOF COUNT: %d", [trendingFOFArray count]);
+            
+            self.trendingFofArray = trendingFOFArray;
+            
+        }
 
         self.myself.followingCount = [NSString stringWithFormat:@"%@",[jsonValues valueForKey:@"user_following_count"]];
         self.myself.followersCount = [NSString stringWithFormat:@"%@",[jsonValues valueForKey:@"user_followers_count"]];

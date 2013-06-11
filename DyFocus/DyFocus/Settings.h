@@ -19,6 +19,7 @@
 #define refresh_user_url @"/uploader/json_user_id_fof/"
 #define refresh_featured_url @"/uploader/user_json_featured_fof/"
 #define refresh_feed_url @"/uploader/user_json_feed/"
+#define refresh_trending_url @"/uploader/trending/"
 
 @interface Settings : NSObject
 
