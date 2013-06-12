@@ -412,7 +412,12 @@
                          // Lets create the json, with all the user info, that will be used in the request
                          NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
                          
-                         [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+                         if (self.deviceId) {
+                             [jsonRequestObject setObject:self.deviceId forKey:@"device_id"];
+                         } else {
+                             [jsonRequestObject setObject:@"null"  forKey:@"device_id"];
+                         }
+                         
                          [jsonRequestObject setObject:[user objectForKey:@"id"] forKey:@"facebook_id"];
                          [jsonRequestObject setObject:[user objectForKey:@"name"] forKey:@"name"];
                          [jsonRequestObject setObject:[user objectForKey:@"email"] forKey:@"email"];
@@ -623,7 +628,7 @@
              if (self.deviceId) {
                  [jsonRequestObject setObject:self.deviceId forKey:@"device_id"];
              } else {
-                 [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+                 [jsonRequestObject setObject:@"null"  forKey:@"device_id"];
              }
              
              [jsonRequestObject setObject:[user objectForKey:@"id"] forKey:@"facebook_id"];
