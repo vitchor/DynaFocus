@@ -327,7 +327,7 @@
         if (delegate.deviceId) {
             [jsonRequestObject setObject:delegate.deviceId forKey:@"device_id"];
         } else {
-            [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+            [jsonRequestObject setObject:@"null" forKey:@"device_id"];
         }
         
         [jsonRequestObject setObject:signupFullNameTextField.text forKey:@"user_name"];
