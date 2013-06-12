@@ -109,7 +109,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">--------------</string>
+								<string key="IBUIText"/>
 								<reference key="IBUITextColor" ref="317422527"/>
 								<nil key="IBUIHighlightedColor"/>
 								<object class="NSColor" key="IBUIShadowColor" id="681495124">
@@ -148,7 +148,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">-</string>
+								<string key="IBUIText"/>
 								<reference key="IBUITextColor" ref="317422527"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -177,7 +177,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">-</string>
+								<string key="IBUIText"/>
 								<reference key="IBUITextColor" ref="317422527"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -844,6 +844,22 @@
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
 							</object>
+							<object class="IBNSLayoutConstraint" id="390888913">
+								<reference key="firstItem" ref="673317085"/>
+								<int key="firstAttribute">3</int>
+								<int key="relation">0</int>
+								<reference key="secondItem" ref="53221008"/>
+								<int key="secondAttribute">3</int>
+								<float key="multiplier">1</float>
+								<object class="IBLayoutConstant" key="constant">
+									<double key="value">0.0</double>
+								</object>
+								<float key="priority">1000</float>
+								<reference key="containingView" ref="801248025"/>
+								<int key="scoringType">6</int>
+								<float key="scoringTypeFloat">24</float>
+								<int key="contentType">2</int>
+							</object>
 							<object class="IBNSLayoutConstraint" id="1007694013">
 								<reference key="firstItem" ref="801248025"/>
 								<int key="firstAttribute">6</int>
@@ -1295,6 +1311,22 @@
 						<int key="objectID">1347</int>
 						<reference key="object" ref="53221008"/>
 						<array class="NSMutableArray" key="children">
+							<object class="IBNSLayoutConstraint" id="934044194">
+								<reference key="firstItem" ref="53221008"/>
+								<int key="firstAttribute">8</int>
+								<int key="relation">0</int>
+								<nil key="secondItem"/>
+								<int key="secondAttribute">0</int>
+								<float key="multiplier">1</float>
+								<object class="IBLayoutConstant" key="constant">
+									<double key="value">21</double>
+								</object>
+								<float key="priority">1000</float>
+								<reference key="containingView" ref="53221008"/>
+								<int key="scoringType">3</int>
+								<float key="scoringTypeFloat">9</float>
+								<int key="contentType">1</int>
+							</object>
 							<object class="IBNSLayoutConstraint" id="780415214">
 								<reference key="firstItem" ref="53221008"/>
 								<int key="firstAttribute">7</int>
@@ -2199,6 +2231,16 @@
 						<reference key="object" ref="732932002"/>
 						<reference key="parent" ref="801248025"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2417</int>
+						<reference key="object" ref="390888913"/>
+						<reference key="parent" ref="801248025"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2418</int>
+						<reference key="object" ref="934044194"/>
+						<reference key="parent" ref="53221008"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2214,7 +2256,7 @@
 					<reference ref="791921634"/>
 				</array>
 				<string key="1341.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<array class="NSMutableArray" key="1341.IBViewMetadataConstraints">
+				<array key="1341.IBViewMetadataConstraints">
 					<reference ref="558312974"/>
 					<reference ref="850845487"/>
 					<reference ref="952172109"/>
@@ -2238,6 +2280,7 @@
 					<reference ref="664582956"/>
 					<reference ref="135082367"/>
 					<reference ref="1007694013"/>
+					<reference ref="390888913"/>
 					<reference ref="29964209"/>
 					<reference ref="519408851"/>
 					<reference ref="376204434"/>
@@ -2264,8 +2307,9 @@
 				</array>
 				<boolean value="NO" key="1346.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="1347.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<array class="NSMutableArray" key="1347.IBViewMetadataConstraints">
+				<array key="1347.IBViewMetadataConstraints">
 					<reference ref="780415214"/>
+					<reference ref="934044194"/>
 				</array>
 				<boolean value="NO" key="1347.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="1348.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -2415,12 +2459,14 @@
 				<string key="2414.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="2415.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="2416.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="2417.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="2418.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2416</int>
+			<int key="maxID">2418</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
