@@ -34,6 +34,7 @@
     IBOutlet UIButton *unfollow;
     
     BOOL forceHideNavigationBar;
+    BOOL refreshFOFs;
     
     Person *person;
     NSMutableArray *personFOFArray;
@@ -68,6 +69,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *unfollow;
 @property (strong, nonatomic) IBOutlet UIView *notificationView;
 
+@property (nonatomic, assign) BOOL refreshFOFs;
 @property (nonatomic, readwrite) BOOL forceHideNavigationBar;
 
 @end

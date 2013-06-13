@@ -25,7 +25,7 @@
 
 @implementation ProfileController
 
-@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar;
+@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, refreshFOFs;
 
 - (id) initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray {
 
@@ -170,7 +170,6 @@
 
 -(void) showPictures {
     FOFTableController *tableController = [[FOFTableController alloc] init];
-//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     tableController.refreshString = refresh_user_url;
     
     tableController.FOFArray = personFOFArray;
@@ -182,8 +181,15 @@
     tableController.navigationItem.title = person.name;
     tableController.hidesBottomBarWhenPushed = YES;
     
+    if(refreshFOFs){
+        [tableController refreshWithAction:YES];
+        refreshFOFs = false;
+    }
+    
     [self.navigationController pushViewController:tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+    
+    [tableController release];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

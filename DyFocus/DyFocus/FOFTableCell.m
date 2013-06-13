@@ -327,13 +327,7 @@
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if(!error && data) {
-                                   for (FOF *m_fof in tableView.FOFArray) {
-                                       if(m_fof.m_id == fof.m_id){
-                                           [tableView.FOFArray removeObject:m_fof];
-                                           [tableView.m_tableView reloadData];
-                                           break;
-                                       }
-                                   }
+                                   [tableView refreshWithAction:YES];
                                    [LoadView fadeAndRemoveFromView:tableView.view];
                                }
                            }];

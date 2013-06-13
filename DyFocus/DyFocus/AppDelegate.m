@@ -272,10 +272,11 @@
     
     [cameraViewController showToast:@"Upload Complete."];
     
+    profileController.refreshFOFs = TRUE; // It will cause the profile friend array to refresh next time it is loaded
     
-    [feedViewController.tableController refreshWithAction:NO];
+    [feedViewController.tableController refreshWithAction:YES];
     
-    tabBarController.lastControllerIndex = 1;
+    tabBarController.lastControllerIndex = 2;
     tabBarController.actualControllerIndex = 1;
     [tabBarController setSelectedIndex:1];
 }
