@@ -37,7 +37,7 @@
     IBOutlet UILabel     *loginEmailTextFieldErrorLabel;    
     IBOutlet UITextField *loginPasswordTextField;
     IBOutlet UILabel     *loginPasswordTextFieldErrorLabel;
-
+    IBOutlet UIButton    *loginForgotPasswordButton;
 
     IBOutlet NSMutableArray *fofs;
     IBOutlet UIScrollView *scrollView;
@@ -82,8 +82,7 @@
 @property (nonatomic, retain) IBOutlet UILabel     *loginEmailTextFieldErrorLabel;
 @property (nonatomic, retain) IBOutlet UITextField *loginPasswordTextField;
 @property (nonatomic, retain) IBOutlet UILabel     *loginPasswordTextFieldErrorLabel;
-
-
+@property (nonatomic, retain) IBOutlet UIButton    *loginForgotPasswordButton;
 
 - (IBAction)changePage:(id)sender;
 
