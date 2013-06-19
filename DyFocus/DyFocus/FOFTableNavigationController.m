@@ -14,7 +14,7 @@
 
 @implementation FOFTableNavigationController
 
-@synthesize tableController;
+@synthesize tableController, trendingTableController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -81,6 +81,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
+
+//-(void)viewWillAppear:(BOOL)animated {
+//
+//}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

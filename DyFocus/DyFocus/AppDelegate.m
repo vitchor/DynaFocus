@@ -265,6 +265,7 @@
 }
 
 -(void)loadFeedTab{
+    
     NSArray *viewControllers = cameraNavigationController.viewControllers;
     UIViewController *rootViewController = [viewControllers objectAtIndex:0];
     [cameraNavigationController setNavigationBarHidden:YES animated:NO];
@@ -272,12 +273,14 @@
     
     [cameraViewController showToast:@"Upload Complete."];
     
-    profileController.refreshFOFs = TRUE; // It will cause the profile friend array to refresh next time it is loaded
-    
-    [feedViewController.tableController refreshWithAction:YES];
+    // It will cause the table controllers to refresh (with header animation) next time they are pushed
+    profileController.shouldRefreshWithTableHeaderView = YES;
+    feedViewController.tableController.shouldRefreshWithTableHeaderView = YES;
+    featuredViewController.trendingTableController.shouldRefreshWithTableHeaderView = YES;
     
     tabBarController.lastControllerIndex = 2;
     tabBarController.actualControllerIndex = 1;
+    
     [tabBarController setSelectedIndex:1];
 }
 

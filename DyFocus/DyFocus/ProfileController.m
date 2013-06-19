@@ -25,7 +25,7 @@
 
 @implementation ProfileController
 
-@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, refreshFOFs;
+@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, shouldRefreshWithTableHeaderView;
 
 - (id) initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray {
 
@@ -181,9 +181,9 @@
     tableController.navigationItem.title = person.name;
     tableController.hidesBottomBarWhenPushed = YES;
     
-    if(refreshFOFs){
-        [tableController refreshWithAction:YES];
-        refreshFOFs = false;
+    if(shouldRefreshWithTableHeaderView){
+        tableController.shouldRefreshWithTableHeaderView = YES;
+        shouldRefreshWithTableHeaderView = NO;
     }
     
     [self.navigationController pushViewController:tableController animated:true];

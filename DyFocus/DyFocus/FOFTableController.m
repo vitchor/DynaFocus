@@ -17,7 +17,7 @@
 @end
 
 @implementation FOFTableController
-@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar;
+@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar, shouldRefreshWithTableHeaderView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -99,6 +99,14 @@
     
     if(shouldShowSegmentedBar)
         [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:YES];
+    
+    if(shouldRefreshWithTableHeaderView){
+        
+        [self.m_tableView setContentOffset:CGPointMake(0, -65) animated:YES];
+        [self refreshWithAction:NO];
+        
+        shouldRefreshWithTableHeaderView = NO;
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
@@ -380,13 +388,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 -(void) refreshWithAction:(BOOL)isAction {
     
     if (!isAction) {
+        
         [refreshHeaderView setState:EGOOPullRefreshLoading];
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.2];
         m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
         [UIView commitAnimations];
-    }
-    
+        
+        }
     
     NSString *requestString = [NSString stringWithFormat: @"%@%@", dyfocus_url, refreshString];
     
@@ -459,8 +468,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        [loadingView setHidden:YES];
                                    }
                                }
-                           }];
-    
+                           }];    
 }
 
 -(void) showSegmentedBar
