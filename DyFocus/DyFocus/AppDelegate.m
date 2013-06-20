@@ -678,6 +678,12 @@
                          [splashScreenController.view removeFromSuperview];
                      
                          [self setupTabController];
+                         
+                         if ((self.myself.uid == 1) || (self.myself.uid == 2) || (self.myself.uid == 73) || (self.myself.uid == 74)){
+                             self.adminRule = TRUE;
+                         }else{
+                             self.adminRule = FALSE;
+                         }
                      }// TODO
                      
                  }
