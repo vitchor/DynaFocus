@@ -71,7 +71,7 @@
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
 
-    if(m_comment.m_userId == delegate.myself.uid){
+    if(delegate.adminRule  ||  m_comment.m_userId == delegate.myself.uid){
         deleteCommentBtn.hidden = NO;
         UITapGestureRecognizer *singleTapDelete = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteCommentPressed)] autorelease];
         [deleteCommentBtn addGestureRecognizer:singleTapDelete];

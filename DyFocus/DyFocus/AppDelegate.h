@@ -71,6 +71,7 @@
     ProfileController *profileController;
     
     bool showNotification;
+    BOOL adminRule;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -115,6 +116,6 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSString *deviceId;
 
 @property (nonatomic, readwrite) int unreadNotifications;
-
+@property (nonatomic,assign) BOOL adminRule;
 
 @end

@@ -247,7 +247,7 @@
         [labelDate setText:fof.m_date];
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-        if(tableView.userId && (tableView.userId == delegate.myself.uid)){
+        if((delegate.adminRule)  ||  (tableView.userId && (tableView.userId == delegate.myself.uid))){
             deleteFOFButton.hidden = NO;
             
             UITapGestureRecognizer *deleteFOFGesture = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteFOFClicked)] autorelease];
