@@ -393,7 +393,23 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     _reloading = YES;
     withHeader = isWithHeader;
+    
+    
+    if(self.isViewLoaded && self.view.window && withHeader){
         
+        [refreshHeaderView setState:EGOOPullRefreshLoading];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.2];
+        m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
+        [UIView commitAnimations];
+        
+        [m_tableView setContentOffset:CGPointMake(0, -60) animated:YES];
+        
+        withHeader = NO;
+    }
+    
+    
+    
     NSString *requestString = [NSString stringWithFormat: @"%@%@", dyfocus_url, refreshString];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: requestString]];

@@ -273,16 +273,14 @@
     
     [cameraViewController showToast:@"Upload Complete."];
     
-    profileController.shouldRefreshWithTableHeaderView = YES;
-    [feedViewController.tableController refreshFOFArrayWithHeader:YES];
-    [featuredViewController.trendingTableController refreshFOFArrayWithHeader:YES];
+    [self refreshAllFOFTables];
     
     tabBarController.lastControllerIndex = 2;
     tabBarController.actualControllerIndex = 1;
     
     [tabBarController setSelectedIndex:1];
     
-    [self askReview];
+//    [self askReview];
 }
 
 -(void)loadTrendingTab{
@@ -1298,6 +1296,13 @@
     str = [NSString stringWithFormat:@"%@557266156", str];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+}
+
+-(void)refreshAllFOFTables
+{
+    [featuredViewController.trendingTableController refreshFOFArrayWithHeader:YES];
+    [feedViewController.tableController refreshFOFArrayWithHeader:YES];
+    [profileController.tableController refreshFOFArrayWithHeader:YES];
 }
 
 @end

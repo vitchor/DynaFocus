@@ -100,6 +100,7 @@ extern NSString *const FBSessionStateChangedNotification;
 
 -(NSMutableArray *) FOFsFromUser: (long)userId;
 -(Person *) getUserWithId: (long long)userId;
+-(void)refreshAllFOFTables;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;

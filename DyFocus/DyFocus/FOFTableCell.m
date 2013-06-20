@@ -327,7 +327,9 @@
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if(!error && data) {
-                                   [tableView refreshFOFArrayWithHeader:YES];
+                                   AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+                                   [delegate refreshAllFOFTables];
+                                   
                                    [LoadView fadeAndRemoveFromView:tableView.view];
                                }
                            }];

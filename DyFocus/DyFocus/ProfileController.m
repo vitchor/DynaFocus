@@ -25,7 +25,7 @@
 
 @implementation ProfileController
 
-@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, shouldRefreshWithTableHeaderView;
+@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, tableController;
 
 - (id) initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray {
 
@@ -168,28 +168,16 @@
     }
 }
 
--(void) showPictures {
-    FOFTableController *tableController = [[FOFTableController alloc] init];
-    tableController.refreshString = refresh_user_url;
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.navigationItem.title = @"Profile";
     
-    tableController.FOFArray = personFOFArray;
-    tableController.shouldHideNavigationBar = NO;
-    tableController.shouldHideNavigationBarWhenScrolling = YES;
+    [follow addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
+    [unfollow addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
     
-    tableController.userId = person.uid;
+    [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     
-    tableController.navigationItem.title = person.name;
-    tableController.hidesBottomBarWhenPushed = YES;
-    
-    if(shouldRefreshWithTableHeaderView){
-        [tableController refreshFOFArrayWithHeader:YES];
-        shouldRefreshWithTableHeaderView = NO;
-    }
-    
-    [self.navigationController pushViewController:tableController animated:true];
-    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-    
-    [tableController release];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -217,6 +205,43 @@
         [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateSelected];
         
     }
+}
+
+-(void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
+    [delegate logEvent:@"ProfileController.viewDidAppear"];
+    
+    if (userKind == MYSELF) {
+        [self updateBadgeView];
+    }
+    
+}
+
+-(void) showPictures {
+    
+    if(!self.tableController){
+    
+        NSLog(@"PERSON IIIIIIDDDDDDDDDDDDD: %ld", person.uid);
+        
+        self.tableController = [[FOFTableController alloc] init];
+        self.tableController.refreshString = refresh_user_url;
+        
+        self.tableController.FOFArray = personFOFArray;
+        self.tableController.shouldHideNavigationBar = NO;
+        self.tableController.shouldHideNavigationBarWhenScrolling = YES;
+        
+        self.tableController.userId = person.uid;
+
+        self.tableController.navigationItem.title = person.name;
+        self.tableController.hidesBottomBarWhenPushed = YES;
+    
+    }
+    
+    [self.navigationController pushViewController:self.tableController animated:true];
+    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
 }
 
 -(void)setUIPersonValues {
@@ -269,19 +294,6 @@
 
 }
 
--(void) viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    
-    [delegate logEvent:@"ProfileController.viewDidAppear"];
-    
-    if (userKind == MYSELF) {
-        [self updateBadgeView];
-    }
-    
-}
-
 -(void)updateBadgeView {
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
@@ -319,31 +331,18 @@
 
 -(void) showNotifications {
 
-    NotificationTableViewController *tableController = [[NotificationTableViewController alloc] init];
+    NotificationTableViewController *notificationTableController = [[NotificationTableViewController alloc] init];
     
     //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    //tableController.notifications = appDelegate.userNotifications;
+    //notificationTableController.notifications = appDelegate.userNotifications;
     
-    tableController.navigationItem.title = @"Notifications";
+    notificationTableController.navigationItem.title = @"Notifications";
     
-    tableController.hidesBottomBarWhenPushed = YES;
+    notificationTableController.hidesBottomBarWhenPushed = YES;
     
-    [self.navigationController pushViewController:tableController animated:true];
+    [self.navigationController pushViewController:notificationTableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
 
-}
-
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.navigationItem.title = @"Profile";
-    
-    [follow addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
-    [unfollow addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
-    
-    [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -456,5 +455,11 @@
                            }
      ];
 }
+
+-(void)dealloc{
+    [tableController release];
+    [super dealloc];
+}
+
 
 @end
