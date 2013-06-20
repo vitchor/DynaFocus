@@ -273,19 +273,20 @@
     
     [cameraViewController showToast:@"Upload Complete."];
     
-    // It will cause the table controllers to refresh (with header animation) next time they are pushed
     profileController.shouldRefreshWithTableHeaderView = YES;
-    feedViewController.tableController.shouldRefreshWithTableHeaderView = YES;
-    featuredViewController.trendingTableController.shouldRefreshWithTableHeaderView = YES;
+    [feedViewController.tableController refreshFOFArrayWithHeader:YES];
+    [featuredViewController.trendingTableController refreshFOFArrayWithHeader:YES];
     
     tabBarController.lastControllerIndex = 2;
     tabBarController.actualControllerIndex = 1;
     
     [tabBarController setSelectedIndex:1];
+    
+    [self askReview];
 }
 
--(void)loadTrendingTab{ 
-    [featuredViewController.trendingTableController refreshWithAction:NO];
+-(void)loadTrendingTab{
+    [featuredViewController.trendingTableController refreshFOFArrayWithHeader:YES];
 }
 
 -(void)goBackToLastController {
@@ -1243,5 +1244,54 @@
 ////    currentFriend
 ////    friendFOFArray
 //}
+
+-(void) askReview {
+    NSString *alertTitle = @"Rate Dyfocus!";
+    NSString *alertMsg =@"If you enjoy using dyfocus, would you mind taking a moment to rate it? Thanks for your support! ";
+    NSString *alertButton1 = @"Yes, Sure";
+    NSString *alertButton2 =@"Remind me later";
+    NSString *alertButton3 =@"No, Thanks";
+    
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton3 otherButtonTitles:nil] autorelease];
+    // optional - add more buttons:
+    [alert setTag:1];
+    [alert addButtonWithTitle:alertButton1];
+    [alert addButtonWithTitle:alertButton2];
+    [alert show];
+    
+    [alertTitle release];
+    [alertMsg release];
+    [alertButton1 release];
+    [alertButton2 release];
+    [alertButton3 release];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
+    if ([alertView tag] == 1) {
+        
+        if (buttonIndex == 1) {
+            [self gotoReviews];
+        }
+        if (buttonIndex == 2) {
+            NSLog(@"REMIND ME LAAAAAAATER!");
+        }
+        if (buttonIndex == 0) {
+            NSLog(@"NO THANNNNNNNNNNKS!");
+        }
+    }
+}
+
+- (void)gotoReviews
+{
+    NSString *str = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa";
+    str = [NSString stringWithFormat:@"%@/wa/viewContentsUserReviews?", str];
+    str = [NSString stringWithFormat:@"%@type=Purple+Software&id=", str];
+    
+    // Here is the app id from itunesconnect
+    str = [NSString stringWithFormat:@"%@557266156", str];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+}
 
 @end

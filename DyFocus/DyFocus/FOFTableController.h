@@ -28,7 +28,7 @@
     BOOL shouldHideNavigationBarWhenScrolling;
     BOOL shouldHideTabBarWhenScrolling;
     BOOL shouldShowSegmentedBar;
-    BOOL shouldRefreshWithTableHeaderView;
+    BOOL withHeader;
 }
 
 @property (nonatomic,retain) IBOutlet UIView *loadingView;
@@ -42,10 +42,9 @@
 @property (nonatomic, readwrite) BOOL shouldHideNavigationBarWhenScrolling;
 @property (nonatomic, readwrite) BOOL shouldHideTabBarWhenScrolling;
 @property (nonatomic, readwrite) BOOL shouldShowSegmentedBar;
-@property (nonatomic, assign) BOOL shouldRefreshWithTableHeaderView;
 
 -(void) addNewCellHeight:(float)height atRow:(int)row;
--(void) refreshWithAction:(BOOL)isAction;
+-(void) refreshFOFArrayWithHeader:(BOOL)isWithHeader;
 -(void)reloadTableViewDataSource;
 -(void)dataSourceDidFinishLoadingNewData;
 -(int)cellStyle;
