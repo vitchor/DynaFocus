@@ -327,7 +327,7 @@
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if(!error && data) {
-                                   [tableView refreshWithAction:YES];
+                                   [tableView refreshFOFArrayWithHeader:NO];
                                    [LoadView fadeAndRemoveFromView:tableView.view];
                                }
                            }];

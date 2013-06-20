@@ -182,7 +182,7 @@
     tableController.hidesBottomBarWhenPushed = YES;
     
     if(shouldRefreshWithTableHeaderView){
-        tableController.shouldRefreshWithTableHeaderView = YES;
+        [tableController refreshFOFArrayWithHeader:YES];
         shouldRefreshWithTableHeaderView = NO;
     }
     

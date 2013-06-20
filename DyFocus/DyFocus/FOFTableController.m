@@ -17,7 +17,7 @@
 @end
 
 @implementation FOFTableController
-@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar, shouldRefreshWithTableHeaderView;
+@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -89,6 +89,19 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    if(self.isReloading && withHeader){
+        
+        [refreshHeaderView setState:EGOOPullRefreshLoading];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.2];
+        m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
+        [UIView commitAnimations];
+        
+        [self.m_tableView setContentOffset:CGPointMake(0, -60) animated:YES];
+        
+        withHeader = NO;
+    }
+    
     [m_tableView reloadData];
     
     [self refreshCellsImageSizes];
@@ -99,14 +112,6 @@
     
     if(shouldShowSegmentedBar)
         [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:YES];
-    
-    if(shouldRefreshWithTableHeaderView){
-        
-        [self.m_tableView setContentOffset:CGPointMake(0, -65) animated:YES];
-        [self refreshWithAction:NO];
-        
-        shouldRefreshWithTableHeaderView = NO;
-    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
@@ -341,7 +346,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	NSLog(@"Please override reloadTableViewDataSource");
     
-    [self refreshWithAction:YES];
+    [self refreshFOFArrayWithHeader:NO];
 }
 
 
@@ -355,7 +360,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	}
     
     if (scrollView.contentOffset.y <= - 65.0f && !_reloading && refreshHeaderView) {
-		_reloading = YES;
 		[self reloadTableViewDataSource];
 		[refreshHeaderView setState:EGOOPullRefreshLoading];
 		[UIView beginAnimations:nil context:NULL];
@@ -385,18 +389,11 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	refreshHeaderView=nil;
 }
 
--(void) refreshWithAction:(BOOL)isAction {
+-(void) refreshFOFArrayWithHeader:(BOOL)isWithHeader{
     
-    if (!isAction) {
+    _reloading = YES;
+    withHeader = isWithHeader;
         
-        [refreshHeaderView setState:EGOOPullRefreshLoading];
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.2];
-        m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
-        [UIView commitAnimations];
-        
-        }
-    
     NSString *requestString = [NSString stringWithFormat: @"%@%@", dyfocus_url, refreshString];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: requestString]];
@@ -458,7 +455,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        
                                        [refreshHeaderView setCurrentDate];
                                        
-                                       //if (isAction) {
                                        [self dataSourceDidFinishLoadingNewData];
                                        
                                        [m_tableView reloadData];
