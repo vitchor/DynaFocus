@@ -97,7 +97,7 @@
         m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
         [UIView commitAnimations];
         
-        [self.m_tableView setContentOffset:CGPointMake(0, -60) animated:YES];
+        [m_tableView setContentOffset:CGPointMake(0, -60) animated:YES];
         
         withHeader = NO;
     }
