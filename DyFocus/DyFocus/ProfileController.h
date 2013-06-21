@@ -10,6 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "CustomBadge.h"
 #import "Person.h"
+#import "FOFTableController.h"
 
 @interface ProfileController : UIViewController {
     
@@ -34,12 +35,13 @@
     IBOutlet UIButton *unfollow;
     
     BOOL forceHideNavigationBar;
-    BOOL shouldRefreshWithTableHeaderView;
     
     Person *person;
     NSMutableArray *personFOFArray;
     
     int userKind;
+    
+    FOFTableController *tableController;
 }
 
 - (void)logout;
@@ -69,7 +71,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *unfollow;
 @property (strong, nonatomic) IBOutlet UIView *notificationView;
 
-@property (nonatomic, assign) BOOL shouldRefreshWithTableHeaderView;
 @property (nonatomic, readwrite) BOOL forceHideNavigationBar;
+
+@property(nonatomic, retain) FOFTableController *tableController;
 
 @end

@@ -71,6 +71,7 @@
     ProfileController *profileController;
     
     bool showNotification;
+    BOOL adminRule;
 }
 
 extern NSString *const FBSessionStateChangedNotification;
@@ -99,6 +100,7 @@ extern NSString *const FBSessionStateChangedNotification;
 
 -(NSMutableArray *) FOFsFromUser: (long)userId;
 -(Person *) getUserWithId: (long long)userId;
+-(void)refreshAllFOFTables;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
@@ -115,6 +117,6 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (nonatomic, retain)  NSString *deviceId;
 
 @property (nonatomic, readwrite) int unreadNotifications;
-
+@property (nonatomic,assign) BOOL adminRule;
 
 @end
