@@ -142,7 +142,24 @@
                 m_fof.m_likes = [NSString stringWithFormat:@"%d", [m_fof.m_likes intValue] + 1];
                 m_fof.m_liked = YES;
             }
-        }      
+        }
+        
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    bool isReviewActive = [userDefaults boolForKey:@"reviewActive"];
+    
+    if(isReviewActive){
+    
+        int likeCount = [userDefaults integerForKey:@"likeCount"] + 1;
+        [userDefaults setInteger:likeCount forKey:@"likeCount"];
+        [userDefaults synchronize];
+        
+        if(likeCount>=3)
+        {
+            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate askReview];
+        }
+    }
+    
     } else {
         NSString *newLikeCount = [[[NSString alloc] initWithFormat:@"%d", [likesCountLabel.text intValue] - 1] autorelease];
         [likesCountLabel setText:newLikeCount];
