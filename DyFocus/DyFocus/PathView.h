@@ -47,11 +47,11 @@
 @property(nonatomic,readwrite)CGColorRef ref;
 @property(nonatomic,readwrite)bool enabled;
 @property(nonatomic,strong)CameraView *cameraViewController;
+@property(nonatomic,readwrite) UIDeviceOrientation lastOrientation;
 
 
 -(NSMutableArray *)getPoints;
 -(void)clearPoints;
--(void)resetOrientations;
--(void)checkOrientations;
+-(void)checkOrientations:(BOOL)isFirstTime;
 
 @end

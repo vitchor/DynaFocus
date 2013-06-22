@@ -97,10 +97,7 @@
     [popupDarkView setNeedsDisplay];
     [popupDarkView setNeedsLayout];
     
-    [pathView resetOrientations];
-    
-    currentOrientation = [UIDevice currentDevice].orientation;
-
+    [pathView checkOrientations:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -415,14 +412,16 @@
     
     if (mVideoConnection && [mVideoConnection isVideoOrientationSupported]){
         
-        if(currentOrientation == UIDeviceOrientationFaceUp || currentOrientation == UIDeviceOrientationFaceDown){
+        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        
+        if(orientation == UIDeviceOrientationFaceUp || orientation == UIDeviceOrientationFaceDown){
             
-            if(lastOrientation==UIDeviceOrientationPortrait ||
-               lastOrientation==UIDeviceOrientationPortraitUpsideDown ||
-               lastOrientation==UIDeviceOrientationLandscapeLeft ||
-               lastOrientation==UIDeviceOrientationLandscapeRight){
+            if(pathView.lastOrientation==UIDeviceOrientationPortrait ||
+               pathView.lastOrientation==UIDeviceOrientationPortraitUpsideDown ||
+               pathView.lastOrientation==UIDeviceOrientationLandscapeLeft ||
+               pathView.lastOrientation==UIDeviceOrientationLandscapeRight){
                 
-                [mVideoConnection setVideoOrientation:lastOrientation];
+                [mVideoConnection setVideoOrientation:pathView.lastOrientation];
             }
             else{
                 [mVideoConnection setVideoOrientation:UIDeviceOrientationPortrait];
@@ -430,7 +429,10 @@
         }
         else
         {
-            [mVideoConnection setVideoOrientation:currentOrientation];
+            if(orientation == UIDeviceOrientationUnknown)
+                [mVideoConnection setVideoOrientation:UIDeviceOrientationPortrait];
+            else
+                [mVideoConnection setVideoOrientation:orientation];
         }
     }
     
@@ -771,17 +773,7 @@
 
 - (void) didRotate:(NSNotification *)notification
 {
-        if(currentOrientation==UIDeviceOrientationPortrait ||
-             currentOrientation==UIDeviceOrientationPortraitUpsideDown ||
-           currentOrientation==UIDeviceOrientationLandscapeLeft ||
-           currentOrientation==UIDeviceOrientationLandscapeRight)
-        {
-            lastOrientation = currentOrientation;
-        }
-    
-    currentOrientation = [UIDevice currentDevice].orientation;
-    
-    [pathView checkOrientations];
+    [pathView checkOrientations:NO];
 }
 
 -(IBAction)volumeChanged:(id)sender{
