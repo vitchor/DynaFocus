@@ -19,7 +19,7 @@
 
 @implementation SharingController
 
-@synthesize facebookSwitch, activityIndicator, commentField, frames, focalPoints, spinner, backButton, fofName, fofUserFbId, titleMessage;
+@synthesize facebookSwitch, isPrivate, activityIndicator, commentField, frames, focalPoints, spinner, backButton, fofName, fofUserFbId, titleMessage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,7 +39,6 @@
         [placeHolderLabel setHidden:YES];
         [commentField setHidden:YES];
     }
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -69,6 +68,7 @@
 
 
 - (void) share {
+    self.fofName = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
     
     self.navigationItem.rightBarButtonItem.enabled = false;
     
@@ -143,17 +143,16 @@
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
+    NSString *fof_size = [[[NSString alloc] initWithFormat:@"%d",[self.frames count]] autorelease];
     NSString *userId = [NSString stringWithFormat:@"%ld",appDelegate.myself.uid];
     
     request = [[ASIFormDataRequest requestWithURL:webServiceUrl] retain];
     [request setDelegate:self];
     
-    fofName = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
-    NSString *fof_size = [[[NSString alloc] initWithFormat:@"%d",[self.frames count]] autorelease];
-    
     [request setPostValue:fofName forKey:@"fof_name"];
     [request setPostValue:fof_size forKey:@"fof_size"];
     [request setPostValue:userId forKey:@"user_id"];
+    [request setPostValue:[NSNumber numberWithBool:isPrivate.on] forKey:@"is_private"];
     
     for (int i = 0; i < [self.frames count]; i++)
     {

@@ -10,7 +10,7 @@
 
 @implementation FOF
 
-@synthesize m_name, m_userId, m_frames, m_comments, m_likes, m_userName, m_userFacebookId, m_date, m_userNickname, m_id, m_liked;
+@synthesize m_name, m_userId, m_frames, m_comments, m_likes, m_userName, m_userFacebookId, m_date, m_userNickname, m_id, m_liked, m_private;
 
 +(FOF *)fofFromJSON: (NSDictionary *)json {
     
@@ -26,6 +26,7 @@
     NSString *fofName = [json valueForKey:@"fof_name"];
     
     NSString *liked = [json valueForKey:@"liked"];
+    NSNumber *isPrivate = [json valueForKey:@"is_private"];
     
     NSDictionary *frames = [json valueForKey:@"frames"];
     
@@ -53,6 +54,7 @@
     
     fof.m_id = fofId;
     fof.m_name = fofName;
+    fof.m_private = [isPrivate isEqualToNumber:[NSNumber numberWithInt:1]];
     fof.m_liked = [liked isEqualToString:@"1"];
     fof.m_userName = name;
     fof.m_userFacebookId = facebook_id;
