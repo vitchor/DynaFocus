@@ -497,7 +497,7 @@
         
         [self.tableView.navigationController pushViewController:profileController animated:YES];
         [self.tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
-        [profileController release];
+//        [profileController release];
     }
 }
 
