@@ -461,8 +461,13 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                            
                                            FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
                                            
-                                           [fofs addObject:fof];
-                                           
+                                           if(fof.m_private){
+                                               if(userId  &&  userId == delegate.myself.uid){
+                                                   [fofs addObject:fof];
+                                               }
+                                           }else{
+                                               [fofs addObject:fof];
+                                           }
                                        }
                                        
                                        [self.FOFArray removeAllObjects];

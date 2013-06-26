@@ -253,6 +253,10 @@
     }
     
     [self loadTrendingTab];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:true forKey:@"reviewActive"];
+    [userDefaults synchronize];
 }
 
 - (void)resetCameraUINavigationController {
@@ -265,6 +269,23 @@
 }
 
 -(void)loadFeedTab{
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    bool isReviewActive = [userDefaults boolForKey:@"reviewActive"];
+    
+    if(isReviewActive){
+        
+        int shootCount = [userDefaults integerForKey:@"shootCount"] + 1;
+        [userDefaults setInteger:shootCount forKey:@"shootCount"];
+        [userDefaults synchronize];
+        
+        if(shootCount>=3)
+        {
+            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate askReview];
+        }
+    }
+
     
     NSArray *viewControllers = cameraNavigationController.viewControllers;
     UIViewController *rootViewController = [viewControllers objectAtIndex:0];
@@ -279,8 +300,6 @@
     tabBarController.actualControllerIndex = 1;
     
     [tabBarController setSelectedIndex:1];
-    
-//    [self askReview];
 }
 
 -(void)loadTrendingTab{
@@ -678,7 +697,7 @@
                      
                          [self setupTabController];
                          
-                         if ((self.myself.uid == 1) || (self.myself.uid == 2) || (self.myself.uid == 73) || (self.myself.uid == 74)){
+                         if ((self.myself.uid == 38) || (self.myself.uid == 2) || (self.myself.uid == 73) || (self.myself.uid == 74)){
                              self.adminRule = TRUE;
                          }else{
                              self.adminRule = FALSE;
@@ -1091,6 +1110,8 @@
         splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
     }
     
+    [splashScreenController.view setUserInteractionEnabled:YES];
+    
     [self.window addSubview:splashScreenController.view];
 }
 
@@ -1271,18 +1292,30 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    
+
     if ([alertView tag] == 1) {
+    
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         
         if (buttonIndex == 1) {
+            //Yes, Sure
+            [userDefaults setInteger:0 forKey:@"likeCount"];
+            [userDefaults setInteger:0 forKey:@"shootCount"];
             [self gotoReviews];
         }
         if (buttonIndex == 2) {
-            NSLog(@"REMIND ME LAAAAAAATER!");
+            //Remind me later
+            [userDefaults setInteger:0 forKey:@"likeCount"];
+            [userDefaults setInteger:0 forKey:@"shootCount"];
         }
         if (buttonIndex == 0) {
-            NSLog(@"NO THANNNNNNNNNNKS!");
+            //No, Thanks
+            [userDefaults setInteger:0 forKey:@"likeCount"];
+            [userDefaults setInteger:0 forKey:@"shootCount"];
+            [userDefaults setBool:false forKey:@"reviewActive"];
         }
+        
+        [userDefaults synchronize];
     }
 }
 

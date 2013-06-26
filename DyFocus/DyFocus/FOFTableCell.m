@@ -142,7 +142,24 @@
                 m_fof.m_likes = [NSString stringWithFormat:@"%d", [m_fof.m_likes intValue] + 1];
                 m_fof.m_liked = YES;
             }
-        }      
+        }
+        
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    bool isReviewActive = [userDefaults boolForKey:@"reviewActive"];
+    
+    if(isReviewActive){
+    
+        int likeCount = [userDefaults integerForKey:@"likeCount"] + 1;
+        [userDefaults setInteger:likeCount forKey:@"likeCount"];
+        [userDefaults synchronize];
+        
+        if(likeCount>=3)
+        {
+            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate askReview];
+        }
+    }
+    
     } else {
         NSString *newLikeCount = [[[NSString alloc] initWithFormat:@"%d", [likesCountLabel.text intValue] - 1] autorelease];
         [likesCountLabel setText:newLikeCount];
@@ -214,6 +231,7 @@
         fof.m_id = [[fofObject.m_id copy] autorelease];
         fof.m_userId = fofObject.m_userId;
         fof.m_liked = fofObject.m_liked;
+        fof.m_private = fofObject.m_private;
         fof.m_likes = [[fofObject.m_likes copy] autorelease];
         fof.m_name = [[fofObject.m_name copy] autorelease];
         fof.m_userFacebookId = [[fofObject.m_userFacebookId copy] autorelease];

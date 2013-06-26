@@ -14,6 +14,7 @@
     
     IBOutlet UILabel *shareLabel;
     IBOutlet UISwitch *facebookSwitch;
+    IBOutlet UISwitch *isPrivate;
     IBOutlet UIView *activityIndicator;
     IBOutlet UIActivityIndicatorView *spinner;
     IBOutlet UITextView *commentField;
@@ -34,6 +35,7 @@
 -(IBAction) toggleEnabledForSwitch: (id) sender;
 
 @property(nonatomic,retain) IBOutlet UISwitch *facebookSwitch;
+@property(nonatomic,retain) IBOutlet UISwitch *isPrivate;
 @property(nonatomic,retain) IBOutlet UIView *activityIndicator;
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic,retain) IBOutlet UITextView *commentField;

@@ -113,11 +113,16 @@
                                            for (int i = 0; i < [FOFJSONArray count]; i++) {
                                                NSDictionary *jsonFOF = [FOFJSONArray objectAtIndex:i];
                                                
-                                               
                                                FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
                                                
-                                               
-                                               [FOFArray addObject:fof];
+                                               if(fof.m_private){
+                                                   AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+                                                   if(userId  &&  userId == delegate.myself.uid){
+                                                       [FOFArray addObject:fof];
+                                                   }
+                                               }else{
+                                                   [FOFArray addObject:fof];
+                                               }
                                            }
                                            
                                            personFOFArray = FOFArray;
