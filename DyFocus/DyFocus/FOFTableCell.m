@@ -231,6 +231,7 @@
         fof.m_id = [[fofObject.m_id copy] autorelease];
         fof.m_userId = fofObject.m_userId;
         fof.m_liked = fofObject.m_liked;
+        fof.m_private = fofObject.m_private;
         fof.m_likes = [[fofObject.m_likes copy] autorelease];
         fof.m_name = [[fofObject.m_name copy] autorelease];
         fof.m_userFacebookId = [[fofObject.m_userFacebookId copy] autorelease];

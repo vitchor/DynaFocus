@@ -30,6 +30,7 @@
     
     IBOutlet UIView *notificationView;
     IBOutlet UIView *logoutView;
+    IBOutlet UIView *changeImageView;
     
     IBOutlet UIButton *follow;
     IBOutlet UIButton *unfollow;
@@ -70,6 +71,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *follow;
 @property (strong, nonatomic) IBOutlet UIButton *unfollow;
 @property (strong, nonatomic) IBOutlet UIView *notificationView;
+@property (strong, nonatomic) IBOutlet UIView *changeImageView;
 
 @property (nonatomic, readwrite) BOOL forceHideNavigationBar;
 

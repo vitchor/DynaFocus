@@ -14,6 +14,7 @@
 #import "NotificationTableViewController.h"
 #import "UIImageLoaderDyfocus.h"
 #import "LoadView.h"
+#import <MobileCoreServices/UTCoreTypes.h>
 
 #define FOLLOW 0
 #define UNFOLLOW 1
@@ -25,7 +26,7 @@
 
 @implementation ProfileController
 
-@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, tableController;
+@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, tableController, changeImageView;
 
 - (id) initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray {
 
@@ -112,11 +113,16 @@
                                            for (int i = 0; i < [FOFJSONArray count]; i++) {
                                                NSDictionary *jsonFOF = [FOFJSONArray objectAtIndex:i];
                                                
-                                               
                                                FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
                                                
-                                               
-                                               [FOFArray addObject:fof];
+                                               if(fof.m_private){
+                                                   AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+                                                   if(userId  &&  userId == delegate.myself.uid){
+                                                       [FOFArray addObject:fof];
+                                                   }
+                                               }else{
+                                                   [FOFArray addObject:fof];
+                                               }
                                            }
                                            
                                            personFOFArray = FOFArray;
@@ -252,8 +258,21 @@
         [followView setHidden:YES];
         [unfollowView setHidden:YES];
         [logoutView setHidden:NO];
+        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showImageLibrary:)];
+        singleTap.numberOfTapsRequired = 1;
+        singleTap.numberOfTouchesRequired = 1;
+        
+        [userPicture addGestureRecognizer:singleTap];
+        [userPicture setUserInteractionEnabled:YES];
+        
+        [changeImageView addGestureRecognizer:singleTap];
+        [changeImageView setUserInteractionEnabled:YES];
+
 
     } else {
+        [changeImageView setHidden:YES];
+                
         
         [notificationView setHidden:YES];
         [logoutView setHidden:YES];
@@ -292,6 +311,37 @@
                            }];
     }
 
+}
+
+- (void)showImageLibrary:(UIGestureRecognizer *)gestureRecognizer {
+    [self startMediaBrowserFromViewController:self usingDelegate:self];
+}
+
+- (BOOL) startMediaBrowserFromViewController: (UIViewController*) controller
+                               usingDelegate: (id <UIImagePickerControllerDelegate,
+                                               UINavigationControllerDelegate>) delegate {
+    
+    if (([UIImagePickerController isSourceTypeAvailable:
+          UIImagePickerControllerSourceTypeSavedPhotosAlbum] == NO)
+        || (delegate == nil)
+        || (controller == nil))
+        return NO;
+    
+    UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
+    mediaUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    // Displays saved pictures and movies, if both are available, from the
+    // Camera Roll album.
+    mediaUI.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+    
+    // Hides the controls for moving & scaling pictures, or for
+    // trimming movies. To instead show the controls, use YES.
+    mediaUI.allowsEditing = NO;
+    
+    mediaUI.delegate = delegate;
+    
+    [controller presentModalViewController: mediaUI animated: YES];
+    return YES;
 }
 
 -(void)updateBadgeView {
