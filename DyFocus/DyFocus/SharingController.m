@@ -139,7 +139,7 @@
     
     [commentField resignFirstResponder]; // hides keyboard
     
-    NSURL *webServiceUrl = [NSURL URLWithString:[[[NSString alloc] initWithFormat: @"%@/uploader/upload_image/", dyfocus_url] autorelease]];
+    NSURL *webServiceUrl = [NSURL URLWithString:[[[NSString alloc] initWithFormat: @"%@/uploader/upload_private_image/", dyfocus_url] autorelease]];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
