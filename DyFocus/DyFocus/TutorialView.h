@@ -8,6 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TutorialView : UIView
+@class CameraView;
+
+@interface TutorialView : UIImageView {
+
+    NSEnumerator *instructionsImagesEnumerator;
+    NSMutableArray *instructionsImagesArray;
+    
+    CameraView *cameraViewController;
+}
+
+@property(nonatomic,retain) NSEnumerator *instructionsImagesEnumerator;
+@property(nonatomic,strong)CameraView *cameraViewController;
+
+-(void)loadTutorial:(BOOL)shouldShowTutorial;
 
 @end

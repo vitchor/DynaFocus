@@ -22,7 +22,7 @@
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchOneButton, torchTwoButton, instructionsImageView;
+@synthesize cameraView, pathView, shootButton, cancelButton, infoButton, mFocalPoints, spinner, loadingView, torchOneButton, torchTwoButton, tutorialView;
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad
@@ -42,26 +42,22 @@
     
     [infoButton setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"] forState:UIControlStateHighlighted];
     
-    
-    [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIImage *redButtonImage = [UIImage imageNamed:@"close.png"];
-    
-    [popupCloseButton setBackgroundImage:redButtonImage forState:UIControlStateNormal];
-    [popupCloseButton addTarget:self action:@selector(closePopup) forControlEvents:UIControlEventTouchUpInside];
+    self.tutorialView.cameraViewController = self;
+    [self.tutorialView init];
     
     [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     
     DyfocusSettings *settings = [DyfocusSettings sharedSettings];
-    if(!settings.isFirstLogin && !popupView.isHidden){
-        [popupView setHidden:YES];
+    if(settings.isFirstLogin){
+        [self.tutorialView setHidden:NO];
         settings.isFirstLogin = NO;
     }
-    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
+    
     [spinner startAnimating];
     [loadingView setHidden:NO];
     
@@ -89,14 +85,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeChanged:) name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
     
     pathView.cameraViewController = self;
-    
-    popupDarkView.layer.cornerRadius = 9.0;
-    [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
-    popupDarkView.clipsToBounds = YES;
-    popupDarkView.layer.masksToBounds = YES;
-    [popupDarkView setNeedsDisplay];
-    [popupDarkView setNeedsLayout];
-    
     [pathView checkOrientations:YES];
 }
 
@@ -106,17 +94,7 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"CameraView.viewDidAppear"];
     
-    //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
-    if(popupView.tag != 420) {
-        //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
-        //[[mToastMessage setDuration:iToastDurationNormal] show];
-        
-        [popupView setHidden:NO];
-        [popupView setTag:420];
-        
-    }
-    
-    [shootButton setEnabled:true];
+    [self.shootButton setEnabled:tutorialView.isHidden];
     
     if (!captureSession) {
         [self startCaptureSession];
@@ -140,7 +118,7 @@
     
     if([mFocalPoints count] > 1)
         [self setProximityEnabled:YES];
-    
+        
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -179,6 +157,7 @@
     [cancelButton release];
     [shootButton release];
     [infoButton release];
+    [tutorialView release];
     [super dealloc];
 }
 
@@ -591,22 +570,8 @@
     NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
 }
 
--(void)closePopup {
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate logEvent:@"Close Pop Up"];
-    
-    [popupView setHidden:YES];
-}
-
--(void)hideInfoView
+-(void)showTutorial
 {
-    [infoView setHidden:YES];
-}
-
--(void)showInfoView
-{
-    [popupView setHidden:YES];
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logEvent:@"Show Info View Button"];
     
@@ -614,7 +579,8 @@
         [mToastMessage removeToast:nil];
         mToastMessage = nil;
     }
-    [infoView setHidden:NO];
+    
+    [tutorialView loadTutorial:YES];
 }
 
 -(void)goBackToLastController
@@ -739,7 +705,7 @@
 
 - (IBAction)helpAction:(UIButton *)sender {
 
-    [self showInfoView];
+    [self showTutorial];
 }
 
 - (void)showToast:(NSString *)text {

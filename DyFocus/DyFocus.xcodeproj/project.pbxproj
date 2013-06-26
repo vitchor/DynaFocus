@@ -161,6 +161,11 @@
 		7B0EC70116F3864C00606626 /* CameraView-ShootButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */; };
 		7B18FA19176120D8005F3B22 /* dyfocus_icon_57x57b.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B18FA17176120D8005F3B22 /* dyfocus_icon_57x57b.png */; };
 		7B18FA1A176120D8005F3B22 /* dyfocus_icon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B18FA18176120D8005F3B22 /* dyfocus_icon_114x114.png */; };
+		7B22CA7517791227007AD22D /* DfShootInstructionsP01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B22CA7117791227007AD22D /* DfShootInstructionsP01.png */; };
+		7B22CA7617791227007AD22D /* DfShootInstructionsP02.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B22CA7217791227007AD22D /* DfShootInstructionsP02.png */; };
+		7B22CA7717791227007AD22D /* DfShootInstructionsP03.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B22CA7317791227007AD22D /* DfShootInstructionsP03.png */; };
+		7B22CA7817791227007AD22D /* DfShootInstructionsP04.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B22CA7417791227007AD22D /* DfShootInstructionsP04.png */; };
+		7B22CA7E17791508007AD22D /* TutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B22CA7D17791508007AD22D /* TutorialView.m */; };
 		7B7C2F3C171D052A00C2A022 /* FullscreenFOFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7C2F39171D052A00C2A022 /* FullscreenFOFViewController.m */; };
 		7B7C2F3D171D052A00C2A022 /* FullscreenFOFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B7C2F3A171D052A00C2A022 /* FullscreenFOFViewController.xib */; };
 		7BBE360F17519BF60002DA95 /* Pause-Button-NoStroke.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BBE360B17519BF60002DA95 /* Pause-Button-NoStroke.png */; };
@@ -485,6 +490,12 @@
 		7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButton.png"; sourceTree = "<group>"; };
 		7B18FA17176120D8005F3B22 /* dyfocus_icon_57x57b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_57x57b.png; sourceTree = "<group>"; };
 		7B18FA18176120D8005F3B22 /* dyfocus_icon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_114x114.png; sourceTree = "<group>"; };
+		7B22CA7117791227007AD22D /* DfShootInstructionsP01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DfShootInstructionsP01.png; sourceTree = "<group>"; };
+		7B22CA7217791227007AD22D /* DfShootInstructionsP02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DfShootInstructionsP02.png; sourceTree = "<group>"; };
+		7B22CA7317791227007AD22D /* DfShootInstructionsP03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DfShootInstructionsP03.png; sourceTree = "<group>"; };
+		7B22CA7417791227007AD22D /* DfShootInstructionsP04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DfShootInstructionsP04.png; sourceTree = "<group>"; };
+		7B22CA7C17791508007AD22D /* TutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialView.h; sourceTree = "<group>"; };
+		7B22CA7D17791508007AD22D /* TutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialView.m; sourceTree = "<group>"; };
 		7B7C2F39171D052A00C2A022 /* FullscreenFOFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenFOFViewController.m; sourceTree = "<group>"; };
 		7B7C2F3A171D052A00C2A022 /* FullscreenFOFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FullscreenFOFViewController.xib; sourceTree = "<group>"; };
 		7B7C2F3B171D052A00C2A022 /* FullscreenFOFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenFOFViewController.h; sourceTree = "<group>"; };
@@ -1128,6 +1139,7 @@
 		44794B271651A9180097824D /* CameraView */ = {
 			isa = PBXGroup;
 			children = (
+				7B22CA7B177914BD007AD22D /* TutorialView */,
 				444C50441659365F006C8CD3 /* PathView */,
 				441BFFC615B1324700E204D7 /* CameraView.h */,
 				AC606B6815DC4912008FDF8F /* CameraView.m */,
@@ -1213,6 +1225,15 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		7B22CA7B177914BD007AD22D /* TutorialView */ = {
+			isa = PBXGroup;
+			children = (
+				7B22CA7C17791508007AD22D /* TutorialView.h */,
+				7B22CA7D17791508007AD22D /* TutorialView.m */,
+			);
+			name = TutorialView;
+			sourceTree = "<group>";
+		};
 		7B7C2F36171D04F600C2A022 /* FullscreenFOFViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1226,6 +1247,10 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7B22CA7117791227007AD22D /* DfShootInstructionsP01.png */,
+				7B22CA7217791227007AD22D /* DfShootInstructionsP02.png */,
+				7B22CA7317791227007AD22D /* DfShootInstructionsP03.png */,
+				7B22CA7417791227007AD22D /* DfShootInstructionsP04.png */,
 				04C25F641767EF7B0073964B /* dyfocus_square_417x417.png */,
 				04C25F621767EF670073964B /* dyfocus_2.0_57x57.png */,
 				7B18FA17176120D8005F3B22 /* dyfocus_icon_57x57b.png */,
@@ -1559,6 +1584,10 @@
 				04C25F611767EEE20073964B /* dyfocus_2.0_114x114.png in Resources */,
 				04C25F631767EF670073964B /* dyfocus_2.0_57x57.png in Resources */,
 				04C25F651767EF7B0073964B /* dyfocus_square_417x417.png in Resources */,
+				7B22CA7517791227007AD22D /* DfShootInstructionsP01.png in Resources */,
+				7B22CA7617791227007AD22D /* DfShootInstructionsP02.png in Resources */,
+				7B22CA7717791227007AD22D /* DfShootInstructionsP03.png in Resources */,
+				7B22CA7817791227007AD22D /* DfShootInstructionsP04.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1653,6 +1682,7 @@
 				04B6028A171B804800CAE579 /* Settings.m in Sources */,
 				7B7C2F3C171D052A00C2A022 /* FullscreenFOFViewController.m in Sources */,
 				04DE36D8172DCBC0006CD4DE /* PageControlFOFViewController.m in Sources */,
+				7B22CA7E17791508007AD22D /* TutorialView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

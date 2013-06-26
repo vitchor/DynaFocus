@@ -220,9 +220,6 @@
 {
     if (orientation == UIDeviceOrientationPortrait || UIDeviceOrientationUnknown)
     {
-        UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
-        [cameraViewController.instructionsImageView setImage:helpImage];
-        
         firstImage.transform = CGAffineTransformIdentity;
         secondImage.transform = CGAffineTransformIdentity;
         cancelIcon.transform = CGAffineTransformIdentity;
@@ -235,23 +232,14 @@
         
         if (orientation == UIDeviceOrientationPortraitUpsideDown)
         {
-            UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-white" ofType:@"png"]];
-            [cameraViewController.instructionsImageView setImage:helpImage];
-
             teta = M_PI;
         }
         else if(orientation == UIDeviceOrientationLandscapeRight)
         {
-            UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-left-white" ofType:@"png"]];
-            [cameraViewController.instructionsImageView setImage:helpImage];
-            
             teta = -M_PI_2;
         }
         else if(orientation == UIDeviceOrientationLandscapeLeft)
         {
-            UIImage *helpImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"dyfocus-instructions-horiz-right-white" ofType:@"png"]];
-            [cameraViewController.instructionsImageView setImage:helpImage];
-            
             teta = M_PI_2;
         }
         else
