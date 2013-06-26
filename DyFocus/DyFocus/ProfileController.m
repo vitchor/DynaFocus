@@ -26,7 +26,7 @@
 
 @implementation ProfileController
 
-@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, tableController, changeImageView;
+@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, tableController, changeImageView, personFOFArray, person, userNameLabel;
 
 - (id) initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray {
 
@@ -59,33 +59,33 @@
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil userId:(long)userId {
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
+
     if (self) {
         NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/user_id_info/", dyfocus_url] autorelease];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-        
+
         NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
-        
+
         [jsonRequestObject setObject:[NSString stringWithFormat:@"%ld", userId] forKey:@"user_id"];
-        
+
         NSString *json = [(NSObject*)jsonRequestObject JSONRepresentation];
-        
-        [LoadView loadViewOnView:self.view withText:@"Loading..."];
-        
+
+//        [LoadView loadViewOnView:self.view withText:@"Loading..."];
+
         [request setHTTPMethod:@"POST"];
         [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
                                json] dataUsingEncoding:NSUTF8StringEncoding]];
         
-        
+
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   
+
                                    NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
                                    
                                    NSDictionary *jsonValues = [stringReply JSONValue];
                                    
-                                   [LoadView fadeAndRemoveFromView:self.view];
+//                                   [LoadView fadeAndRemoveFromView:self.view];
                                    
                                    if(!error && data) {
                                        
@@ -93,22 +93,22 @@
                                        
                                        NSMutableDictionary * jsonPerson = [jsonValues valueForKey:@"person"];
                                        
-                                       person = [[Person alloc] initWithDyfocusDic:jsonPerson];
+                                       self.person =  [[[Person alloc] initWithDyfocusDic:jsonPerson] autorelease];
                                        
                                        if (userKind == MYSELF) {
-                                           person.kind = MYSELF;
+                                           self.person.kind = MYSELF;
                                        }
                                        
-                                       NSLog(@"PERSON NAME: %@", person.name);
+                                       NSLog(@"PERSON NAME: %@", self.person.name);
                                        
                                        [self setUIPersonValues];
-                                       
+//
                                        
                                        NSDictionary * FOFJSONArray = [jsonValues valueForKey:@"person_FOF_array"];
                                        
                                        if (FOFJSONArray) {
                                            
-                                           NSMutableArray *FOFArray = [[NSMutableArray alloc] initWithCapacity:[FOFJSONArray count]];
+                                           NSMutableArray *FOFArray = [NSMutableArray arrayWithCapacity:[FOFJSONArray count]];
                                            
                                            for (int i = 0; i < [FOFJSONArray count]; i++) {
                                                NSDictionary *jsonFOF = [FOFJSONArray objectAtIndex:i];
@@ -125,7 +125,7 @@
                                                }
                                            }
                                            
-                                           personFOFArray = FOFArray;
+                                           self.personFOFArray = FOFArray;
                                            
                                            NSString *buttonPicturesString = [NSString stringWithFormat:@"Pictures (%i)", FOFArray.count];
                                            
@@ -152,9 +152,9 @@
     if (!(profilePerson.kind == MYSELF) && (!profilePersonFOFArray || [profilePersonFOFArray count] == 0)) {
         
         if (profilePerson) {
-            person = [profilePerson retain];
+            self.person = profilePerson;
             userKind = profilePerson.kind;
-            return [self initWithUserId:person.uid];
+            return [self initWithUserId:self.person.uid];
         } else {
             return nil;
         }
@@ -165,13 +165,14 @@
         self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
         
         if (self) {
-            personFOFArray = [profilePersonFOFArray retain];
-            person = [profilePerson retain];
+            self.personFOFArray = profilePersonFOFArray;
+            self.person = profilePerson;
             userKind = profilePerson.kind;
         }
-        
+    
         return self;
     }
+    return nil;
 }
 
 - (void)viewDidLoad
@@ -197,13 +198,13 @@
     [notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
     
 
-    if (person) {
+    if (self.person) {
         [self setUIPersonValues];
     }
     
-    if (personFOFArray) {
+    if (self.personFOFArray) {
         
-        NSString *buttonPicturesString = [NSString stringWithFormat:@"Pictures (%i)", personFOFArray.count];
+        NSString *buttonPicturesString = [NSString stringWithFormat:@"Pictures (%i)", self.personFOFArray.count];
         
         [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateNormal];
         [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateHighlighted];
@@ -230,18 +231,18 @@
     
     if(!self.tableController){
     
-        NSLog(@"PERSON IIIIIIDDDDDDDDDDDDD: %ld", person.uid);
+        NSLog(@"PERSON IIIIIIDDDDDDDDDDDDD: %ld", self.person.uid);
         
         self.tableController = [[FOFTableController alloc] init];
         self.tableController.refreshString = refresh_user_url;
         
-        self.tableController.FOFArray = personFOFArray;
+        self.tableController.FOFArray = self.personFOFArray;
         self.tableController.shouldHideNavigationBar = NO;
         self.tableController.shouldHideNavigationBarWhenScrolling = YES;
         
-        self.tableController.userId = person.uid;
+        self.tableController.userId = self.person.uid;
 
-        self.tableController.navigationItem.title = person.name;
+        self.tableController.navigationItem.title = self.person.name;
         self.tableController.hidesBottomBarWhenPushed = YES;
     
     }
@@ -252,7 +253,7 @@
 
 -(void)setUIPersonValues {
     
-    if (person.kind == MYSELF) {
+    if (self.person.kind == MYSELF) {
         
         [notificationView setHidden:NO];
         [followView setHidden:YES];
@@ -279,7 +280,7 @@
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
-        Person *user = [delegate getUserWithId:person.uid];
+        Person *user = [delegate getUserWithId:self.person.uid];
         
         if (user) {
             [followView setHidden:YES];
@@ -290,14 +291,14 @@
         }
     }
     
-    self.userNameLabel.text = person.name;
+    [self.userNameLabel setText:self.person.name];
    
-    [followersLabel setText:person.followersCount];
-    [followingLabel setText:person.followingCount];
+    [followersLabel setText:self.person.followersCount];
+    [followingLabel setText:self.person.followingCount];
     
-   if (!(person.facebookId == (id)[NSNull null] || person.facebookId.length == 0)) {
+   if (!(self.person.facebookId == (id)[NSNull null] || self.person.facebookId.length == 0)) {
         
-        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%d&height=%d",person.facebookId, (int)userPicture.frame.size.width*5, (int)userPicture.frame.size.height*5] autorelease];
+        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%d&height=%d",self.person.facebookId, (int)userPicture.frame.size.width*5, (int)userPicture.frame.size.height*5] autorelease];
      
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
 
@@ -436,7 +437,7 @@
     AppDelegate* delegate = [UIApplication sharedApplication].delegate;
     
     
-    NSString *person_id = [NSString stringWithFormat:@"%ld", person.uid];
+    NSString *person_id = [NSString stringWithFormat:@"%ld", self.person.uid];
     NSString *my_id = [NSString stringWithFormat:@"%ld", delegate.myself.uid];
 
     NSLog(@"FOLLOW REQUEST: %@ to %@", person_id, my_id);
@@ -474,8 +475,8 @@
                                                int newFollowersValue = [followersLabel.text intValue] + 1;
                                                followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
 
-                                               person.followersCount = followersLabel.text;
-                                               [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:person.uid]];
+                                               self.person.followersCount = followersLabel.text;
+                                               [delegate.friendsThatIFollow setObject:self.person forKey:[NSNumber numberWithLong:self.person.uid]];
                                                delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] + 1];
                                                
                                                [followView setHidden:YES];
@@ -485,8 +486,8 @@
                                                int newFollowersValue = [followersLabel.text intValue] - 1;
                                                followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
                                                
-                                               person.followersCount = followersLabel.text;
-                                               [delegate.friendsThatIFollow removeObjectForKey:[NSNumber numberWithLong:person.uid]];
+                                               self.person.followersCount = followersLabel.text;
+                                               [delegate.friendsThatIFollow removeObjectForKey:[NSNumber numberWithLong:self.person.uid]];
                                                delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] - 1];
                                                
                                                [followView setHidden:NO];
@@ -507,7 +508,30 @@
 }
 
 -(void)dealloc{
+    [logoutButton release];
+    [myPicturesButton release];
+    [notificationButton release];
+    [follow release];
+    [unfollow release];
+    
+    [followingLabel release];
+    [followersLabel release];
+    
+    [logoutView release];
+    [followView release];
+    [unfollowView release];
+    [notificationView release];
+    [changeImageView release];
+    
+    [userPicture release];
     [tableController release];
+    
+    [personFOFArray removeAllObjects];
+    [personFOFArray release];
+    [person release];
+    
+    [notificationBadge release];
+    
     [super dealloc];
 }
 
