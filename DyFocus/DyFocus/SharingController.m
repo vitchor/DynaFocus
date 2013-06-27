@@ -139,7 +139,7 @@
     
     [commentField resignFirstResponder]; // hides keyboard
     
-    NSURL *webServiceUrl = [NSURL URLWithString:[[[NSString alloc] initWithFormat: @"%@/uploader/upload_image/", dyfocus_url] autorelease]];
+    NSURL *webServiceUrl = [NSURL URLWithString:[[[NSString alloc] initWithFormat: @"%@/uploader/upload_private_image/", dyfocus_url] autorelease]];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
@@ -288,6 +288,7 @@
     self.navigationItem.leftBarButtonItem = backButton;
     
     [facebookSwitch setHidden:NO];
+    [isPrivate setHidden:NO];
     [shareLabel setHidden:NO];
     [placeHolderLabel setHidden:NO];
 }
@@ -296,6 +297,7 @@
     
     [placeHolderLabel setHidden:YES];
     [facebookSwitch setHidden:YES];
+    [isPrivate setHidden:YES];
     [shareLabel setHidden:YES];
     
     self.commentField.text = @"";
@@ -347,6 +349,7 @@
     [fofName release];
     [shareLabel release];
     [facebookSwitch release];
+    [isPrivate release];
     [activityIndicator release];
     [spinner release];
     [commentField release];

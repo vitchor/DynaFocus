@@ -697,7 +697,7 @@
                      
                          [self setupTabController];
                          
-                         if ((self.myself.uid == 1) || (self.myself.uid == 2) || (self.myself.uid == 73) || (self.myself.uid == 74)){
+                         if ((self.myself.uid == 38) || (self.myself.uid == 2) || (self.myself.uid == 73) || (self.myself.uid == 74)){
                              self.adminRule = TRUE;
                          }else{
                              self.adminRule = FALSE;
@@ -1295,21 +1295,25 @@
 
     if ([alertView tag] == 1) {
     
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         
         if (buttonIndex == 1) {
             //Yes, Sure
+            [delegate logEvent:@"Yes, Sure pressed"];
             [userDefaults setInteger:0 forKey:@"likeCount"];
             [userDefaults setInteger:0 forKey:@"shootCount"];
             [self gotoReviews];
         }
         if (buttonIndex == 2) {
             //Remind me later
+            [delegate logEvent:@"Remind me later pressed"];
             [userDefaults setInteger:0 forKey:@"likeCount"];
             [userDefaults setInteger:0 forKey:@"shootCount"];
         }
         if (buttonIndex == 0) {
             //No, Thanks
+            [delegate logEvent:@"No, Thanks pressed"];
             [userDefaults setInteger:0 forKey:@"likeCount"];
             [userDefaults setInteger:0 forKey:@"shootCount"];
             [userDefaults setBool:false forKey:@"reviewActive"];

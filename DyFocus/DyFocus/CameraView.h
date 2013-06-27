@@ -3,6 +3,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <ImageIO/ImageIO.h>
 #import "PathView.h"
+#import "TutorialView.h"
 #import "iToast.h"
 
 @interface CameraView : UIViewController {
@@ -12,11 +13,10 @@
     AVCaptureDevice *mCaptureDevice;
 
     IBOutlet UIView *cameraView;
-    IBOutlet UIView *infoView;
     
+    IBOutlet TutorialView *tutorialView;
     IBOutlet PathView *pathView;
     
-    IBOutlet UIButton *getStartedButton;
     IBOutlet UIButton *torchOneButton;
     IBOutlet UIButton *torchTwoButton;
     
@@ -40,11 +40,6 @@
     bool isObserving;
     bool isTorchOn;
     
-    IBOutlet UIButton *popupCloseButton;
-    IBOutlet UIView *popupView;
-    IBOutlet UIView *popupDarkView;
-    IBOutlet UIImageView *instructionsImageView;
-    
     }
 
 - (IBAction)cancelAction:(UIButton *)sender;
@@ -62,16 +57,11 @@
 @property(nonatomic,retain) IBOutlet UIButton *infoButton;
 @property(nonatomic,retain) IBOutlet UIView *cameraView;
 @property(nonatomic,retain) IBOutlet PathView *pathView;
-@property(nonatomic,retain) IBOutlet UIView *infoView;
-@property(nonatomic,retain) IBOutlet UIButton *getStartedButton;
 @property(nonatomic,retain) IBOutlet NSMutableArray *mFocalPoints;
-@property(nonatomic,retain) IBOutlet UIButton *popupCloseButton;
-@property(nonatomic,retain) IBOutlet UIView *popupView;
-@property(nonatomic,retain) IBOutlet UIView *popupDarkView;
 @property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic,retain) IBOutlet UIView *loadingView;
 @property(nonatomic,retain) IBOutlet UIButton *torchOneButton;
 @property(nonatomic,retain) IBOutlet UIButton *torchTwoButton;
-@property(nonatomic,retain) IBOutlet UIImageView *instructionsImageView;
+@property(nonatomic,retain) IBOutlet TutorialView *tutorialView;
 
 @end
