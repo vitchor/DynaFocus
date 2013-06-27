@@ -19,7 +19,7 @@
 }
 
 @property(nonatomic,retain) NSEnumerator *instructionsImagesEnumerator;
-@property(nonatomic,strong)CameraView *cameraViewController;
+@property(nonatomic,strong) CameraView *cameraViewController;
 
 -(void)loadTutorial:(BOOL)shouldShowTutorial;
 

@@ -99,6 +99,7 @@
 {
     [instructionsImagesArray release];
     [instructionsImagesEnumerator release];
+    [cameraViewController release];
     [super dealloc];
 }
 
