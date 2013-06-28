@@ -68,7 +68,7 @@
 
 
 - (void) share {
-    self.fofName = [[NSString alloc] initWithFormat:@"%f",CACurrentMediaTime()];
+    self.fofName = [NSString stringWithFormat:@"%f",CACurrentMediaTime()];
     
     self.navigationItem.rightBarButtonItem.enabled = false;
     
