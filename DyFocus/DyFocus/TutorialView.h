@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 @class CameraView;
 
-@interface TutorialView : UIImageView {
+@interface TutorialView : UIImageView  <MFMailComposeViewControllerDelegate>{
 
-    NSEnumerator *instructionsImagesEnumerator;
+    IBOutlet UILabel *supportEmailLabel;
+    
     NSMutableArray *instructionsImagesArray;
     
     CameraView *cameraViewController;
