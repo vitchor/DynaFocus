@@ -235,6 +235,10 @@
 		ACBAC90216B63FAB00AB85C0 /* df_profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ACBAC8F816B63FAB00AB85C0 /* df_profile@2x.png */; };
 		ACBAC90A16B642F600AB85C0 /* selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ACBAC90816B642F600AB85C0 /* selected@2x.png */; };
 		ACBAC90B16B642F600AB85C0 /* tabbar-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ACBAC90916B642F600AB85C0 /* tabbar-background@2x.png */; };
+		ACE87166177CD13D00AE5F34 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE87165177CD13D00AE5F34 /* AdSupport.framework */; };
+		ACE87169177CD14600AE5F34 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495E69715EEBC9F009C2B9F /* Accounts.framework */; };
+		ACE8716B177CD15700AE5F34 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE8716A177CD15700AE5F34 /* Security.framework */; };
+		ACE8716D177CD15F00AE5F34 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE8716C177CD15F00AE5F34 /* Social.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -550,6 +554,9 @@
 		ACBAC8F816B63FAB00AB85C0 /* df_profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "df_profile@2x.png"; sourceTree = "<group>"; };
 		ACBAC90816B642F600AB85C0 /* selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected@2x.png"; sourceTree = "<group>"; };
 		ACBAC90916B642F600AB85C0 /* tabbar-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-background@2x.png"; sourceTree = "<group>"; };
+		ACE87165177CD13D00AE5F34 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		ACE8716A177CD15700AE5F34 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		ACE8716C177CD15F00AE5F34 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -557,6 +564,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACE8716D177CD15F00AE5F34 /* Social.framework in Frameworks */,
+				ACE8716B177CD15700AE5F34 /* Security.framework in Frameworks */,
+				ACE87169177CD14600AE5F34 /* Accounts.framework in Frameworks */,
+				ACE87166177CD13D00AE5F34 /* AdSupport.framework in Frameworks */,
 				04D98AF51706A5DE0093E056 /* libGPUImage.a in Frameworks */,
 				AC606B6B15DC492F008FDF8F /* QuartzCore.framework in Frameworks */,
 				441BFFCC15B1328300E204D7 /* AVFoundation.framework in Frameworks */,
@@ -771,9 +782,6 @@
 		441BFFA015B131D200E204D7 = {
 			isa = PBXGroup;
 			children = (
-				04D98AD917069ED10093E056 /* OpenGLES.framework */,
-				04D98AD717069EC40093E056 /* CoreVideo.framework */,
-				447D7ED1166E6264002599EE /* MessageUI.framework */,
 				441BFFB515B131D200E204D7 /* DyFocus */,
 				441BFFAE15B131D200E204D7 /* Frameworks */,
 				441BFFAC15B131D200E204D7 /* Products */,
@@ -791,6 +799,12 @@
 		441BFFAE15B131D200E204D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ACE8716C177CD15F00AE5F34 /* Social.framework */,
+				ACE8716A177CD15700AE5F34 /* Security.framework */,
+				ACE87165177CD13D00AE5F34 /* AdSupport.framework */,
+				04D98AD917069ED10093E056 /* OpenGLES.framework */,
+				04D98AD717069EC40093E056 /* CoreVideo.framework */,
+				447D7ED1166E6264002599EE /* MessageUI.framework */,
 				04D98ACC17069E7B0093E056 /* GPUImage */,
 				444C504C1659375B006C8CD3 /* Lib */,
 				44794AF01651472F0097824D /* Bundles */,
