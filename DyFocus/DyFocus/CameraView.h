@@ -6,7 +6,7 @@
 #import "TutorialView.h"
 #import "iToast.h"
 
-@interface CameraView : UIViewController {
+@interface CameraView : UIViewController{
     
 	AVCaptureStillImageOutput *mStillImageOutput;
     AVCaptureConnection *mVideoConnection;
@@ -20,16 +20,11 @@
     IBOutlet UIButton *torchOneButton;
     IBOutlet UIButton *torchTwoButton;
     
-    IBOutlet UIButton *cancelButton;
-    IBOutlet UIButton *shootButton;
-    IBOutlet UIButton *infoButton;
-    
     IBOutlet UIActivityIndicatorView *spinner;
     IBOutlet UIView *loadingView;
     
     AVCaptureSession *captureSession;
     
-    NSMutableArray *mFocalPoints;
     NSMutableArray *mFrames;
 
     iToast *mToastMessage;
@@ -48,20 +43,13 @@
 
 - (void)showToast:(NSString *)text;
 - (void)updateFocusPoint;
-- (void)setInitialFocusPoint:(CGPoint)point;
 - (void)setProximityEnabled:(BOOL)isOn;
 - (void)clearPoints;
 
 @property(nonatomic,retain) IBOutlet UIButton *shootButton;
 @property(nonatomic,retain) IBOutlet UIButton *cancelButton;
 @property(nonatomic,retain) IBOutlet UIButton *infoButton;
-@property(nonatomic,retain) IBOutlet UIView *cameraView;
-@property(nonatomic,retain) IBOutlet PathView *pathView;
 @property(nonatomic,retain) IBOutlet NSMutableArray *mFocalPoints;
-@property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
-@property(nonatomic,retain) IBOutlet UIView *loadingView;
-@property(nonatomic,retain) IBOutlet UIButton *torchOneButton;
-@property(nonatomic,retain) IBOutlet UIButton *torchTwoButton;
-@property(nonatomic,retain) IBOutlet TutorialView *tutorialView;
+
 
 @end
