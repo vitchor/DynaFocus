@@ -16,8 +16,6 @@
     IBOutlet UILabel *supportEmailLabel;
     
     NSMutableArray *instructionsImagesArray;
-    
-    CameraView *cameraViewController;
 }
 
 @property(nonatomic,retain) NSEnumerator *instructionsImagesEnumerator;

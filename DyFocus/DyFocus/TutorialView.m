@@ -12,7 +12,6 @@
 @implementation TutorialView
 
 @synthesize cameraViewController, instructionsImagesEnumerator;
-//, supportEmailLabel;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -109,9 +108,6 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"TutorialView.showTutorial"];
     
-   if(self.instructionsImagesEnumerator)
-       self.instructionsImagesEnumerator = nil;
-    
     self.instructionsImagesEnumerator = [instructionsImagesArray objectEnumerator];
     
     [self setImage:self.instructionsImagesEnumerator.nextObject];
@@ -176,10 +172,10 @@
 
 -(void)dealloc
 {
-    [instructionsImagesArray release];
-    [self.instructionsImagesEnumerator release];
-    [cameraViewController release];
     [supportEmailLabel release];
+    [instructionsImagesArray release];
+    [instructionsImagesEnumerator release];
+    [cameraViewController release];
     [super dealloc];
 }
 
