@@ -28,7 +28,7 @@
         self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 		self.navigationItem.hidesBackButton = YES;
 		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAction)] autorelease];
-		self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(saveAction)] autorelease];
+		self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(sendAction)] autorelease];
 		self.title = @"Edit Message";
 
     }
@@ -90,7 +90,7 @@
 //    [messageTextView setEditable:YES];
 }
 
-- (void)saveAction {
+- (void)sendAction {
 	//[m_delegate saveInviteWithText:[m_messageView text]];
 	//[self.navigationController dismissModalViewControllerAnimated:YES];
     
