@@ -231,23 +231,25 @@
 }
 
 - (void) next
-{    
-    SharingController *sharingController;
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    if (screenBounds.size.height == 568) {
-        // code for 4-inch screen
-        sharingController = [[SharingController alloc] initWithNibName:@"SharingController_i5" bundle:nil];
-    } else {
-        // code for 3.5-inch screen
-        sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
+{
+    if(!applyingFilter){
+        SharingController *sharingController;
+        
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            // code for 4-inch screen
+            sharingController = [[SharingController alloc] initWithNibName:@"SharingController_i5" bundle:nil];
+        } else {
+            // code for 3.5-inch screen
+            sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
+        }
+        
+        sharingController.focalPoints = focalPoints;
+        sharingController.frames = displayedFrames;
+        
+        [self.navigationController pushViewController:sharingController animated:true];
+        [sharingController release];
     }
-    
-    sharingController.focalPoints = focalPoints;
-    sharingController.frames = displayedFrames;
-    
-    [self.navigationController pushViewController:sharingController animated:true];
-    [sharingController release];
 }
 
 - (void)fadeImages
@@ -301,25 +303,29 @@
 #pragma mark Table Delegate Methods
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (tableView == firstTableView) {
-//        UIImage *bufferImage = [FilterUtil filterImage:[frames objectAtIndex:0] withFilterId:indexPath.row];
-        UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[frames objectAtIndex:0] withFilterId:indexPath.row], 1.0)];
+    if(!applyingFilter){
+        applyingFilter = true;
         
-        if(self.displayedFrames[0]){
-            [self.displayedFrames replaceObjectAtIndex:0 withObject:filteredImage];
-        }else{
-            [self.displayedFrames setObject:filteredImage atIndexedSubscript:0];
+        if (tableView == firstTableView) {
+            UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[frames objectAtIndex:0] withFilterId:indexPath.row], 1.0)];
+            
+            if(self.displayedFrames[0]){
+                [self.displayedFrames replaceObjectAtIndex:0 withObject:filteredImage];
+            }else{
+                [self.displayedFrames setObject:filteredImage atIndexedSubscript:0];
+            }
+        } else if (tableView == secondTableView) {
+            UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[frames objectAtIndex:1] withFilterId:indexPath.row], 1.0)];
+            if(self.displayedFrames[1]){
+                [self.displayedFrames replaceObjectAtIndex:1 withObject:filteredImage];
+            }else{
+                [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];
+            }
         }
-        
-    } else if (tableView == secondTableView) {
-        UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[frames objectAtIndex:1] withFilterId:indexPath.row], 1.0)];
-        if(self.displayedFrames[1]){
-            [self.displayedFrames replaceObjectAtIndex:1 withObject:filteredImage];
-        }else{
-            [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];
-        }
+        applyingFilter = false;
     }
+    
+
 }
 
 - (void) cancel {

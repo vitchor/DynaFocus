@@ -24,6 +24,7 @@
     NSString *fofName;
     NSTimer *timer;
 
+    bool applyingFilter;
     int oldFrameIndex;
     int timerPause;
     IBOutlet UIButton *playPauseButton;
