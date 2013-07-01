@@ -90,16 +90,32 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"TutorialView.nextInstruction"];
     
-    [self setImage:self.instructionsImagesEnumerator.nextObject];
-    
-    if(self.image == instructionsImagesArray.lastObject)
-        [supportEmailLabel setHidden:NO];
+    if(self.image == instructionsImagesArray.lastObject){
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.alpha = 0.0;
+            supportEmailLabel.alpha = 0.0;
+            
+        }completion: ^(BOOL finished) {
+            
+            [self setImage:self.instructionsImagesEnumerator.nextObject];
+            [supportEmailLabel setHidden:YES];
+            [self setHidden:YES];
+            self.alpha = 1.0;
+            supportEmailLabel.alpha = 1.0;
+            [self.cameraViewController.shootButton setEnabled:YES];
+        }];
+
+    }
     else
-        [supportEmailLabel setHidden:YES];
-    
-    if(!self.image){
-        [self setHidden:YES];
-        [self.cameraViewController.shootButton setEnabled:YES];
+    {
+        [self setImage:self.instructionsImagesEnumerator.nextObject];
+        
+        if(self.image == instructionsImagesArray.lastObject)
+            [supportEmailLabel setHidden:NO];
+        else
+            [supportEmailLabel setHidden:YES];
     }
 }
 
