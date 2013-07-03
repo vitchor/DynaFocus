@@ -6,23 +6,22 @@
 //  Copyright (c) 2012 Ufscar. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
-// MODEL
+// MODELs
 #import "Comment.h"
 #import "FOF.h"
 #import "Like.h"
 #import "Notification.h"
 #import "Person.h"
-
 #import "Settings.h"
-
-#import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
 
 // Overriden system classes
 #import "DyfocusUITabBarController.h"
 #import "DyfocusUINavigationController.h"
 #import "UIDyfocusImage.h"
+#import "NSDyfocusURLRequest.h"
 
 // Controllers
 #import "FacebookController.h"
@@ -32,6 +31,11 @@
 #import "CameraView.h"
 #import "FOFTableController.h"
 #import "FOFTableNavigationController.h"
+
+#import "Flurry.h"
+#import "JSON.h"
+#import "UIImageLoaderDyfocus.h"
+#import "FilterUtil.h"
 
 
 #define UPLOADING 0

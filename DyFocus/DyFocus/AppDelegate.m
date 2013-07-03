@@ -7,21 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "CameraView.h"
-#import "WebViewController.h"
-#import "DyfocusUITabBarController.h"
-#import "DyfocusUINavigationController.h"
-#import "FacebookController.h"
-#import "ProfileController.h"
-#import "Flurry.h"
-#import "SharingController.h"
-#import "LoginController.h"
-#import "JSON.h"
-#import "Flurry.h"
-#import "FOFTableNavigationController.h"
-#import "NSDyfocusURLRequest.h"
-#import "UIImageLoaderDyfocus.h"
-#import "FilterUtil.h"
 
 @implementation AppDelegate
 
@@ -167,8 +152,6 @@
     
     
     // Featured Controller
-//    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray andUrl:refresh_featured_url];
-    
     featuredViewController = [[FOFTableNavigationController alloc] initWithTopRatedFOFArray:self.featuredFofArray andTopRatedUrl:refresh_featured_url andTrendingFOFArray:self.trendingFofArray andTrendingUrl:refresh_trending_url];
     
     
@@ -179,9 +162,6 @@
     // Feed Controller
     
     feedViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.feedFofArray andUrl:refresh_feed_url];
-
-    //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
-    
     
     UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed"] tag:2];
     [feedTab setFinishedSelectedImage:[UIImage imageNamed:@"df_feed_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_feed.png"]];
@@ -236,9 +216,6 @@
     NSArray* controllers = [NSArray arrayWithObjects:featuredViewController, feedViewController, cameraNavigationController, friendsNavigationController, profileNavigationController, nil];
     
     self.tabBarController.viewControllers = controllers;
-    
-    self.tabBarController.featuredWebController = featuredViewController;
-    self.tabBarController.feedWebController = feedViewController;
     
     
     // Configure window
@@ -791,7 +768,9 @@
                         NSNumber *key = [NSNumber numberWithLong:[followingPerson.facebookId longLongValue]];
                         Person *person = [self.friendsFromFb objectForKey:key];
                         
-                        [person release];
+                        [
+                         person release];
+                        
                         [self.friendsFromFb removeObjectForKey:key];
                         
                     }else{
@@ -1240,6 +1219,7 @@
     myself.kind = MYSELF;
     myself.name = name;
     myself.email = email;
+    //TODO test if following and followers jason return are a long variable'
     myself.followersCount = [NSString stringWithFormat:@"%@",followers_count];
     myself.followingCount = [NSString stringWithFormat:@"%@",following_count];
     

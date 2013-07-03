@@ -607,6 +607,8 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
     imagebackFrame.image = nil;
     imagefrontFrame.image = nil;
     
+    //TODO use self.dataMember instead of allocating and releasing manually
+    
     [fof release];
     fof = nil;
     
