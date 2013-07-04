@@ -8,42 +8,32 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "AppDelegate.h"
 #import "ASIFormDataRequest.h"
+#import "LoadView.h"
+#import "UIImage+fixOrientation.h"
 
-@interface SharingController : UIViewController {
+#define MAX_LENGTH 210
+
+@interface SharingController : UIViewController <UITextViewDelegate>{
     
-    IBOutlet UILabel *shareLabel;
-    IBOutlet UILabel *placeHolderLabel;
-    FBSession *facebook;
-    ASIFormDataRequest *request;
-    
-    
-    IBOutlet UISwitch *facebookSwitch;
     IBOutlet UIView *activityIndicator;
     IBOutlet UIActivityIndicatorView *spinner;
     IBOutlet UITextView *commentField;
-
-    NSMutableArray *frames;
-    NSMutableArray *focalPoints;
-    UIBarButtonItem *backButton;
-    NSString *fofName;
-    NSString *fofUserFbId;
-    NSString *matrixString;
+    IBOutlet UILabel *placeHolderLabel;
+    IBOutlet UILabel *titleWithFb;
+    IBOutlet UILabel *titleWithoutFb;
+    IBOutlet UILabel *shareOnFbLabel;
+    IBOutlet UISwitch *facebookSwitch;
+    IBOutlet UISwitch *isPrivate;
     
+    ASIFormDataRequest *request;
 }
-
--(void) facebookError;
--(IBAction) toggleEnabledForSwitch: (id) sender;
-
-@property(nonatomic,retain) IBOutlet UISwitch *facebookSwitch;
-@property(nonatomic,retain) IBOutlet UIView *activityIndicator;
-@property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
-@property(nonatomic,retain) IBOutlet UITextView *commentField;
 
 @property(nonatomic,retain) NSMutableArray *frames;
 @property(nonatomic,retain) NSMutableArray *focalPoints;
-@property(nonatomic,retain) UIBarButtonItem *backButton;
 @property(nonatomic,retain) NSString *fofName;
-@property(nonatomic,retain) NSString *fofUserFbId;
 @property(nonatomic,retain) NSString *matrixString;
+
 @end
+

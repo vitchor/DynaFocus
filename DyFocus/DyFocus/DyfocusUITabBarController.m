@@ -7,7 +7,7 @@
 //
 
 #import "DyfocusUITabBarController.h"
-#import "WebViewController.h"
+#import "AppDelegate.h"
 
 @interface DyfocusUITabBarController ()
 
@@ -15,7 +15,7 @@
 
 @implementation DyfocusUITabBarController
 
-@synthesize feedWebController, featuredWebController, lastControllerIndex, actualControllerIndex;
+@synthesize lastControllerIndex, actualControllerIndex;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,27 +57,6 @@
 
 -(void) tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     
-//    if (!(viewController == feedWebController )) {
-//        
-//        int orientation = [[UIDevice currentDevice] orientation];
-//
-//        if (orientation != UIDeviceOrientationPortrait) {
-//        
-//            UIViewController *c = [[UIViewController alloc]init];
-//            [viewController presentModalViewController:c animated:NO];
-//            [viewController dismissModalViewControllerAnimated:NO];
-//            
-//            [c release];
-//            c = nil;
-//            
-//            if ([UIViewController respondsToSelector:@selector(attemptRotationToDeviceOrientation)]) {
-//                // this ensures that the view will be presented in the orientation of the device
-//                // This method is only supported on iOS 5.0.  iOS 4.3 users may get a little dizzy.
-//                [UIViewController attemptRotationToDeviceOrientation];
-//            }
-//        }
-//    }
-    
     if (actualControllerIndex != -1) {
         self.lastControllerIndex = actualControllerIndex;
         NSLog(@"Updating lastControllerIndex: %d", lastControllerIndex);
@@ -85,6 +64,9 @@
     
     self.actualControllerIndex = [self.viewControllers indexOfObject:viewController];
     NSLog(@"Updating actualControllerIndex: %d", actualControllerIndex);
+    
+    if(actualControllerIndex == 4)
+        [self resetTabBarControllerTransitionView];
 }
 
 -(NSUInteger)supportedInterfaceOrientations
@@ -99,8 +81,22 @@
 
 - (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
 {
-    
     return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+-(void)resetTabBarControllerTransitionView
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    AppDelegate* delegate = [UIApplication sharedApplication].delegate;
+    
+    for(UIView *view in delegate.tabBarController.view.subviews)
+    {
+        if(![view isKindOfClass:[UITabBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height-delegate.tabBarController.tabBar.frame.size.height)];
+        }
+    }
 }
 
 @end

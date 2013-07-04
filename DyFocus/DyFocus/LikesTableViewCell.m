@@ -47,6 +47,7 @@
     m_like = [[Like alloc] init];
     m_like.m_userFacebookId = like.m_userFacebookId;
     m_like.m_userId = like.m_userId;
+    m_like.m_uid = like.m_uid;
     
     if([like.m_userName isEqualToString:@"You"]){
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;

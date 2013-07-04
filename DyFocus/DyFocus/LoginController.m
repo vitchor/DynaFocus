@@ -25,7 +25,7 @@
 @synthesize signupView, signupFullNameTextField, signupFullNameTextFieldErrorLabel, signupEmailTextField, signupEmailTextFieldErrorLabel, signupPasswordTextField, signupPasswordTextFieldErrorLabel, signupCancelButton, showSignupButton;
 
 // LOGIN VIEW OUTLETS
-@synthesize loginView, loginEmailTextField, loginEmailTextFieldErrorLabel, loginPasswordTextField, loginPasswordTextFieldErrorLabel, loginCancelButton, showLoginButton;
+@synthesize loginView, loginEmailTextField, loginEmailTextFieldErrorLabel, loginPasswordTextField, loginPasswordTextFieldErrorLabel, loginCancelButton, showLoginButton, loginForgotPasswordButton;
 
 
 @synthesize borderView, facebookConnectButton, leftButton, rightButton, fofs, scrollView, pageControl, viewControllers;
@@ -157,6 +157,8 @@
     
     [showLoginButton addTarget:self action:@selector(showLogin) forControlEvents:UIControlEventTouchUpInside];
     [loginCancelButton addTarget:self action:@selector(hideLogin) forControlEvents:UIControlEventTouchUpInside];
+    
+    [loginForgotPasswordButton addTarget:self action:@selector(sendForgotPasswordRequest) forControlEvents:UIControlEventTouchUpInside];
  
     [signupCancelButton addTarget:self action:@selector(hideSignup) forControlEvents:UIControlEventTouchUpInside];
     
@@ -209,6 +211,82 @@
     
     return YES;
 }
+
+- (void) sendForgotPasswordRequest {
+    
+    if ([loginEmailTextField.text isEqualToString:@""] || ![self isValidEmail:loginEmailTextField.text]) {
+        [loginEmailTextFieldErrorLabel setText:@"Please enter a valid email:"];
+        [loginEmailTextFieldErrorLabel setHidden:NO];
+        
+    } else {
+        
+        [LoadView loadViewOnView:self.view withText:@"Loading..."];
+        
+        NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/send_forgot_password_email/",dyfocus_url] autorelease];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+        
+        NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:4] autorelease];
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        [jsonRequestObject setObject:loginEmailTextField.text forKey:@"user_email"];
+        
+        NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                               json] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSLog(@"SENDING");
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   
+                                   [LoadView fadeAndRemoveFromView:self.view];
+                                   
+                                   if(!error && data) {
+                                       
+                                       NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                                       
+                                       NSLog(@"stringReply: %@",stringReply);
+                                       
+                                       NSDictionary *jsonValues = [stringReply JSONValue];
+                                       
+                                       NSString *error = [jsonValues valueForKey:@"error"];
+                                       
+                                       if (!error) {
+                                           
+                                           [self showOkAlertWithMessage:@"Your password information has been sent to your email address." andTitle:@"Email was sent"];
+                                           
+                                           [loginEmailTextFieldErrorLabel setHidden:YES];
+                                           [loginPasswordTextFieldErrorLabel setHidden:YES];
+                                           
+                                       } else {
+                                           [loginEmailTextFieldErrorLabel setText:error];
+                                           [loginEmailTextFieldErrorLabel setHidden:NO];
+                                           
+                                       }
+                                   } else {
+                                       [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
+                                   }
+                                   
+                                   NSLog(@"ERROR");
+                               }
+         ];
+        
+    }
+}
+
+-(void)showOkAlertWithMessage:(NSString *)message andTitle:(NSString *)title
+{
+    NSString *alertButton = @"OK";
+    
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+    [alert show];
+    
+    [alertButton release];
+}
+
 
 -(void) sendLoginRequest {
     
@@ -327,7 +405,7 @@
         if (delegate.deviceId) {
             [jsonRequestObject setObject:delegate.deviceId forKey:@"device_id"];
         } else {
-            [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+            [jsonRequestObject setObject:@"null" forKey:@"device_id"];
         }
         
         [jsonRequestObject setObject:signupFullNameTextField.text forKey:@"user_name"];
@@ -535,16 +613,6 @@
     [scrollView scrollRectToVisible:frame animated:YES];
     // Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
     pageControlUsed = YES;
-}
-
--(void)showOkAlertWithMessage:(NSString *)message andTitle:(NSString *)title
-{
-    NSString *alertButton = @"OK";
-    
-    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
-    [alert show];
-    
-    [alertButton release];
 }
 
 @end

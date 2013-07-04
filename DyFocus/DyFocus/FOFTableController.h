@@ -23,6 +23,12 @@
     
     BOOL _reloading;
     BOOL m_isFOFTableEmpty;
+    
+    float lastOffset;
+    BOOL shouldHideNavigationBarWhenScrolling;
+    BOOL shouldHideTabBarWhenScrolling;
+    BOOL shouldShowSegmentedBar;
+    BOOL withHeader;
 }
 
 @property (nonatomic,retain) IBOutlet UIView *loadingView;
@@ -33,12 +39,15 @@
 @property (nonatomic, readwrite) long userId;
 @property(assign,getter=isReloading) BOOL reloading;
 @property(nonatomic,readonly) EGORefreshTableHeaderView *refreshHeaderView;
+@property (nonatomic, readwrite) BOOL shouldHideNavigationBarWhenScrolling;
+@property (nonatomic, readwrite) BOOL shouldHideTabBarWhenScrolling;
+@property (nonatomic, readwrite) BOOL shouldShowSegmentedBar;
 
 -(void) addNewCellHeight:(float)height atRow:(int)row;
--(void) refreshWithAction:(BOOL)isAction;
+-(void) refreshFOFArrayWithHeader:(BOOL)isWithHeader;
 -(void)reloadTableViewDataSource;
 -(void)dataSourceDidFinishLoadingNewData;
 -(int)cellStyle;
-
+-(void)resetTabBarControllerTransitionView;
 
 @end

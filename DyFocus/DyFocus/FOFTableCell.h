@@ -11,7 +11,7 @@
 #import "FOFTableController.h"
 
 @interface FOFTableCell : UITableViewCell {
-
+    IBOutlet UIButton *deleteFOFButton;
     IBOutlet UILabel *labelUserName;
     IBOutlet UILabel *labelDate;
     
@@ -53,8 +53,10 @@
 
 -(void) loadImages;
 -(void) increaseCommentsCounter;
+-(void) decreaseCommentsCounter;
 -(void) refreshImageSize;
 
+@property (nonatomic,retain) IBOutlet UIButton *deleteFOFButton;
 @property (nonatomic,retain) IBOutlet UILabel *labelUserName;
 @property (nonatomic,retain) IBOutlet UILabel *labelDate;
 

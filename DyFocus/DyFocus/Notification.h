@@ -12,10 +12,11 @@
 #define NOTIFICATION_COMMENTED_FOF 1
 #define NOTIFICATION_FOLLOWED_YOU 2
 #define NOTIFICATION_COMMENTED_ON_COMMENTED_FOF 3
+#define NOTIFICATION_COMMENTED_ON_LIKED_FOF 4
 
 @interface Notification: NSObject {
     NSString *m_message;
-    NSString *m_userId;
+    NSString *m_userFacebookId;
     NSDecimalNumber *m_notificationId;
     int m_triggerType;
     int m_triggerId;
@@ -25,7 +26,7 @@
 +(Notification *) notificationFromJSON: (NSDictionary *)json;
 
 @property (nonatomic, retain) NSString *m_message;
-@property (nonatomic, retain) NSString *m_userId;
+@property (nonatomic, retain) NSString *m_userFacebookId;
 @property (nonatomic, retain) NSDecimalNumber *m_notificationId;
 @property (nonatomic, readwrite) int m_triggerType;
 @property (nonatomic, readwrite) int m_triggerId;

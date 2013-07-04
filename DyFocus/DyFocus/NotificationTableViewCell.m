@@ -49,7 +49,7 @@
         m_notification = [[Notification alloc] init];
         m_notification.m_message = [[notification.m_message copy] autorelease];
         m_notification.m_notificationId = [[notification.m_notificationId copy] autorelease];
-        m_notification.m_userId = [[notification.m_userId copy] autorelease];
+        m_notification.m_userFacebookId = [[notification.m_userFacebookId copy] autorelease];
         m_notification.m_wasRead = notification.m_wasRead;
         
         UIView *backView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
@@ -70,7 +70,7 @@
 -(void) loadImage {
     if (userImage.tag != 420) {
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadPictureWithFaceId:m_notification.m_userId andImageView:userImage andIsSmall:YES];
+        [imageLoader loadPictureWithFaceId:m_notification.m_userFacebookId andImageView:userImage andIsSmall:YES];
     }
     
 

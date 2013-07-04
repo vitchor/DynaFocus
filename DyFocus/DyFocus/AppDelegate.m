@@ -7,26 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "CameraView.h"
-#import "WebViewController.h"
-#import "DyfocusUITabBarController.h"
-#import "DyfocusUINavigationController.h"
-#import "FacebookController.h"
-#import "ProfileController.h"
-#import "Flurry.h"
-#import "SharingController.h"
-#import "LoginController.h"
-#import "JSON.h"
-#import "Flurry.h"
-#import "FOFTableNavigationController.h"
-#import "NSDyfocusURLRequest.h"
-#import "UIImageLoaderDyfocus.h"
-#import "FilterUtil.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController, friendsFromFb, myself, featuredFofArray, userFofArray, feedFofArray, deviceId, notificationsArray, unreadNotifications, friendsThatIFollow;
+@synthesize tabBarController, friendsFromFb, myself, featuredFofArray, userFofArray, feedFofArray, deviceId, notificationsArray, unreadNotifications, friendsThatIFollow, trendingFofArray, adminRule;
 
 - (void)dealloc
 {
@@ -167,18 +152,16 @@
     
     
     // Featured Controller
-    FOFTableNavigationController *featuredWebViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.featuredFofArray andUrl:refresh_featured_url];
+    featuredViewController = [[FOFTableNavigationController alloc] initWithTopRatedFOFArray:self.featuredFofArray andTopRatedUrl:refresh_featured_url andTrendingFOFArray:self.trendingFofArray andTrendingUrl:refresh_trending_url];
+    
     
     UITabBarItem *galleryTab = [[UITabBarItem alloc] initWithTitle:@"Featured" image:[UIImage imageNamed:@"df_featured.png"] tag:1];
     [galleryTab setFinishedSelectedImage:[UIImage imageNamed:@"df_featured_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_featured.png"]];
-    [featuredWebViewController setTabBarItem:galleryTab];
+    [featuredViewController setTabBarItem:galleryTab];
     
     // Feed Controller
+    
     feedViewController = [[FOFTableNavigationController alloc] initWithFOFArray:self.feedFofArray andUrl:refresh_feed_url];
-
-    
-    //[feedWebViewController loadUrl: [[NSString alloc] initWithFormat: @"http://192.168.100.108:8000/uploader/%@/user/0/fof_name/", [[UIDevice currentDevice] uniqueIdentifier]]];
-    
     
     UITabBarItem *feedTab = [[UITabBarItem alloc] initWithTitle:@"Feed" image:[UIImage imageNamed:@"df_feed"] tag:2];
     [feedTab setFinishedSelectedImage:[UIImage imageNamed:@"df_feed_white.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"df_feed.png"]];
@@ -230,12 +213,9 @@
     [[[self tabBarController] tabBar] setSelectionIndicatorImage:[UIImage imageNamed:@"selected-black"]];
     
     
-    NSArray* controllers = [NSArray arrayWithObjects:featuredWebViewController, feedViewController, cameraNavigationController, friendsNavigationController, profileNavigationController, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:featuredViewController, feedViewController, cameraNavigationController, friendsNavigationController, profileNavigationController, nil];
     
     self.tabBarController.viewControllers = controllers;
-    
-    self.tabBarController.featuredWebController = featuredWebViewController;
-    self.tabBarController.feedWebController = feedViewController;
     
     
     // Configure window
@@ -248,6 +228,12 @@
         [self showNotificationView];
         showNotification = NO;
     }
+    
+    [self loadTrendingTab];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:true forKey:@"reviewActive"];
+    [userDefaults synchronize];
 }
 
 - (void)resetCameraUINavigationController {
@@ -260,6 +246,24 @@
 }
 
 -(void)loadFeedTab{
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    bool isReviewActive = [userDefaults boolForKey:@"reviewActive"];
+    
+    if(isReviewActive){
+        
+        int shootCount = [userDefaults integerForKey:@"shootCount"] + 1;
+        [userDefaults setInteger:shootCount forKey:@"shootCount"];
+        [userDefaults synchronize];
+        
+        if(shootCount>=3)
+        {
+            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate askReview];
+        }
+    }
+
+    
     NSArray *viewControllers = cameraNavigationController.viewControllers;
     UIViewController *rootViewController = [viewControllers objectAtIndex:0];
     [cameraNavigationController setNavigationBarHidden:YES animated:NO];
@@ -267,12 +271,16 @@
     
     [cameraViewController showToast:@"Upload Complete."];
     
+    [self refreshAllFOFTables];
     
-    [feedViewController.tableController refreshWithAction:NO];
-    
-    tabBarController.lastControllerIndex = 1;
+    tabBarController.lastControllerIndex = 2;
     tabBarController.actualControllerIndex = 1;
+    
     [tabBarController setSelectedIndex:1];
+}
+
+-(void)loadTrendingTab{
+    [featuredViewController.trendingTableController refreshFOFArrayWithHeader:YES];
 }
 
 -(void)goBackToLastController {
@@ -403,7 +411,12 @@
                          // Lets create the json, with all the user info, that will be used in the request
                          NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
                          
-                         [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+                         if (self.deviceId) {
+                             [jsonRequestObject setObject:self.deviceId forKey:@"device_id"];
+                         } else {
+                             [jsonRequestObject setObject:@"null"  forKey:@"device_id"];
+                         }
+                         
                          [jsonRequestObject setObject:[user objectForKey:@"id"] forKey:@"facebook_id"];
                          [jsonRequestObject setObject:[user objectForKey:@"name"] forKey:@"name"];
                          [jsonRequestObject setObject:[user objectForKey:@"email"] forKey:@"email"];
@@ -614,7 +627,7 @@
              if (self.deviceId) {
                  [jsonRequestObject setObject:self.deviceId forKey:@"device_id"];
              } else {
-                 [jsonRequestObject setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"device_id"];
+                 [jsonRequestObject setObject:@"null"  forKey:@"device_id"];
              }
              
              [jsonRequestObject setObject:[user objectForKey:@"id"] forKey:@"facebook_id"];
@@ -660,6 +673,12 @@
                          [splashScreenController.view removeFromSuperview];
                      
                          [self setupTabController];
+                         
+                         if ((self.myself.uid == 38) || (self.myself.uid == 2) || (self.myself.uid == 73) || (self.myself.uid == 74)){
+                             self.adminRule = TRUE;
+                         }else{
+                             self.adminRule = FALSE;
+                         }
                      }// TODO
                      
                  }
@@ -749,7 +768,9 @@
                         NSNumber *key = [NSNumber numberWithLong:[followingPerson.facebookId longLongValue]];
                         Person *person = [self.friendsFromFb objectForKey:key];
                         
-                        [person release];
+                        [
+                         person release];
+                        
                         [self.friendsFromFb removeObjectForKey:key];
                         
                     }else{
@@ -835,6 +856,28 @@
             
         }
         
+        //creating array trending fof list
+        NSDictionary * trendingFOFList = [jsonValues valueForKey:@"fof_list"];
+        
+        if (trendingFOFList) {
+            
+            NSMutableArray *trendingFOFArray = [NSMutableArray array];
+            
+            for (int i = 0; i < [trendingFOFList count]; i++) {
+                NSDictionary *jsonFOF = [trendingFOFList objectAtIndex:i];
+                
+                FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
+                
+                [trendingFOFArray addObject:fof];
+                
+                //NSLog(@"Adding FOf %@",fof.m_userName);
+                
+            }
+            NSLog(@"TRENDING FOF COUNT: %d", [trendingFOFArray count]);
+            
+            self.trendingFofArray = trendingFOFArray;
+            
+        }
 
         self.myself.followingCount = [NSString stringWithFormat:@"%@",[jsonValues valueForKey:@"user_following_count"]];
         self.myself.followersCount = [NSString stringWithFormat:@"%@",[jsonValues valueForKey:@"user_followers_count"]];
@@ -1046,6 +1089,8 @@
         splashScreenController = [[SplashScreenController alloc] initWithNibName:@"SplashScreenController" bundle:nil];
     }
     
+    [splashScreenController.view setUserInteractionEnabled:YES];
+    
     [self.window addSubview:splashScreenController.view];
 }
 
@@ -1174,6 +1219,7 @@
     myself.kind = MYSELF;
     myself.name = name;
     myself.email = email;
+    //TODO test if following and followers jason return are a long variable'
     myself.followersCount = [NSString stringWithFormat:@"%@",followers_count];
     myself.followingCount = [NSString stringWithFormat:@"%@",following_count];
     
@@ -1203,5 +1249,77 @@
 ////    currentFriend
 ////    friendFOFArray
 //}
+
+-(void) askReview {
+    NSString *alertTitle = @"Rate Dyfocus!";
+    NSString *alertMsg =@"If you enjoy using dyfocus, would you mind taking a moment to rate it? Thanks for your support! ";
+    NSString *alertButton1 = @"Yes, Sure";
+    NSString *alertButton2 =@"Remind me later";
+    NSString *alertButton3 =@"No, Thanks";
+    
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton3 otherButtonTitles:nil] autorelease];
+    // optional - add more buttons:
+    [alert setTag:1];
+    [alert addButtonWithTitle:alertButton1];
+    [alert addButtonWithTitle:alertButton2];
+    [alert show];
+    
+    [alertTitle release];
+    [alertMsg release];
+    [alertButton1 release];
+    [alertButton2 release];
+    [alertButton3 release];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+
+    if ([alertView tag] == 1) {
+    
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+        if (buttonIndex == 1) {
+            //Yes, Sure
+            [delegate logEvent:@"Yes, Sure pressed"];
+            [userDefaults setInteger:0 forKey:@"likeCount"];
+            [userDefaults setInteger:0 forKey:@"shootCount"];
+            [self gotoReviews];
+        }
+        if (buttonIndex == 2) {
+            //Remind me later
+            [delegate logEvent:@"Remind me later pressed"];
+            [userDefaults setInteger:0 forKey:@"likeCount"];
+            [userDefaults setInteger:0 forKey:@"shootCount"];
+        }
+        if (buttonIndex == 0) {
+            //No, Thanks
+            [delegate logEvent:@"No, Thanks pressed"];
+            [userDefaults setInteger:0 forKey:@"likeCount"];
+            [userDefaults setInteger:0 forKey:@"shootCount"];
+            [userDefaults setBool:false forKey:@"reviewActive"];
+        }
+        
+        [userDefaults synchronize];
+    }
+}
+
+- (void)gotoReviews
+{
+    NSString *str = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa";
+    str = [NSString stringWithFormat:@"%@/wa/viewContentsUserReviews?", str];
+    str = [NSString stringWithFormat:@"%@type=Purple+Software&id=", str];
+    
+    // Here is the app id from itunesconnect
+    str = [NSString stringWithFormat:@"%@557266156", str];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+}
+
+-(void)refreshAllFOFTables
+{
+    [featuredViewController.trendingTableController refreshFOFArrayWithHeader:YES];
+    [feedViewController.tableController refreshFOFArrayWithHeader:YES];
+    [profileController.tableController refreshFOFArrayWithHeader:YES];
+}
 
 @end

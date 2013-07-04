@@ -9,6 +9,7 @@
 #import "NotificationTableViewController.h"
 #import "AppDelegate.h"
 #import "JSON.h"
+#import "LoadView.h"
 
 @interface NotificationTableViewController ()
 
@@ -256,6 +257,7 @@
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Notification *notification = [notifications objectAtIndex:indexPath.row];
     
+    
     if (notification.m_triggerType == NOTIFICATION_LIKED_FOF || notification.m_triggerType == NOTIFICATION_COMMENTED_FOF) {
      
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
@@ -264,22 +266,94 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
          
             if ([fof.m_id intValue] == notification.m_triggerId) {
                 
-                FOFTableController *tableController = [[FOFTableController alloc] init];
-                
-                NSMutableArray *array = [NSMutableArray arrayWithObject:fof];
-                tableController.FOFArray = array;
-                tableController.shouldHideNavigationBar = NO;
-                
-                tableController.navigationItem.title = @"Notification";
-                tableController.hidesBottomBarWhenPushed = YES;
-                
-                [self.navigationController pushViewController:tableController animated:true];
-                [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+                [self showFofInTable:fof];
                 
                 break;
             }
         }
+    } else if (notification.m_triggerType == NOTIFICATION_FOLLOWED_YOU) {
+    
+        ProfileController *profileController = [[ProfileController alloc] initWithUserId:notification.m_triggerId];
+
+        profileController.hidesBottomBarWhenPushed = YES;
+    
+        [self.navigationController pushViewController:profileController animated:YES];
+        
+    } else if (notification.m_triggerType == NOTIFICATION_COMMENTED_ON_COMMENTED_FOF || notification.m_triggerType == NOTIFICATION_COMMENTED_ON_LIKED_FOF) {
+        
+        [LoadView loadViewOnView:self.view withText:@"Loading..."];
+        
+        NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/get_fof_json/",dyfocus_url] autorelease];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+        
+        NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+        
+        NSString *fofId = [NSString stringWithFormat:@"%d",notification.m_triggerId];
+        [jsonRequestObject setObject:fofId forKey:@"fof_id"];
+        
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        NSString *user_id = [NSString stringWithFormat:@"%ld",delegate.myself.uid];
+        [jsonRequestObject setObject:user_id forKey:@"user_id"];
+        
+        NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                               json] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   
+                                   [LoadView fadeAndRemoveFromView:self.view];
+                                   
+                                   if (!error && data) {
+                                       NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                                       
+                                       NSLog(@"stringReply: %@",stringReply);
+                                       
+                                       NSDictionary *jsonValues = [stringReply JSONValue];
+                                       
+                                       NSDictionary *jsonFof = [jsonValues valueForKey:@"fof"];
+                                       
+                                       FOF *fof = [[FOF fofFromJSON:jsonFof] autorelease];
+                                           
+                                       [self showFofInTable:fof];
+                                       
+                                   } else {
+                                       [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
+                                   }
+                               }];
+        
     }
+    
+    
+}
+
+-(void) showFofInTable:(FOF *)fof {
+    FOFTableController *tableController = [[FOFTableController alloc] init];
+    
+    NSMutableArray *array = [NSMutableArray arrayWithObject:fof];
+    tableController.FOFArray = array;
+    tableController.shouldHideNavigationBar = NO;
+    
+    tableController.navigationItem.title = @"Notification";
+    tableController.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:tableController animated:true];
+    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+}
+
+-(void)showOkAlertWithMessage:(NSString *)message andTitle:(NSString *)title
+{
+    NSString *alertButton = @"OK";
+    
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:alertButton otherButtonTitles:nil] autorelease];
+    [alert show];
+    
+    [alertButton release];
 }
 
 -(void)viewDidDisappear:(BOOL)animated {

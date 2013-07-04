@@ -17,7 +17,7 @@
 @end
 
 @implementation FOFTableController
-@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView;
+@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -78,11 +78,29 @@
     }
     
     else m_isFOFTableEmpty = FALSE;
+ 
+    if(shouldShowSegmentedBar)
+        [self showSegmentedBar];
     
+    if(shouldHideTabBarWhenScrolling)
+        [self showTabBar:self.tabBarController];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if(self.isReloading && withHeader){
+        
+        [refreshHeaderView setState:EGOOPullRefreshLoading];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.2];
+        m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
+        [UIView commitAnimations];
+        
+        [m_tableView setContentOffset:CGPointMake(0, -60) animated:YES];
+        
+        withHeader = NO;
+    }
     
     [m_tableView reloadData];
     
@@ -91,7 +109,20 @@
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FOFTableController.viewDidAppear"];
+    
+    if(shouldShowSegmentedBar)
+        [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:YES];
 }
+
+-(void) viewWillDisappear:(BOOL)animated{
+    if(shouldShowSegmentedBar){
+        [self hideSegmentedBar];
+        [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:NO];
+    }
+    
+    [self resetNavigationControllerFrame];
+}
+
 
 -(void) refreshCellsImageSizes {
     
@@ -274,7 +305,29 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 			[refreshHeaderView setState:EGOOPullRefreshPulling];
 		}
 	}
+    
+    if (scrollView.contentOffset.y > lastOffset) {
+        
+        if(shouldHideNavigationBarWhenScrolling)
+            [self hideNavigationBar:self.navigationController];
+
+        if(shouldHideTabBarWhenScrolling)
+            [self hideTabBar:self.tabBarController];
+    } else {
+        
+        if(shouldHideNavigationBarWhenScrolling)
+            [self showNavigationBar:self.navigationController];
+
+        if(shouldHideTabBarWhenScrolling)
+            [self showTabBar:self.tabBarController];
+    }
 }
+
+
+-(void) scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    lastOffset = scrollView.contentOffset.y;
+}
+
 
 - (void)dataSourceDidFinishLoadingNewData{
     
@@ -293,7 +346,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	NSLog(@"Please override reloadTableViewDataSource");
     
-    [self refreshWithAction:YES];
+    [self refreshFOFArrayWithHeader:NO];
 }
 
 
@@ -307,7 +360,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	}
     
     if (scrollView.contentOffset.y <= - 65.0f && !_reloading && refreshHeaderView) {
-		_reloading = YES;
 		[self reloadTableViewDataSource];
 		[refreshHeaderView setState:EGOOPullRefreshLoading];
 		[UIView beginAnimations:nil context:NULL];
@@ -337,15 +389,25 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	refreshHeaderView=nil;
 }
 
--(void) refreshWithAction:(BOOL)isAction {
+-(void) refreshFOFArrayWithHeader:(BOOL)isWithHeader{
     
-    if (!isAction) {
+    _reloading = YES;
+    withHeader = isWithHeader;
+    
+    
+    if(self.isViewLoaded && self.view.window && withHeader){
+        
         [refreshHeaderView setState:EGOOPullRefreshLoading];
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.2];
         m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
         [UIView commitAnimations];
+        
+        [m_tableView setContentOffset:CGPointMake(0, -60) animated:YES];
+        
+        withHeader = NO;
     }
+    
     
     
     NSString *requestString = [NSString stringWithFormat: @"%@%@", dyfocus_url, refreshString];
@@ -399,8 +461,13 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                            
                                            FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
                                            
-                                           [fofs addObject:fof];
-                                           
+                                           if(fof.m_private){
+                                               if(userId  &&  userId == delegate.myself.uid){
+                                                   [fofs addObject:fof];
+                                               }
+                                           }else{
+                                               [fofs addObject:fof];
+                                           }
                                        }
                                        
                                        [self.FOFArray removeAllObjects];
@@ -409,7 +476,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        
                                        [refreshHeaderView setCurrentDate];
                                        
-                                       //if (isAction) {
                                        [self dataSourceDidFinishLoadingNewData];
                                        
                                        [m_tableView reloadData];
@@ -419,8 +485,105 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        [loadingView setHidden:YES];
                                    }
                                }
-                           }];
+                           }];    
+}
+
+-(void) showSegmentedBar
+{
+    [(FOFTableNavigationController*)self.navigationController setSegmentedControlHidden:NO];
+}
+
+- (void)hideSegmentedBar
+{
+    [(FOFTableNavigationController*)self.navigationController setSegmentedControlHidden:YES];
+}
+
+- (void)hideNavigationBar:(UINavigationController *) navigationController
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        
+    for(UIView *view in navigationController.view.subviews)
+    {
+        if(![view isKindOfClass:[UINavigationBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height)];
+        }
+    }
+
+    [navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)showNavigationBar:(UINavigationController *) navigationController
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
+    for(UIView *view in navigationController.view.subviews)
+    {
+        if(![view isKindOfClass:[UINavigationBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height+44)];
+        }
+    }
+    
+    [navigationController setNavigationBarHidden:NO animated:YES];
+    
+}
+
+- (void)hideTabBar:(UITabBarController *) tabBarController
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        for(UIView *view in tabBarController.view.subviews)
+        {
+            if([view isKindOfClass:[UITabBar class]])
+            {
+                [view setFrame:CGRectMake(view.frame.origin.x, screenBounds.size.height, view.frame.size.width,
+                                          view.frame.size.height)];
+            }
+            else
+            {
+                [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y,
+                                          view.frame.size.width, screenBounds.size.height)];
+            }
+        }
+        
+    }];    
+}
+
+- (void)showTabBar:(UITabBarController *) tabBarController
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        for(UIView *view in tabBarController.view.subviews)
+        {
+            if([view isKindOfClass:[UITabBar class]])
+            {
+                [view setFrame:CGRectMake(view.frame.origin.x, screenBounds.size.height - tabBarController.tabBar.frame.size.height, view.frame.size.width, view.frame.size.height)];
+                
+            }
+        }
+        
+    }];
+}
+
+-(void)resetNavigationControllerFrame
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    for(UIView *view in self.navigationController.view.subviews)
+    {
+        if(![view isKindOfClass:[UINavigationBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height)];
+        }
+    }
 }
 
 @end

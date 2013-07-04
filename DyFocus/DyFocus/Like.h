@@ -12,9 +12,11 @@
 	NSString *m_fofId;
 	NSString *m_userName;
 	NSString *m_userFacebookId;
+    NSString *m_uid;
     long m_userId;
 }
 
+@property (nonatomic, retain) NSString *m_uid;
 @property (nonatomic, retain) NSString *m_fofId;
 @property (nonatomic, retain) NSString *m_userName;
 @property (nonatomic, retain) NSString *m_userFacebookId;

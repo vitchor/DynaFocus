@@ -22,7 +22,7 @@
 
 @implementation CameraView
 
-@synthesize cameraView, pathView, shootButton, cancelButton, infoButton, infoView, getStartedButton, mFocalPoints, popupCloseButton, popupView, spinner, loadingView, popupDarkView, torchOneButton, torchTwoButton, instructionsImageView;
+@synthesize shootButton, cancelButton, infoButton, mFocalPoints;
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad
@@ -36,39 +36,35 @@
     [torchOneButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
     [torchTwoButton setImage:[UIImage imageNamed:@"Torch-Button-Off-NoStroke.png"] forState:UIControlStateNormal];
     
-    [cancelButton setImage:[UIImage imageNamed:@"CameraView-LeftButtonPressed.png"] forState:UIControlStateHighlighted];
+    [self.cancelButton setImage:[UIImage imageNamed:@"CameraView-LeftButtonPressed.png"] forState:UIControlStateHighlighted];
     
-    [shootButton setImage:[UIImage imageNamed:@"CameraView-ShootButtonPressed.png"] forState:UIControlStateHighlighted];
+    [self.shootButton setImage:[UIImage imageNamed:@"CameraView-ShootButtonPressed.png"] forState:UIControlStateHighlighted];
     
-    [infoButton setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"] forState:UIControlStateHighlighted];
+    [self.infoButton setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"] forState:UIControlStateHighlighted];
     
-    
-    [getStartedButton addTarget:self action:@selector(hideInfoView) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIImage *redButtonImage = [UIImage imageNamed:@"close.png"];
-    
-    [popupCloseButton setBackgroundImage:redButtonImage forState:UIControlStateNormal];
-    [popupCloseButton addTarget:self action:@selector(closePopup) forControlEvents:UIControlEventTouchUpInside];
+    tutorialView.cameraViewController = self;
+    [tutorialView init];
     
     [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     
     DyfocusSettings *settings = [DyfocusSettings sharedSettings];
-    if(!settings.isFirstLogin && !popupView.isHidden){
-        [popupView setHidden:YES];
+    if(settings.isFirstLogin){
+        [tutorialView setHidden:NO];
         settings.isFirstLogin = NO;
     }
-    [self.navigationController setNavigationBarHidden:YES animated:FALSE];
+    
     [spinner startAnimating];
     [loadingView setHidden:NO];
     
     [super viewWillAppear:animated];
     
-    [infoButton setEnabled:true];
-    [cancelButton setEnabled:true];
+    [self.infoButton setEnabled:true];
+    [self.cancelButton setEnabled:true];
     
     if(mFocalPoints.count==1)
         [self setTorchOn:(torchOnFocusPoints==2||torchOnFocusPoints==3)];
@@ -89,18 +85,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeChanged:) name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
     
     pathView.cameraViewController = self;
-    
-    popupDarkView.layer.cornerRadius = 9.0;
-    [popupDarkView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
-    popupDarkView.clipsToBounds = YES;
-    popupDarkView.layer.masksToBounds = YES;
-    [popupDarkView setNeedsDisplay];
-    [popupDarkView setNeedsLayout];
-    
-    [pathView resetOrientations];
-    
-    currentOrientation = [UIDevice currentDevice].orientation;
-
+    [pathView checkOrientations:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -109,17 +94,7 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"CameraView.viewDidAppear"];
     
-    //[TestFlight passCheckpoint:@"CameraView.viewDidAppear - Picture Time!"];
-    if(popupView.tag != 420) {
-        //mToastMessage = [iToast makeText:NSLocalizedString(@"Place your phone on a steady surface (or hold it really still), touch the screen to add a few focus points an press ""Capture"".", @"")];
-        //[[mToastMessage setDuration:iToastDurationNormal] show];
-        
-        [popupView setHidden:NO];
-        [popupView setTag:420];
-        
-    }
-    
-    [shootButton setEnabled:true];
+    [self.shootButton setEnabled:tutorialView.isHidden];
     
     if (!captureSession) {
         [self startCaptureSession];
@@ -143,7 +118,7 @@
     
     if([mFocalPoints count] > 1)
         [self setProximityEnabled:YES];
-    
+        
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -179,9 +154,10 @@
 {
     [mFocalPoints release];
     [mFrames release];
-    [cancelButton release];
-    [shootButton release];
-    [infoButton release];
+    [self.cancelButton release];
+    [self.shootButton release];
+    [self.infoButton release];
+    [tutorialView release];
     [super dealloc];
 }
 
@@ -267,9 +243,9 @@
 
 - (void)disablePictureTaking {
     if (self.navigationItem.rightBarButtonItem.enabled) {
-        [shootButton setEnabled:false];
-        [infoButton setEnabled:false];
-        [cancelButton setEnabled:false];
+        [self.shootButton setEnabled:false];
+        [self.infoButton setEnabled:false];
+        [self.cancelButton setEnabled:false];
         
         [self showOkAlertWithMessage:@"Your device does not support focus point settings." andTitle:@"Sorry"];
     }
@@ -382,9 +358,9 @@
 
     layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
-    layer.frame = self.cameraView.frame;
+    layer.frame = cameraView.frame;
     NSLog(@"CameraView is ready");
-    [self.cameraView.layer addSublayer:layer];
+    [cameraView.layer addSublayer:layer];
     NSLog(@"CameraView is added");
 
     [spinner stopAnimating];
@@ -415,14 +391,16 @@
     
     if (mVideoConnection && [mVideoConnection isVideoOrientationSupported]){
         
-        if(currentOrientation == UIDeviceOrientationFaceUp || currentOrientation == UIDeviceOrientationFaceDown){
+        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        
+        if(orientation == UIDeviceOrientationFaceUp || orientation == UIDeviceOrientationFaceDown){
             
-            if(lastOrientation==UIDeviceOrientationPortrait ||
-               lastOrientation==UIDeviceOrientationPortraitUpsideDown ||
-               lastOrientation==UIDeviceOrientationLandscapeLeft ||
-               lastOrientation==UIDeviceOrientationLandscapeRight){
+            if(pathView.lastOrientation==UIDeviceOrientationPortrait ||
+               pathView.lastOrientation==UIDeviceOrientationPortraitUpsideDown ||
+               pathView.lastOrientation==UIDeviceOrientationLandscapeLeft ||
+               pathView.lastOrientation==UIDeviceOrientationLandscapeRight){
                 
-                [mVideoConnection setVideoOrientation:lastOrientation];
+                [mVideoConnection setVideoOrientation:pathView.lastOrientation];
             }
             else{
                 [mVideoConnection setVideoOrientation:UIDeviceOrientationPortrait];
@@ -430,7 +408,10 @@
         }
         else
         {
-            [mVideoConnection setVideoOrientation:currentOrientation];
+            if(orientation == UIDeviceOrientationUnknown)
+                [mVideoConnection setVideoOrientation:UIDeviceOrientationPortrait];
+            else
+                [mVideoConnection setVideoOrientation:orientation];
         }
     }
     
@@ -589,22 +570,8 @@
     NSLog(@"Current value for torchOnFocusPoints: %d",torchOnFocusPoints);
 }
 
--(void)closePopup {
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate logEvent:@"Close Pop Up"];
-    
-    [popupView setHidden:YES];
-}
-
--(void)hideInfoView
+-(void)showTutorial
 {
-    [infoView setHidden:YES];
-}
-
--(void)showInfoView
-{
-    [popupView setHidden:YES];
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logEvent:@"Show Info View Button"];
     
@@ -612,7 +579,8 @@
         [mToastMessage removeToast:nil];
         mToastMessage = nil;
     }
-    [infoView setHidden:NO];
+    
+    [tutorialView loadTutorial:YES];
 }
 
 -(void)goBackToLastController
@@ -637,7 +605,7 @@
     
     mFocalPoints = [pathView getPoints];
     
-    [shootButton setEnabled:false];
+    [self.shootButton setEnabled:false];
     
     if ([mFocalPoints count] > 1) {
         
@@ -647,8 +615,8 @@
             isObserving = YES;
             [mCaptureDevice addObserver:self forKeyPath:@"adjustingFocus" options:NSKeyValueObservingOptionNew context:nil];
         } else {
-            [infoButton setEnabled:false];
-            [cancelButton setEnabled:false];
+            [self.infoButton setEnabled:false];
+            [self.cancelButton setEnabled:false];
             
             pathView.enabled = false;
             
@@ -681,7 +649,7 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if ([alertView tag] == OK) {
         if (buttonIndex == 0) {
-			 [shootButton setEnabled:true];
+			 [self.shootButton setEnabled:true];
         }
     }
 }
@@ -719,7 +687,7 @@
     BOOL proximityState = [[UIDevice currentDevice] proximityState];
     NSLog(proximityState ? @"CLOSE": @"FAR");
     
-    if([shootButton isEnabled]  &&  proximityState  &&  [[pathView getPoints] count] > 1){
+    if([self.shootButton isEnabled]  &&  proximityState  &&  [[pathView getPoints] count] > 1){
         // TODO SHOOT PIC
         [self addObserverToFocus];
     }
@@ -737,7 +705,7 @@
 
 - (IBAction)helpAction:(UIButton *)sender {
 
-    [self showInfoView];
+    [self showTutorial];
 }
 
 - (void)showToast:(NSString *)text {
@@ -771,21 +739,11 @@
 
 - (void) didRotate:(NSNotification *)notification
 {
-        if(currentOrientation==UIDeviceOrientationPortrait ||
-             currentOrientation==UIDeviceOrientationPortraitUpsideDown ||
-           currentOrientation==UIDeviceOrientationLandscapeLeft ||
-           currentOrientation==UIDeviceOrientationLandscapeRight)
-        {
-            lastOrientation = currentOrientation;
-        }
-    
-    currentOrientation = [UIDevice currentDevice].orientation;
-    
-    [pathView checkOrientations];
+    [pathView checkOrientations:NO];
 }
 
 -(IBAction)volumeChanged:(id)sender{
-    if(shootButton.isEnabled)
+    if(self.shootButton.isEnabled)
         [self addObserverToFocus];
 }
 

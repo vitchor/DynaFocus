@@ -21,8 +21,9 @@
     IBOutlet UIView *whiteView;
         
     IBOutlet UILabel *commentTextView;
-    IBOutlet CommentViewerController *commentController;
-    IBOutlet Comment *m_comment;
+    CommentViewerController *commentController;
+    Comment *m_comment;
+    IBOutlet UIButton *deleteCommentBtn;
     
     int row;
     
@@ -39,7 +40,8 @@
 
 @property (nonatomic,retain) IBOutlet UIView *whiteView;
 
-@property (nonatomic,retain) IBOutlet CommentViewerController *commentController;
-@property (nonatomic,retain) IBOutlet Comment *m_comment;
+@property (nonatomic,retain) CommentViewerController *commentController;
+@property (nonatomic,retain) Comment *m_comment;
+@property (nonatomic,retain) IBOutlet UIButton *deleteCommentBtn;
 
 @end
