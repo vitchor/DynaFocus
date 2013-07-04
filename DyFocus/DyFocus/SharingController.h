@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import"AppDelegate.h"
+#import "AppDelegate.h"
 #import "ASIFormDataRequest.h"
 #import "LoadView.h"
 #import "UIImage+fixOrientation.h"
 
-@interface SharingController : UIViewController {
+#define MAX_LENGTH 210
+
+@interface SharingController : UIViewController <UITextViewDelegate>{
     
     IBOutlet UIView *activityIndicator;
     IBOutlet UIActivityIndicatorView *spinner;

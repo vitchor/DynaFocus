@@ -28,6 +28,7 @@
     self.navigationItem.title = @"Share";
     [self showSaveButton];
     commentField.layer.cornerRadius = 6.0;
+    commentField.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -262,6 +263,12 @@
         [self hidesKeyboard];
     
     [super touchesBegan:touches withEvent:event];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    NSUInteger newLength = [textView.text length] + [text length] - range.length;
+    return (newLength > MAX_LENGTH) ? NO : YES;
 }
 
 - (void)didReceiveMemoryWarning
