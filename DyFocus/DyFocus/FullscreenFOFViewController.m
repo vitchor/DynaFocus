@@ -9,10 +9,6 @@
 #import "FullscreenFOFViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface FullscreenFOFViewController ()
-
-@end
-
 @implementation FullscreenFOFViewController
 
 @synthesize frames;

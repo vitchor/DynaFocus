@@ -30,8 +30,8 @@
     ASIFormDataRequest *request;
 }
 
+@property(nonatomic,retain) NSString *fofName;
 @property(nonatomic,retain) NSMutableArray *frames;
 @property(nonatomic,retain) NSMutableArray *focalPoints;
-@property(nonatomic,retain) NSString *fofName;
 
 @end

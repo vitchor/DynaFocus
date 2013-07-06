@@ -376,7 +376,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         cellHeightDictionary = [[NSMutableDictionary alloc] init];
     }
     
-    [cellHeightDictionary setObject:[NSNumber numberWithFloat:height + 122] forKey:[NSNumber numberWithInt:row]];
+    [cellHeightDictionary setObject:[NSNumber numberWithFloat:height] forKey:[NSNumber numberWithInt:row]];
 
     NSLog(@"NEWWW CELL HEIGHT! %f", height);
     

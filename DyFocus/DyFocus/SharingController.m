@@ -93,6 +93,7 @@
     
     NSString *fof_size = [[[NSString alloc] initWithFormat:@"%d",[self.frames count]] autorelease];
     NSString *userId = [NSString stringWithFormat:@"%ld",appDelegate.myself.uid];
+    NSString *description = commentField.text;
     
     request = [[ASIFormDataRequest requestWithURL:webServiceUrl] retain];
     [request setDelegate:self];
@@ -100,6 +101,7 @@
     [request setPostValue:self.fofName forKey:@"fof_name"];
     [request setPostValue:fof_size forKey:@"fof_size"];
     [request setPostValue:userId forKey:@"user_id"];
+    [request setPostValue:description forKey:@"description"];
     [request setPostValue:[NSNumber numberWithBool:isPrivate.on] forKey:@"is_private"];
     
     for (int i = 0; i < [self.frames count]; i++)
@@ -173,6 +175,8 @@
 
 - (void)requestFailed:(ASIHTTPRequest *)request {
     [activityIndicator setHidden:YES];
+    [spinner stopAnimating];
+    
     NSLog(@"REQUEST FAILED");
     
     self.navigationItem.rightBarButtonItem.enabled = true;
@@ -191,6 +195,7 @@
 
 - (void)requestRedirected:(ASIHTTPRequest *)request {
     [activityIndicator setHidden:YES];
+    [spinner stopAnimating];
     NSLog(@"REQUEST REDIRECTED");
 }
 
@@ -299,9 +304,9 @@
     
     [request release];
     
+    [fofName release];
     [frames release];
     [focalPoints release];
-    [fofName release];
     
     [super dealloc];
 }

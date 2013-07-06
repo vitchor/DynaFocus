@@ -17,6 +17,7 @@
 	NSString *m_userNickname;
 	NSString *m_date;
 	NSString *m_id;
+    NSString *m_description;
     bool m_private;
     bool m_liked;
     long m_userId;
@@ -33,6 +34,7 @@
 @property (nonatomic, retain) NSString *m_userFacebookId;
 @property (nonatomic, retain) NSString *m_date;
 @property (nonatomic, retain) NSString *m_id;
+@property (nonatomic, retain) NSString *m_description;
 @property (nonatomic, readwrite) bool m_private;
 @property (nonatomic, readwrite) bool m_liked;
 @property (nonatomic, readwrite) long m_userId;
