@@ -156,6 +156,7 @@
 		7B3AE3D1177D131D00726CCA /* Pattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3AE3D0177D131D00726CCA /* Pattern.m */; };
 		7B7C2F3C171D052A00C2A022 /* FullscreenFOFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7C2F39171D052A00C2A022 /* FullscreenFOFViewController.m */; };
 		7B7C2F3D171D052A00C2A022 /* FullscreenFOFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B7C2F3A171D052A00C2A022 /* FullscreenFOFViewController.xib */; };
+		7B7F6C7D1787458600589C3C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B7F6C7C1787458600589C3C /* CoreText.framework */; };
 		7B823BBB177D0AC400141490 /* DfShootInstructionsP01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B823BB6177D0AC400141490 /* DfShootInstructionsP01.png */; };
 		7B823BBC177D0AC400141490 /* DfShootInstructionsP02.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B823BB7177D0AC400141490 /* DfShootInstructionsP02.png */; };
 		7B823BBD177D0AC400141490 /* DfShootInstructionsP03.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B823BB8177D0AC400141490 /* DfShootInstructionsP03.png */; };
@@ -472,6 +473,7 @@
 		7B7C2F39171D052A00C2A022 /* FullscreenFOFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenFOFViewController.m; sourceTree = "<group>"; };
 		7B7C2F3A171D052A00C2A022 /* FullscreenFOFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FullscreenFOFViewController.xib; sourceTree = "<group>"; };
 		7B7C2F3B171D052A00C2A022 /* FullscreenFOFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenFOFViewController.h; sourceTree = "<group>"; };
+		7B7F6C7C1787458600589C3C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		7B823BB6177D0AC400141490 /* DfShootInstructionsP01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DfShootInstructionsP01.png; sourceTree = "<group>"; };
 		7B823BB7177D0AC400141490 /* DfShootInstructionsP02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DfShootInstructionsP02.png; sourceTree = "<group>"; };
 		7B823BB8177D0AC400141490 /* DfShootInstructionsP03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DfShootInstructionsP03.png; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B7F6C7D1787458600589C3C /* CoreText.framework in Frameworks */,
 				ACE8716D177CD15F00AE5F34 /* Social.framework in Frameworks */,
 				ACE8716B177CD15700AE5F34 /* Security.framework in Frameworks */,
 				ACE87169177CD14600AE5F34 /* Accounts.framework in Frameworks */,
@@ -796,6 +799,7 @@
 		441BFFAE15B131D200E204D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7B7F6C7C1787458600589C3C /* CoreText.framework */,
 				ACE8716C177CD15F00AE5F34 /* Social.framework */,
 				ACE8716A177CD15700AE5F34 /* Security.framework */,
 				ACE87165177CD13D00AE5F34 /* AdSupport.framework */,
