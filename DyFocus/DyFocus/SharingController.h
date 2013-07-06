@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+
 #import "AppDelegate.h"
 #import "ASIFormDataRequest.h"
 #import "LoadView.h"
 #import "UIImage+fixOrientation.h"
 
-#define MAX_LENGTH 210
+#define MAX_COMMENT_LENGTH 210
 
 @interface SharingController : UIViewController <UITextViewDelegate>{
     
@@ -30,9 +31,10 @@
     ASIFormDataRequest *request;
 }
 
-@property(nonatomic,retain) NSMutableArray *frames;
-@property(nonatomic,retain) NSMutableArray *focalPoints;
 @property(nonatomic,retain) NSString *fofName;
 @property(nonatomic,retain) NSString *matrixString;
+@property(nonatomic,retain) NSMutableArray *frames;
+@property(nonatomic,retain) NSMutableArray *focalPoints;
+
 
 @end

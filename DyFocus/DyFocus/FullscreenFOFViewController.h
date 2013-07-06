@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FullscreenFOFViewController : UIViewController <UIGestureRecognizerDelegate>{
+@interface FullscreenFOFViewController : UIViewController{
     
     IBOutlet NSLayoutConstraint *fullscreenImageHeight;
     IBOutlet NSLayoutConstraint *fullscreenImageWidth;

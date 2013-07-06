@@ -7,46 +7,45 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <DyOpenCv/DyOpenCv.h>
+
+#import "AppDelegate.h"
+
+#import "SharingController.h"
+#import "FullscreenFOFViewController.h"
+
 #import "UIHorizontalTableView.h"
 #import "UIHorizontalTableViewCell.h"
+#import "ASIFormDataRequest.h"
+#import "FilterUtil.h"
+#import "GPUImage.h"
 
-@interface FOFPreview : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate> {
+#define CANCEL 0
+#define TIMER_INTERVAL 0.1
+#define TIMER_PAUSE 10.0 / TIMER_INTERVAL
+
+@interface FOFPreview : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate> {
     
-    IBOutlet UIHorizontalTableView *firstTableView;
-    IBOutlet UIHorizontalTableView *secondTableView;
+    int timerPause;
+    int oldFrameIndex;
+    bool applyingFilter;
+
+    IBOutlet UIButton *playPauseButton;
     IBOutlet UIImageView *firstImageView;
     IBOutlet UIImageView *secondImageView;
     IBOutlet UIScrollView *scrollView;
+    IBOutlet UIHorizontalTableView *firstTableView;
+    IBOutlet UIHorizontalTableView *secondTableView;
     
-    NSMutableArray *fixedFrames;
-    NSMutableArray *frames;
-    NSMutableArray *displayedFrames;
-    NSMutableArray *focalPoints;
     NSTimer *timer;
     NSString *fofName;
-
-    bool applyingFilter;
-    int oldFrameIndex;
-    int timerPause;
-    IBOutlet UIButton *playPauseButton;
+    NSMutableArray *displayedFrames;
 }
 
-@property(nonatomic,retain) IBOutlet UIHorizontalTableView *firstTableView;
-@property(nonatomic,retain) IBOutlet UIHorizontalTableView *secondTableView;
-@property(nonatomic,retain) IBOutlet UIImageView *firstImageView;
-@property(nonatomic,retain) IBOutlet UIImageView *secondImageView;
-@property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
-@property(nonatomic,retain) NSMutableArray *fixedFrames;
 @property(nonatomic,retain) NSMutableArray *frames;
-@property(nonatomic,retain) NSMutableArray *displayedFrames;
+@property(nonatomic,retain) NSMutableArray *fixedFrames;
 @property(nonatomic,retain) NSMutableArray *focalPoints;
-@property(nonatomic,retain) NSTimer *timer;
-@property(nonatomic,retain) NSString *fofName;
 
-@property(nonatomic, assign) int oldFrameIndex;
-@property(nonatomic, assign) int timerPause;
-
-- (IBAction)changeSlider:(id)sender;
 - (IBAction)playPauseAction:(UIButton *)sender;
 
 @end

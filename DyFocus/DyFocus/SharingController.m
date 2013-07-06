@@ -10,7 +10,7 @@
 
 @implementation SharingController
 
-@synthesize frames, focalPoints, fofName, matrixString;
+@synthesize fofName, matrixString, frames, focalPoints;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,9 +57,9 @@
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if(matrixString){
+    if(self.matrixString){
         NSString *alertButton = @"OK";
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Matrix" message:matrixString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Matrix" message:self.matrixString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
         [alert setTag:1];
         [alert show];
         
@@ -282,7 +282,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
     NSUInteger newLength = [textView.text length] + [text length] - range.length;
-    return (newLength > MAX_LENGTH) ? NO : YES;
+    return (newLength > MAX_COMMENT_LENGTH) ? NO : YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -314,6 +314,7 @@
     [request release];
     
     [fofName release];
+    [matrixString release];
     [frames release];
     [focalPoints release];
     

@@ -7,22 +7,10 @@
 //
 
 #import "FOFPreview.h"
-#import "ASIFormDataRequest.h"
-#import "SharingController.h"
-#import "AppDelegate.h"
-#import "FilterUtil.h"
-#import "FullscreenFOFViewController.h"
-#import <DyOpenCv/DyOpenCv.h>
-#import "GPUImage.h"
 
-#define CANCEL 0
 @implementation FOFPreview
 
-@synthesize firstImageView,secondImageView, frames, focalPoints, timer, firstTableView, secondTableView, displayedFrames;
-
-#define TIMER_INTERVAL 0.1;
-#define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
-
+@synthesize frames, fixedFrames, focalPoints;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,7 +21,6 @@
     return self;
 }
 
-#pragma mark - View lifecycle
 - (void)viewDidLoad
 {
     displayedFrames = [[NSMutableArray alloc] init];
@@ -59,13 +46,13 @@
 //    self.fixedFrames = [dyOpenCV antiShake:self.frames];
 //    [dyOpenCV release];
     
-    [self.firstImageView setImage: [self.frames objectAtIndex:0]];
+    [firstImageView setImage: [self.frames objectAtIndex:0]];
     
     if ([self.frames count] > 1) {
-        [self.secondImageView setImage: [self.frames objectAtIndex:1]];
+        [secondImageView setImage: [self.frames objectAtIndex:1]];
     }
     
-    for (UIImage *frame in frames) {
+    for (UIImage *frame in self.frames) {
         [displayedFrames addObject:frame];
     }
     
@@ -109,7 +96,7 @@
 {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     //TODO start fade out timer
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_INTERVAL/10 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
     [timer fire];
     
     [scrollView setUserInteractionEnabled:YES];
@@ -128,7 +115,7 @@
     if (screenBounds.size.height == 568) {
     } else {
         
-        CGSize size = ((UIImage *)[frames objectAtIndex:0]).size;
+        CGSize size = ((UIImage *)[self.frames objectAtIndex:0]).size;
         
         CGFloat height = (size.height/size.width) * firstImageView.frame.size.width;
         
@@ -147,59 +134,111 @@
     [super viewWillDisappear:animated];
 }
 
-- (void) dealloc
+- (void) next
 {
-    //for (UIImage *frame in self.frames) {
-    //    [frame release];
-    //}
-    
-    //for (NSValue *point in self.focalPoints) {
-    //    [point release];
-    //}
-    
-    [displayedFrames release];
-    [frames release];
-    
-    [focalPoints release];
-    [firstImageView release];
-    [secondImageView release];
-    
-    [scrollView release];
-    
-    [firstTableView setDataSource:nil];
-    [firstTableView reloadData];
-    [firstTableView release];
-    firstTableView = nil;
-    
-    [secondTableView setDataSource:nil];
-    [secondTableView reloadData];
-    [secondTableView release];
-    secondTableView = nil;
-    
-    [timer release];
-    [fofName release];
-    
-    [playPauseButton release];
-    [super dealloc];
+    if(!applyingFilter){
+        SharingController *sharingController;
+        
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        if (screenBounds.size.height == 568) {
+            // code for 4-inch screen
+            sharingController = [[SharingController alloc] initWithNibName:@"SharingController_i5" bundle:nil];
+        } else {
+            // code for 3.5-inch screen
+            sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
+        }
+        
+        sharingController.focalPoints = self.focalPoints;
+        sharingController.frames = displayedFrames;
+        if(self.fixedFrames)
+            sharingController.matrixString = [[self.fixedFrames[2] copy] autorelease];
+        
+        [self.navigationController pushViewController:sharingController animated:true];
+        [sharingController release];
+    }
 }
 
-- (void)didReceiveMemoryWarning
+- (void) cancel {
+	NSString *alertTitle = @"Cancel?";
+	NSString *alertMsg =@"You'll lose the picture that you've taken. Are you sure?";
+	NSString *alertButton1 = @"Yes";
+	NSString *alertButton2 =@"No";
+	
+	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton1 otherButtonTitles:nil] autorelease];
+    // optional - add more buttons:
+	[alert setTag:CANCEL];
+    [alert addButtonWithTitle:alertButton2];
+    [alert show];
+	
+	[alertTitle release];
+	[alertMsg release];
+	[alertButton1 release];
+	[alertButton2 release];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if ([alertView tag] == CANCEL) {
+        if (buttonIndex == 0) {
+			[self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+}
+
+-(void)fofToFullScreen
 {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
+    if(self.frames.count > 0){
+        
+        [scrollView setUserInteractionEnabled:NO];
+        
+        FullscreenFOFViewController *fullScreenController = [[FullscreenFOFViewController alloc] initWithNibName:@"FullscreenFOFViewController" bundle:nil];
+        
+        
+        fullScreenController.hidesBottomBarWhenPushed = YES;
+        
+        fullScreenController.frames = displayedFrames;
+        
+        [UIView beginAnimations:@"View Flip" context:nil];
+        [UIView setAnimationDuration:0.80];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        
+        [UIView setAnimationTransition:
+         UIViewAnimationTransitionFlipFromRight
+                               forView:self.navigationController.view cache:NO];
+        
+        
+        [self.navigationController pushViewController:fullScreenController animated:YES];
+        [UIView commitAnimations];
+        
+        
+        [fullScreenController release];
+    }
 }
 
-- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
-    return [FilterUtil getFiltersSize];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-	return 1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 105;
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(!applyingFilter){
+        applyingFilter = true;
+        
+        if (tableView == firstTableView) {
+            UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[self.frames objectAtIndex:0] withFilterId:indexPath.row], 1.0)];
+            
+            if(displayedFrames[0]){
+                [displayedFrames replaceObjectAtIndex:0 withObject:filteredImage];
+            }else{
+                [displayedFrames setObject:filteredImage atIndexedSubscript:0];
+            }
+        } else if (tableView == secondTableView) {
+            UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[self.frames objectAtIndex:1] withFilterId:indexPath.row], 1.0)];
+            if(displayedFrames[1]){
+                [displayedFrames replaceObjectAtIndex:1 withObject:filteredImage];
+            }else{
+                [displayedFrames setObject:filteredImage atIndexedSubscript:1];
+            }
+        }
+        applyingFilter = false;
+    }
+    
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -234,32 +273,21 @@
     return cell;
 }
 
-- (void) next
-{
-    if(!applyingFilter){
-        SharingController *sharingController;
-        
-        CGRect screenBounds = [[UIScreen mainScreen] bounds];
-        if (screenBounds.size.height == 568) {
-            // code for 4-inch screen
-            sharingController = [[SharingController alloc] initWithNibName:@"SharingController_i5" bundle:nil];
-        } else {
-            // code for 3.5-inch screen
-            sharingController = [[SharingController alloc] initWithNibName:@"SharingController" bundle:nil];
-        }
-        
-        sharingController.focalPoints = focalPoints;
-        sharingController.frames = displayedFrames;
-        sharingController.matrixString = [self.fixedFrames[2] copy];
-        
-        [self.navigationController pushViewController:sharingController animated:true];
-        [sharingController release];
-    }
+- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
+    return [FilterUtil getFiltersSize];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
+	return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 105;
 }
 
 - (void)fadeImages
 {
-    if (self.firstImageView.alpha >= 1.0) {
+    if (firstImageView.alpha >= 1.0) {
         
         if (timerPause > 0) {
             timerPause -= 1;
@@ -268,138 +296,35 @@
             
             timerPause = TIMER_PAUSE;
             
-            if (oldFrameIndex >= [frames count] - 1) {
+            if (oldFrameIndex >= [self.frames count] - 1) {
                 oldFrameIndex = 0;
             } else {
                 oldFrameIndex += 1;
             }
             
-            [self.secondImageView setImage:[self.displayedFrames objectAtIndex:oldFrameIndex]];
+            [secondImageView setImage:[displayedFrames objectAtIndex:oldFrameIndex]];
             
-            [self.secondImageView setNeedsDisplay];
+            [secondImageView setNeedsDisplay];
             
-            [self.firstImageView setAlpha:0.0];
+            [firstImageView setAlpha:0.0];
             
-            [self.firstImageView setNeedsDisplay];
+            [firstImageView setNeedsDisplay];
             
             int newIndex;
-            if (oldFrameIndex == [frames count] - 1) {
+            if (oldFrameIndex == [self.frames count] - 1) {
                 newIndex = 0;
             } else {
                 newIndex = oldFrameIndex + 1;
             }
-
-            [self.firstImageView setImage: [self.displayedFrames objectAtIndex:newIndex]];
-        }
             
+            [firstImageView setImage: [displayedFrames objectAtIndex:newIndex]];
+        }
+        
     } else {
-        [self.firstImageView setAlpha:self.firstImageView.alpha + 0.01];
+        [firstImageView setAlpha:firstImageView.alpha + 0.01];
     }
     
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return NO;
-}
-
-#pragma mark -
-#pragma mark Table Delegate Methods
-- (void)tableView:(UITableView *)tableView
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(!applyingFilter){
-        applyingFilter = true;
-        
-        if (tableView == firstTableView) {
-            UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[frames objectAtIndex:0] withFilterId:indexPath.row], 1.0)];
-            
-            if(self.displayedFrames[0]){
-                [self.displayedFrames replaceObjectAtIndex:0 withObject:filteredImage];
-            }else{
-                [self.displayedFrames setObject:filteredImage atIndexedSubscript:0];
-            }
-        } else if (tableView == secondTableView) {
-            UIImage *filteredImage = [UIImage imageWithData:UIImageJPEGRepresentation([FilterUtil filterImage:[frames objectAtIndex:1] withFilterId:indexPath.row], 1.0)];
-            if(self.displayedFrames[1]){
-                [self.displayedFrames replaceObjectAtIndex:1 withObject:filteredImage];
-            }else{
-                [self.displayedFrames setObject:filteredImage atIndexedSubscript:1];
-            }
-        }
-        applyingFilter = false;
-    }
-    
-
-}
-
-- (void) cancel {
-	NSString *alertTitle = @"Cancel?";
-	NSString *alertMsg =@"You'll lose the picture that you've taken. Are you sure?";
-	NSString *alertButton1 = @"Yes";
-	NSString *alertButton2 =@"No";
-	
-	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:alertTitle message:alertMsg delegate:self cancelButtonTitle:alertButton1 otherButtonTitles:nil] autorelease];
-    // optional - add more buttons:
-	[alert setTag:CANCEL];
-    [alert addButtonWithTitle:alertButton2];
-    [alert show];
-	
-	[alertTitle release];
-	[alertMsg release];
-	[alertButton1 release];
-	[alertButton2 release];
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ([alertView tag] == CANCEL) {
-        if (buttonIndex == 0) {
-			[self.navigationController popViewControllerAnimated:YES];
-        }
-    }
-}
-
--(void)fofToFullScreen
-{
-    if(frames.count > 0){
-        
-        [scrollView setUserInteractionEnabled:NO];
-    
-        FullscreenFOFViewController *fullScreenController = [[FullscreenFOFViewController alloc] initWithNibName:@"FullscreenFOFViewController" bundle:nil];
-        
-        
-        fullScreenController.hidesBottomBarWhenPushed = YES;
-        
-        fullScreenController.frames = displayedFrames;
-        
-        [UIView beginAnimations:@"View Flip" context:nil];
-        [UIView setAnimationDuration:0.80];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        
-        [UIView setAnimationTransition:
-         UIViewAnimationTransitionFlipFromRight
-                               forView:self.navigationController.view cache:NO];
-        
-        
-        [self.navigationController pushViewController:fullScreenController animated:YES];
-        [UIView commitAnimations];
-        
-        
-        [fullScreenController release];
-    }
-}
-
-//- (void) pushViewController:(UIViewController*)controller withAnimationType:(NSString*)animationType {
-//    
-//    CATransition* transition = [CATransition animation];
-//    transition.duration = 0.5;
-//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//    transition.type = animationType;
-//    [self.navigationController.view.layer addAnimation:transition forKey:nil];
-//    [self.navigationController pushViewController:controller animated:NO];
-//    
-//    
-//}
 
 - (IBAction)playPauseAction:(UIButton *)sender {
     
@@ -412,10 +337,46 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     else
     {
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
+        timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_INTERVAL/10 target:self selector:@selector(fadeImages) userInfo:nil repeats:YES];
         [timer fire];
         
         [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
     }
 }
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    // Release any cached data, images, etc that aren't in use.
+}
+
+- (void) dealloc
+{
+    [playPauseButton release];
+    [firstImageView release];
+    [secondImageView release];
+    [scrollView release];
+    
+    [firstTableView setDataSource:nil];
+    [firstTableView reloadData];
+    [firstTableView release];
+    firstTableView = nil;
+    
+    [secondTableView setDataSource:nil];
+    [secondTableView reloadData];
+    [secondTableView release];
+    secondTableView = nil;
+
+    [timer release];
+    [fofName release];
+    [displayedFrames release];
+    
+    [frames release];
+    [fixedFrames release];
+    [focalPoints release];
+    
+    [super dealloc];
+}
+
 @end
