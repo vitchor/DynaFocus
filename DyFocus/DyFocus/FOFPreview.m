@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "FilterUtil.h"
 #import "FullscreenFOFViewController.h"
-
+#import <DyOpenCv/DyOpenCv.h>
 #import "GPUImage.h"
 
 #define CANCEL 0
@@ -54,6 +54,10 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Preview";
+    
+//    DyOpenCv *dyOpenCV = [DyOpenCv alloc];
+//    self.fixedFrames = [dyOpenCV antiShake:self.frames];
+//    [dyOpenCV release];
     
     [self.firstImageView setImage: [self.frames objectAtIndex:0]];
     
@@ -246,6 +250,7 @@
         
         sharingController.focalPoints = focalPoints;
         sharingController.frames = displayedFrames;
+        sharingController.matrixString = [self.fixedFrames[2] copy];
         
         [self.navigationController pushViewController:sharingController animated:true];
         [sharingController release];

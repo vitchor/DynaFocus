@@ -498,7 +498,7 @@
                              [mCaptureDevice removeObserver:self forKeyPath:@"adjustingFocus"];
                              isObserving = NO;
                          }
-                         
+                         [self setProximityEnabled:NO];
                          [self.navigationController pushViewController:FOFpreview animated:true];
                          
                          [FOFpreview release];
@@ -677,7 +677,7 @@
         }
         NSLog([device isProximityMonitoringEnabled] ? @"SUCCESS, proximity is enabled": @"FAIL, Proximity AIN'T SUPPORTED");
     }else{
-                    NSLog(@"DISABLE PROXIMITY SENSOR");
+        NSLog(@"DISABLE PROXIMITY SENSOR");
         [device setProximityMonitoringEnabled:NO];
     }
 }
