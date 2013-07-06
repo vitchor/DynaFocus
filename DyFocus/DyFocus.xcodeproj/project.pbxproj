@@ -91,6 +91,8 @@
 		1F59C1B51708EB130070D3C4 /* LikesTableViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1AF1708CF840070D3C4 /* LikesTableViewController.h */; };
 		1F59C1B61708EB130070D3C4 /* LikesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1B01708CF840070D3C4 /* LikesTableViewController.m */; };
 		1F59C1B71708EB130070D3C4 /* LikesTableViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1B11708CF840070D3C4 /* LikesTableViewController.xib */; };
+		1FA669501786123B00CAFD6E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6694E1786120C00CAFD6E /* opencv2.framework */; };
+		1FA669531786130A00CAFD6E /* libDyOpenCv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6694D178611E000CAFD6E /* libDyOpenCv.a */; };
 		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
 		441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFB115B131D200E204D7 /* Foundation.framework */; };
 		441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFB815B131D200E204D7 /* InfoPlist.strings */; };
@@ -263,6 +265,20 @@
 			remoteGlobalIDString = BCF1A33314DDB1EC00852800;
 			remoteInfo = GPUImage;
 		};
+		1FA6694C178611E000CAFD6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA66948178611DF00CAFD6E /* DyOpenCv.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F545A49172ABBC50025F9BD;
+			remoteInfo = DyOpenCv;
+		};
+		1FA66951178612FE00CAFD6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA66948178611DF00CAFD6E /* DyOpenCv.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F545A48172ABBC50025F9BD;
+			remoteInfo = DyOpenCv;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -372,6 +388,8 @@
 		1F59C1AF1708CF840070D3C4 /* LikesTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LikesTableViewController.h; sourceTree = "<group>"; };
 		1F59C1B01708CF840070D3C4 /* LikesTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LikesTableViewController.m; sourceTree = "<group>"; };
 		1F59C1B11708CF840070D3C4 /* LikesTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikesTableViewController.xib; sourceTree = "<group>"; };
+		1FA66948178611DF00CAFD6E /* DyOpenCv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DyOpenCv.xcodeproj; path = DyOpenCv/DyOpenCv.xcodeproj; sourceTree = "<group>"; };
+		1FA6694E1786120C00CAFD6E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = DyOpenCv/opencv2.framework; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		441BFFAF15B131D200E204D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		441BFFB115B131D200E204D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -563,7 +581,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B7F6C7D1787458600589C3C /* CoreText.framework in Frameworks */,
+				1FA669531786130A00CAFD6E /* libDyOpenCv.a in Frameworks */,
+				1FA669501786123B00CAFD6E /* opencv2.framework in Frameworks */,
 				ACE8716D177CD15F00AE5F34 /* Social.framework in Frameworks */,
 				ACE8716B177CD15700AE5F34 /* Security.framework in Frameworks */,
 				ACE87169177CD14600AE5F34 /* Accounts.framework in Frameworks */,
@@ -779,6 +798,22 @@
 			name = Likes;
 			sourceTree = "<group>";
 		};
+		1FA669471786100800CAFD6E /* DyOpenCv */ = {
+			isa = PBXGroup;
+			children = (
+				1FA66948178611DF00CAFD6E /* DyOpenCv.xcodeproj */,
+			);
+			name = DyOpenCv;
+			sourceTree = "<group>";
+		};
+		1FA66949178611DF00CAFD6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA6694D178611E000CAFD6E /* libDyOpenCv.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		441BFFA015B131D200E204D7 = {
 			isa = PBXGroup;
 			children = (
@@ -799,16 +834,17 @@
 		441BFFAE15B131D200E204D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7B7F6C7C1787458600589C3C /* CoreText.framework */,
+				1FA669471786100800CAFD6E /* DyOpenCv */,
+				04D98ACC17069E7B0093E056 /* GPUImage */,
+				444C504C1659375B006C8CD3 /* Lib */,
+				44794AF01651472F0097824D /* Bundles */,
+				1FA6694E1786120C00CAFD6E /* opencv2.framework */,
 				ACE8716C177CD15F00AE5F34 /* Social.framework */,
 				ACE8716A177CD15700AE5F34 /* Security.framework */,
 				ACE87165177CD13D00AE5F34 /* AdSupport.framework */,
 				04D98AD917069ED10093E056 /* OpenGLES.framework */,
 				04D98AD717069EC40093E056 /* CoreVideo.framework */,
 				447D7ED1166E6264002599EE /* MessageUI.framework */,
-				04D98ACC17069E7B0093E056 /* GPUImage */,
-				444C504C1659375B006C8CD3 /* Lib */,
-				44794AF01651472F0097824D /* Bundles */,
 				AC8D7B6715DB406200058949 /* MobileCoreServices.framework */,
 				AC8D7B6515DB403700058949 /* SystemConfiguration.framework */,
 				AC8D7B6215DB3F6300058949 /* CFNetwork.framework */,
@@ -1441,6 +1477,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1FA66952178612FE00CAFD6E /* PBXTargetDependency */,
 				04D98AF71706A5E50093E056 /* PBXTargetDependency */,
 			);
 			name = dyfocus;
@@ -1469,6 +1506,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 1FA66949178611DF00CAFD6E /* Products */;
+					ProjectRef = 1FA66948178611DF00CAFD6E /* DyOpenCv.xcodeproj */;
+				},
+				{
 					ProductGroup = 04D98AEC1706A5D00093E056 /* Products */;
 					ProjectRef = 04D98AEB1706A5D00093E056 /* GPUImage.xcodeproj */;
 				},
@@ -1493,6 +1534,13 @@
 			fileType = wrapper.cfbundle;
 			path = GPUImageTests.octest;
 			remoteRef = 04D98AF31706A5D00093E056 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA6694D178611E000CAFD6E /* libDyOpenCv.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDyOpenCv.a;
+			remoteRef = 1FA6694C178611E000CAFD6E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1732,6 +1780,11 @@
 			name = GPUImage;
 			targetProxy = 04D98AF61706A5E50093E056 /* PBXContainerItemProxy */;
 		};
+		1FA66952178612FE00CAFD6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DyOpenCv;
+			targetProxy = 1FA66951178612FE00CAFD6E /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1817,12 +1870,15 @@
 		441BFFC415B131D200E204D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../DyOpenCv\"",
+					"\"$(SRCROOT)/DyOpenCv\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
@@ -1833,7 +1889,10 @@
 					"\"$(SRCROOT)/DyFocus/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/DyFocus/Flurry\"",
 				);
-				OTHER_LDFLAGS = "-lsqlite3.0";
+				OTHER_LDFLAGS = (
+					"-lsqlite3.0",
+					"-lc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
@@ -1847,6 +1906,7 @@
 		441BFFC515B131D200E204D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Daniel Bragiel (C757UQMZUN)";
@@ -1854,6 +1914,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../DyOpenCv\"",
+					"\"$(SRCROOT)/DyOpenCv\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DyFocus/DyFocus-Prefix.pch";
@@ -1864,7 +1926,10 @@
 					"\"$(SRCROOT)/DyFocus/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/DyFocus/Flurry\"",
 				);
-				OTHER_LDFLAGS = "-lsqlite3.0";
+				OTHER_LDFLAGS = (
+					"-lsqlite3.0",
+					"-lc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E6A67E5B-A6C1-4664-ADF7-66622B6C8E53";

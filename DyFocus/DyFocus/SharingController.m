@@ -10,7 +10,7 @@
 
 @implementation SharingController
 
-@synthesize frames, focalPoints, fofName;
+@synthesize frames, focalPoints, fofName, matrixString;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,6 +56,15 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if(matrixString){
+        NSString *alertButton = @"OK";
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Matrix" message:matrixString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+        [alert setTag:1];
+        [alert show];
+        
+        [alertButton release];
+    }
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"SharingController.viewDidAppear"];
