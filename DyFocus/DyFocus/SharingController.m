@@ -104,13 +104,15 @@
     NSString *userId = [NSString stringWithFormat:@"%ld",appDelegate.myself.uid];
     NSString *description = commentField.text;
     
+//    NSString *description = @"HOOOOOOOOOOORYUKEEEEEENNNNNNNNNN!!!";
+    
     request = [[ASIFormDataRequest requestWithURL:webServiceUrl] retain];
     [request setDelegate:self];
     
     [request setPostValue:self.fofName forKey:@"fof_name"];
     [request setPostValue:fof_size forKey:@"fof_size"];
     [request setPostValue:userId forKey:@"user_id"];
-    [request setPostValue:description forKey:@"description"];
+    [request setPostValue:description forKey:@"fof_description"];
     [request setPostValue:[NSNumber numberWithBool:isPrivate.on] forKey:@"is_private"];
     
     for (int i = 0; i < [self.frames count]; i++)

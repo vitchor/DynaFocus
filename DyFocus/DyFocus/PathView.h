@@ -40,6 +40,9 @@
     IBOutlet UIButton *cancelIcon;
     IBOutlet UIButton *cameraIcon;
     IBOutlet UIButton *helpIcon;
+    
+    IBOutlet UIImageView *firstFocusImageView;
+    IBOutlet UIImageView *secondFocusImageView;
 }
 
 @property(nonatomic,retain) NSMutableArray *touchPoints;
@@ -49,6 +52,8 @@
 @property(nonatomic,strong)CameraView *cameraViewController;
 @property(nonatomic,readwrite) UIDeviceOrientation lastOrientation;
 
+@property(nonatomic,retain) IBOutlet UIImageView *firstFocusImageView;
+@property(nonatomic,retain) IBOutlet UIImageView *secondFocusImageView;
 
 -(NSMutableArray *)getPoints;
 -(void)clearPoints;

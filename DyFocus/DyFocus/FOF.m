@@ -27,7 +27,7 @@
     NSString *pubDate = [json valueForKey:@"pub_date"];
     NSString *comments = [json valueForKey:@"comments"];
     NSString *likes = [json valueForKey:@"likes"];
-//    NSString *description = [json valueForKey:@"description"];
+    NSString *description = [json valueForKey:@"fof_description"];
     
 //No description:
 //    NSString *description = @"";
@@ -42,7 +42,7 @@
 //    NSString *description = @"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum.";
 
 //4 lines or more description:
-    NSString *description = @"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing.";
+//    NSString *description = @"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing.";
     
     NSMutableArray *framesData = [NSMutableArray array];
     
@@ -68,6 +68,8 @@
     fof.m_date = pubDate;
     fof.m_userId = user_id;
     fof.m_description = description;
+    
+    NSLog(@"OLHA A DESCRIIIIIIIIPTIONNNNNNNNNNNNNNNNNN:  %@", description);
     
     liked = nil;
     

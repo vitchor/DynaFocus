@@ -13,7 +13,7 @@
 
 @implementation PathView
 
-@synthesize touchPoints, ref, context, enabled, cameraViewController, lastOrientation;
+@synthesize touchPoints, ref, context, enabled, cameraViewController, lastOrientation, firstFocusImageView, secondFocusImageView;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -270,6 +270,8 @@
     [cancelIcon release];
     [cameraIcon release];
     [helpIcon release];
+    [firstFocusImageView release];
+    [secondFocusImageView release];
     [super dealloc];
 }
 

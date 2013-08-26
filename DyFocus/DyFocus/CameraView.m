@@ -45,9 +45,27 @@
     tutorialView.cameraViewController = self;
     [tutorialView init];
     
+    UITapGestureRecognizer *tapOnFirstFocus = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnFirstFocus)] autorelease];
+    [pathView.firstFocusImageView addGestureRecognizer:tapOnFirstFocus];
+    
+    UITapGestureRecognizer *tapOnSecondFocus = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnSecondFocus)] autorelease];
+    [pathView.secondFocusImageView addGestureRecognizer:tapOnSecondFocus];
+
+    
     [super viewDidLoad];
 }
 
+-(void)singleTapOnFirstFocus
+{
+    
+    NSLog(@"FIIIIIIIIRRRRRRRRRSSSSSSSSSTTTTTTTTTTTTT");
+}
+
+-(void)singleTapOnSecondFocus
+{
+    NSLog(@"SEEEEEEEEEEEECOOOOOOOOOOOOONDDDDDDDDDDD");
+    
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
@@ -154,9 +172,9 @@
 {
     [mFocalPoints release];
     [mFrames release];
-    [self.cancelButton release];
-    [self.shootButton release];
-    [self.infoButton release];
+    [cancelButton release];
+    [shootButton release];
+    [infoButton release];
     [tutorialView release];
     [super dealloc];
 }

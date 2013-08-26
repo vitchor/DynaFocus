@@ -35,7 +35,7 @@
 
 //Description Label Settings
 #define PREVIEW_N_LINES 3 //// ---> number of lines for preview text, i.e, the text before "read more".
-#define MAX_LINES 10
+#define MAX_LINES 20
 #define LINE_HEIGHT 18
 #define MAX_FRAME_HEIGHT MAX_LINES * LINE_HEIGHT
 

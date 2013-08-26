@@ -14,7 +14,7 @@
 #import "LoadView.h"
 #import "UIImage+fixOrientation.h"
 
-#define MAX_COMMENT_LENGTH 210
+#define MAX_COMMENT_LENGTH 200
 
 @interface SharingController : UIViewController <UITextViewDelegate>{
     
