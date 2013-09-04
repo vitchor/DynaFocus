@@ -449,7 +449,7 @@
     if (newDescriptionHeight!=0)
         [descriptionLabel setHidden:NO];
     
-    if(self.descriptionPreviewText)
+    if(!((NSNull*)fof.m_description==[NSNull null]||fof.m_description==nil||[fof.m_description isEqual:@""]))
         [readMoreLabel setHidden:NO];
 }
 

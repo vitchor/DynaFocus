@@ -69,7 +69,7 @@
     fof.m_userId = user_id;
     fof.m_description = description;
     
-    NSLog(@"OLHA A DESCRIIIIIIIIPTIONNNNNNNNNNNNNNNNNN:  %@", description);
+//    NSLog(@"OLHA A DESCRIIIIIIIIPTIONNNNNNNNNNNNNNNNNN:  %@", description);
     
     liked = nil;
     
