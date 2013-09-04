@@ -7,8 +7,7 @@
 //
 
 #import "LikesTableViewCell.h"
-#import "UIImageLoaderDyfocus.h"
-#import "AppDelegate.h"
+
 
 @implementation LikesTableViewCell
 
@@ -35,10 +34,17 @@
     [m_like release];
     m_like = nil;
     
-    userNameLabel.text = nil;
+    self.userNameLabel.text = nil;
 
-    [userImage setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
-    userImage.tag = 0;
+    [self.userImage setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
+    self.userImage.tag = 0;
+}
+
+-(void) loadImage{
+    if (self.userImage.tag != 420) {
+        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+        [imageLoader loadPictureWithFaceId:m_like.m_userFacebookId andImageView:self.userImage andIsSmall:YES];
+    }
 }
 
 - (void) refreshWithLike:(Like *)like{
@@ -62,11 +68,12 @@
 //    TODO COPY THE REST
 }
 
--(void) loadImage{
-    if (userImage.tag != 420) {
-        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadPictureWithFaceId:m_like.m_userFacebookId andImageView:userImage andIsSmall:YES];
-    }
+-(void)dealloc
+{
+    [userImage release];
+    [userNameLabel release];
+    
+    [super dealloc];
 }
 
 @end

@@ -7,14 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LikesTableViewCell.h"
 
-@interface LikesTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>  {
-    IBOutlet UITableView *likesTableView;
-    NSMutableArray *likesArray;
-    bool isTableEmpty;
+#import "JSON.h"
+
+#import "AppDelegate.h"
+#import "LikesTableViewCell.h"
+#import "UIImageLoaderDyfocus.h"
+
+@interface LikesTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+{
+
 }
 
-@property (nonatomic,retain) IBOutlet UITableView *likesTableView;
 @property (nonatomic,retain) NSMutableArray *likesArray;
+@property (nonatomic,retain) IBOutlet UITableView *likesTableView;
+
 @end

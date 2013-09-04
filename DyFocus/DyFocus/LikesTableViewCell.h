@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "AppDelegate.h"
+#import "UIImageLoaderDyfocus.h"
 
 @interface LikesTableViewCell : UITableViewCell {
-    //UI:
-    IBOutlet UIImageView *userImage;
-    IBOutlet UILabel *userNameLabel;
+
     Like *m_like;
 }
 

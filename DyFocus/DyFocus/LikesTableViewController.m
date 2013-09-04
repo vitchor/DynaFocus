@@ -7,17 +7,10 @@
 //
 
 #import "LikesTableViewController.h"
-#import "AppDelegate.h"
-#import "JSON.h"
-#import "UIImageLoaderDyfocus.h"
-
-@interface LikesTableViewController ()
-
-@end
 
 @implementation LikesTableViewController
 
-@synthesize likesTableView, likesArray;
+@synthesize likesArray, likesTableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,7 +52,7 @@
 #pragma mark Table Delegate Methods
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
-    Like *like = [likesArray objectAtIndex:indexPath.row];
+    Like *like = [self.likesArray objectAtIndex:indexPath.row];
         
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
 
@@ -88,7 +81,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [likesArray count];
+    return [self.likesArray count];
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -107,7 +100,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         cell = [topLevelObjects objectAtIndex:0];
         
     }
-    [cell refreshWithLike:[likesArray objectAtIndex:indexPath.row]];
+    [cell refreshWithLike:[self.likesArray objectAtIndex:indexPath.row]];
     return cell;
 }
 
@@ -115,14 +108,22 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [likesTableView setDataSource:self];
-    [likesTableView setDelegate:self];
+    [self.likesTableView setDataSource:self];
+    [self.likesTableView setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc
+{
+    [likesArray release];
+    [likesTableView release];
+    
+    [super dealloc];
 }
 
 @end
