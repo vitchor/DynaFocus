@@ -7,17 +7,8 @@
 //
 
 #import "NotificationTableViewController.h"
-#import "AppDelegate.h"
-#import "JSON.h"
-#import "LoadView.h"
-
-@interface NotificationTableViewController ()
-
-@end
 
 @implementation NotificationTableViewController
-
-@synthesize notificationsTableView, notifications;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,7 +38,7 @@
     [notificationsTableView setDelegate:self];
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    self.notifications = delegate.notificationsArray;
+    notifications = delegate.notificationsArray;
     
     
     NSString *requestUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/user_read_notification/",dyfocus_url] autorelease];
@@ -362,6 +353,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     [delegate clearNotifications];
     [super viewDidDisappear:animated];
+}
+
+-(void)dealloc
+{
+    [notificationsTableView release];
+    [notifications release];
+    
+    [super dealloc];
 }
 
 

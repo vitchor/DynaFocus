@@ -7,7 +7,7 @@
 //
 
 #import "NotificationTableViewCell.h"
-#import "UIImageLoaderDyfocus.h"
+
 
 @implementation NotificationTableViewCell
 
@@ -34,12 +34,22 @@
     [m_notification release];
     m_notification = nil;
     
-    notificationLabel.text = nil;
+    self.notificationLabel.text = nil;
 
-    [userImage setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
-    userImage.tag = 0;
+    [self.userImage setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
+    self.userImage.tag = 0;
     
 }
+
+-(void) loadImage {
+    if (self.userImage.tag != 420) {
+        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+        [imageLoader loadPictureWithFaceId:m_notification.m_userFacebookId andImageView:self.userImage andIsSmall:YES];
+    }
+    
+    
+}
+
 - (void) refreshWithNotification: (Notification *)notification {
     
     if (!m_notification ||  notification.m_notificationId != m_notification.m_notificationId) {
@@ -63,17 +73,16 @@
         
         self.backgroundView = backView;
         
-        [notificationLabel setText:m_notification.m_message];
+        [self.notificationLabel setText:m_notification.m_message];
     }
 }
 
--(void) loadImage {
-    if (userImage.tag != 420) {
-        UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadPictureWithFaceId:m_notification.m_userFacebookId andImageView:userImage andIsSmall:YES];
-    }
+-(void)dealloc
+{
+    [userImage release];
+    [notificationLabel release];
     
-
+    [super dealloc];
 }
 
 @end

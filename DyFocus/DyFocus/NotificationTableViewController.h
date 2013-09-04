@@ -7,14 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "JSON.h"
+
+#import "LoadView.h"
+#import "AppDelegate.h"
 #import "NotificationTableViewCell.h"
 
+
 @interface NotificationTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>  {
-    IBOutlet UITableView *notificationsTableView;
-    NSMutableArray *notifications;
+
     bool isTableEmpty;
+    
+    UITableView *notificationsTableView;
+    NSMutableArray *notifications;
 }
 
-@property (nonatomic,retain) IBOutlet UITableView *notificationsTableView;
-@property (nonatomic,retain) NSArray *notifications;
 @end

@@ -7,20 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "AppDelegate.h"
+#import "UIImageLoaderDyfocus.h"
 
 @interface NotificationTableViewCell : UITableViewCell {
     
-    IBOutlet UIImageView *userImage;
-    IBOutlet UILabel *notificationLabel;
-    IBOutlet Notification *m_notification;
-    
+    Notification *m_notification;
 }
 
 @property (nonatomic,retain) IBOutlet UIImageView *userImage;
 @property (nonatomic,retain) IBOutlet UILabel *notificationLabel;
 
-- (void) refreshWithNotification:(Notification *)notification;
 - (void) loadImage;
+- (void) refreshWithNotification:(Notification *)notification;
 
 @end
