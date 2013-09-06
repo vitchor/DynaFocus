@@ -7,47 +7,58 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "JSON.h"
+#import "LoadView.h"
 #import "EGORefreshTableHeaderView.h"
 
+
 @interface FOFTableController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
-    IBOutlet UITableView *m_tableView;
-    IBOutlet UIView *loadingView;
-    NSMutableArray *FOFArray;
-    NSMutableDictionary *cellHeightDictionary;
-    BOOL shouldHideNavigationBar;
-    EGORefreshTableHeaderView *refreshHeaderView;
     
-    NSString *refreshString;
-    
-    long userId;
+//    long userId;
+    float lastOffset;
     
     BOOL _reloading;
     BOOL m_isFOFTableEmpty;
-    
-    float lastOffset;
-    BOOL shouldHideNavigationBarWhenScrolling;
-    BOOL shouldHideTabBarWhenScrolling;
-    BOOL shouldShowSegmentedBar;
     BOOL withHeader;
+//    BOOL shouldHideNavigationBar;
+//    BOOL shouldHideNavigationBarWhenScrolling;
+//    BOOL shouldHideTabBarWhenScrolling;
+//    BOOL shouldShowSegmentedBar;
+   
+//    IBOutlet UITableView *m_tableView;
+//    IBOutlet UIView *loadingView;
+   
+    NSString *refreshString;
+    NSMutableArray *FOFArray;
+    NSMutableDictionary *cellHeightDictionary;
+    
+//    EGORefreshTableHeaderView *refreshHeaderView;
+    
 }
 
-@property (nonatomic,retain) IBOutlet UIView *loadingView;
-@property (nonatomic, retain) IBOutlet UITableView *m_tableView;
-@property (nonatomic, retain) IBOutlet NSMutableArray *FOFArray;
-@property (nonatomic, readwrite) BOOL shouldHideNavigationBar;
-@property (nonatomic, readwrite) NSString *refreshString;
 @property (nonatomic, readwrite) long userId;
+
 @property(assign,getter=isReloading) BOOL reloading;
-@property(nonatomic,readonly) EGORefreshTableHeaderView *refreshHeaderView;
+
+@property (nonatomic, readwrite) BOOL shouldHideNavigationBar;
 @property (nonatomic, readwrite) BOOL shouldHideNavigationBarWhenScrolling;
 @property (nonatomic, readwrite) BOOL shouldHideTabBarWhenScrolling;
 @property (nonatomic, readwrite) BOOL shouldShowSegmentedBar;
 
+@property (nonatomic,retain)  IBOutlet UIView *loadingView;
+@property (nonatomic, retain) IBOutlet UITableView *m_tableView;
+
+@property (nonatomic, readwrite) NSString *refreshString;
+@property (nonatomic, retain) NSMutableArray *FOFArray;
+
+@property(nonatomic,readonly) EGORefreshTableHeaderView *refreshHeaderView;
+
+
 -(void) addNewCellHeight:(float)height atRow:(int)row;
 -(void) refreshFOFArrayWithHeader:(BOOL)isWithHeader;
--(void)reloadTableViewDataSource;
--(void)dataSourceDidFinishLoadingNewData;
--(int)cellStyle;
--(void)resetTabBarControllerTransitionView;
+-(void) reloadTableViewDataSource;
+-(void) dataSourceDidFinishLoadingNewData;
+-(int)  cellStyle;
 
 @end

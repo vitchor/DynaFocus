@@ -9,15 +9,10 @@
 #import "FOFTableController.h"
 #import "FOFTableCell.h"
 #import "AppDelegate.h"
-#import "JSON.h"
-#import "LoadView.h"
-
-@interface FOFTableController ()
-
-@end
 
 @implementation FOFTableController
-@synthesize m_tableView, FOFArray, shouldHideNavigationBar, refreshString, userId, loadingView, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar;
+
+@synthesize userId, reloading, shouldHideNavigationBar, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar, loadingView, m_tableView, refreshString, FOFArray, refreshHeaderView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -584,6 +579,23 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                       view.frame.size.width, screenBounds.size.height)];
         }
     }
+}
+
+-(void)delloc
+{
+    [refreshString release];
+    [FOFArray release];
+    [cellHeightDictionary release];
+    
+    [loadingView release];
+    [m_tableView release];
+    
+    [refreshString release];
+    [FOFArray release];
+    
+    [refreshHeaderView release];
+    
+    [super dealloc];
 }
 
 @end

@@ -8,10 +8,6 @@
 
 #import "FOFTableNavigationController.h"
 
-@interface FOFTableNavigationController ()
-
-@end
-
 @implementation FOFTableNavigationController
 
 @synthesize tableController, trendingTableController;
@@ -130,6 +126,7 @@
         [self popViewControllerAnimated:YES];
     }else{
         [self pushViewController:self.trendingTableController animated:YES];
+        [self.trendingTableController release];
     }
 }
 
@@ -146,6 +143,9 @@
 }
 
 -(void)dealloc{
+    
+    [refreshTrendingUrl release];
+    [segmentedControl release];
     
     [tableController release];
     [trendingTableController release];
