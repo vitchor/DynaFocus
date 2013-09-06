@@ -6,27 +6,26 @@
 //  Copyright (c) 2012 Ufscar. All rights reserved.
 //
 
-#import "ProfileController.h"
-#import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
-#import "FOFTableController.h"
-#import "CustomBadge.h"
-#import "NotificationTableViewController.h"
-#import "UIImageLoaderDyfocus.h"
-#import "LoadView.h"
-#import <MobileCoreServices/UTCoreTypes.h>
-
-#define FOLLOW 0
-#define UNFOLLOW 1
-
-
-@interface ProfileController ()
-
-@end
+#import "ProfileController.h"
 
 @implementation ProfileController
 
-@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, tableController, changeImageView, personFOFArray, person, userNameLabel;
+@synthesize forceHideNavigationBar, logoutView, followView, unfollowView, notificationView, changeImageView, userPicture, logoutButton, myPicturesButton, notificationButton, follow, unfollow, followingLabel, followersLabel, userNameLabel, tableController, personFOFArray, person;
+
+- (id) initWithUserId:(long)userId {
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    if (screenBounds.size.height == 568) {
+        // code for 4-inch screen
+        return [self initWithNibName:@"ProfileController_i5" bundle:nil userId:userId];
+    } else {
+        // code for 3.5-inch screen
+        return [self initWithNibName:@"ProfileController" bundle:nil userId:userId];
+    }
+    
+}
 
 - (id) initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray {
 
@@ -42,18 +41,32 @@
     
 }
 
-- (id) initWithUserId:(long)userId {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray {
     
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    
-    if (screenBounds.size.height == 568) {
-        // code for 4-inch screen
-        return [self initWithNibName:@"ProfileController_i5" bundle:nil userId:userId];
+    if (!(profilePerson.kind == MYSELF) && (!profilePersonFOFArray || [profilePersonFOFArray count] == 0)) {
+        
+        if (profilePerson) {
+            self.person = profilePerson;
+            userKind = profilePerson.kind;
+            return [self initWithUserId:self.person.uid];
+        } else {
+            return nil;
+        }
+        
+        
     } else {
-        // code for 3.5-inch screen
-        return [self initWithNibName:@"ProfileController" bundle:nil userId:userId];
+        
+        self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+        
+        if (self) {
+            self.personFOFArray = profilePersonFOFArray;
+            self.person = profilePerson;
+            userKind = profilePerson.kind;
+        }
+        
+        return self;
     }
-    
+    return nil;
 }
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil userId:(long)userId {
@@ -129,10 +142,10 @@
                                            
                                            NSString *buttonPicturesString = [NSString stringWithFormat:@"Pictures (%i)", FOFArray.count];
                                            
-                                           [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateNormal];
-                                           [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateHighlighted];
-                                           [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateDisabled];
-                                           [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateSelected];
+                                           [self.myPicturesButton setTitle:buttonPicturesString forState:UIControlStateNormal];
+                                           [self.myPicturesButton setTitle:buttonPicturesString forState:UIControlStateHighlighted];
+                                           [self.myPicturesButton setTitle:buttonPicturesString forState:UIControlStateDisabled];
+                                           [self.myPicturesButton setTitle:buttonPicturesString forState:UIControlStateSelected];
                                        }
 
                                        
@@ -146,56 +159,27 @@
     return self;
 }
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray {
-    
-    if (!(profilePerson.kind == MYSELF) && (!profilePersonFOFArray || [profilePersonFOFArray count] == 0)) {
-        
-        if (profilePerson) {
-            self.person = profilePerson;
-            userKind = profilePerson.kind;
-            return [self initWithUserId:self.person.uid];
-        } else {
-            return nil;
-        }
-        
-        
-    } else {
-                   
-        self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-        
-        if (self) {
-            self.personFOFArray = profilePersonFOFArray;
-            self.person = profilePerson;
-            userKind = profilePerson.kind;
-        }
-    
-        return self;
-    }
-    return nil;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.navigationItem.title = @"Profile";
     
-    [follow addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
-    [unfollow addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
+    [self.follow addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
+    [self.unfollow addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
     
-    [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    [self.logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (forceHideNavigationBar) {
+    if (self.forceHideNavigationBar) {
         [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     }
     
-    [myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
-    [notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
+    [self.myPicturesButton addTarget:self action:@selector(showPictures) forControlEvents:UIControlEventTouchUpInside];
+    [self.notificationButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
     
 
     if (self.person) {
@@ -206,17 +190,17 @@
         
         NSString *buttonPicturesString = [NSString stringWithFormat:@"Pictures (%i)", self.personFOFArray.count];
         
-        [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateNormal];
-        [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateHighlighted];
-        [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateDisabled];
-        [myPicturesButton setTitle:buttonPicturesString forState:UIControlStateSelected];
+        [self.myPicturesButton setTitle:buttonPicturesString forState:UIControlStateNormal];
+        [self.myPicturesButton setTitle:buttonPicturesString forState:UIControlStateHighlighted];
+        [self.myPicturesButton setTitle:buttonPicturesString forState:UIControlStateDisabled];
+        [self.myPicturesButton setTitle:buttonPicturesString forState:UIControlStateSelected];
         
     }
 }
 
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
+
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     
     [delegate logEvent:@"ProfileController.viewDidAppear"];
@@ -230,8 +214,6 @@
 -(void) showPictures {
     
     if(!self.tableController){
-    
-        NSLog(@"PERSON IIIIIIDDDDDDDDDDDDD: %ld", self.person.uid);
         
         self.tableController = [[FOFTableController alloc] init];
         self.tableController.refreshString = refresh_user_url;
@@ -249,56 +231,59 @@
     
     [self.navigationController pushViewController:self.tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+//    [self.tableController release];
 }
 
 -(void)setUIPersonValues {
     
     if (self.person.kind == MYSELF) {
         
-        [notificationView setHidden:NO];
-        [followView setHidden:YES];
-        [unfollowView setHidden:YES];
-        [logoutView setHidden:NO];
+        [self.notificationView setHidden:NO];
+        [self.followView setHidden:YES];
+        [self.unfollowView setHidden:YES];
+        [self.logoutView setHidden:NO];
         
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showImageLibrary:)];
         singleTap.numberOfTapsRequired = 1;
         singleTap.numberOfTouchesRequired = 1;
         
-        [userPicture addGestureRecognizer:singleTap];
-        [userPicture setUserInteractionEnabled:YES];
+        [self.userPicture addGestureRecognizer:singleTap];
+        [self.userPicture setUserInteractionEnabled:YES];
         
-        [changeImageView addGestureRecognizer:singleTap];
-        [changeImageView setUserInteractionEnabled:YES];
+        [self.changeImageView addGestureRecognizer:singleTap];
+        [self.changeImageView setUserInteractionEnabled:YES];
+        
+        [singleTap release];
 
 
     } else {
-        [changeImageView setHidden:YES];
+        [self.changeImageView setHidden:YES];
                 
         
-        [notificationView setHidden:YES];
-        [logoutView setHidden:YES];
+        [self.notificationView setHidden:YES];
+        [self.logoutView setHidden:YES];
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
         Person *user = [delegate getUserWithId:self.person.uid];
         
         if (user) {
-            [followView setHidden:YES];
-            [unfollowView setHidden:NO];
+            [self.followView setHidden:YES];
+            [self.unfollowView setHidden:NO];
         } else {
-            [followView setHidden:NO];
-            [unfollowView setHidden:YES];
+            [self.followView setHidden:NO];
+            [self.unfollowView setHidden:YES];
         }
     }
     
     [self.userNameLabel setText:self.person.name];
    
-    [followersLabel setText:self.person.followersCount];
-    [followingLabel setText:self.person.followingCount];
+    [self.followersLabel setText:self.person.followersCount];
+    [self.followingLabel setText:self.person.followingCount];
     
    if (!(self.person.facebookId == (id)[NSNull null] || self.person.facebookId.length == 0)) {
         
-        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%d&height=%d",self.person.facebookId, (int)userPicture.frame.size.width*5, (int)userPicture.frame.size.height*5] autorelease];
+        NSString *imageUrl = [[[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=%d&height=%d",self.person.facebookId, (int)self.userPicture.frame.size.width*5, (int)self.userPicture.frame.size.height*5] autorelease];
      
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
 
@@ -307,7 +292,7 @@
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if(!error && data) {                               
                                    UIImage *image = [[[UIImage alloc] initWithData:data] autorelease];
-                                   [userPicture setImage:image];
+                                   [self.userPicture setImage:image];
                                }                           
                            }];
     }
@@ -318,7 +303,7 @@
     [self startMediaBrowserFromViewController:self usingDelegate:self];
 }
 
-- (BOOL) startMediaBrowserFromViewController: (UIViewController*) controller
+- (BOOL)startMediaBrowserFromViewController: (UIViewController*) controller
                                usingDelegate: (id <UIImagePickerControllerDelegate,
                                                UINavigationControllerDelegate>) delegate {
     
@@ -342,6 +327,9 @@
     mediaUI.delegate = delegate;
     
     [controller presentModalViewController: mediaUI animated: YES];
+    
+    [mediaUI release];
+    
     return YES;
 }
 
@@ -366,7 +354,7 @@
             badgeWidth = 30;
         }
         
-        [notificationBadge setFrame:CGRectMake(notificationView.frame.origin.x + notificationView.frame.size.width - 3*badgeWidth/5, notificationView.frame.origin.y - 2*badgeheight/5, badgeWidth, badgeheight)];
+        [notificationBadge setFrame:CGRectMake(self.notificationView.frame.origin.x + self.notificationView.frame.size.width - 3*badgeWidth/5, self.notificationView.frame.origin.y - 2*badgeheight/5, badgeWidth, badgeheight)];
         
         [self.view addSubview:notificationBadge];
         
@@ -380,20 +368,9 @@
     }
 }
 
--(void) showNotifications {
-
-    NotificationTableViewController *notificationTableController = [[NotificationTableViewController alloc] init];
-    
-    //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    //notificationTableController.notifications = appDelegate.userNotifications;
-    
-    notificationTableController.navigationItem.title = @"Notifications";
-    
-    notificationTableController.hidesBottomBarWhenPushed = YES;
-    
-    [self.navigationController pushViewController:notificationTableController animated:true];
-    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-
+- (void)logout {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    [appDelegate closeSession];
 }
 
 - (void)didReceiveMemoryWarning
@@ -407,14 +384,8 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return NO;
-}
-
-- (void)logout {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    [appDelegate closeSession];
 }
 
 -(void)followUser{
@@ -472,26 +443,26 @@
                                        if([jsonResult hasPrefix:@"ok:"]) {
                                            
                                            if (requestType == FOLLOW) {
-                                               int newFollowersValue = [followersLabel.text intValue] + 1;
-                                               followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
+                                               int newFollowersValue = [self.followersLabel.text intValue] + 1;
+                                               self.followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
 
-                                               self.person.followersCount = followersLabel.text;
-                                               [delegate.friendsThatIFollow setObject:self.person forKey:[NSNumber numberWithLong:self.person.uid]];
+                                               self.person.followersCount = self.followersLabel.text;
+                                               [delegate.friendsThatIFollow setObject:person forKey:[NSNumber numberWithLong:self.person.uid]];
                                                delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] + 1];
                                                
-                                               [followView setHidden:YES];
-                                               [unfollowView setHidden:NO];
+                                               [self.followView setHidden:YES];
+                                               [self.unfollowView setHidden:NO];
                                            } else {
                                                
-                                               int newFollowersValue = [followersLabel.text intValue] - 1;
-                                               followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
+                                               int newFollowersValue = [self.followersLabel.text intValue] - 1;
+                                               self.followersLabel.text = [NSString stringWithFormat:@"%d", newFollowersValue];
                                                
-                                               self.person.followersCount = followersLabel.text;
+                                               self.person.followersCount = self.followersLabel.text;
                                                [delegate.friendsThatIFollow removeObjectForKey:[NSNumber numberWithLong:self.person.uid]];
                                                delegate.myself.followingCount = [NSString stringWithFormat:@"%d",[delegate.myself.followingCount intValue] - 1];
                                                
-                                               [followView setHidden:NO];
-                                               [unfollowView setHidden:YES];
+                                               [self.followView setHidden:NO];
+                                               [self.unfollowView setHidden:YES];
                                            }
                                            
                                        }else if([jsonResult hasPrefix:@"error:"]){
@@ -507,15 +478,29 @@
      ];
 }
 
--(void)dealloc{
-    [logoutButton release];
-    [myPicturesButton release];
-    [notificationButton release];
-    [follow release];
-    [unfollow release];
+-(void) showNotifications {
     
-    [followingLabel release];
-    [followersLabel release];
+    NotificationTableViewController *notificationTableController = [[NotificationTableViewController alloc] init];
+    
+    //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    //notificationTableController.notifications = appDelegate.userNotifications;
+    
+    notificationTableController.navigationItem.title = @"Notifications";
+    
+    notificationTableController.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:notificationTableController animated:true];
+    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+    [notificationTableController release];
+    
+}
+
+-(void)dealloc{
+    
+    [personFOFArray removeAllObjects];
+    [personFOFArray release];
+
+    [person release];
     
     [logoutView release];
     [followView release];
@@ -524,16 +509,20 @@
     [changeImageView release];
     
     [userPicture release];
+    
+    [logoutButton release];
+    [myPicturesButton release];
+    [notificationButton release];
+    [follow release];
+    [unfollow release];
+    
+    [followingLabel release];
+    [followersLabel release];
+    [userNameLabel release];
+    
     [tableController release];
-    
-    [personFOFArray removeAllObjects];
-    [personFOFArray release];
-    [person release];
-    
-    [notificationBadge release];
     
     [super dealloc];
 }
-
 
 @end
