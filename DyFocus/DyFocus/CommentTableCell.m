@@ -7,16 +7,10 @@
 //
 
 #import "CommentTableCell.h"
-#import <QuartzCore/QuartzCore.h>
-#import "JSON.h"
-#import "UIImageLoaderDyfocus.h"
-#import "LoadView.h"
 
 @implementation CommentTableCell
-@synthesize labelUserName ,labelDate, imageUserPicture, commentTextView, whiteView, commentController, m_comment, deleteCommentBtn;
 
-#define TIMER_INTERVAL 0.1;
-#define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
+@synthesize imageUserPicture, deleteCommentBtn, labelUserName, commentTextView,  labelDate,  m_comment, commentController;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -29,88 +23,46 @@
 
 - (void) clear {
     
-    if (m_comment) {
-        [m_comment release];
-        m_comment = nil;
+    if (self.m_comment) {
+        [self.m_comment release];
+        self.m_comment = nil;
     }
     
-    [imageUserPicture setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
+    [self.imageUserPicture setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
     
-}
-
-
-- (void) refreshWithComment: (Comment *)comment {
-    
-    labelUserName.text = comment.m_userName;
-    commentTextView.text = comment.m_message;
-
-    if (comment.m_date && ![comment.m_date isEqualToString:@"null"]) {
-        labelDate.text = comment.m_date;
-    }
-    
-    
-    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    [imageLoader loadPictureWithFaceId:comment.m_userFacebookId andImageView:imageUserPicture andIsSmall:YES];  
-    
-    if (m_comment) {
-        [m_comment release];
-        m_comment = nil;
-    }
-    
-    m_comment = [[Comment alloc] init];
-    m_comment.m_uid = [[comment.m_uid copy] autorelease];
-    m_comment.m_date = [[comment.m_date copy] autorelease];
-    m_comment.m_fofId = [[comment.m_fofId copy] autorelease];
-    m_comment.m_message = [[comment.m_message copy] autorelease];
-    m_comment.m_userFacebookId = [[comment.m_userFacebookId copy] autorelease];
-    m_comment.m_userName = [[comment.m_userName copy] autorelease];
-    m_comment.m_userId = comment.m_userId;
-    
-    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
-    [self addGestureRecognizer:singleTap];
-    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-
-    if(delegate.adminRule  ||  m_comment.m_userId == delegate.myself.uid){
-        deleteCommentBtn.hidden = NO;
-        UITapGestureRecognizer *singleTapDelete = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteCommentPressed)] autorelease];
-        [deleteCommentBtn addGestureRecognizer:singleTapDelete];
-    }else{
-        deleteCommentBtn.hidden = YES;
-    }
 }
 
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
 {
-    if(!commentController.isKeyboardHidden){
+    if(!self.commentController.isKeyboardHidden){
         //hides it
-        [commentController hideKeyboard];
-        commentController.isKeyboardHidden = YES;
+        [self.commentController hideKeyboard];
+        self.commentController.isKeyboardHidden = YES;
     }else{
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
         ProfileController *profileController = nil;
         Person *person;
-        if(m_comment.m_userId == delegate.myself.uid){
+        if(self.m_comment.m_userId == delegate.myself.uid){
             person = delegate.myself;
         }else{
-            person = [delegate getUserWithId:m_comment.m_userId];
+            person = [delegate getUserWithId:self.m_comment.m_userId];
         }
         
         if (person) {
             profileController = [[ProfileController alloc] initWithPerson:person personFOFArray:[delegate FOFsFromUser:person.uid]];
         } else {
-            profileController = [[ProfileController alloc] initWithUserId:m_comment.m_userId];
+            profileController = [[ProfileController alloc] initWithUserId:self.m_comment.m_userId];
         }
         
         profileController.hidesBottomBarWhenPushed = YES;
         
-        [commentController.navigationController pushViewController:profileController animated:YES];
-        [commentController.navigationController setNavigationBarHidden:NO animated:TRUE];
+        [self.commentController.navigationController pushViewController:profileController animated:YES];
+        [self.commentController.navigationController setNavigationBarHidden:NO animated:TRUE];
+        [profileController release];
     }
 }
-
 
 -(void)deleteCommentPressed {
     NSString *alertTitle = @"Delete this comment?";
@@ -139,8 +91,8 @@
 }
 
 - (void) eraseComment {
-    if(m_comment.m_uid){
-        [LoadView loadViewOnView:commentController.view withText:@"Deleting..."];
+    if(self.m_comment.m_uid){
+        [LoadView loadViewOnView:self.commentController.view withText:@"Deleting..."];
 
         NSString *imageUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/delete_comment/",dyfocus_url] autorelease];
         
@@ -148,7 +100,7 @@
         
         NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
         
-        [jsonRequestObject setObject:m_comment.m_uid forKey:@"comment_id"];
+        [jsonRequestObject setObject:self.m_comment.m_uid forKey:@"comment_id"];
         
         NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
         
@@ -161,23 +113,23 @@
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                    if(!error && data) {
                                        // Lets REFRESH COMMENT TABLE:
-                                       for (Comment *comment in commentController.comments) {
-                                           if([comment.m_uid longLongValue] == [m_comment.m_uid longLongValue]){
-                                              [commentController.comments removeObject:comment];
+                                       for (Comment *comment in self.commentController.comments) {
+                                           if([comment.m_uid longLongValue] == [self.m_comment.m_uid longLongValue]){
+                                              [self.commentController.comments removeObject:comment];
                                                [comment release];
                                                break;
                                            }
                                        }
-                                       [commentController.tableView reloadData];
+                                       [self.commentController.tableView reloadData];
                                        // TODO- Now it is time to decrease FofTableCell field                                       
-                                       for (FOF *m_fof in commentController.tableCell.tableView.FOFArray) {
-                                           if([m_fof.m_id longLongValue] == [m_comment.m_fofId longLongValue]){
+                                       for (FOF *m_fof in self.commentController.tableCell.tableView.FOFArray) {
+                                           if([m_fof.m_id longLongValue] == [self.m_comment.m_fofId longLongValue]){
                                                m_fof.m_comments = [NSString stringWithFormat:@"%d", [m_fof.m_comments intValue] - 1];
-                                               [commentController.tableCell decreaseCommentsCounter];
+                                               [self.commentController.tableCell decreaseCommentsCounter];
                                            }
                                        }
 
-                                       [LoadView fadeAndRemoveFromView:commentController.view];
+                                       [LoadView fadeAndRemoveFromView:self.commentController.view];
                                    }
                                }];
     }
@@ -189,5 +141,59 @@
     // Configure the view for the selected state
 }    
 
+- (void) refreshWithComment: (Comment *)comment {
+    
+    self.labelUserName.text = comment.m_userName;
+    self.commentTextView.text = comment.m_message;
+    
+    if (comment.m_date && ![comment.m_date isEqualToString:@"null"]) {
+        self.labelDate.text = comment.m_date;
+    }
+    
+    
+    UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
+    [imageLoader loadPictureWithFaceId:comment.m_userFacebookId andImageView:self.imageUserPicture andIsSmall:YES];
+    
+    if (self.m_comment) {
+        [self.m_comment release];
+        self.m_comment = nil;
+    }
+    
+    self.m_comment = [[Comment alloc] init];
+    self.m_comment.m_uid = [[comment.m_uid copy] autorelease];
+    self.m_comment.m_date = [[comment.m_date copy] autorelease];
+    self.m_comment.m_fofId = [[comment.m_fofId copy] autorelease];
+    self.m_comment.m_message = [[comment.m_message copy] autorelease];
+    self.m_comment.m_userFacebookId = [[comment.m_userFacebookId copy] autorelease];
+    self.m_comment.m_userName = [[comment.m_userName copy] autorelease];
+    self.m_comment.m_userId = comment.m_userId;
+    
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
+    [self addGestureRecognizer:singleTap];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
+    if(delegate.adminRule  ||  self.m_comment.m_userId == delegate.myself.uid){
+        self.deleteCommentBtn.hidden = NO;
+        UITapGestureRecognizer *singleTapDelete = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteCommentPressed)] autorelease];
+        [self.deleteCommentBtn addGestureRecognizer:singleTapDelete];
+    }else{
+        self.deleteCommentBtn.hidden = YES;
+    }
+}
+
+-(void)dealloc
+{
+    [imageUserPicture release];
+    [deleteCommentBtn release];
+    [labelUserName release];
+    [commentTextView release];
+    [labelDate release];
+    
+    [m_comment release];
+    [commentController release];
+    
+    [super dealloc];
+}
 
 @end
