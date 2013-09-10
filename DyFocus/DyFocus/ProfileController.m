@@ -19,14 +19,11 @@
 #define FOLLOW 0
 #define UNFOLLOW 1
 
-
-@interface ProfileController ()
-
-@end
-
 @implementation ProfileController
 
-@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, tableController, changeImageView, personFOFArray, person, userNameLabel;
+//@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, tableController, changeImageView, personFOFArray, person, userNameLabel;
+
+@synthesize tableController, forceHideNavigationBar, person, personFOFArray;
 
 - (id) initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray {
 
@@ -269,8 +266,9 @@
         
         [changeImageView addGestureRecognizer:singleTap];
         [changeImageView setUserInteractionEnabled:YES];
-
-
+        
+        [singleTap release];
+        
     } else {
         [changeImageView setHidden:YES];
                 
@@ -291,7 +289,7 @@
         }
     }
     
-    [self.userNameLabel setText:self.person.name];
+    [userNameLabel setText:self.person.name];
    
     [followersLabel setText:self.person.followersCount];
     [followingLabel setText:self.person.followingCount];
@@ -393,6 +391,7 @@
     
     [self.navigationController pushViewController:notificationTableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+    [notificationTableController release];
 
 }
 
@@ -507,6 +506,7 @@
      ];
 }
 
+
 -(void)dealloc{
     [logoutButton release];
     [myPicturesButton release];
@@ -531,6 +531,8 @@
     [person release];
     
     [notificationBadge release];
+    
+    [userNameLabel release];
     
     [super dealloc];
 }

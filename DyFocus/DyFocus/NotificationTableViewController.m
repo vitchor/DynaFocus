@@ -10,6 +10,8 @@
 
 @implementation NotificationTableViewController
 
+@synthesize notificationsTableView, notifications;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,11 +36,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [notificationsTableView setDataSource:self];
-    [notificationsTableView setDelegate:self];
+    [self.notificationsTableView setDataSource:self];
+    [self.notificationsTableView setDelegate:self];
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    notifications = delegate.notificationsArray;
+    self.notifications = delegate.notificationsArray;
     
     
     NSString *requestUrl = [[[NSString alloc] initWithFormat:@"%@/uploader/user_read_notification/",dyfocus_url] autorelease];
@@ -47,8 +49,8 @@
     
     NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
 
-    if (notifications && [notifications count] > 0 ) {
-        Notification *notification = [notifications objectAtIndex:0];
+    if (self.notifications && [self.notifications count] > 0 ) {
+        Notification *notification = [self.notifications objectAtIndex:0];
         
         NSString *notificationId = [NSString stringWithFormat:@"%@", notification.m_notificationId];
         
@@ -87,7 +89,7 @@
                                    
                                    if (jsonNotifications && [jsonNotifications count] > 0) {
                                        
-                                       [notifications removeAllObjects];
+                                       [self.notifications removeAllObjects];
                                        
                                        for (int i = 0; i < [jsonNotifications count]; i++) {
                                            
@@ -95,20 +97,20 @@
                                            
                                            Notification *notification = [Notification notificationFromJSON:jsonNotification];
                                            
-                                           [notifications addObject:notification];
+                                           [self.notifications addObject:notification];
                                            
                                        }
                                        
-                                       [notificationsTableView reloadData];
+                                       [self.notificationsTableView reloadData];
                                        [self refreshImages];
                                
                                        //Everything is updated on our side! Let's mark everything as read!
                                        
-                                       if (notifications && [notifications count] != 0) {
+                                       if (self.notifications && [self.notifications count] != 0) {
                                            
                                            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
                                            NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
-                                           Notification *notification =[notifications objectAtIndex:0];
+                                           Notification *notification =[self.notifications objectAtIndex:0];
                                            [jsonRequestObject setObject:[NSString stringWithFormat:@"%@",notification.m_notificationId] forKey:@"notification_id"];
                                            
                                            NSString *userId = [NSString stringWithFormat:@"ld", delegate.myself.uid];
@@ -156,9 +158,9 @@
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
     
-    if (notifications && [notifications count] != 0) {
+    if (self.notifications && [self.notifications count] != 0) {
         isTableEmpty = NO;
-        return [notifications count];
+        return [self.notifications count];
     } else {
         isTableEmpty = YES;
         return 1;
@@ -205,7 +207,7 @@
             
         }
         
-        Notification *notification = (Notification *) [notifications objectAtIndex:indexPath.row];
+        Notification *notification = (Notification *) [self.notifications objectAtIndex:indexPath.row];
         
         [cell refreshWithNotification:notification];
         
@@ -217,7 +219,7 @@
 
 -(void)refreshImages {
     if (!isTableEmpty) {
-		NSArray *visibleCells = [notificationsTableView visibleCells];
+		NSArray *visibleCells = [self.notificationsTableView visibleCells];
 		if (visibleCells) {
 			NSArray *visibleCellsCopy = [[NSArray alloc] initWithArray:visibleCells];
 			for (NotificationTableViewCell *cell in visibleCellsCopy) {
@@ -246,7 +248,7 @@
 #pragma mark Table Delegate Methods
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Notification *notification = [notifications objectAtIndex:indexPath.row];
+    Notification *notification = [self.notifications objectAtIndex:indexPath.row];
     
     
     if (notification.m_triggerType == NOTIFICATION_LIKED_FOF || notification.m_triggerType == NOTIFICATION_COMMENTED_FOF) {
@@ -359,7 +361,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 {
     [notificationsTableView release];
     [notifications release];
-    
+
     [super dealloc];
 }
 

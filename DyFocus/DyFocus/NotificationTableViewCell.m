@@ -11,7 +11,7 @@
 
 @implementation NotificationTableViewCell
 
-@synthesize userImage, notificationLabel;
+@synthesize userImage, notificationLabel, m_notification;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -31,9 +31,6 @@
 
 -(void) clear {
     
-    [m_notification release];
-    m_notification = nil;
-    
     self.notificationLabel.text = nil;
 
     [self.userImage setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
@@ -44,7 +41,7 @@
 -(void) loadImage {
     if (self.userImage.tag != 420) {
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        [imageLoader loadPictureWithFaceId:m_notification.m_userFacebookId andImageView:self.userImage andIsSmall:YES];
+        [imageLoader loadPictureWithFaceId:self.m_notification.m_userFacebookId andImageView:self.userImage andIsSmall:YES];
     }
     
     
@@ -52,19 +49,15 @@
 
 - (void) refreshWithNotification: (Notification *)notification {
     
-    if (!m_notification ||  notification.m_notificationId != m_notification.m_notificationId) {
+    if (!self.m_notification ||  notification.m_notificationId != self.m_notification.m_notificationId) {
         
         [self clear];
         
-        m_notification = [[Notification alloc] init];
-        m_notification.m_message = [[notification.m_message copy] autorelease];
-        m_notification.m_notificationId = [[notification.m_notificationId copy] autorelease];
-        m_notification.m_userFacebookId = [[notification.m_userFacebookId copy] autorelease];
-        m_notification.m_wasRead = notification.m_wasRead;
+        self.m_notification = notification;
         
         UIView *backView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
         
-        if (m_notification.m_wasRead) {
+        if (self.m_notification.m_wasRead) {
             backView.backgroundColor = [UIColor whiteColor];
         } else {
             backView.backgroundColor = [UIColor colorWithRed:1 green:0.9 blue:0.78 alpha:1];
@@ -73,7 +66,7 @@
         
         self.backgroundView = backView;
         
-        [self.notificationLabel setText:m_notification.m_message];
+        [self.notificationLabel setText:self.m_notification.m_message];
     }
 }
 
@@ -81,6 +74,7 @@
 {
     [userImage release];
     [notificationLabel release];
+    [m_notification release];
     
     [super dealloc];
 }

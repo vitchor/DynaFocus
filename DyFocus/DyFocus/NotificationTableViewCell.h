@@ -13,11 +13,12 @@
 
 @interface NotificationTableViewCell : UITableViewCell {
     
-    Notification *m_notification;
 }
 
 @property (nonatomic,retain) IBOutlet UIImageView *userImage;
 @property (nonatomic,retain) IBOutlet UILabel *notificationLabel;
+
+@property (nonatomic,retain) Notification *m_notification;
 
 - (void) loadImage;
 - (void) refreshWithNotification:(Notification *)notification;

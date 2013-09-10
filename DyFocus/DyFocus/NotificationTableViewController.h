@@ -18,9 +18,9 @@
 @interface NotificationTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>  {
 
     bool isTableEmpty;
-    
-    UITableView *notificationsTableView;
-    NSMutableArray *notifications;
 }
+
+@property (nonatomic, retain) UITableView *notificationsTableView;
+@property (nonatomic, retain) NSMutableArray *notifications;
 
 @end
