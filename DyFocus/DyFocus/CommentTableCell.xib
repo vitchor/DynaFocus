@@ -52,6 +52,7 @@
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{61, 33}, {123, 21}}</string>
 										<reference key="NSSuperview" ref="529101705"/>
+										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="779314673"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
@@ -85,6 +86,7 @@
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{7, 8}, {46, 46}}</string>
 										<reference key="NSSuperview" ref="529101705"/>
+										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="466798416"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -99,6 +101,7 @@
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{60, 10}, {242, 21}}</string>
 										<reference key="NSSuperview" ref="529101705"/>
+										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="858091608"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
@@ -130,6 +133,8 @@
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{15, 62}, {287, 33}}</string>
 										<reference key="NSSuperview" ref="529101705"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -158,6 +163,7 @@
 										<int key="NSvFlags">-2147483356</int>
 										<string key="NSFrame">{{284, 2}, {36, 36}}</string>
 										<reference key="NSSuperview" ref="529101705"/>
+										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="336218283"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
@@ -184,6 +190,7 @@
 								</array>
 								<string key="NSFrame">{{-1, 0}, {322, 107}}</string>
 								<reference key="NSSuperview" ref="422916416"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="839503385"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -195,6 +202,7 @@
 						</array>
 						<string key="NSFrameSize">{320, 106}</string>
 						<reference key="NSSuperview" ref="323944411"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="529101705"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -210,6 +218,7 @@
 				</array>
 				<string key="NSFrameSize">{320, 107}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="422916416"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -934,14 +943,62 @@
 			<nil key="sourceID"/>
 			<int key="maxID">1755</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">CommentTableCell</string>
+					<string key="superclassName">UITableViewCell</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="commentTextView">UILabel</string>
+						<string key="deleteCommentBtn">UIButton</string>
+						<string key="imageUserPicture">UIImageView</string>
+						<string key="labelDate">UILabel</string>
+						<string key="labelUserName">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="commentTextView">
+							<string key="name">commentTextView</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="deleteCommentBtn">
+							<string key="name">deleteCommentBtn</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageUserPicture">
+							<string key="name">imageUserPicture</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelDate">
+							<string key="name">labelDate</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelUserName">
+							<string key="name">labelUserName</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CommentTableCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSLayoutConstraint</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="AvatarDefault.png">{50, 50}</string>
-			<string key="close.png">{25, 25}</string>
+			<string key="close.png">{29, 29}</string>
 		</dictionary>
 		<bool key="IBDocument.UseAutolayout">YES</bool>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

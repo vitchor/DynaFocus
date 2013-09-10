@@ -7,15 +7,258 @@
 //
 
 #import "CommentViewerController.h"
-#import "JSON.h"
-#import "LoadView.h"
 #import "CommentTableCell.h"
 
-#define kOFFSET_FOR_KEYBOARD 400.0
 
 @implementation CommentViewerController
 
-@synthesize inputMessageTextField, tableView, likesLabel, scrollView, isKeyboardHidden, commentView, fbCommentTextView, isCommenting, tableCell, likesView, comments;
+@synthesize isKeyboardHidden, isCommenting, comments, tableView, tableCell;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil andFOF:(FOF *)FOF {
+    
+    fof = FOF;
+    
+    return [self initWithNibName:nibNameOrNil bundle:nil];
+}
+
+- (void)viewDidLoad
+{
+    self.isKeyboardHidden = YES;
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLikesTableView)] autorelease];
+    [likesView addGestureRecognizer:singleTap];
+    
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"CommentViewerController.viewDidAppear"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    // Hides magnifier icon
+    UITextField* searchField = nil;
+    for (UIView* subview in inputMessageTextField.subviews) {
+        if ([subview isKindOfClass:[UITextField class]]) {
+            searchField = (UITextField*)subview;
+            break;
+        }
+    }
+    if (searchField) {
+        searchField.leftViewMode = UITextFieldViewModeNever;
+    }
+    
+    inputMessageTextField.placeholder = @"Write a comment...";
+    
+    [self.tableView setDataSource:self];
+    [self.tableView setDelegate:self];
+    
+    if (!self.comments || [self.comments count] == 0) {
+        
+        [self setupFbShareButton];
+        
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        
+        
+        [LoadView loadViewOnView:self.view withText:@"Loading..."];
+        
+        NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/likes_and_comments/",dyfocus_url] autorelease];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+        
+        NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+        
+        [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
+        
+        NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                               json] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   
+                                   [LoadView fadeAndRemoveFromView:self.view];
+                                   
+                                   if(!error && data) {
+                                       
+                                       [self.comments release];
+                                       self.comments = nil;
+                                       self.comments = [[NSMutableArray alloc] init];
+                                       [likes release];
+                                       likes = nil;
+                                       likes = [[NSMutableArray alloc] init];
+                                       
+                                       
+                                       
+                                       NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                                       
+                                       NSLog(@"stringReply: %@",stringReply);
+                                       
+                                       NSDictionary *jsonValues = [stringReply JSONValue];
+                                       
+                                       if (jsonValues) {
+                                           NSDictionary * jsonComments = [jsonValues valueForKey:@"comment_list"];
+                                           
+                                           for (int i = 0; i < [jsonComments count]; i++) {
+                                               
+                                               NSDictionary *jsonComment = [jsonComments objectAtIndex:i];
+                                               
+                                               NSString *fofFriendId = [jsonComment valueForKey:@"user_facebook_id"];
+                                               NSString *fofId = [jsonComment valueForKey:@"fof_id"];
+                                               NSString *fofComment = [jsonComment valueForKey:@"comment"];
+                                               NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
+                                               NSString *fofUserId = [jsonComment valueForKey:@"user_id"];
+                                               NSString *commentUid = [jsonComment valueForKey:@"comment_id"];
+                                               NSString *commentPubDate = [jsonComment valueForKey:@"pub_date"];
+                                               
+                                               Comment *comment = [[Comment alloc] init];
+                                               comment.m_userFacebookId = fofFriendId;
+                                               comment.m_message = fofComment;
+                                               comment.m_userName = fofUserName;
+                                               comment.m_fofId = fofId;
+                                               comment.m_date = commentPubDate;
+                                               comment.m_userId = [fofUserId longLongValue];
+                                               comment.m_uid = commentUid;
+                                               
+                                               [self.comments addObject:comment];
+                                               NSLog(@"Commentario: %@", comment.m_message);
+                                               [comment release];
+                                               
+                                           }
+                                           
+                                           
+                                           
+                                           
+                                           NSDictionary * jsonLikes = [jsonValues valueForKey:@"like_list"];
+                                           // TODO GET THE LIST OF USERS THAT LIKED
+                                           for (int i = 0; i < [jsonLikes count]; i++) {
+                                               
+                                               NSDictionary *jsonLike = [jsonLikes objectAtIndex:i];  // jsonComment? why not jonLike?
+                                               
+                                               NSString *fofUserId = [jsonLike valueForKey:@"user_id"];
+                                               NSString *fofUserFacebookId = [jsonLike valueForKey:@"user_facebook_id"];
+                                               NSString *fofId = [jsonLike valueForKey:@"fof_id"];
+                                               long userId = [[jsonLike valueForKey:@"user_id"] longLongValue];
+                                               NSString *fofUserName = [jsonLike valueForKey:@"user_name"];
+                                               NSString *likeId = [jsonLike valueForKey:@"like_id"];
+                                               
+                                               Like *like = [[Like alloc] init];
+                                               like.m_userFacebookId = fofUserFacebookId;
+                                               like.m_userId = [fofUserId longLongValue];
+                                               like.m_fofId = fofId;
+                                               like.m_userId = userId;
+                                               like.m_uid = likeId;
+                                               
+                                               //                                               like.m_userName = fofUserName;//todo
+                                               
+                                               AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+                                               
+                                               
+                                               if([fofUserId longLongValue] == appDelegate.myself.uid){
+                                                   
+                                                   like.m_userName = @"You";
+                                               }else{
+                                                   like.m_userName = fofUserName;
+                                               }
+                                               
+                                               if([like.m_userName isEqualToString:@"You"]){
+                                                   [likes insertObject:like atIndex:0];
+                                               }else{
+                                                   [likes addObject:like];
+                                               }
+                                               
+                                               [like release];
+                                               
+                                           }
+                                           [self buildLikesText];
+                                           self.navigationItem.rightBarButtonItem.enabled = YES;
+                                           
+                                           [self.tableView reloadData];
+                                           
+                                           if (self.isCommenting) {
+                                               [inputMessageTextField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.4f];
+                                           }
+                                           
+                                       } else {
+                                           [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
+                                       }
+                                       
+                                   } else {
+                                       [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
+                                   }
+                               }];
+        
+    }
+    
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
+    [scrollView addGestureRecognizer:singleTap];
+    
+    
+    self.tableView.exclusiveTouch = NO;
+    self.tableView.multipleTouchEnabled = YES;
+    
+    for (UIView *searchBarSubview in [inputMessageTextField subviews]) {
+        if ([searchBarSubview conformsToProtocol:@protocol(UITextInputTraits)]) {
+            @try {
+                [(UITextField *)searchBarSubview setReturnKeyType:UIReturnKeySend];
+                [(UITextField *)searchBarSubview setKeyboardAppearance:UIKeyboardAppearanceAlert];
+            }
+            @catch (NSException * e) {
+                
+                // ignore exception
+            }
+        }
+    }
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch * touch = [touches anyObject];
+    if(touch.phase == UITouchPhaseBegan) {
+        [self hideKeyboard];
+        
+	}
+}
 
 -(void)keyboardWillShow:(NSNotification*)aNotification
 {
@@ -26,7 +269,7 @@
     CGRect rect = inputMessageTextField.frame;
     
     NSLog(@"SEARCH BAR ORIGIN: %f",rect.origin.y);
-    isKeyboardHidden = NO;
+    self.isKeyboardHidden = NO;
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     if (screenBounds.size.height == 568) {
@@ -66,20 +309,6 @@
     {
         [self setViewMovedUp:NO];
     } */
-}
-
-
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch * touch = [touches anyObject];
-    if(touch.phase == UITouchPhaseBegan) {
-        [self hideKeyboard];
-        
-	}
-}
-
--(void)hideKeyboard {
-    [inputMessageTextField resignFirstResponder];
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
@@ -148,33 +377,6 @@
     [UIView commitAnimations];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil andFOF:(FOF *)FOF {
-    
-    fof = FOF;
-    
-    return [self initWithNibName:nibNameOrNil bundle:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLikesTableView)] autorelease];
-    [likesView addGestureRecognizer:singleTap];
-
-    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    [delegate logEvent:@"CommentViewerController.viewDidAppear"];
-}
-
 -(void) showLikesTableView{
     if(!self.isKeyboardHidden){
         //hides it
@@ -186,14 +388,8 @@
         
         [self.navigationController pushViewController:likesController animated:true];
         [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+        [likesController release];
     }
-}
-
-- (void)viewDidLoad
-{
-    isKeyboardHidden = YES;
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning
@@ -204,7 +400,7 @@
 
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
 {
-    isKeyboardHidden = YES;
+    self.isKeyboardHidden = YES;
     [self hideKeyboard];
 }
 
@@ -214,7 +410,7 @@
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.hidesBackButton = NO;
     
-    [self setFbShareButton];
+    [self setupFbShareButton];
     
     [commentView setHidden:YES];
     
@@ -230,7 +426,7 @@
     
     NSString *urlLink = [[NSString alloc] initWithFormat:@"%@/uploader/%@/share_fof/", dyfocus_url, fof.m_name];
     
-    NSString *message = self.fbCommentTextView.text;
+    NSString *message = fbCommentTextView.text;
     
     NSString *imageUrl = [[NSString alloc] initWithFormat:@"http://s3.amazonaws.com/dyfocus/%ld_%@_0.jpeg", fof.m_userId, fof.m_name];
     
@@ -351,7 +547,7 @@
 
 }
 
-- (void)setFbShareButton {
+- (void)setupFbShareButton {
     
     AppDelegate * delegate = [UIApplication sharedApplication].delegate;
     
@@ -370,193 +566,6 @@
         [self.navigationItem setRightBarButtonItem:faceBtn];
     }
 
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    
-    // Hides magnifier icon
-    UITextField* searchField = nil;
-    for (UIView* subview in inputMessageTextField.subviews) {
-        if ([subview isKindOfClass:[UITextField class]]) {
-            searchField = (UITextField*)subview;
-            break;
-        }
-    }
-    if (searchField) {
-        searchField.leftViewMode = UITextFieldViewModeNever;
-    }
-    
-    inputMessageTextField.placeholder = @"Write a comment...";    
-    
-    [tableView setDataSource:self];
-    [tableView setDelegate:self];
-    
-    if (!comments || [comments count] == 0) {
-        
-        [self setFbShareButton];
-        
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-        
-        
-        [LoadView loadViewOnView:self.view withText:@"Loading..."];
-        
-        NSString *url = [[[NSString alloc] initWithFormat:@"%@/uploader/likes_and_comments/",dyfocus_url] autorelease];
-        
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-        
-        NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
-        
-        [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
-        
-        NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
-        
-        [request setHTTPMethod:@"POST"];
-        [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
-                               json] dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   
-                                   [LoadView fadeAndRemoveFromView:self.view];
-                                   
-                                   if(!error && data) {
-                                       
-                                       [comments release];
-                                       comments = nil;
-                                       comments = [[NSMutableArray alloc] init];
-                                       [likes release];
-                                       likes = nil;
-                                       likes = [[NSMutableArray alloc] init];                                   
-                                       
-                         
-                                       
-                                       NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-                                       
-                                                     NSLog(@"stringReply: %@",stringReply);
-                                       
-                                       NSDictionary *jsonValues = [stringReply JSONValue];
-                                       
-                                       if (jsonValues) {
-                                           NSDictionary * jsonComments = [jsonValues valueForKey:@"comment_list"];
-                                           
-                                           for (int i = 0; i < [jsonComments count]; i++) {
-                                               
-                                               NSDictionary *jsonComment = [jsonComments objectAtIndex:i];
-                                               
-                                               NSString *fofFriendId = [jsonComment valueForKey:@"user_facebook_id"];
-                                               NSString *fofId = [jsonComment valueForKey:@"fof_id"];
-                                               NSString *fofComment = [jsonComment valueForKey:@"comment"];
-                                               NSString *fofUserName = [jsonComment valueForKey:@"user_name"];
-                                               NSString *fofUserId = [jsonComment valueForKey:@"user_id"];
-                                               NSString *commentUid = [jsonComment valueForKey:@"comment_id"];
-                                               NSString *commentPubDate = [jsonComment valueForKey:@"pub_date"];
-                                               
-                                               Comment *comment = [[Comment alloc] init];
-                                               comment.m_userFacebookId = fofFriendId;
-                                               comment.m_message = fofComment;
-                                               comment.m_userName = fofUserName;
-                                               comment.m_fofId = fofId;
-                                               comment.m_date = commentPubDate;
-                                               comment.m_userId = [fofUserId longLongValue];
-                                               comment.m_uid = commentUid;
-                                            
-                                               [comments addObject:comment];
-                                                  NSLog(@"Commentario: %@", comment.m_message);
-                                               
-                                            }
-                                           
-                                        
-                                           
-                                           NSDictionary * jsonLikes = [jsonValues valueForKey:@"like_list"];
-                                           // TODO GET THE LIST OF USERS THAT LIKED
-                                           for (int i = 0; i < [jsonLikes count]; i++) {
-                                               
-                                               NSDictionary *jsonLike = [jsonLikes objectAtIndex:i];  // jsonComment? why not jonLike?
-                                               
-                                               NSString *fofUserId = [jsonLike valueForKey:@"user_id"];
-                                               NSString *fofUserFacebookId = [jsonLike valueForKey:@"user_facebook_id"];
-                                               NSString *fofId = [jsonLike valueForKey:@"fof_id"];
-                                               long userId = [[jsonLike valueForKey:@"user_id"] longLongValue];
-                                               NSString *fofUserName = [jsonLike valueForKey:@"user_name"];
-                                               NSString *likeId = [jsonLike valueForKey:@"like_id"];
-                                               
-                                               Like *like = [[Like alloc] init];
-                                               like.m_userFacebookId = fofUserFacebookId;
-                                               like.m_userId = [fofUserId longLongValue];
-                                               like.m_fofId = fofId;
-                                               like.m_userId = userId;
-                                               like.m_uid = likeId;
-                                               
-//                                               like.m_userName = fofUserName;//todo
-                                               
-                                               AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-
-                                               
-                                               if([fofUserId longLongValue] == appDelegate.myself.uid){
-
-                                                   like.m_userName = @"You";
-                                               }else{
-                                                   like.m_userName = fofUserName;
-                                               }
-                                               
-                                               if([like.m_userName isEqualToString:@"You"]){
-                                                   [likes insertObject:like atIndex:0];
-                                               }else{
-                                                   [likes addObject:like];
-                                               } 
-                                           }
-                                           [self buildLikesText];                                           
-                                            self.navigationItem.rightBarButtonItem.enabled = YES;
-                                           
-                                           [tableView reloadData];
-                                           
-                                           if (isCommenting) {
-                                               [inputMessageTextField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.4f];
-                                           }
-                                           
-                                       } else {
-                                           [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
-                                       }
-                                       
-                                   } else {
-                                       [self showOkAlertWithMessage:@"Please try again later." andTitle:@"Connection Error"];
-                                   }
-                               }];
-    
-    }
-    
-    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
-    [scrollView addGestureRecognizer:singleTap];
-    
-    
-    tableView.exclusiveTouch = NO;
-    tableView.multipleTouchEnabled = YES;
-    
-    for (UIView *searchBarSubview in [inputMessageTextField subviews]) {
-        if ([searchBarSubview conformsToProtocol:@protocol(UITextInputTraits)]) {
-            @try {
-                [(UITextField *)searchBarSubview setReturnKeyType:UIReturnKeySend];
-                [(UITextField *)searchBarSubview setKeyboardAppearance:UIKeyboardAppearanceAlert];
-            }
-            @catch (NSException * e) {
-                
-                // ignore exception
-            }
-        }
-    }
-    // register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-     
 }
 
 - (void) buildLikesText{
@@ -609,28 +618,14 @@
     [likesLabel setText:likeListUsers];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    // unregister for keyboard notifications while not visible.
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillShowNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillHideNotification
-                                                  object:nil];
-}
-
-
-
 #pragma mark -
 #pragma mark Table Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
     
-    if (comments && [comments count] != 0) {
+    if (self.comments && [self.comments count] != 0) {
         isTableEmpty = NO;
-        return [comments count];
+        return [self.comments count];
     } else {
         isTableEmpty = YES;
         return 1;
@@ -668,7 +663,7 @@
         
         
         NSString *cellId = @"CommentTableCell";
-        cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+        cell = [self.tableView dequeueReusableCellWithIdentifier:cellId];
         if (cell == nil) {
             NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"CommentTableCell" owner:self options:nil];
             
@@ -682,7 +677,7 @@
             
         }
         
-        Comment *comment = (Comment *) [comments objectAtIndex:indexPath.row];
+        Comment *comment = (Comment *) [self.comments objectAtIndex:indexPath.row];
         
         [cell refreshWithComment:comment];
         return cell;
@@ -769,15 +764,16 @@
                                    comment.m_userId = myself.uid;
                                    comment.m_uid = [jsonValues valueForKey:@"comment_id"];
                                    
-                                   [comments addObject:comment];
-                                   [tableView reloadData];
+                                   [self.comments addObject:comment];
+                                   [self.tableView reloadData];
+                                   [comment release];
                                    
                                    fof.m_comments = [NSString stringWithFormat: @"%d",[fof.m_comments intValue] + 1];
                                    
-                                   for (FOF *m_fof in tableCell.tableView.FOFArray) {
+                                   for (FOF *m_fof in self.tableCell.tableView.FOFArray) {
                                        if(m_fof.m_id == fof.m_id){
                                            m_fof.m_comments = [NSString stringWithFormat:@"%d", [m_fof.m_comments intValue] + 1];
-                                           [tableCell increaseCommentsCounter];
+                                           [self.tableCell increaseCommentsCounter];
                                        }
                                    }
                                    
@@ -807,13 +803,33 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 }
 
+-(void)hideKeyboard {
+    [inputMessageTextField resignFirstResponder];
+}
+
 - (void)dealloc {
+    
+    [likesView release];
+    [commentView release];
     [activityView release];
-    [activityIndicator release];
+    
+    [likesLabel release];
     [sharingLabel release];
     [sharingCompletedLabel release];
-    [comments release];
+    
+    [fbCommentTextView release];
+    [scrollView release];
+    [inputMessageTextField release];
+    [activityIndicator release];
+    
     [likes release];
+    
+//    [fof release]; do NOT uncomment this line
+    
+    [comments release];
+    [tableView release];
+    [tableCell release];
+    
     [super dealloc];
 }
 @end

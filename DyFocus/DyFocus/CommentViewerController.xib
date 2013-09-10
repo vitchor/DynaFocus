@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1653,7 +1653,6 @@
 						<string key="commentView">UIView</string>
 						<string key="fbCommentTextView">UITextView</string>
 						<string key="inputMessageTextField">UISearchBar</string>
-						<string key="likesGrayView">UIView</string>
 						<string key="likesLabel">UILabel</string>
 						<string key="likesView">UIView</string>
 						<string key="scrollView">UIScrollView</string>
@@ -1682,10 +1681,6 @@
 						<object class="IBToOneOutletInfo" key="inputMessageTextField">
 							<string key="name">inputMessageTextField</string>
 							<string key="candidateClassName">UISearchBar</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="likesGrayView">
-							<string key="name">likesGrayView</string>
-							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="likesLabel">
 							<string key="name">likesLabel</string>
@@ -1724,18 +1719,34 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">FOFTableCell</string>
 					<string key="superclassName">UITableViewCell</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">playPauseAction:</string>
+						<string key="NS.object.0">UIButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">playPauseAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">playPauseAction:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="buttonComment">UIButton</string>
 						<string key="buttonLike">UIButton</string>
 						<string key="commentsCountLabel">UILabel</string>
+						<string key="deleteFOFButton">UIButton</string>
+						<string key="descriptionLabel">UILabel</string>
 						<string key="imageUserPicture">UIImageView</string>
 						<string key="imagebackFrame">UIImageView</string>
 						<string key="imagefrontFrame">UIImageView</string>
 						<string key="labelDate">UILabel</string>
 						<string key="labelUserName">UILabel</string>
-						<string key="lightGrayBrackgroundView">UIView</string>
+						<string key="lightGrayBackgroundView">UIView</string>
 						<string key="likesCountLabel">UILabel</string>
+						<string key="playPauseButton">UIButton</string>
+						<string key="readMoreLabel">UILabel</string>
 						<string key="spinner">UIActivityIndicatorView</string>
+						<string key="supportView">UIView</string>
 						<string key="whiteView">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -1749,6 +1760,14 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="commentsCountLabel">
 							<string key="name">commentsCountLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="deleteFOFButton">
+							<string key="name">deleteFOFButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="descriptionLabel">
+							<string key="name">descriptionLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="imageUserPicture">
@@ -1771,17 +1790,29 @@
 							<string key="name">labelUserName</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="lightGrayBrackgroundView">
-							<string key="name">lightGrayBrackgroundView</string>
+						<object class="IBToOneOutletInfo" key="lightGrayBackgroundView">
+							<string key="name">lightGrayBackgroundView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="likesCountLabel">
 							<string key="name">likesCountLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="playPauseButton">
+							<string key="name">playPauseButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="readMoreLabel">
+							<string key="name">readMoreLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="spinner">
 							<string key="name">spinner</string>
 							<string key="candidateClassName">UIActivityIndicatorView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="supportView">
+							<string key="name">supportView</string>
+							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="whiteView">
 							<string key="name">whiteView</string>
