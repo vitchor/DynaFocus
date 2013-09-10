@@ -11,7 +11,7 @@
 
 @implementation FOFTableCell
 
-@synthesize row, descriptionFullText, descriptionPreviewText, tableView;
+@synthesize row, descriptionFullText, descriptionPreviewText, tableController;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
     NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
@@ -61,7 +61,7 @@
                                        
                                        float newCellHeight = HEADER_AND_FOOTER_HEIGHT + newImageHeight + newDescriptionHeight;
                                        
-                                       [self.tableView addNewCellHeight:newCellHeight atRow:self.row];
+                                       [self.tableController addNewCellHeight:newCellHeight atRow:self.row];
                                        
                                        imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
                                                                          imagebackFrame.frame.origin.y , imagebackFrame.frame.size.width, newImageHeight);
@@ -106,7 +106,7 @@
 - (void)loadUserProfile:(UIGestureRecognizer *)gestureRecognizer
 {
     
-    if(self.tableView.userId){
+    if(self.tableController.userId){
         NSLog(@"==== U ARE already inside this person's profile");
     }else{
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
@@ -131,8 +131,8 @@
         }
         profileController.hidesBottomBarWhenPushed = YES;
         
-        [self.tableView.navigationController pushViewController:profileController animated:YES];
-        [self.tableView.navigationController setNavigationBarHidden:NO animated:TRUE];
+        [self.tableController.navigationController pushViewController:profileController animated:YES];
+        [self.tableController.navigationController setNavigationBarHidden:NO animated:TRUE];
         [profileController release];
     }
 }
@@ -164,7 +164,7 @@
 }
 
 -(void) eraseFOF {
-    [LoadView loadViewOnView:self.tableView.view withText:@"Deleting..."];
+    [LoadView loadViewOnView:self.tableController.view withText:@"Deleting..."];
     
     NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [likesCountLabel.text intValue] + 1] autorelease];
     [likesCountLabel setText:newCount];
@@ -190,7 +190,7 @@
                                    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
                                    [delegate refreshAllFOFTables];
                                    
-                                   [LoadView fadeAndRemoveFromView:self.tableView.view];
+                                   [LoadView fadeAndRemoveFromView:self.tableController.view];
                                }
                            }];
 }
@@ -213,10 +213,10 @@
         
         [UIView setAnimationTransition:
          UIViewAnimationTransitionFlipFromRight
-                               forView:self.tableView.navigationController.view cache:NO];
+                               forView:self.tableController.navigationController.view cache:NO];
         
         
-        [self.tableView.navigationController pushViewController:fullScreenController animated:YES];
+        [self.tableController.navigationController pushViewController:fullScreenController animated:YES];
         [UIView commitAnimations];
         
         [fullScreenController release];
@@ -241,7 +241,7 @@
         
         float newCellHeight = HEADER_AND_FOOTER_HEIGHT + newImageHeight + newDescriptionHeight;
         
-        [self.tableView addNewCellHeight: newCellHeight atRow:self.row];
+        [self.tableController addNewCellHeight: newCellHeight atRow:self.row];
         
         [descriptionLabel setUserInteractionEnabled:YES];
         
@@ -277,7 +277,7 @@
         
         float newCellHeight = HEADER_AND_FOOTER_HEIGHT + newImageHeight + newDescriptionHeight;
         
-        [self.tableView addNewCellHeight: newCellHeight atRow:self.row];
+        [self.tableController addNewCellHeight: newCellHeight atRow:self.row];
         
         [self refreshImageSize];
         
@@ -325,7 +325,7 @@
         fof.m_liked = YES;
         fof.m_likes = [NSString stringWithFormat:@"%d",[fof.m_likes intValue] + 1];
         
-        for (FOF *m_fof in self.tableView.FOFArray) {
+        for (FOF *m_fof in self.tableController.FOFArray) {
             if(m_fof.m_id == fof.m_id){
                 m_fof.m_likes = [NSString stringWithFormat:@"%d", [m_fof.m_likes intValue] + 1];
                 m_fof.m_liked = YES;
@@ -382,7 +382,7 @@
         fof.m_liked = NO;
         fof.m_likes = [NSString stringWithFormat:@"%d",[fof.m_likes intValue] - 1];
         
-        for (FOF *m_fof in self.tableView.FOFArray) {
+        for (FOF *m_fof in self.tableController.FOFArray) {
             if(m_fof.m_id == fof.m_id){
                 m_fof.m_likes = [NSString stringWithFormat:@"%d", [m_fof.m_likes intValue] - 1];
                 m_fof.m_liked = NO;
@@ -419,8 +419,8 @@
     
     commentController.tableCell = self;
     
-    [self.tableView.navigationController setNavigationBarHidden:NO];
-    [self.tableView.navigationController pushViewController:commentController animated:YES];
+    [self.tableController.navigationController setNavigationBarHidden:NO];
+    [self.tableController.navigationController pushViewController:commentController animated:YES];
     [commentController release];
 }
 
@@ -450,7 +450,17 @@
     if (newDescriptionHeight!=0)
         [descriptionLabel setHidden:NO];
     
-    if(!((NSNull*)fof.m_description==[NSNull null]||fof.m_description==nil||[fof.m_description isEqual:@""]))
+    
+    CGSize maxDescriptionFrameSize = CGSizeMake(descriptionLabel.frame.size.width, MAX_FRAME_HEIGHT);
+    
+    CGSize descriptionTextSize = [descriptionFullText sizeWithFont:descriptionLabel.font
+                                                   constrainedToSize:maxDescriptionFrameSize
+                                                       lineBreakMode:NSLineBreakByWordWrapping];
+    
+    CGFloat descriptionTextHeight = descriptionTextSize.height;
+    
+    if( !((NSNull*)fof.m_description==[NSNull null]||fof.m_description==nil||[fof.m_description isEqual:@""])
+       && (descriptionTextHeight > PREVIEW_N_LINES * LINE_HEIGHT))
         [readMoreLabel setHidden:NO];
 }
 
@@ -664,6 +674,36 @@
     return (NSArray *)linesArray;
 }
 
+static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ignore)
+{
+    
+    NSNumber *number1 = [NSNumber numberWithInt:image1.index];
+    NSNumber *number2 = [NSNumber numberWithInt:image2.index];
+    return [number1 compare:number2];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+    
+    // Configure the view for the selected state
+}
+
+/*- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+    [super willMoveToSuperview:newSuperview];
+    NSLog(@"%p willMoveToSuperview: %p", self, newSuperview);
+    if(newSuperview == nil) {
+        [self clearImages];
+         NSLog(@"IMAGES CLEARED!!!!");
+    }
+}
+
+- (oneway void) release {
+    
+    [super release];
+}*/
+
 -(void)loadImages {
     
     UITapGestureRecognizer *singleTapUserName = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadUserProfile:)] autorelease];
@@ -713,6 +753,36 @@
 - (void) decreaseCommentsCounter{
     NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [commentsCountLabel.text intValue] - 1] autorelease];
     [commentsCountLabel setText:newCount];
+}
+
+-(void) refreshImageSize {
+    
+    [supportView setUserInteractionEnabled:YES];
+    
+    if(imagebackFrame && imagefrontFrame && newImageHeight != 0.0){
+        
+        imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
+                                          imagebackFrame.frame.origin.y , imagebackFrame.frame.size.width, newImageHeight);
+        
+        
+        imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
+                                           imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newImageHeight);
+        
+        supportView.frame = CGRectMake(supportView.frame.origin.x,
+                                       supportView.frame.origin.y, supportView.frame.size.width, newImageHeight);
+        
+        playPauseButton.center = CGPointMake(playPauseButton.center.x, newImageHeight + PLAY_PAUSE_BUTTON_OFFSET);
+        
+        descriptionLabel.frame = CGRectMake(descriptionLabel.frame.origin.x,
+                                            newImageHeight + DESCRIPTION_LABEL_OFFSET,
+                                            descriptionLabel.frame.size.width,
+                                            newDescriptionHeight);
+        
+        readMoreLabel.frame = CGRectMake(readMoreLabel.frame.origin.x,
+                                         newImageHeight + DESCRIPTION_LABEL_OFFSET + READMORE_LABEL_OFFSET,
+                                         readMoreLabel.frame.size.width,
+                                         readMoreLabel.frame.size.height);
+    }
 }
 
 - (void) refreshWithFof:(FOF *)fofObject {
@@ -781,7 +851,7 @@
         [labelDate setText:fof.m_date];
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-        if((delegate.adminRule)  ||  (self.tableView.userId && (self.tableView.userId == delegate.myself.uid))){
+        if((delegate.adminRule)  ||  (self.tableController.userId && (self.tableController.userId == delegate.myself.uid))){
             deleteFOFButton.hidden = NO;
             
             UITapGestureRecognizer *deleteFOFGesture = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteFOFClicked:)] autorelease];
@@ -812,36 +882,6 @@
     }
 }
 
--(void) refreshImageSize {
-    
-    [supportView setUserInteractionEnabled:YES];
-    
-    if(imagebackFrame && imagefrontFrame && newImageHeight != 0.0){
-        
-        imagebackFrame.frame = CGRectMake(imagebackFrame.frame.origin.x,
-                                          imagebackFrame.frame.origin.y , imagebackFrame.frame.size.width, newImageHeight);
-        
-        
-        imagefrontFrame.frame = CGRectMake(imagefrontFrame.frame.origin.x,
-                                           imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, newImageHeight);
-        
-        supportView.frame = CGRectMake(supportView.frame.origin.x,
-                                       supportView.frame.origin.y, supportView.frame.size.width, newImageHeight);
-        
-        playPauseButton.center = CGPointMake(playPauseButton.center.x, newImageHeight + PLAY_PAUSE_BUTTON_OFFSET);
-        
-        descriptionLabel.frame = CGRectMake(descriptionLabel.frame.origin.x,
-                                            newImageHeight + DESCRIPTION_LABEL_OFFSET,
-                                            descriptionLabel.frame.size.width,
-                                            newDescriptionHeight);
-        
-        readMoreLabel.frame = CGRectMake(readMoreLabel.frame.origin.x,
-                                         newImageHeight + DESCRIPTION_LABEL_OFFSET + READMORE_LABEL_OFFSET,
-                                         readMoreLabel.frame.size.width,
-                                         readMoreLabel.frame.size.height);
-    }
-}
-
 - (IBAction)playPauseAction:(UIButton *)sender {
     
     if (timer)
@@ -859,36 +899,6 @@
         [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
     }
 }
-
-static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ignore)
-{
-    
-    NSNumber *number1 = [NSNumber numberWithInt:image1.index];
-    NSNumber *number2 = [NSNumber numberWithInt:image2.index];
-    return [number1 compare:number2];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
-
-/*- (void)willMoveToSuperview:(UIView *)newSuperview
-{
-    [super willMoveToSuperview:newSuperview];
-    NSLog(@"%p willMoveToSuperview: %p", self, newSuperview);
-    if(newSuperview == nil) {
-        [self clearImages];
-         NSLog(@"IMAGES CLEARED!!!!");
-    }
-}
-
-- (oneway void) release {
-    
-    [super release];
-}*/
 
 - (void)dealloc
 {
@@ -923,7 +933,7 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
     
     [descriptionFullText release];
     [descriptionPreviewText release];
-    [tableView release];
+    [tableController release];
     
     [super dealloc];
 }

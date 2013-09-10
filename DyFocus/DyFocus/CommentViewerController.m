@@ -770,7 +770,7 @@
                                    
                                    fof.m_comments = [NSString stringWithFormat: @"%d",[fof.m_comments intValue] + 1];
                                    
-                                   for (FOF *m_fof in self.tableCell.tableView.FOFArray) {
+                                   for (FOF *m_fof in self.tableCell.tableController.FOFArray) {
                                        if(m_fof.m_id == fof.m_id){
                                            m_fof.m_comments = [NSString stringWithFormat:@"%d", [m_fof.m_comments intValue] + 1];
                                            [self.tableCell increaseCommentsCounter];
