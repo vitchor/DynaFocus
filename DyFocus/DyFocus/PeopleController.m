@@ -412,6 +412,7 @@
 
         [self.navigationController pushViewController:profileController animated:true];
         [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+        [profileController release];
 
         
     } else if (!m_isFacebookTableEmpty) {
@@ -651,6 +652,7 @@
 	DyfocusUINavigationController *navCtlr = [[[DyfocusUINavigationController alloc] initWithRootViewController:invitationController] autorelease];
 	navCtlr.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[self presentModalViewController:navCtlr animated:YES];
+    [navCtlr release];
 }
 
 - (IBAction)switchSelectedClicked:(id)sender {

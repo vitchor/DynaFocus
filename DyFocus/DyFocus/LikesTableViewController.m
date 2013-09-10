@@ -78,6 +78,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self.navigationController pushViewController:profileController animated:YES];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+    [profileController release];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

@@ -231,7 +231,7 @@
     
     [self.navigationController pushViewController:self.tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-//    [self.tableController release];
+    [self.tableController release];
 }
 
 -(void)setUIPersonValues {

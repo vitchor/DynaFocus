@@ -421,6 +421,7 @@
     
     [self.tableView.navigationController setNavigationBarHidden:NO];
     [self.tableView.navigationController pushViewController:commentController animated:YES];
+    [commentController release];
 }
 
 -(void) startTimer {
