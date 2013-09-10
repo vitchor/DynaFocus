@@ -12,7 +12,7 @@
 
 @implementation FOFTableController
 
-@synthesize userId, reloading, shouldHideNavigationBar, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar, loadingView, m_tableView, refreshString, FOFArray, refreshHeaderView;
+@synthesize userId, shouldHideNavigationBar, shouldHideNavigationBarWhenScrolling, shouldHideTabBarWhenScrolling, shouldShowSegmentedBar, refreshString, FOFArray, refreshHeaderView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,21 +31,21 @@
     backView.backgroundColor = [UIColor clearColor];
     m_tableView.backgroundView = backView;
     
-    self.m_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    m_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    if (!refreshHeaderView && refreshString) {
+    if (!self.refreshHeaderView && self.refreshString) {
         
         refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - m_tableView.bounds.size.height, 320.0f, m_tableView.bounds.size.height)];
         
-        refreshHeaderView.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0];
-        refreshHeaderView.bottomBorderThickness = 1.0;
+        self.refreshHeaderView.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0];
+        self.refreshHeaderView.bottomBorderThickness = 1.0;
         
-        [refreshHeaderView setCurrentDate];
+        [self.refreshHeaderView setCurrentDate];
         
-        [m_tableView addSubview:refreshHeaderView];
+        [m_tableView addSubview:self.refreshHeaderView];
         m_tableView.showsVerticalScrollIndicator = YES;
         
-        [refreshHeaderView release];
+        [self.refreshHeaderView release];
     }
     
     [backView release];
@@ -63,30 +63,30 @@
     
     [m_tableView setDataSource:self];
     [m_tableView setDelegate:self];
-
+    
     //m_tableView.backgroundColor = [UIColor clearColor];
     
-    [self.navigationController setNavigationBarHidden:shouldHideNavigationBar];
+    [self.navigationController setNavigationBarHidden:self.shouldHideNavigationBar];
     
-    if (!(FOFArray && [FOFArray count] > 0)) {
+    if (!(self.FOFArray && [self.FOFArray count] > 0)) {
         // No FOFs to show:
     }
     
     else m_isFOFTableEmpty = FALSE;
- 
-    if(shouldShowSegmentedBar)
+    
+    if(self.shouldShowSegmentedBar)
         [self showSegmentedBar];
     
-    if(shouldHideTabBarWhenScrolling)
+    if(self.shouldHideTabBarWhenScrolling)
         [self showTabBar:self.tabBarController];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if(self.isReloading && withHeader){
+    if(isReloading && withHeader){
         
-        [refreshHeaderView setState:EGOOPullRefreshLoading];
+        [self.refreshHeaderView setState:EGOOPullRefreshLoading];
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.2];
         m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
@@ -105,12 +105,12 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"FOFTableController.viewDidAppear"];
     
-    if(shouldShowSegmentedBar)
+    if(self.shouldShowSegmentedBar)
         [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:YES];
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
-    if(shouldShowSegmentedBar){
+    if(self.shouldShowSegmentedBar){
         [self hideSegmentedBar];
         [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:NO];
     }
@@ -118,10 +118,14 @@
     [self resetNavigationControllerFrame];
 }
 
+- (void)viewDidUnload {
+    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
+	refreshHeaderView = nil;
+}
 
 -(void) refreshCellsImageSizes {
     
-    if (FOFArray && [FOFArray count] != 0) {
+    if (self.FOFArray && [self.FOFArray count] != 0) {
         
         NSArray *visibleCells = [m_tableView visibleCells];
         
@@ -147,7 +151,7 @@
 
 -(void) refreshImages {
 
-    if (FOFArray && [FOFArray count] != 0) {
+    if (self.FOFArray && [self.FOFArray count] != 0) {
         NSArray *visibleCells = [m_tableView visibleCells];
         
         if (visibleCells) {
@@ -165,7 +169,6 @@
     
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -176,18 +179,14 @@
 #pragma mark Table Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-    if (!FOFArray || [FOFArray count] == 0) {
+    if (!self.FOFArray || [self.FOFArray count] == 0) {
         m_isFOFTableEmpty = TRUE;
         return 1;
     }
     else {
         m_isFOFTableEmpty = FALSE;
-        return [FOFArray count];
+        return [self.FOFArray count];
     }
-}
-
-- (int)cellStyle {
-	return UITableViewCellStyleDefault;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -198,7 +197,7 @@
     if (m_isFOFTableEmpty == TRUE) {
         NSLog(@"FOF table is fucking empty motherfucker");
         NSString *cellId = @"empty";
-        cell = [self.m_tableView dequeueReusableCellWithIdentifier:cellId];
+        cell = [m_tableView dequeueReusableCellWithIdentifier:cellId];
         
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:[self cellStyle] reuseIdentifier:cellId] autorelease];
@@ -227,7 +226,7 @@
         tableView.backgroundColor = [UIColor clearColor];
         
         //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
-        cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell"];
+        cell = [m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell"];
         
         
         if (cell == nil) {
@@ -238,7 +237,7 @@
             
         }
         
-        //FOF *fof = (FOF *)[FOFArray objectAtIndex:indexPath.row];
+        //FOF *fof = (FOF *)[self.FOFArray objectAtIndex:indexPath.row];
         
 
         cell.tableView = self;
@@ -263,7 +262,7 @@
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (m_isFOFTableEmpty) {
         CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -293,48 +292,46 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
-	if (scrollView.isDragging && refreshHeaderView) {
-		if (refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_reloading) {
-			[refreshHeaderView setState:EGOOPullRefreshNormal];
-		} else if (refreshHeaderView.state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_reloading) {
-			[refreshHeaderView setState:EGOOPullRefreshPulling];
+	if (scrollView.isDragging && self.refreshHeaderView) {
+		if (self.refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !isReloading) {
+			[self.refreshHeaderView setState:EGOOPullRefreshNormal];
+		} else if (self.refreshHeaderView.state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !isReloading) {
+			[self.refreshHeaderView setState:EGOOPullRefreshPulling];
 		}
 	}
     
     if (scrollView.contentOffset.y > lastOffset) {
         
-        if(shouldHideNavigationBarWhenScrolling)
+        if(self.shouldHideNavigationBarWhenScrolling)
             [self hideNavigationBar:self.navigationController];
 
-        if(shouldHideTabBarWhenScrolling)
+        if(self.shouldHideTabBarWhenScrolling)
             [self hideTabBar:self.tabBarController];
     } else {
         
-        if(shouldHideNavigationBarWhenScrolling)
+        if(self.shouldHideNavigationBarWhenScrolling)
             [self showNavigationBar:self.navigationController];
 
-        if(shouldHideTabBarWhenScrolling)
+        if(self.shouldHideTabBarWhenScrolling)
             [self showTabBar:self.tabBarController];
     }
 }
-
 
 -(void) scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     lastOffset = scrollView.contentOffset.y;
 }
 
-
 - (void)dataSourceDidFinishLoadingNewData{
     
-	_reloading = NO;
+	isReloading = NO;
     
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:.3];
 	[m_tableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
 	[UIView commitAnimations];
     
-	[refreshHeaderView setState:EGOOPullRefreshNormal];
-    [refreshHeaderView setCurrentDate];
+	[self.refreshHeaderView setState:EGOOPullRefreshNormal];
+    [self.refreshHeaderView setCurrentDate];
 }
 
 - (void) reloadTableViewDataSource {
@@ -343,7 +340,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self refreshFOFArrayWithHeader:NO];
 }
-
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
 	[self refreshCellsImageSizes];
@@ -354,133 +350,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 		[self refreshCellsImageSizes];
 	}
     
-    if (scrollView.contentOffset.y <= - 65.0f && !_reloading && refreshHeaderView) {
+    if (scrollView.contentOffset.y <= - 65.0f && !isReloading && self.refreshHeaderView) {
 		[self reloadTableViewDataSource];
-		[refreshHeaderView setState:EGOOPullRefreshLoading];
+		[self.refreshHeaderView setState:EGOOPullRefreshLoading];
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.2];
 		m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
 		[UIView commitAnimations];
 	}
-}
-
-
--(void) addNewCellHeight:(float)height atRow:(int)row {
-    
-    if(!cellHeightDictionary) {
-        cellHeightDictionary = [[NSMutableDictionary alloc] init];
-    }
-    
-    [cellHeightDictionary setObject:[NSNumber numberWithFloat:height] forKey:[NSNumber numberWithInt:row]];
-
-    NSLog(@"NEWWW CELL HEIGHT! %f", height);
-    
-    [m_tableView beginUpdates];
-    [m_tableView endUpdates];
-}
-
-- (void)viewDidUnload {
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-	refreshHeaderView=nil;
-}
-
--(void) refreshFOFArrayWithHeader:(BOOL)isWithHeader{
-    
-    _reloading = YES;
-    withHeader = isWithHeader;
-    
-    
-    if(self.isViewLoaded && self.view.window && withHeader){
-        
-        [refreshHeaderView setState:EGOOPullRefreshLoading];
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.2];
-        m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
-        [UIView commitAnimations];
-        
-        [m_tableView setContentOffset:CGPointMake(0, -60) animated:YES];
-        
-        withHeader = NO;
-    }
-    
-    
-    
-    NSString *requestString = [NSString stringWithFormat: @"%@%@", dyfocus_url, refreshString];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: requestString]];
-    
-    NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
-    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    
-    NSString *userIdString = nil;
-    if (userId && userId != 0) {
-        userIdString = [NSString stringWithFormat:@"%ld", userId];
-    } else {
-        userIdString = [NSString stringWithFormat:@"%ld", delegate.myself.uid];
-    }
-    
-    [jsonRequestObject setObject:userIdString forKey:@"user_id"];
-
-
-    
-    NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
-                           json] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               
-                               if(!error && data) {
-                                   
-                                   NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-                                   
-                                   NSLog(@"stringReply: %@", stringReply);
-                                   
-                                   NSDictionary *jsonValues = [stringReply JSONValue];
-                                   
-                                   if (jsonValues) {
-                                       NSDictionary * jsonFOFs = [jsonValues valueForKey:@"fof_list"];
-                                       
-                                    
-                                       
-                                       NSMutableArray *fofs = [NSMutableArray array];
-                                       
-                                       for (int i = 0; i < [jsonFOFs count]; i++) {
-                                           
-                                           NSDictionary *jsonFOF = [jsonFOFs objectAtIndex:i];
-                                           
-                                           FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
-                                           
-                                           if(fof.m_private){
-                                               if(userId  &&  userId == delegate.myself.uid){
-                                                   [fofs addObject:fof];
-                                               }
-                                           }else{
-                                               [fofs addObject:fof];
-                                           }
-                                       }
-                                       
-                                       [self.FOFArray removeAllObjects];
-                                       [self.FOFArray addObjectsFromArray:fofs];
-                                       
-                                       
-                                       [refreshHeaderView setCurrentDate];
-                                       
-                                       [self dataSourceDidFinishLoadingNewData];
-                                       
-                                       [m_tableView reloadData];
-                                       [self refreshCellsImageSizes];
-                                       
-                                       [LoadView fadeAndRemoveFromView:self.view];
-                                       [loadingView setHidden:YES];
-                                   }
-                               }
-                           }];    
 }
 
 -(void) showSegmentedBar
@@ -581,14 +458,127 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+- (int)cellStyle {
+	return UITableViewCellStyleDefault;
+}
+
+-(void) addNewCellHeight:(float)height atRow:(int)row {
+    
+    if(!cellHeightDictionary) {
+        cellHeightDictionary = [[NSMutableDictionary alloc] init];
+    }
+    
+    [cellHeightDictionary setObject:[NSNumber numberWithFloat:height] forKey:[NSNumber numberWithInt:row]];
+    
+    NSLog(@"NEWWW CELL HEIGHT! %f", height);
+    
+    [m_tableView beginUpdates];
+    [m_tableView endUpdates];
+}
+
+-(void) refreshFOFArrayWithHeader:(BOOL)isWithHeader{
+    
+    isReloading = YES;
+    withHeader = isWithHeader;
+    
+    if(self.isViewLoaded && self.view.window && withHeader){
+        
+        [self.refreshHeaderView setState:EGOOPullRefreshLoading];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.2];
+        m_tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
+        [UIView commitAnimations];
+        
+        [m_tableView setContentOffset:CGPointMake(0, -60) animated:YES];
+        
+        withHeader = NO;
+    }
+    
+    
+    
+    NSString *requestString = [NSString stringWithFormat: @"%@%@", dyfocus_url, self.refreshString];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: requestString]];
+    
+    NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:1] autorelease];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
+    NSString *userIdString = nil;
+    if (self.userId && self.userId != 0) {
+        userIdString = [NSString stringWithFormat:@"%ld", self.userId];
+    } else {
+        userIdString = [NSString stringWithFormat:@"%ld", delegate.myself.uid];
+    }
+    
+    [jsonRequestObject setObject:userIdString forKey:@"user_id"];
+    
+    
+    
+    NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[[NSString stringWithFormat:@"json=%@",
+                           json] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               
+                               if(!error && data) {
+                                   
+                                   NSString *stringReply = [(NSString *)[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                                   
+                                   NSLog(@"stringReply: %@", stringReply);
+                                   
+                                   NSDictionary *jsonValues = [stringReply JSONValue];
+                                   
+                                   if (jsonValues) {
+                                       NSDictionary * jsonFOFs = [jsonValues valueForKey:@"fof_list"];
+                                       
+                                       
+                                       
+                                       NSMutableArray *fofs = [NSMutableArray array];
+                                       
+                                       for (int i = 0; i < [jsonFOFs count]; i++) {
+                                           
+                                           NSDictionary *jsonFOF = [jsonFOFs objectAtIndex:i];
+                                           
+                                           FOF *fof = [[FOF fofFromJSON:jsonFOF] autorelease];
+                                           
+                                           if(fof.m_private){
+                                               if(self.userId  &&  self.userId == delegate.myself.uid){
+                                                   [fofs addObject:fof];
+                                               }
+                                           }else{
+                                               [fofs addObject:fof];
+                                           }
+                                       }
+                                       
+                                       [self.FOFArray removeAllObjects];
+                                       [self.FOFArray addObjectsFromArray:fofs];
+                                       
+                                       
+                                       [self.refreshHeaderView setCurrentDate];
+                                       
+                                       [self dataSourceDidFinishLoadingNewData];
+                                       
+                                       [m_tableView reloadData];
+                                       [self refreshCellsImageSizes];
+                                       
+                                       [LoadView fadeAndRemoveFromView:self.view];
+                                       [loadingView setHidden:YES];
+                                   }
+                               }
+                           }];
+}
+
 -(void)delloc
 {
-    [refreshString release];
-    [FOFArray release];
-    [cellHeightDictionary release];
-    
     [loadingView release];
     [m_tableView release];
+    [cellHeightDictionary release];
     
     [refreshString release];
     [FOFArray release];

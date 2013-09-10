@@ -126,7 +126,7 @@
         [self popViewControllerAnimated:YES];
     }else{
         [self pushViewController:self.trendingTableController animated:YES];
-        [self.trendingTableController release];
+//        [trendingTableController release];  // ***crashes after switching 9 times
     }
 }
 

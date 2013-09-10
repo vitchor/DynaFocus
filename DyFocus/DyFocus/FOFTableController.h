@@ -12,53 +12,35 @@
 #import "LoadView.h"
 #import "EGORefreshTableHeaderView.h"
 
-
 @interface FOFTableController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     
-//    long userId;
     float lastOffset;
     
-    BOOL _reloading;
+    BOOL isReloading;
     BOOL m_isFOFTableEmpty;
     BOOL withHeader;
-//    BOOL shouldHideNavigationBar;
-//    BOOL shouldHideNavigationBarWhenScrolling;
-//    BOOL shouldHideTabBarWhenScrolling;
-//    BOOL shouldShowSegmentedBar;
-   
-//    IBOutlet UITableView *m_tableView;
-//    IBOutlet UIView *loadingView;
-   
-    NSString *refreshString;
-    NSMutableArray *FOFArray;
+
+    UIView *loadingView;
+    UITableView *m_tableView;
     NSMutableDictionary *cellHeightDictionary;
     
-//    EGORefreshTableHeaderView *refreshHeaderView;
-    
+    EGORefreshTableHeaderView *refreshHeaderView;
 }
 
 @property (nonatomic, readwrite) long userId;
-
-@property(assign,getter=isReloading) BOOL reloading;
 
 @property (nonatomic, readwrite) BOOL shouldHideNavigationBar;
 @property (nonatomic, readwrite) BOOL shouldHideNavigationBarWhenScrolling;
 @property (nonatomic, readwrite) BOOL shouldHideTabBarWhenScrolling;
 @property (nonatomic, readwrite) BOOL shouldShowSegmentedBar;
 
-@property (nonatomic,retain)  IBOutlet UIView *loadingView;
-@property (nonatomic, retain) IBOutlet UITableView *m_tableView;
-
 @property (nonatomic, readwrite) NSString *refreshString;
 @property (nonatomic, retain) NSMutableArray *FOFArray;
 
 @property(nonatomic,readonly) EGORefreshTableHeaderView *refreshHeaderView;
 
-
+-(int)  cellStyle;
 -(void) addNewCellHeight:(float)height atRow:(int)row;
 -(void) refreshFOFArrayWithHeader:(BOOL)isWithHeader;
--(void) reloadTableViewDataSource;
--(void) dataSourceDidFinishLoadingNewData;
--(int)  cellStyle;
 
 @end
