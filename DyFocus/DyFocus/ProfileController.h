@@ -8,20 +8,28 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import "CustomBadge.h"
-#import "Person.h"
+#import <MobileCoreServices/UTCoreTypes.h>
+
 #import "FOFTableController.h"
+
+#import "Person.h"
+#import "LoadView.h"
+#import "CustomBadge.h"
+#import "UIImageLoaderDyfocus.h"
+
+#define FOLLOW 0
+#define UNFOLLOW 1
 
 @interface ProfileController : UIViewController {
     
-    CustomBadge *notificationBadge;
+    int userKind;
+    BOOL forceHideNavigationBar;
     
+    IBOutlet UIButton *logoutButton;
     IBOutlet UIButton *myPicturesButton;
     IBOutlet UIButton *notificationButton;
     IBOutlet UIButton *follow;
     IBOutlet UIButton *unfollow;
-    
-    IBOutlet UIImageView *userPicture;
     
     IBOutlet UILabel *followingLabel;
     IBOutlet UILabel *followersLabel;
@@ -29,53 +37,23 @@
     
     IBOutlet UIView *followView;
     IBOutlet UIView *unfollowView;
-    
     IBOutlet UIView *notificationView;
     IBOutlet UIView *logoutView;
     IBOutlet UIView *changeImageView;
+    IBOutlet UIImageView *userPicture;
     
-    FOFTableController *tableController;
-    Person *person;
-    NSMutableArray *personFOFArray;
-    
-    BOOL forceHideNavigationBar;
-    int userKind;
-    
-    IBOutlet UIButton *logoutButton;
-
+    CustomBadge *notificationBadge;
 }
-//@property (strong, nonatomic) IBOutlet UIButton *logoutButton;
-//@property (strong, nonatomic) IBOutlet UIButton *myPicturesButton;
-//@property (strong, nonatomic) IBOutlet UIButton *notificationButton;
-//@property (strong, nonatomic) IBOutlet UIButton *follow;
-//@property (strong, nonatomic) IBOutlet UIButton *unfollow;
-
-//@property (strong, nonatomic) IBOutlet UILabel *followingLabel;
-//@property (strong, nonatomic) IBOutlet UILabel *followersLabel;
-//@property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
-
-//@property (strong, nonatomic) IBOutlet UIView *logoutView;
-//@property (retain, nonatomic) IBOutlet UIView *followView;
-//@property (retain, nonatomic) IBOutlet UIView *unfollowView;
-//@property (strong, nonatomic) IBOutlet UIView *notificationView;
-//@property (strong, nonatomic) IBOutlet UIView *changeImageView;
-
-//@property (strong, nonatomic) IBOutlet UIImageView *userPicture;
-@property (nonatomic, retain) FOFTableController *tableController;
-
-@property (nonatomic, retain) NSMutableArray *personFOFArray;
-@property (nonatomic, retain) Person *person;
 
 @property (nonatomic, readwrite) BOOL forceHideNavigationBar;
+@property (nonatomic, retain) NSMutableArray *personFOFArray;
+@property (nonatomic, retain) Person *person;
+@property (nonatomic, retain) FOFTableController *tableController;
 
-- (void)logout;
-- (void)showNotifications;
-
-
+- (id)initWithUserId:(long) userId;
 - (id)initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray;
-
-- (id) initWithUserId:(long) userId;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray;
+
+- (void)showNotifications;
 
 @end

@@ -7,23 +7,26 @@
 //
 
 #import "ProfileController.h"
-#import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
-#import "FOFTableController.h"
-#import "CustomBadge.h"
 #import "NotificationTableViewController.h"
-#import "UIImageLoaderDyfocus.h"
-#import "LoadView.h"
-#import <MobileCoreServices/UTCoreTypes.h>
-
-#define FOLLOW 0
-#define UNFOLLOW 1
 
 @implementation ProfileController
 
-//@synthesize logoutButton, myPicturesButton, userPicture, notificationButton, followingLabel, followersLabel, followView, unfollowView, follow, unfollow, notificationView, logoutView, forceHideNavigationBar, tableController, changeImageView, personFOFArray, person, userNameLabel;
+@synthesize forceHideNavigationBar, personFOFArray, person, tableController;
 
-@synthesize tableController, forceHideNavigationBar, person, personFOFArray;
+- (id) initWithUserId:(long)userId {
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    if (screenBounds.size.height == 568) {
+        // code for 4-inch screen
+        return [self initWithNibName:@"ProfileController_i5" bundle:nil userId:userId];
+    } else {
+        // code for 3.5-inch screen
+        return [self initWithNibName:@"ProfileController" bundle:nil userId:userId];
+    }
+    
+}
 
 - (id) initWithPerson:(Person *)profilePerson personFOFArray:(NSMutableArray *)profilePersonFOFArray {
 
@@ -39,18 +42,32 @@
     
 }
 
-- (id) initWithUserId:(long)userId {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray {
     
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    
-    if (screenBounds.size.height == 568) {
-        // code for 4-inch screen
-        return [self initWithNibName:@"ProfileController_i5" bundle:nil userId:userId];
+    if (!(profilePerson.kind == MYSELF) && (!profilePersonFOFArray || [profilePersonFOFArray count] == 0)) {
+        
+        if (profilePerson) {
+            self.person = profilePerson;
+            userKind = profilePerson.kind;
+            return [self initWithUserId:self.person.uid];
+        } else {
+            return nil;
+        }
+        
+        
     } else {
-        // code for 3.5-inch screen
-        return [self initWithNibName:@"ProfileController" bundle:nil userId:userId];
+        
+        self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+        
+        if (self) {
+            self.personFOFArray = profilePersonFOFArray;
+            self.person = profilePerson;
+            userKind = profilePerson.kind;
+        }
+        
+        return self;
     }
-    
+    return nil;
 }
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil userId:(long)userId {
@@ -143,35 +160,6 @@
     return self;
 }
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil person:(Person *)profilePerson personFofArray:(NSMutableArray *)profilePersonFOFArray {
-    
-    if (!(profilePerson.kind == MYSELF) && (!profilePersonFOFArray || [profilePersonFOFArray count] == 0)) {
-        
-        if (profilePerson) {
-            self.person = profilePerson;
-            userKind = profilePerson.kind;
-            return [self initWithUserId:self.person.uid];
-        } else {
-            return nil;
-        }
-        
-        
-    } else {
-                   
-        self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-        
-        if (self) {
-            self.personFOFArray = profilePersonFOFArray;
-            self.person = profilePerson;
-            userKind = profilePerson.kind;
-        }
-    
-        return self;
-    }
-    return nil;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -184,10 +172,23 @@
     
 }
 
+-(void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    
+    [delegate logEvent:@"ProfileController.viewDidAppear"];
+    
+    if (userKind == MYSELF) {
+        [self updateBadgeView];
+    }
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (forceHideNavigationBar) {
+    if (self.forceHideNavigationBar) {
         [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     }
     
@@ -211,24 +212,9 @@
     }
 }
 
--(void) viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    
-    [delegate logEvent:@"ProfileController.viewDidAppear"];
-    
-    if (userKind == MYSELF) {
-        [self updateBadgeView];
-    }
-    
-}
-
 -(void) showPictures {
     
     if(!self.tableController){
-    
-        NSLog(@"PERSON IIIIIIDDDDDDDDDDDDD: %ld", self.person.uid);
         
         self.tableController = [[FOFTableController alloc] init];
         self.tableController.refreshString = refresh_user_url;
@@ -246,6 +232,8 @@
     
     [self.navigationController pushViewController:self.tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+//    [tableController release];  //crashes after pushing 5 times!
+    
 }
 
 -(void)setUIPersonValues {
@@ -340,6 +328,9 @@
     mediaUI.delegate = delegate;
     
     [controller presentModalViewController: mediaUI animated: YES];
+    
+    [mediaUI release];
+    
     return YES;
 }
 
@@ -376,23 +367,6 @@
         }
         
     }
-}
-
--(void) showNotifications {
-
-    NotificationTableViewController *notificationTableController = [[NotificationTableViewController alloc] init];
-    
-    //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    //notificationTableController.notifications = appDelegate.userNotifications;
-    
-    notificationTableController.navigationItem.title = @"Notifications";
-    
-    notificationTableController.hidesBottomBarWhenPushed = YES;
-    
-    [self.navigationController pushViewController:notificationTableController animated:true];
-    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
-    [notificationTableController release];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -506,8 +480,25 @@
      ];
 }
 
+-(void) showNotifications {
+    
+    NotificationTableViewController *notificationTableController = [[NotificationTableViewController alloc] init];
+    
+    //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    //notificationTableController.notifications = appDelegate.userNotifications;
+    
+    notificationTableController.navigationItem.title = @"Notifications";
+    
+    notificationTableController.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:notificationTableController animated:true];
+    [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+    [notificationTableController release];
+    
+}
 
 -(void)dealloc{
+    
     [logoutButton release];
     [myPicturesButton release];
     [notificationButton release];
@@ -516,26 +507,22 @@
     
     [followingLabel release];
     [followersLabel release];
+    [userNameLabel release];
     
-    [logoutView release];
     [followView release];
     [unfollowView release];
     [notificationView release];
+    [logoutView release];
     [changeImageView release];
-    
     [userPicture release];
-    [tableController release];
-    
-    [personFOFArray removeAllObjects];
-    [personFOFArray release];
-    [person release];
     
     [notificationBadge release];
-    
-    [userNameLabel release];
-    
+
+    [personFOFArray release];
+    [person release];
+    [tableController release];
+
     [super dealloc];
 }
-
 
 @end
