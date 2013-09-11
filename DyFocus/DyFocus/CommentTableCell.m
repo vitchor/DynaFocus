@@ -10,7 +10,7 @@
 
 @implementation CommentTableCell
 
-@synthesize imageUserPicture, deleteCommentBtn, labelUserName, commentTextView,  labelDate,  m_comment, commentController;
+@synthesize m_comment, commentController;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -19,17 +19,6 @@
                 
     }
     return self;
-}
-
-- (void) clear {
-    
-    if (self.m_comment) {
-        [self.m_comment release];
-        self.m_comment = nil;
-    }
-    
-    [self.imageUserPicture setImage: [UIImage imageNamed:@"AvatarDefault.png"]];
-    
 }
 
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
@@ -143,30 +132,18 @@
 
 - (void) refreshWithComment: (Comment *)comment {
     
-    self.labelUserName.text = comment.m_userName;
-    self.commentTextView.text = comment.m_message;
+    labelUserName.text = comment.m_userName;
+    commentTextView.text = comment.m_message;
     
     if (comment.m_date && ![comment.m_date isEqualToString:@"null"]) {
-        self.labelDate.text = comment.m_date;
+        labelDate.text = comment.m_date;
     }
     
     
     UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-    [imageLoader loadPictureWithFaceId:comment.m_userFacebookId andImageView:self.imageUserPicture andIsSmall:YES];
+    [imageLoader loadPictureWithFaceId:comment.m_userFacebookId andImageView:imageUserPicture andIsSmall:YES];
     
-    if (self.m_comment) {
-        [self.m_comment release];
-        self.m_comment = nil;
-    }
-    
-    self.m_comment = [[Comment alloc] init];
-    self.m_comment.m_uid = [[comment.m_uid copy] autorelease];
-    self.m_comment.m_date = [[comment.m_date copy] autorelease];
-    self.m_comment.m_fofId = [[comment.m_fofId copy] autorelease];
-    self.m_comment.m_message = [[comment.m_message copy] autorelease];
-    self.m_comment.m_userFacebookId = [[comment.m_userFacebookId copy] autorelease];
-    self.m_comment.m_userName = [[comment.m_userName copy] autorelease];
-    self.m_comment.m_userId = comment.m_userId;
+    self.m_comment = comment;
     
     UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)] autorelease];
     [self addGestureRecognizer:singleTap];
@@ -174,11 +151,11 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     
     if(delegate.adminRule  ||  self.m_comment.m_userId == delegate.myself.uid){
-        self.deleteCommentBtn.hidden = NO;
+        deleteCommentBtn.hidden = NO;
         UITapGestureRecognizer *singleTapDelete = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteCommentPressed)] autorelease];
-        [self.deleteCommentBtn addGestureRecognizer:singleTapDelete];
+        [deleteCommentBtn addGestureRecognizer:singleTapDelete];
     }else{
-        self.deleteCommentBtn.hidden = YES;
+        deleteCommentBtn.hidden = YES;
     }
 }
 

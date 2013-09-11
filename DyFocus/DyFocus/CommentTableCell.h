@@ -20,13 +20,12 @@
 
 @interface CommentTableCell : UITableViewCell {
     
+    IBOutlet UIImageView *imageUserPicture;
+    IBOutlet UIButton *deleteCommentBtn;
+    IBOutlet UILabel *labelUserName;
+    IBOutlet UILabel *commentTextView;
+    IBOutlet UILabel *labelDate;
 }
-
-@property (nonatomic,retain) IBOutlet UIImageView *imageUserPicture;
-@property (nonatomic,retain) IBOutlet UIButton *deleteCommentBtn;
-@property (nonatomic,retain) IBOutlet UILabel *labelUserName;
-@property (nonatomic,retain) IBOutlet UILabel *commentTextView;
-@property (nonatomic,retain) IBOutlet UILabel *labelDate;
 
 @property (nonatomic,retain) Comment *m_comment;
 @property (nonatomic,retain) CommentViewerController *commentController;
