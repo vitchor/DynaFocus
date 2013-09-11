@@ -241,7 +241,7 @@
         //FOF *fof = (FOF *)[FOFArray objectAtIndex:indexPath.row];
         
 
-        cell.tableView = self;
+        cell.tableController = self;
         
         cell.row = indexPath.row;
 

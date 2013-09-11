@@ -122,7 +122,7 @@
                                        }
                                        [self.commentController.tableView reloadData];
                                        // TODO- Now it is time to decrease FofTableCell field                                       
-                                       for (FOF *m_fof in self.commentController.tableCell.tableView.FOFArray) {
+                                       for (FOF *m_fof in self.commentController.tableCell.tableController.FOFArray) {
                                            if([m_fof.m_id longLongValue] == [self.m_comment.m_fofId longLongValue]){
                                                m_fof.m_comments = [NSString stringWithFormat:@"%d", [m_fof.m_comments intValue] - 1];
                                                [self.commentController.tableCell decreaseCommentsCounter];

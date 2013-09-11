@@ -84,7 +84,7 @@
 @property (nonatomic,readwrite) int row;
 @property (nonatomic,retain) NSString *descriptionFullText;
 @property (nonatomic,retain) NSMutableString *descriptionPreviewText;
-@property (nonatomic,retain) FOFTableController *tableView;
+@property (nonatomic,retain) FOFTableController *tableController;
 
 - (void) loadImages;
 - (void) increaseCommentsCounter;
