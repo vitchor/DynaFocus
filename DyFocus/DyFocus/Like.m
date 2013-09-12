@@ -14,8 +14,7 @@
 
 - (void)dealloc {
     [m_userName release];
-    [m_fofId release];
-    [m_fofId release];
+    [m_userFacebookId release];
     [m_fofId release];
     [m_uid release];
 	[super dealloc];

@@ -269,8 +269,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         ProfileController *profileController = [[ProfileController alloc] initWithUserId:notification.m_triggerId];
 
         profileController.hidesBottomBarWhenPushed = YES;
-    
+           
         [self.navigationController pushViewController:profileController animated:YES];
+        [profileController release];
         
     } else if (notification.m_triggerType == NOTIFICATION_COMMENTED_ON_COMMENTED_FOF || notification.m_triggerType == NOTIFICATION_COMMENTED_ON_LIKED_FOF) {
         
@@ -337,6 +338,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self.navigationController pushViewController:tableController animated:true];
     [self.navigationController setNavigationBarHidden:NO animated:TRUE];
+    [tableController release];
 }
 
 -(void)showOkAlertWithMessage:(NSString *)message andTitle:(NSString *)title

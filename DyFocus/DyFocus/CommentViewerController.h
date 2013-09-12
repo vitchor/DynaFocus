@@ -7,56 +7,47 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppDelegate.h"
-#import "FOFTableCell.h"
+
 #import "LikesTableViewController.h"
 
-@class TouchView;
+#import "JSON.h"
+#import "LoadView.h"
+#import "AppDelegate.h"
+#import "FOFTableCell.h"
+
+#define kOFFSET_FOR_KEYBOARD 400.0
 
 @interface CommentViewerController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate> {
     
-    IBOutlet UISearchBar *inputMessageTextField;
-    IBOutlet UITableView *tableView;
-    IBOutlet UILabel *likesLabel;
-    IBOutlet UIScrollView *scrollView;
-    IBOutlet UIView *commentView;
-    IBOutlet UITextView *fbCommentTextView;
-    IBOutlet FOFTableCell *tableCell;
-    
-    IBOutlet UIView *activityView;
-    IBOutlet UIActivityIndicatorView *activityIndicator;
-    IBOutlet UILabel *sharingLabel;
-    IBOutlet UILabel *sharingCompletedLabel;
-    
-    NSMutableArray *comments;
-    NSMutableArray *likes;
-    IBOutlet UIView *likesView;
-    
-    BOOL isKeyboardHidden;
+    int keyboardSize;
     BOOL isTableEmpty;
     
+    IBOutlet UILabel *sharingLabel;
+    IBOutlet UILabel *sharingCompletedLabel;
+    IBOutlet UILabel *likesLabel;
+    
+    IBOutlet UIView *commentView;
+    IBOutlet UIView *likesView;
+    IBOutlet UIView *activityView;
+    
+    IBOutlet UITextView *fbCommentTextView;
+    IBOutlet UIScrollView *scrollView;
+    
+    IBOutlet UISearchBar *inputMessageTextField;
+    IBOutlet UIActivityIndicatorView *activityIndicator;
+
+    NSMutableArray *likes;
+    
     FOF *fof;
-    
-    int keyboardSize;
-    
-    BOOL isCommenting;
-    
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil andFOF:(FOF *)FOF;
-
-- (void)hideKeyboard;
-@property (nonatomic, retain) IBOutlet FOFTableCell *tableCell;
-@property (nonatomic, retain) IBOutlet UISearchBar *inputMessageTextField;
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) IBOutlet UILabel *likesLabel;
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, retain) IBOutlet UIView *commentView;
-@property (nonatomic, retain) IBOutlet UIView *likesView;
-@property (nonatomic, retain) IBOutlet UITextView *fbCommentTextView;
-@property (nonatomic) BOOL isKeyboardHidden;
+@property (nonatomic,readwrite) BOOL isKeyboardHidden;
 @property (nonatomic,readwrite) BOOL isCommenting;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *comments;
+@property (nonatomic, retain) FOFTableCell *tableCell;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil andFOF:(FOF *)FOF;
+- (void)hideKeyboard;
 
 @end
