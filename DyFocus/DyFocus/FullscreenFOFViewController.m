@@ -33,6 +33,31 @@
     UITapGestureRecognizer *tapView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popController)];
     [self.view addGestureRecognizer:tapView];
     [tapView release];
+    
+    // Create a view of the standard size at the top of the screen.
+    // Available AdSize constants are explained in GADAdSize.h.
+    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    
+    // Specify the ad's "unit identifier". This is your AdMob Publisher ID.
+    bannerView_.adUnitID = @"ca-app-pub-4922757350349330/6794918205";
+    
+    // Let the runtime know which UIViewController to restore after taking
+    // the user wherever the ad goes and add it to the view hierarchy.
+    bannerView_.rootViewController = self;
+    [self.view addSubview:bannerView_];
+    
+    GADRequest *request = [GADRequest request];
+    
+    // Make the request for a test ad. Put in an identifier for the simulator as
+    // well as any devices you want to receive test ads.
+    request.testDevices = [NSArray arrayWithObjects:@"c7a566cbe07e78e282956d4e44695295", nil];
+    
+    // Initiate a generic request to load it with an ad.
+    [bannerView_ loadRequest:request];
+    
+    
+//    [bannerView_ loadRequest:[GADRequest request]];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -97,6 +122,9 @@
     [playPauseButton release];
     [playPauseButtonX release];
     [playPauseButtonY release];
+    
+    [bannerView_ release];
+    
     [super dealloc];
 }
 
@@ -113,17 +141,17 @@
     backImageView.transform = CGAffineTransformIdentity;
     frontImageView.transform = CGAffineTransformIdentity;
     
-        [UIView beginAnimations:@"View Flip" context:nil];
-        [UIView setAnimationDuration:0.80];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        
-        [UIView setAnimationTransition:
-         UIViewAnimationTransitionFlipFromLeft
-                               forView:self.navigationController.view cache:NO];
-        
-        
-        [self.navigationController popViewControllerAnimated:YES];
-        [UIView commitAnimations];
+    [UIView beginAnimations:@"View Flip" context:nil];
+    [UIView setAnimationDuration:0.80];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    
+    [UIView setAnimationTransition:
+     UIViewAnimationTransitionFlipFromLeft
+                           forView:self.navigationController.view cache:NO];
+    
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    [UIView commitAnimations];
 }
 
 - (void)fadeImages {
@@ -208,6 +236,7 @@
             
             backImageView.transform = CGAffineTransformIdentity;
             frontImageView.transform = CGAffineTransformIdentity;
+//            bannerView_.transform = CGAffineTransformIdentity;
             
             [UIView animateWithDuration:0.15 animations:^{
                 playPauseButton.alpha = 0.0;
@@ -218,11 +247,15 @@
                     [self setPlayPauseButtonPlace:orientation];
                 }];
             }];
+            
+//            [bannerView_ setAdSize:kGADAdSizeSmartBannerPortrait];
         }
         else if (orientation == UIDeviceOrientationPortraitUpsideDown)
         {
             backImageView.transform = CGAffineTransformMakeRotation(M_PI);
             frontImageView.transform = CGAffineTransformMakeRotation(M_PI);
+//            bannerView_.transform = CGAffineTransformMakeRotation(M_PI);
+
             
             [UIView animateWithDuration:0.15 animations:^{
                 playPauseButton.alpha = 0.0;
@@ -233,6 +266,8 @@
                     [self setPlayPauseButtonPlace:orientation];
                 }];
             }];
+            
+//            [bannerView_ setAdSize:kGADAdSizeSmartBannerPortrait];
         }
         else if(orientation == UIDeviceOrientationLandscapeRight)
         {
@@ -242,6 +277,7 @@
             
             backImageView.transform = transfConcat;
             frontImageView.transform = transfConcat;
+//            bannerView_.transform = transfRotation;
             
             [UIView animateWithDuration:0.15 animations:^{
                 playPauseButton.alpha = 0.0;
@@ -252,6 +288,8 @@
                     [self setPlayPauseButtonPlace:orientation];
                 }];
             }];
+            
+//            [bannerView_ setAdSize:kGADAdSizeSmartBannerLandscape];
         }
         else if(orientation == UIDeviceOrientationLandscapeLeft)
         {
@@ -261,6 +299,7 @@
             
             backImageView.transform = transfConcat;
             frontImageView.transform = transfConcat;
+//            bannerView_.transform = transfRotation;
             
             [UIView animateWithDuration:0.15 animations:^{
                 playPauseButton.alpha = 0.0;
@@ -271,11 +310,14 @@
                     [self setPlayPauseButtonPlace:orientation];
                 }];
             }];
+            
+//            [bannerView_ setAdSize:kGADAdSizeSmartBannerLandscape];
         }
         else if(orientation == UIDeviceOrientationUnknown)
         {
             backImageView.transform = CGAffineTransformIdentity;
             frontImageView.transform = CGAffineTransformIdentity;
+//            bannerView_.transform = CGAffineTransformIdentity;
             
             [UIView animateWithDuration:0.15 animations:^{
                 playPauseButton.alpha = 0.0;
@@ -286,11 +328,14 @@
                     [self setPlayPauseButtonPlace:orientation];
                 }];
             }];
+            
+//            [bannerView_ setAdSize:kGADAdSizeSmartBannerPortrait];
         }
         else if(firstTime && (orientation == UIDeviceOrientationFaceUp || orientation == UIDeviceOrientationFaceDown))
         {
             backImageView.transform = CGAffineTransformIdentity;
             frontImageView.transform = CGAffineTransformIdentity;
+//            bannerView_.transform = CGAffineTransformIdentity;
             
             [UIView animateWithDuration:0.15 animations:^{
                 playPauseButton.alpha = 0.0;
@@ -301,6 +346,8 @@
                     [self setPlayPauseButtonPlace:UIDeviceOrientationPortrait];
                 }];
             }];
+            
+//            [bannerView_ setAdSize:kGADAdSizeSmartBannerPortrait];
         }
         
         [UIView commitAnimations];
@@ -382,4 +429,5 @@
         [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
     }
 }
+
 @end

@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GADBannerView.h"
+#import "GADRequest.h"
 
 @interface FullscreenFOFViewController : UIViewController{
     
@@ -24,9 +26,12 @@
     
     int oldFrameIndex;
     int timerPause;
+    
+    GADBannerView *bannerView_;
 }
 
 @property(nonatomic,assign) NSMutableArray *frames;
+//@property (nonatomic, retain) GADBannerView *bannerView;
 
 - (IBAction)playPauseAction:(UIButton *)sender;
 
