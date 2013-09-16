@@ -7,31 +7,36 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "GADBannerView.h"
 #import "GADRequest.h"
 
-@interface FullscreenFOFViewController : UIViewController{
-    
-    IBOutlet NSLayoutConstraint *fullscreenImageHeight;
-    IBOutlet NSLayoutConstraint *fullscreenImageWidth;
-    IBOutlet UIImageView *frontImageView;
-    IBOutlet UIImageView *backImageView;
-    IBOutlet UIButton *playPauseButton;
-    IBOutlet NSLayoutConstraint *playPauseButtonX;
-    IBOutlet NSLayoutConstraint *playPauseButtonY;
+#define TIMER_INTERVAL 0.1;
+#define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
 
-    UIDeviceOrientation lastOrientation;
-    NSMutableArray *frames;
-    NSTimer *timer;
+@interface FullscreenFOFViewController : UIViewController{
     
     int oldFrameIndex;
     int timerPause;
     
-    GADBannerView *bannerView_;
+    IBOutlet NSLayoutConstraint *fullscreenImageHeight;
+    IBOutlet NSLayoutConstraint *fullscreenImageWidth;
+    IBOutlet NSLayoutConstraint *playPauseButtonX;
+    IBOutlet NSLayoutConstraint *playPauseButtonY;
+    
+    IBOutlet UIImageView *frontImageView;
+    IBOutlet UIImageView *backImageView;
+    
+    IBOutlet UIButton *playPauseButton;
+    
+    UIDeviceOrientation lastOrientation;
+    NSTimer *timer;
+    
+    GADBannerView *bannerView;
 }
 
-@property(nonatomic,assign) NSMutableArray *frames;
-//@property (nonatomic, retain) GADBannerView *bannerView;
+@property(nonatomic,retain) NSMutableArray *frames;
 
 - (IBAction)playPauseAction:(UIButton *)sender;
 

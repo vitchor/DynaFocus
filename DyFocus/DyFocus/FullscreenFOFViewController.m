@@ -7,14 +7,10 @@
 //
 
 #import "FullscreenFOFViewController.h"
-#import <QuartzCore/QuartzCore.h>
 
 @implementation FullscreenFOFViewController
 
 @synthesize frames;
-
-#define TIMER_INTERVAL 0.1;
-#define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil 
 {
@@ -36,15 +32,15 @@
     
     // Create a view of the standard size at the top of the screen.
     // Available AdSize constants are explained in GADAdSize.h.
-    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
     
     // Specify the ad's "unit identifier". This is your AdMob Publisher ID.
-    bannerView_.adUnitID = @"ca-app-pub-4922757350349330/6794918205";
+    bannerView.adUnitID = @"ca-app-pub-4922757350349330/6794918205";
     
     // Let the runtime know which UIViewController to restore after taking
     // the user wherever the ad goes and add it to the view hierarchy.
-    bannerView_.rootViewController = self;
-    [self.view addSubview:bannerView_];
+    bannerView.rootViewController = self;
+    [self.view addSubview:bannerView];
     
     GADRequest *request = [GADRequest request];
     
@@ -53,7 +49,7 @@
     request.testDevices = [NSArray arrayWithObjects:@"c7a566cbe07e78e282956d4e44695295", nil];
     
     // Initiate a generic request to load it with an ad.
-    [bannerView_ loadRequest:request];
+    [bannerView loadRequest:request];
     
     
 //    [bannerView_ loadRequest:[GADRequest request]];
@@ -66,12 +62,12 @@
     
     [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
     
-    if ([frames count] > 0) {
-        [backImageView setImage: [frames objectAtIndex:0]];
+    if ([self.frames count] > 0) {
+        [backImageView setImage: [self.frames objectAtIndex:0]];
 
         
-        if ([frames count] > 1) {
-            [frontImageView setImage: [frames objectAtIndex:1]];
+        if ([self.frames count] > 1) {
+            [frontImageView setImage: [self.frames objectAtIndex:1]];
         }
         
         float scale = backImageView.image.size.width/backImageView.image.size.height;
@@ -92,7 +88,7 @@
         [timer fire];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)name:UIDeviceOrientationDidChangeNotification object:nil];
-        
+               
         [self checkOrientation:scale isFirstTime:YES];
     }
     else
@@ -105,27 +101,10 @@
 {
     [timer invalidate];
     timer = nil;
-    frames  = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
     
     [super viewWillDisappear:animated];
-}
-
-- (void)dealloc {
-    [fullscreenImageHeight release];
-    [fullscreenImageWidth release];
-    [frontImageView release];
-    [backImageView release];
-    [frames release];
-
-    [playPauseButton release];
-    [playPauseButtonX release];
-    [playPauseButtonY release];
-    
-    [bannerView_ release];
-    
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -165,14 +144,14 @@
                 
                 timerPause = TIMER_PAUSE;
                 
-                if (oldFrameIndex >= [frames count] - 1) {
+                if (oldFrameIndex >= [self.frames count] - 1) {
                     oldFrameIndex = 0;
                 } else {
                     oldFrameIndex += 1;
                 }
                 
-                if ([frames count] > 0)
-                    [backImageView setImage:[frames objectAtIndex:oldFrameIndex]];
+                if ([self.frames count] > 0)
+                    [backImageView setImage:[self.frames objectAtIndex:oldFrameIndex]];
                 
                 [backImageView setNeedsDisplay];
                 
@@ -181,14 +160,14 @@
                 [frontImageView setNeedsDisplay];
                 
                 int newIndex;
-                if (oldFrameIndex == [frames count] - 1) {
+                if (oldFrameIndex == [self.frames count] - 1) {
                     newIndex = 0;
                 } else {
                     newIndex = oldFrameIndex + 1;
                 }
                 
-                if ([frames count] > 0)
-                    [frontImageView setImage: [frames objectAtIndex: newIndex]];
+                if ([self.frames count] > 0)
+                    [frontImageView setImage: [self.frames objectAtIndex: newIndex]];
             }
             
         } else {
@@ -428,6 +407,27 @@
         
         [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
     }
+}
+
+- (void)dealloc {
+    
+    [fullscreenImageHeight release];
+    [fullscreenImageWidth release];
+    [playPauseButtonX release];
+    [playPauseButtonY release];
+    
+    [frontImageView release];
+    [backImageView release];
+    
+    [playPauseButton release];
+    
+    [timer release];
+    
+    [bannerView release];
+    
+    [frames release], frames = nil;
+    
+    [super dealloc];
 }
 
 @end
