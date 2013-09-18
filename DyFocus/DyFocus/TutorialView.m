@@ -67,7 +67,7 @@
             
             instructionsImagesArray = [[NSMutableArray alloc] initWithObjects:instruction1, instruction2, instruction3, instruction4, instruction5, nil];
         }
-        
+            
         [self loadTutorial:NO];
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
@@ -132,6 +132,32 @@
     [self.cameraViewController.shootButton setEnabled:!shouldShowTutorial];
     
     [supportEmailLabel setHidden:YES];
+    
+//    if(shouldShowTutorial){
+//        
+//        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+//        
+//        UIImageView* animatedImageView = [[UIImageView alloc] initWithFrame:screenBounds];
+//        animatedImageView.animationImages = [NSArray arrayWithObjects:
+//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-01"],
+//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-02"],
+//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-03"],
+//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-04"],
+//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-05"],
+//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-06"],
+//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-07"],
+//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-08"],
+//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-09"],
+//                                             nil];
+//        
+//        animatedImageView.animationDuration = 5.0f;
+//        animatedImageView.animationRepeatCount = 3;
+//        [animatedImageView startAnimating];
+//        [self addSubview: animatedImageView];
+//        [animatedImageView release];
+//        
+//    }
+
 }
 
 - (void)sendSupportEmail {

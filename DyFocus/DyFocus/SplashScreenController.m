@@ -9,13 +9,7 @@
 #import "SplashScreenController.h"
 #import "AppDelegate.h"
 
-@interface SplashScreenController ()
-
-@end
-
 @implementation SplashScreenController
-
-@synthesize spinner, splashImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,6 +39,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void) dealloc {
+    
+    [spinner release];
+    [splashImage release];
+    
+    [super dealloc];
 }
 
 @end

@@ -59,7 +59,7 @@
                                        
                                        newDescriptionHeight = [self calculateNewDescriptionHeight];
                                        
-                                       float newCellHeight = HEADER_AND_FOOTER_HEIGHT + newImageHeight + newDescriptionHeight;
+                                       float newCellHeight = BANNER_HEIGHT + HEADER_AND_FOOTER_HEIGHT + newImageHeight + newDescriptionHeight;
                                        
                                        [self.tableController addNewCellHeight:newCellHeight atRow:self.row];
                                        
@@ -239,7 +239,7 @@
         
         newDescriptionHeight = descriptionTextHeight;
         
-        float newCellHeight = HEADER_AND_FOOTER_HEIGHT + newImageHeight + newDescriptionHeight;
+        float newCellHeight = BANNER_HEIGHT + HEADER_AND_FOOTER_HEIGHT + newImageHeight + newDescriptionHeight;
         
         [self.tableController addNewCellHeight: newCellHeight atRow:self.row];
         
@@ -275,7 +275,7 @@
         
         newDescriptionHeight = PREVIEW_N_LINES * LINE_HEIGHT;
         
-        float newCellHeight = HEADER_AND_FOOTER_HEIGHT + newImageHeight + newDescriptionHeight;
+        float newCellHeight = BANNER_HEIGHT + HEADER_AND_FOOTER_HEIGHT + newImageHeight + newDescriptionHeight;
         
         [self.tableController addNewCellHeight: newCellHeight atRow:self.row];
         

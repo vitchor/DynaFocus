@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "GADBannerView.h"
-#import "GADRequest.h"
+//#import "GADBannerView.h"
+//#import "GADRequest.h"
 
 #define TIMER_INTERVAL 0.1;
 #define TIMER_PAUSE 10.0 / TIMER_INTERVAL;
@@ -33,7 +33,7 @@
     UIDeviceOrientation lastOrientation;
     NSTimer *timer;
     
-    GADBannerView *bannerView;
+//    GADBannerView *bannerView;
 }
 
 @property(nonatomic,retain) NSMutableArray *frames;

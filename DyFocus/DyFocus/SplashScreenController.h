@@ -14,7 +14,4 @@
     IBOutlet UIImageView *splashImage;
 }
 
-@property(nonatomic,retain) IBOutlet UIActivityIndicatorView *spinner;
-@property(nonatomic,retain) IBOutlet UIImageView *splashImage;
-
 @end

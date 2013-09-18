@@ -12,6 +12,8 @@
 #import "LoadView.h"
 #import "EGORefreshTableHeaderView.h"
 
+#import "GADBannerView.h"
+#import "GADRequest.h"
 
 @interface FOFTableController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     
@@ -34,6 +36,8 @@
     NSMutableDictionary *cellHeightDictionary;
     
 //    EGORefreshTableHeaderView *refreshHeaderView;
+    
+//    GADBannerView *bannerView;
     
 }
 
