@@ -277,17 +277,17 @@
     [cell addSubview:bannerView];
     
 //USE THE TESTDEVICE AD REQUEST WHILE TESTING:
-//    GADRequest *request = [GADRequest request];
-//    
-//    // Make the request for a test ad. Put in an identifier for the simulator as
-//    // well as any devices you want to receive test ads.
-//    request.testDevices = [NSArray arrayWithObjects:@"c7a566cbe07e78e282956d4e44695295", nil];
-//    
-//    // Initiate a generic request to load it with an ad.
-//    [bannerView loadRequest:request];
+    GADRequest *request = [GADRequest request];
+    
+    // Make the request for a test ad. Put in an identifier for the simulator as
+    // well as any devices you want to receive test ads.
+    request.testDevices = [NSArray arrayWithObjects:@"c7a566cbe07e78e282956d4e44695295", nil];
+    
+    // Initiate a generic request to load it with an ad.
+    [bannerView loadRequest:request];
     
 // "REAL" AD REQUEST:
-    [bannerView loadRequest:[GADRequest request]];
+//    [bannerView loadRequest:[GADRequest request]];
     
     [bannerView release];
     bannerView = nil;
