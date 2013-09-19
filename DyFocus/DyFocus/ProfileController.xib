@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -90,6 +90,7 @@
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
 									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
 								</object>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 							<object class="IBUILabel" id="349133395">
@@ -2471,22 +2472,6 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">CustomBadge</string>
-					<string key="superclassName">UIView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/CustomBadge.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">FBProfilePictureView</string>
-					<string key="superclassName">UIView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/FBProfilePictureView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSLayoutConstraint</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -2498,7 +2483,7 @@
 					<string key="className">ProfileController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="dyfocusProfileView">UIView</string>
+						<string key="changeImageView">UIView</string>
 						<string key="follow">UIButton</string>
 						<string key="followView">UIView</string>
 						<string key="followersLabel">UILabel</string>
@@ -2506,18 +2491,16 @@
 						<string key="logoutButton">UIButton</string>
 						<string key="logoutView">UIView</string>
 						<string key="myPicturesButton">UIButton</string>
-						<string key="notificationBadge">CustomBadge</string>
 						<string key="notificationButton">UIButton</string>
 						<string key="notificationView">UIView</string>
 						<string key="unfollow">UIButton</string>
 						<string key="unfollowView">UIView</string>
 						<string key="userNameLabel">UILabel</string>
 						<string key="userPicture">UIImageView</string>
-						<string key="userProfileImage">FBProfilePictureView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="dyfocusProfileView">
-							<string key="name">dyfocusProfileView</string>
+						<object class="IBToOneOutletInfo" key="changeImageView">
+							<string key="name">changeImageView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="follow">
@@ -2548,10 +2531,6 @@
 							<string key="name">myPicturesButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="notificationBadge">
-							<string key="name">notificationBadge</string>
-							<string key="candidateClassName">CustomBadge</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="notificationButton">
 							<string key="name">notificationButton</string>
 							<string key="candidateClassName">UIButton</string>
@@ -2575,10 +2554,6 @@
 						<object class="IBToOneOutletInfo" key="userPicture">
 							<string key="name">userPicture</string>
 							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="userProfileImage">
-							<string key="name">userProfileImage</string>
-							<string key="candidateClassName">FBProfilePictureView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
