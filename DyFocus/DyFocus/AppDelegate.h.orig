@@ -1,0 +1,117 @@
+//
+//  AppDelegate.h
+//  DyFocus
+//
+//  Created by Marcia  Rozenfeld on 7/14/12.
+//  Copyright (c) 2012 Ufscar. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
+
+#import "DyfocusUITabBarController.h"
+#import "DyfocusUINavigationController.h"
+
+#import "FacebookController.h"
+#import "ProfileController.h"
+#import "FriendProfileController.h"
+
+#import "LoginController.h"
+#import "SplashScreenController.h"
+#import "CameraView.h"
+#import "FOFTableController.h"
+
+#define UPLOADING 0
+#define SHARING 1
+#define FRIENDS 2
+
+<<<<<<< HEAD
+#define dyfocus_url @"http://dyfoc.us"
+//#define dyfocus_url @"http://192.168.100.140:8000"
+//#define dyfocus_url @"http://192.168.0.190:8000"
+=======
+//#define dyfocus_url @"http://dyfoc.us"
+#define dyfocus_url @"http://192.168.0.140:8000"
+>>>>>>> 82dd1467e87b5c67e2e9e00ad4d14d9276a9b59c
+
+@interface FOF : NSObject {
+	NSString *m_name;
+	NSArray *m_frames;
+	NSArray *m_comments;
+	NSString *m_likes;
+	NSString *m_userName;
+	NSString *m_userNickname;
+	NSString *m_date;
+	NSString *m_userId;
+	NSString *m_id;
+	BOOL m_liked;
+    
+}
+
+@property (nonatomic, retain) NSArray *m_frames;
+@property (nonatomic, retain) NSArray *m_comments;
+@property (nonatomic, retain) NSString *m_name;
+@property (nonatomic, retain) NSString *m_likes;
+@property (nonatomic, retain) NSString *m_userName;
+@property (nonatomic, retain) NSString *m_userNickname;
+@property (nonatomic, retain) NSString *m_userId;
+@property (nonatomic, retain) NSString *m_date;
+@property (nonatomic, retain) NSString *m_id;
+@property (nonatomic, readwrite) BOOL m_liked;
+@end
+
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+    DyfocusUITabBarController *tabBarController;
+    DyfocusUINavigationController *cameraNavigationController;
+
+    NSArray *permissions;
+    FacebookController *friendsController;
+    FOFTableController *feedViewController;
+    LoginController *loginController;
+    SplashScreenController *splashScreenController;
+    CameraView *cameraViewController;
+    
+    
+    NSMutableDictionary *friends;
+    NSMutableDictionary *dyfocusFriends;    
+    NSMutableDictionary *myself;
+    NSArray *featuredFofArray;
+    NSArray *userFofArray;
+    NSArray *feedFofArray;
+    NSArray *friendFofArray;
+    Person *currentFriend;
+}
+
+extern NSString *const FBSessionStateChangedNotification;
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+- (void)closeSession;
+
+- (void)openFacebookSessionWithTag:(int)tag;
+- (void)loadFeedUrl:(NSString *)url;
+
+- (void)resetCameraUINavigationController;
+- (void)loadFeedTab;
+- (void)goBackToLastController;
+
+- (void)invitationSentGoBackToFriends;
+
+- (void)signin;
+
+-(void) logEvent:(NSString *)event;
+
+@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) DyfocusUITabBarController *tabBarController;
+
+@property (nonatomic, retain)  NSMutableDictionary *friends;
+@property (nonatomic, retain)  NSMutableDictionary *dyfocusFriends;
+@property (nonatomic, retain)  NSMutableDictionary *myself;
+@property (nonatomic, retain)  NSArray *featuredFofArray;
+@property (nonatomic, retain)  NSArray *userFofArray;
+@property (nonatomic, retain)  NSArray *feedFofArray;
+@property (nonatomic, retain)  NSArray *friendFofArray;
+@property (nonatomic, retain)  Person *currentFriend;;
+
+
+
+@end
