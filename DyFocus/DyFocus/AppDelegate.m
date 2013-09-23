@@ -113,8 +113,6 @@
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSLog(@"SUCESS");
-
     deviceId = [[[[[deviceToken description]
                                stringByReplacingOccurrencesOfString: @"<" withString: @""]
                               stringByReplacingOccurrencesOfString: @">" withString: @""]
@@ -1305,13 +1303,9 @@
 
 - (void)gotoReviews
 {
-    NSString *str = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa";
-    str = [NSString stringWithFormat:@"%@/wa/viewContentsUserReviews?", str];
-    str = [NSString stringWithFormat:@"%@type=Purple+Software&id=", str];
-    
-    // Here is the app id from itunesconnect
-    str = [NSString stringWithFormat:@"%@557266156", str];
-    
+//    NSString *str = @"https://itunes.apple.com/us/app/dyfocus/id557266156";
+    NSString *str = @"http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?pageNumber=0&sortOrdering=1&type=Purple+Software&mt=8&id=557266156";
+
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 
