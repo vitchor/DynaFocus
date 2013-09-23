@@ -20,6 +20,8 @@
 #import "NSDyfocusURLRequest.h"
 #import "UIDyfocusImage.h"
 #import "UIImageLoaderDyfocus.h"
+#import "GADBannerView.h"
+#import "GADRequest.h"
 
 //Space occupied by the banner in the cell:
 #define BANNER_HEIGHT 50
@@ -82,6 +84,7 @@
     NSTimer *timer;
     
     FOF *fof;
+    GADBannerView *bannerView;
 }
 
 @property (nonatomic,readwrite) int row;

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12E55</string>
-		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
+		<int key="IBDocument.SystemTarget">1536</int>
+		<string key="IBDocument.SystemVersion">12F37</string>
+		<string key="IBDocument.InterfaceBuilderVersion">4510</string>
 		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">2083</string>
+			<string key="NS.object.0">3742</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBNSLayoutConstraint</string>
@@ -37,7 +37,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUITableViewCell" id="323944411">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="422916416">
@@ -61,7 +61,6 @@
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{58, 0}, {93, 35}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="202190798"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<object class="NSColor" key="IBUIBackgroundColor">
@@ -72,15 +71,15 @@
 														<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 														<int key="IBUIContentHorizontalAlignment">0</int>
 														<int key="IBUIContentVerticalAlignment">0</int>
-														<string key="IBUINormalTitle">Comment</string>
-														<object class="NSColor" key="IBUIHighlightedTitleColor" id="331655042">
-															<int key="NSColorSpace">3</int>
-															<bytes key="NSWhite">MQA</bytes>
-														</object>
 														<object class="NSColor" key="IBUINormalTitleColor">
 															<int key="NSColorSpace">1</int>
 															<bytes key="NSRGB">MCAwLjI1ODgyMzUyOTQgMC40MDc4NDMxMzczAA</bytes>
 														</object>
+														<object class="NSColor" key="IBUIHighlightedTitleColor" id="331655042">
+															<int key="NSColorSpace">3</int>
+															<bytes key="NSWhite">MQA</bytes>
+														</object>
+														<string key="IBUINormalTitle">Comment</string>
 														<object class="NSColor" key="IBUINormalTitleShadowColor" id="223726141">
 															<int key="NSColorSpace">3</int>
 															<bytes key="NSWhite">MC41AA</bytes>
@@ -89,8 +88,8 @@
 															<int key="type">2</int>
 															<double key="pointSize">14</double>
 														</object>
-														<object class="NSFont" key="IBUIFont" id="34556892">
-															<string key="NSName">Helvetica-Bold</string>
+														<object class="NSFont" key="IBUIFont" id="374860748">
+															<string key="NSName">HelveticaNeue-Bold</string>
 															<double key="NSSize">14</double>
 															<int key="NSfFlags">16</int>
 														</object>
@@ -100,7 +99,6 @@
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{236, 12}, {12, 12}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="610770142"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -115,7 +113,6 @@
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{251, 8}, {13, 20}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="1024721068"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<bool key="IBUIOpaque">NO</bool>
@@ -132,14 +129,13 @@
 														<int key="IBUIBaselineAdjustment">1</int>
 														<float key="IBUIMinimumFontSize">8</float>
 														<reference key="IBUIFontDescription" ref="802407618"/>
-														<reference key="IBUIFont" ref="34556892"/>
+														<reference key="IBUIFont" ref="374860748"/>
 													</object>
 													<object class="IBUILabel" id="163750538">
 														<reference key="NSNextResponder" ref="1073676801"/>
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{283, 8}, {13, 20}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="753390101"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<bool key="IBUIOpaque">NO</bool>
@@ -156,14 +152,13 @@
 														<int key="IBUIBaselineAdjustment">1</int>
 														<float key="IBUIMinimumScaleFactor">0.5</float>
 														<reference key="IBUIFontDescription" ref="802407618"/>
-														<reference key="IBUIFont" ref="34556892"/>
+														<reference key="IBUIFont" ref="374860748"/>
 													</object>
 													<object class="IBUIImageView" id="1024721068">
 														<reference key="NSNextResponder" ref="1073676801"/>
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{268, 13}, {12, 11}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="163750538"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -178,7 +173,6 @@
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{57, 1}, {2, 34}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="1006642075"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<object class="NSColor" key="IBUIBackgroundColor" id="91874602">
@@ -192,7 +186,6 @@
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{58, 0}, {2, 35}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="89119347"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<object class="NSColor" key="IBUIBackgroundColor" id="1023478914">
@@ -207,7 +200,6 @@
 														<array class="NSMutableArray" key="NSSubviews"/>
 														<string key="NSFrame">{{151, 0}, {2, 35}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="262334174"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<reference key="IBUIBackgroundColor" ref="1023478914"/>
@@ -218,7 +210,6 @@
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{150, 1}, {1, 34}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="159920019"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<reference key="IBUIBackgroundColor" ref="91874602"/>
@@ -229,7 +220,6 @@
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{222, 12}, {80, 32}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="79692360"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<object class="NSColor" key="IBUIBackgroundColor" id="881656791">
@@ -242,18 +232,18 @@
 														<int key="IBUIContentHorizontalAlignment">0</int>
 														<int key="IBUIContentVerticalAlignment">0</int>
 														<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
-														<reference key="IBUIHighlightedTitleColor" ref="331655042"/>
 														<object class="NSColor" key="IBUINormalTitleColor">
 															<int key="NSColorSpace">1</int>
 															<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 														</object>
+														<reference key="IBUIHighlightedTitleColor" ref="331655042"/>
 														<reference key="IBUINormalTitleShadowColor" ref="223726141"/>
 														<object class="IBUIFontDescription" key="IBUIFontDescription" id="200668710">
 															<int key="type">2</int>
 															<double key="pointSize">15</double>
 														</object>
-														<object class="NSFont" key="IBUIFont" id="33967748">
-															<string key="NSName">Helvetica-Bold</string>
+														<object class="NSFont" key="IBUIFont" id="852281196">
+															<string key="NSName">HelveticaNeue-Bold</string>
 															<double key="NSSize">15</double>
 															<int key="NSfFlags">16</int>
 														</object>
@@ -263,7 +253,6 @@
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{222, -3}, {80, 18}}</string>
 														<reference key="NSSuperview" ref="1073676801"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="920627409"/>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<reference key="IBUIBackgroundColor" ref="881656791"/>
@@ -272,7 +261,6 @@
 												</array>
 												<string key="NSFrame">{{0, 302}, {302, 35}}</string>
 												<reference key="NSSuperview" ref="529101705"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="633683632"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<object class="NSColor" key="IBUIBackgroundColor">
@@ -286,7 +274,6 @@
 												<int key="NSvFlags">292</int>
 												<string key="NSFrame">{{0, 302}, {59, 35}}</string>
 												<reference key="NSSuperview" ref="529101705"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="82641925"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<object class="NSColor" key="IBUIBackgroundColor">
@@ -301,25 +288,24 @@
 												<double key="IBUIContentEdgeInsets.bottom">0.0</double>
 												<double key="IBUIContentEdgeInsets.left">0.0</double>
 												<double key="IBUIContentEdgeInsets.right">0.0</double>
-												<string key="IBUITitleShadowOffset">{1, 0}</string>
-												<string key="IBUINormalTitle">Like</string>
 												<object class="NSColor" key="IBUINormalTitleColor">
 													<int key="NSColorSpace">1</int>
 													<bytes key="NSRGB">MCAwLjI1ODgyMzUyOTQgMC40MDc4NDMxMzczAA</bytes>
 												</object>
+												<string key="IBUITitleShadowOffset">{1, 0}</string>
+												<string key="IBUINormalTitle">Like</string>
 												<object class="NSColor" key="IBUINormalTitleShadowColor">
 													<int key="NSColorSpace">3</int>
 													<bytes key="NSWhite">MC45NwA</bytes>
 												</object>
 												<reference key="IBUIFontDescription" ref="802407618"/>
-												<reference key="IBUIFont" ref="34556892"/>
+												<reference key="IBUIFont" ref="374860748"/>
 											</object>
 											<object class="IBUILabel" id="858091608">
 												<reference key="NSNextResponder" ref="529101705"/>
 												<int key="NSvFlags">292</int>
 												<string key="NSFrame">{{59, 27}, {71, 21}}</string>
 												<reference key="NSSuperview" ref="529101705"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="844385666"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
@@ -339,7 +325,7 @@
 													<double key="pointSize">13</double>
 												</object>
 												<object class="NSFont" key="IBUIFont">
-													<string key="NSName">Helvetica</string>
+													<string key="NSName">HelveticaNeue</string>
 													<double key="NSSize">13</double>
 													<int key="NSfFlags">16</int>
 												</object>
@@ -350,7 +336,6 @@
 												<int key="NSvFlags">292</int>
 												<string key="NSFrame">{{9, 9}, {41, 40}}</string>
 												<reference key="NSSuperview" ref="529101705"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="466798416"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -365,7 +350,6 @@
 												<int key="NSvFlags">292</int>
 												<string key="NSFrame">{{59, 9}, {224, 21}}</string>
 												<reference key="NSSuperview" ref="529101705"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="858091608"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
@@ -386,7 +370,7 @@
 													<double key="pointSize">15</double>
 												</object>
 												<object class="NSFont" key="IBUIFont">
-													<string key="NSName">Helvetica</string>
+													<string key="NSName">HelveticaNeue</string>
 													<double key="NSSize">15</double>
 													<int key="NSfFlags">16</int>
 												</object>
@@ -397,32 +381,30 @@
 												<int key="NSvFlags">-2147483356</int>
 												<string key="NSFrame">{{263, 3}, {38, 38}}</string>
 												<reference key="NSSuperview" ref="529101705"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="1007084820"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 												<int key="IBUIContentHorizontalAlignment">0</int>
 												<int key="IBUIContentVerticalAlignment">0</int>
-												<reference key="IBUIHighlightedTitleColor" ref="331655042"/>
 												<object class="NSColor" key="IBUINormalTitleColor">
 													<int key="NSColorSpace">1</int>
 													<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 												</object>
+												<reference key="IBUIHighlightedTitleColor" ref="331655042"/>
 												<reference key="IBUINormalTitleShadowColor" ref="223726141"/>
 												<object class="NSCustomResource" key="IBUINormalImage">
 													<string key="NSClassName">NSImage</string>
 													<string key="NSResourceName">close.png</string>
 												</object>
 												<reference key="IBUIFontDescription" ref="200668710"/>
-												<reference key="IBUIFont" ref="33967748"/>
+												<reference key="IBUIFont" ref="852281196"/>
 											</object>
 											<object class="IBUILabel" id="1007084820">
 												<reference key="NSNextResponder" ref="529101705"/>
 												<int key="NSvFlags">-2147483356</int>
-												<string key="NSFrame">{{9, 276}, {285, 18}}</string>
+												<string key="NSFrame">{{9, 277}, {285, 17}}</string>
 												<reference key="NSSuperview" ref="529101705"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="1073676801"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
@@ -440,7 +422,7 @@
 													<double key="pointSize">14</double>
 												</object>
 												<object class="NSFont" key="IBUIFont">
-													<string key="NSName">Helvetica</string>
+													<string key="NSName">HelveticaNeue</string>
 													<double key="NSSize">14</double>
 													<int key="NSfFlags">16</int>
 												</object>
@@ -450,9 +432,8 @@
 											<object class="IBUILabel" id="82641925">
 												<reference key="NSNextResponder" ref="529101705"/>
 												<int key="NSvFlags">-2147483356</int>
-												<string key="NSFrame">{{204, 267}, {90, 36}}</string>
+												<string key="NSFrame">{{205, 268}, {89, 36}}</string>
 												<reference key="NSSuperview" ref="529101705"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="934879283"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<reference key="IBUIBackgroundColor" ref="881656791"/>
@@ -465,13 +446,12 @@
 												<nil key="IBUIHighlightedColor"/>
 												<int key="IBUIBaselineAdjustment">0</int>
 												<reference key="IBUIFontDescription" ref="200668710"/>
-												<reference key="IBUIFont" ref="33967748"/>
+												<reference key="IBUIFont" ref="852281196"/>
 												<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 											</object>
 										</array>
 										<string key="NSFrame">{{9, 10}, {302, 337}}</string>
 										<reference key="NSSuperview" ref="574326647"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="839503385"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<object class="NSColor" key="IBUIBackgroundColor">
@@ -485,7 +465,6 @@
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{4, 69}, {312, 212}}</string>
 										<reference key="NSSuperview" ref="574326647"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="941508903"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<reference key="IBUIBackgroundColor" ref="881656791"/>
@@ -496,7 +475,6 @@
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{4, 69}, {312, 212}}</string>
 										<reference key="NSSuperview" ref="574326647"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="529101705"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<reference key="IBUIBackgroundColor" ref="881656791"/>
@@ -508,7 +486,6 @@
 										<array class="NSMutableArray" key="NSSubviews"/>
 										<string key="NSFrame">{{4, 67}, {312, 210}}</string>
 										<reference key="NSSuperview" ref="574326647"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="690510363"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<reference key="IBUIBackgroundColor" ref="881656791"/>
@@ -519,7 +496,6 @@
 										<int key="NSvFlags">-2147483356</int>
 										<string key="NSFrame">{{265, 201}, {40, 40}}</string>
 										<reference key="NSSuperview" ref="574326647"/>
-										<reference key="NSWindow"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<float key="IBUIAlpha">0.5</float>
@@ -528,11 +504,11 @@
 										<int key="IBUIContentVerticalAlignment">0</int>
 										<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 										<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
-										<reference key="IBUIHighlightedTitleColor" ref="331655042"/>
 										<object class="NSColor" key="IBUINormalTitleColor">
 											<int key="NSColorSpace">1</int>
 											<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
 										</object>
+										<reference key="IBUIHighlightedTitleColor" ref="331655042"/>
 										<reference key="IBUINormalTitleShadowColor" ref="223726141"/>
 										<object class="NSCustomResource" key="IBUINormalImage">
 											<string key="NSClassName">NSImage</string>
@@ -543,7 +519,7 @@
 											<double key="pointSize">10</double>
 										</object>
 										<object class="NSFont" key="IBUIFont">
-											<string key="NSName">Helvetica-Bold</string>
+											<string key="NSName">HelveticaNeue-Bold</string>
 											<double key="NSSize">10</double>
 											<int key="NSfFlags">16</int>
 										</object>
@@ -553,7 +529,6 @@
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{150, 165}, {20, 20}}</string>
 										<reference key="NSSuperview" ref="574326647"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="43968949"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
@@ -564,7 +539,6 @@
 								</array>
 								<string key="NSFrame">{{0, 46}, {320, 357}}</string>
 								<reference key="NSSuperview" ref="422916416"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="748531470"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -576,7 +550,6 @@
 						</array>
 						<string key="NSFrameSize">{320, 402}</string>
 						<reference key="NSSuperview" ref="323944411"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="574326647"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<reference key="IBUIBackgroundColor" ref="881656791"/>
@@ -588,8 +561,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 403}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="422916416"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -789,6 +760,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="376013583">
 								<reference key="firstItem" ref="574326647"/>
@@ -802,9 +774,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="323944411"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="582466968">
 								<reference key="firstItem" ref="574326647"/>
@@ -818,9 +791,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="323944411"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="177890532">
 								<reference key="firstItem" ref="574326647"/>
@@ -834,9 +808,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="323944411"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<reference ref="574326647"/>
 						</array>
@@ -865,6 +840,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="597157716">
 								<reference key="firstItem" ref="574326647"/>
@@ -881,6 +857,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="546291496">
 								<reference key="firstItem" ref="941508903"/>
@@ -897,6 +874,7 @@
 								<int key="scoringType">5</int>
 								<float key="scoringTypeFloat">22</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="880281907">
 								<reference key="firstItem" ref="941508903"/>
@@ -913,6 +891,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="130537733">
 								<reference key="firstItem" ref="941508903"/>
@@ -929,6 +908,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="476574377">
 								<reference key="firstItem" ref="690510363"/>
@@ -945,6 +925,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="922073515">
 								<reference key="firstItem" ref="690510363"/>
@@ -961,6 +942,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="455852157">
 								<reference key="firstItem" ref="690510363"/>
@@ -977,6 +959,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="561123991">
 								<reference key="firstItem" ref="690510363"/>
@@ -993,6 +976,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="121502318">
 								<reference key="firstItem" ref="748531470"/>
@@ -1009,6 +993,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="141786374">
 								<reference key="firstItem" ref="748531470"/>
@@ -1025,6 +1010,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="293205672">
 								<reference key="firstItem" ref="748531470"/>
@@ -1041,6 +1027,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="117658567">
 								<reference key="firstItem" ref="748531470"/>
@@ -1057,6 +1044,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="368866681">
 								<reference key="firstItem" ref="748531470"/>
@@ -1073,6 +1061,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="266355888">
 								<reference key="firstItem" ref="574326647"/>
@@ -1089,6 +1078,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="673097556">
 								<reference key="firstItem" ref="529101705"/>
@@ -1105,6 +1095,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="7683217">
 								<reference key="firstItem" ref="529101705"/>
@@ -1121,6 +1112,7 @@
 								<int key="scoringType">5</int>
 								<float key="scoringTypeFloat">22</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="392404454">
 								<reference key="firstItem" ref="529101705"/>
@@ -1137,6 +1129,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<reference ref="748531470"/>
 							<reference ref="43968949"/>
@@ -1164,6 +1157,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="814398419">
 								<reference key="firstItem" ref="82641925"/>
@@ -1180,6 +1174,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="136695993">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1196,6 +1191,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="1021400491">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1209,9 +1205,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="529101705"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="94513990">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1225,9 +1222,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="529101705"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="760892398">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1241,9 +1239,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="529101705"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="767316140">
 								<reference key="firstItem" ref="753390101"/>
@@ -1260,6 +1259,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="894689082">
 								<reference key="firstItem" ref="753390101"/>
@@ -1273,9 +1273,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="529101705"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="604187699">
 								<reference key="firstItem" ref="753390101"/>
@@ -1292,6 +1293,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="459829928">
 								<reference key="firstItem" ref="753390101"/>
@@ -1305,9 +1307,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="529101705"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="401924013">
 								<reference key="firstItem" ref="1007084820"/>
@@ -1324,6 +1327,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="876887145">
 								<reference key="firstItem" ref="1007084820"/>
@@ -1340,6 +1344,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="528021482">
 								<reference key="firstItem" ref="529101705"/>
@@ -1356,6 +1361,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="551524968">
 								<reference key="firstItem" ref="844385666"/>
@@ -1372,6 +1378,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="1056053938">
 								<reference key="firstItem" ref="858091608"/>
@@ -1388,6 +1395,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="168692421">
 								<reference key="firstItem" ref="858091608"/>
@@ -1404,6 +1412,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="752939744">
 								<reference key="firstItem" ref="466798416"/>
@@ -1420,6 +1429,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="152721467">
 								<reference key="firstItem" ref="839503385"/>
@@ -1436,6 +1446,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="946131963">
 								<reference key="firstItem" ref="839503385"/>
@@ -1452,6 +1463,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<reference ref="839503385"/>
 							<reference ref="858091608"/>
@@ -1481,6 +1493,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="441240583">
 								<reference key="firstItem" ref="163750538"/>
@@ -1497,6 +1510,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="511412863">
 								<reference key="firstItem" ref="163750538"/>
@@ -1513,6 +1527,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="1044247890">
 								<reference key="firstItem" ref="163750538"/>
@@ -1529,6 +1544,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="859626626">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1545,6 +1561,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="338700511">
 								<reference key="firstItem" ref="1024721068"/>
@@ -1561,6 +1578,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="196055126">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1577,6 +1595,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="791684102">
 								<reference key="firstItem" ref="610770142"/>
@@ -1593,6 +1612,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="42239655">
 								<reference key="firstItem" ref="79692360"/>
@@ -1609,6 +1629,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="576598235">
 								<reference key="firstItem" ref="79692360"/>
@@ -1625,6 +1646,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="107767619">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1641,6 +1663,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="276353783">
 								<reference key="firstItem" ref="79692360"/>
@@ -1657,6 +1680,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="221690290">
 								<reference key="firstItem" ref="920627409"/>
@@ -1673,6 +1697,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="762127597">
 								<reference key="firstItem" ref="920627409"/>
@@ -1686,9 +1711,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="73485328">
 								<reference key="firstItem" ref="262334174"/>
@@ -1705,6 +1731,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="783150516">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1718,9 +1745,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="1046646034">
 								<reference key="firstItem" ref="262334174"/>
@@ -1734,9 +1762,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="273713074">
 								<reference key="firstItem" ref="159920019"/>
@@ -1753,6 +1782,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="660511272">
 								<reference key="firstItem" ref="159920019"/>
@@ -1766,9 +1796,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="1063749523">
 								<reference key="firstItem" ref="159920019"/>
@@ -1782,9 +1813,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="432757925">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1801,6 +1833,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="172316999">
 								<reference key="firstItem" ref="89119347"/>
@@ -1817,6 +1850,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="974883526">
 								<reference key="firstItem" ref="89119347"/>
@@ -1833,6 +1867,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="790745154">
 								<reference key="firstItem" ref="89119347"/>
@@ -1849,6 +1884,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="934070907">
 								<reference key="firstItem" ref="89119347"/>
@@ -1862,9 +1898,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="955129542">
 								<reference key="firstItem" ref="1073676801"/>
@@ -1881,6 +1918,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="346361652">
 								<reference key="firstItem" ref="202190798"/>
@@ -1894,9 +1932,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="497965658">
 								<reference key="firstItem" ref="202190798"/>
@@ -1910,9 +1949,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="183463654">
 								<reference key="firstItem" ref="1006642075"/>
@@ -1929,6 +1969,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="260648018">
 								<reference key="firstItem" ref="1006642075"/>
@@ -1945,6 +1986,7 @@
 								<int key="scoringType">6</int>
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">2</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="696742849">
 								<reference key="firstItem" ref="1006642075"/>
@@ -1958,9 +2000,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="79813255">
 								<reference key="firstItem" ref="1006642075"/>
@@ -1974,9 +2017,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="338046639">
 								<reference key="firstItem" ref="633683632"/>
@@ -1993,6 +2037,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="799818285">
 								<reference key="firstItem" ref="1073676801"/>
@@ -2009,6 +2054,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="917581501">
 								<reference key="firstItem" ref="633683632"/>
@@ -2025,6 +2071,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="385199021">
 								<reference key="firstItem" ref="633683632"/>
@@ -2038,9 +2085,10 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1073676801"/>
-								<int key="scoringType">8</int>
+								<int key="scoringType">0</int>
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<reference ref="79692360"/>
 							<reference ref="610770142"/>
@@ -2076,6 +2124,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="181944498">
 								<reference key="firstItem" ref="858091608"/>
@@ -2092,6 +2141,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="529101705"/>
@@ -2115,6 +2165,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="219484173">
 								<reference key="firstItem" ref="1024721068"/>
@@ -2131,6 +2182,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="1073676801"/>
@@ -2154,6 +2206,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="1073676801"/>
@@ -2177,6 +2230,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="211814065">
 								<reference key="firstItem" ref="610770142"/>
@@ -2193,6 +2247,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="1073676801"/>
@@ -2216,6 +2271,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="1073676801"/>
@@ -2239,6 +2295,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="1073676801"/>
@@ -2262,6 +2319,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="799844402">
 								<reference key="firstItem" ref="839503385"/>
@@ -2278,6 +2336,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="529101705"/>
@@ -2301,6 +2360,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="749159031">
 								<reference key="firstItem" ref="466798416"/>
@@ -2317,6 +2377,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="529101705"/>
@@ -2352,6 +2413,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="683520126">
 								<reference key="firstItem" ref="941508903"/>
@@ -2368,6 +2430,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="574326647"/>
@@ -2566,6 +2629,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="693877091">
 								<reference key="firstItem" ref="753390101"/>
@@ -2582,6 +2646,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="529101705"/>
@@ -2666,6 +2731,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="342308167">
 								<reference key="firstItem" ref="844385666"/>
@@ -2682,6 +2748,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="529101705"/>
@@ -2748,6 +2815,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="187462606">
 								<reference key="firstItem" ref="43968949"/>
@@ -2764,6 +2832,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="574326647"/>
@@ -2869,6 +2938,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="529101705"/>
@@ -2922,6 +2992,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 							<object class="IBNSLayoutConstraint" id="721987629">
 								<reference key="firstItem" ref="920627409"/>
@@ -2938,6 +3009,7 @@
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
+								<bool key="placeholder">NO</bool>
 							</object>
 						</array>
 						<reference key="parent" ref="1073676801"/>
@@ -3415,138 +3487,28 @@
 			<nil key="sourceID"/>
 			<int key="maxID">4951</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">FOFTableCell</string>
-					<string key="superclassName">UITableViewCell</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">playPauseAction:</string>
-						<string key="NS.object.0">UIButton</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">playPauseAction:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">playPauseAction:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-					</object>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="buttonComment">UIButton</string>
-						<string key="buttonLike">UIButton</string>
-						<string key="commentsCountLabel">UILabel</string>
-						<string key="deleteFOFButton">UIButton</string>
-						<string key="descriptionLabel">UILabel</string>
-						<string key="imageUserPicture">UIImageView</string>
-						<string key="imagebackFrame">UIImageView</string>
-						<string key="imagefrontFrame">UIImageView</string>
-						<string key="labelDate">UILabel</string>
-						<string key="labelUserName">UILabel</string>
-						<string key="lightGrayBackgroundView">UIView</string>
-						<string key="likesCountLabel">UILabel</string>
-						<string key="playPauseButton">UIButton</string>
-						<string key="readMoreLabel">UILabel</string>
-						<string key="spinner">UIActivityIndicatorView</string>
-						<string key="supportView">UIView</string>
-						<string key="whiteView">UIView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="buttonComment">
-							<string key="name">buttonComment</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="buttonLike">
-							<string key="name">buttonLike</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="commentsCountLabel">
-							<string key="name">commentsCountLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="deleteFOFButton">
-							<string key="name">deleteFOFButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="descriptionLabel">
-							<string key="name">descriptionLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="imageUserPicture">
-							<string key="name">imageUserPicture</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="imagebackFrame">
-							<string key="name">imagebackFrame</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="imagefrontFrame">
-							<string key="name">imagefrontFrame</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="labelDate">
-							<string key="name">labelDate</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="labelUserName">
-							<string key="name">labelUserName</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="lightGrayBackgroundView">
-							<string key="name">lightGrayBackgroundView</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="likesCountLabel">
-							<string key="name">likesCountLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="playPauseButton">
-							<string key="name">playPauseButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="readMoreLabel">
-							<string key="name">readMoreLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="spinner">
-							<string key="name">spinner</string>
-							<string key="candidateClassName">UIActivityIndicatorView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="supportView">
-							<string key="name">supportView</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="whiteView">
-							<string key="name">whiteView</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/FOFTableCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSLayoutConstraint</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
+		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1536" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.InterfaceBuilder3</string>
+			<integer value="4600" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="AvatarDefault.png">{50, 50}</string>
 			<string key="Pause-Button.png">{379, 379}</string>
-			<string key="close.png">{29, 29}</string>
+			<string key="close.png">{25, 25}</string>
 			<string key="heart-blue.png">{32, 32}</string>
 			<string key="message-blue.png">{34, 31}</string>
 		</dictionary>
 		<bool key="IBDocument.UseAutolayout">YES</bool>
-		<string key="IBCocoaTouchPluginVersion">2083</string>
+		<string key="IBCocoaTouchPluginVersion">3742</string>
 	</data>
 </archive>

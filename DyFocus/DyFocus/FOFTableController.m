@@ -250,8 +250,6 @@
         [cell refreshWithFof:fof];
         
         [cell refreshImageSize];
-        
-        [self addBannerToCell:cell];
     }
     
 	return cell;
@@ -259,39 +257,6 @@
 }
 
 
--(void) addBannerToCell: (UITableViewCell *) cell{
-    
-    // Create a view of the standard size at the top of the screen.
-    // Available AdSize constants are explained in GADAdSize.h.
-    GADBannerView *bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-    
-    // Specify the ad's "unit identifier". This is your AdMob Publisher ID.
-    bannerView.adUnitID = @"ca-app-pub-4922757350349330/6794918205";
-    
-    // Let the runtime know which UIViewController to restore after taking
-    // the user wherever the ad goes and add it to the view hierarchy.
-    bannerView.rootViewController = self;
-
-    [bannerView setBackgroundColor: [UIColor colorWithRed:210.0/255.0 green:210.0/255.0 blue:210.0/255.0 alpha:1.0]];
-    
-    [cell addSubview:bannerView];
-    
-//USE THE TESTDEVICE AD REQUEST WHILE TESTING:
-    GADRequest *request = [GADRequest request];
-    
-    // Make the request for a test ad. Put in an identifier for the simulator as
-    // well as any devices you want to receive test ads.
-    request.testDevices = [NSArray arrayWithObjects:@"c7a566cbe07e78e282956d4e44695295", nil];
-    
-    // Initiate a generic request to load it with an ad.
-    [bannerView loadRequest:request];
-    
-// "REAL" AD REQUEST:
-//    [bannerView loadRequest:[GADRequest request]];
-    
-    [bannerView release];
-    bannerView = nil;
-}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -631,8 +596,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [FOFArray release];
     
     [refreshHeaderView release];
-    
-//    [bannerView release];
     
     [super dealloc];
 }
