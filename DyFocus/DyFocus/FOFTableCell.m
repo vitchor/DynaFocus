@@ -11,7 +11,7 @@
 
 @implementation FOFTableCell
 
-@synthesize row, descriptionFullText, descriptionPreviewText, tableController;
+@synthesize row, descriptionFullText, descriptionPreviewText, fof, tableController;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
     NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
@@ -119,7 +119,7 @@
         if(fof.m_userId == delegate.myself.uid){
             person = delegate.myself;
         }else{
-            person = [delegate getUserWithId:fof.m_userId];
+            person = [delegate getUserWithId:self.fof.m_userId];
         }
         
         if (person) {
@@ -129,7 +129,7 @@
             
         } else {
             // Person is not being followed, there's no information we can get.
-            profileController = [[ProfileController alloc] initWithUserId:fof.m_userId];
+            profileController = [[ProfileController alloc] initWithUserId:self.fof.m_userId];
         }
         profileController.hidesBottomBarWhenPushed = YES;
         
@@ -177,7 +177,7 @@
     
     NSMutableDictionary *jsonRequestObject = [[[NSMutableDictionary alloc] initWithCapacity:5] autorelease];
     
-    [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
+    [jsonRequestObject setObject:self.fof.m_id forKey:@"fof_id"];
     
     NSString *json = [(NSObject *)jsonRequestObject JSONRepresentation];
     
@@ -293,7 +293,7 @@
 }
 
 - (void) likeButtonPressed {
-    if (!fof.m_liked) {
+    if (!self.fof.m_liked) {
         
         NSString *newCount = [[[NSString alloc] initWithFormat:@"%d", [likesCountLabel.text intValue] + 1] autorelease];
         [likesCountLabel setText:newCount];
@@ -306,7 +306,7 @@
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
-        [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
+        [jsonRequestObject setObject:self.fof.m_id forKey:@"fof_id"];
         
         [jsonRequestObject setObject:[NSString stringWithFormat:@"%ld", delegate.myself.uid] forKey:@"user_id"];
         
@@ -324,11 +324,11 @@
                                }];
         
         [buttonLike setTitle:@"Liked" forState:UIControlStateNormal];
-        fof.m_liked = YES;
-        fof.m_likes = [NSString stringWithFormat:@"%d",[fof.m_likes intValue] + 1];
+        self.fof.m_liked = YES;
+        self.fof.m_likes = [NSString stringWithFormat:@"%d",[self.fof.m_likes intValue] + 1];
         
         for (FOF *m_fof in self.tableController.FOFArray) {
-            if(m_fof.m_id == fof.m_id){
+            if(m_fof.m_id == self.fof.m_id){
                 m_fof.m_likes = [NSString stringWithFormat:@"%d", [m_fof.m_likes intValue] + 1];
                 m_fof.m_liked = YES;
             }
@@ -363,7 +363,7 @@
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         
         //        curl -d json='{"user_id": 74, "fof_id": 352}' http://localhost:8000/uploader/delete_like/
-        [jsonRequestObject setObject:fof.m_id forKey:@"fof_id"];
+        [jsonRequestObject setObject:self.fof.m_id forKey:@"fof_id"];
         
         [jsonRequestObject setObject:[NSString stringWithFormat:@"%ld", delegate.myself.uid] forKey:@"user_id"];
         
@@ -381,8 +381,8 @@
                                }];
         
         [buttonLike setTitle:@"Like" forState:UIControlStateNormal];
-        fof.m_liked = NO;
-        fof.m_likes = [NSString stringWithFormat:@"%d",[fof.m_likes intValue] - 1];
+        self.fof.m_liked = NO;
+        self.fof.m_likes = [NSString stringWithFormat:@"%d",[self.fof.m_likes intValue] - 1];
         
         for (FOF *m_fof in self.tableController.FOFArray) {
             if(m_fof.m_id == fof.m_id){
@@ -400,16 +400,15 @@
 - (void)openCommentView:(UIGestureRecognizer *)gestureRecognizer
 {
     [self showCommentView:FALSE];
-    
 }
 
 - (void) showCommentView:(BOOL)isCommenting {
     CommentViewerController *commentController = nil;
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     if (screenBounds.size.height == 568) {
-        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController_i5" andFOF:fof];
+        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController_i5" andFOF:self.fof];
     } else {
-        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:fof];
+        commentController = [[CommentViewerController alloc] initWithNibName:@"CommentViewerController" andFOF:self.fof];
     }
         
     commentController.navigationItem.title = @"Comments";
@@ -423,6 +422,7 @@
     
     [self.tableController.navigationController setNavigationBarHidden:NO];
     [self.tableController.navigationController pushViewController:commentController animated:YES];
+    [commentController release];
 }
 
 -(void) startTimer {
@@ -459,7 +459,7 @@
     
     CGFloat descriptionTextHeight = descriptionTextSize.height;
     
-    if( !((NSNull*)fof.m_description==[NSNull null]||fof.m_description==nil||[fof.m_description isEqual:@""])
+    if( !((NSNull*)self.fof.m_description==[NSNull null]||self.fof.m_description==nil||[self.fof.m_description isEqual:@""])
        && (descriptionTextHeight > PREVIEW_N_LINES * LINE_HEIGHT))
         [readMoreLabel setHidden:NO];
 }
@@ -524,9 +524,6 @@
     
     //TODO use self.dataMember instead of allocating and releasing manually
     
-    [fof release];
-    fof = nil;
-    
     if (timer) {
         [timer invalidate];
         timer = nil;
@@ -551,9 +548,9 @@
 {
 //    [descriptionLabel setText:@"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing."];
     
-    if (!((NSNull*)fof.m_description==[NSNull null]||fof.m_description==nil||[fof.m_description isEqual:@""])) {
+    if (!((NSNull*)self.fof.m_description==[NSNull null]||self.fof.m_description==nil||[self.fof.m_description isEqual:@""])) {
     
-        [descriptionLabel setText:fof.m_description];
+        [descriptionLabel setText:self.fof.m_description];
         
         NSMutableString *fullText = [NSMutableString stringWithString:descriptionLabel.text];
         
@@ -683,9 +680,9 @@
     
     if (imageUserPicture.tag != 420) {
         UIImageLoaderDyfocus *imageLoader = [UIImageLoaderDyfocus sharedUIImageLoader];
-        //        [imageLoader loadPictureWithFaceId:fof.m_userId andImageView:imageUserPicture andIsSmall:YES];
+        //        [imageLoader loadPictureWithFaceId:self.fof.m_userId andImageView:imageUserPicture andIsSmall:YES];
         
-        [imageLoader loadFofTableCellUserPicture:fof.m_userFacebookId andFOFId:fof.m_id andImageView:imageUserPicture];
+        [imageLoader loadFofTableCellUserPicture:self.fof.m_userFacebookId andFOFId:self.fof.m_id andImageView:imageUserPicture];
     }
     
     
@@ -705,7 +702,7 @@
             NSDyfocusURLRequest *request = [NSDyfocusURLRequest requestWithURL:[NSURL URLWithString:frameUrl]];
             
             request.tag = [fofUrls indexOfObject:frameUrl];
-            request.id = fof.m_id;
+            request.id = self.fof.m_id;
             
             [self sendFrameRequest:request];
             
@@ -730,7 +727,7 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if ( !fof || fof.m_id != fofObject.m_id ) {
+    if ( !self.fof || self.fof.m_id != fofObject.m_id ) {
         
         [self clearImages];
         
@@ -742,26 +739,7 @@
                                           imagefrontFrame.frame.origin.y, imagefrontFrame.frame.size.width, 212);
         
         
-        if (fof) {
-            [fof release];
-            fof = nil;
-        }
-        
-        
-        fof = [[FOF alloc] init];
-        fof.m_frames = [[fofObject.m_frames copy] autorelease];
-        fof.m_comments = [[fofObject.m_comments copy] autorelease];
-        fof.m_date = [[fofObject.m_date copy] autorelease];
-        fof.m_id = [[fofObject.m_id copy] autorelease];
-        fof.m_userId = fofObject.m_userId;
-        fof.m_liked = fofObject.m_liked;
-        fof.m_private = fofObject.m_private;
-        fof.m_likes = [[fofObject.m_likes copy] autorelease];
-        fof.m_name = [[fofObject.m_name copy] autorelease];
-        fof.m_userFacebookId = [[fofObject.m_userFacebookId copy] autorelease];
-        fof.m_userName = [[fofObject.m_userName copy] autorelease];
-        fof.m_userNickname = [[fofObject.m_userNickname copy] autorelease];
-        fof.m_description = [[fofObject.m_description copy] autorelease];
+        self.fof = fofObject;
         
         UITapGestureRecognizer *singleTapOnLightGrayBackgroundView = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openCommentView:)] autorelease];
         [lightGrayBackgroundView addGestureRecognizer:singleTapOnLightGrayBackgroundView];

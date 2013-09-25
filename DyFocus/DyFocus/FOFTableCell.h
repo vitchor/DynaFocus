@@ -83,14 +83,15 @@
     NSMutableArray *fofUrls;
     NSTimer *timer;
     
-    FOF *fof;
     GADBannerView *bannerView;
 }
 
 @property (nonatomic,readwrite) int row;
 @property (nonatomic,retain) NSString *descriptionFullText;
 @property (nonatomic,retain) NSMutableString *descriptionPreviewText;
+@property (nonatomic,retain) FOF *fof;
 @property (nonatomic,retain) FOFTableController *tableController;
+
 
 - (void) loadImages;
 - (void) increaseCommentsCounter;
