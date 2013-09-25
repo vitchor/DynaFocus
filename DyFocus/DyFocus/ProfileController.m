@@ -175,6 +175,9 @@
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
+    if([(DyfocusUITabBarController *)self.tabBarController actualControllerIndex]!=4)
+        [self resetNavigationControlleTransitionView];
+    
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     
     [delegate logEvent:@"ProfileController.viewDidAppear"];
@@ -479,6 +482,21 @@
                            }
      ];
 }
+
+-(void)resetNavigationControlleTransitionView
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    for(UIView *view in self.navigationController.view.subviews)
+    {
+        if(![view isKindOfClass:[UINavigationBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height)];
+        }
+    }
+}
+
 
 -(void) showNotifications {
     

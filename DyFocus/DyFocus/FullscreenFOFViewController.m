@@ -97,6 +97,10 @@
     }
 }
 
+-(void) viewDidAppear:(BOOL)animated{
+    [self resetNavigationControllerTransitionView];
+}
+
 - (void) viewWillDisappear:(BOOL)animated
 {
     [timer invalidate];
@@ -406,6 +410,20 @@
         [timer fire];
         
         [playPauseButton setImage:[UIImage imageNamed:@"Pause-Button-NoStroke.png"] forState:UIControlStateNormal];
+    }
+}
+
+-(void)resetNavigationControllerTransitionView
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    
+    for(UIView *view in self.navigationController.view.subviews)
+    {
+        if(![view isKindOfClass:[UINavigationBar class]]){
+            
+            [view setFrame:CGRectMake(view.frame.origin.x,view.frame.origin.y,
+                                      view.frame.size.width, screenBounds.size.height)];
+        }
     }
 }
 
