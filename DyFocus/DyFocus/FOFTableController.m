@@ -110,14 +110,19 @@
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     if(shouldShowSegmentedBar){
         [self hideSegmentedBar];
         [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:NO];
     }
-    
-    [self resetNavigationControllerFrame];
+
 }
 
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+     [self resetNavigationControllerTransitionView];
+}
 
 -(void) refreshCellsImageSizes {
     
@@ -569,7 +574,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }];
 }
 
--(void)resetNavigationControllerFrame
+-(void)resetNavigationControllerTransitionView
 {
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
