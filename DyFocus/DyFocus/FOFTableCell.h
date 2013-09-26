@@ -78,9 +78,6 @@
    
     IBOutlet UIActivityIndicatorView *spinner;
     
-    NSString *profilePictureUrl;
-    NSMutableArray *frames;
-    NSMutableArray *fofUrls;
     NSTimer *timer;
     
     GADBannerView *bannerView;
@@ -89,6 +86,8 @@
 @property (nonatomic,readwrite) int row;
 @property (nonatomic,retain) NSString *descriptionFullText;
 @property (nonatomic,retain) NSMutableString *descriptionPreviewText;
+@property (nonatomic,retain) NSMutableArray *frames;
+@property (nonatomic,retain) NSMutableArray *fofUrls;
 @property (nonatomic,retain) FOF *fof;
 @property (nonatomic,retain) FOFTableController *tableController;
 

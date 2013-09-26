@@ -11,7 +11,7 @@
 
 @implementation FOFTableCell
 
-@synthesize row, descriptionFullText, descriptionPreviewText, fof, tableController;
+@synthesize row, descriptionFullText, descriptionPreviewText, fof, tableController, frames, fofUrls;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
     NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
@@ -51,7 +51,7 @@
                                        
                                        image.index = request.tag;
                                        
-                                       [frames addObject:image];
+                                       [self.frames addObject:image];
                                        
                                        float scale = image.size.height / image.size.width;
                                        
@@ -87,9 +87,9 @@
                                                                         readMoreLabel.frame.size.width,
                                                                         readMoreLabel.frame.size.height);
                                        
-                                       if ([frames count] == [fofUrls count]) {
+                                       if ([self.frames count] == [self.fofUrls count]) {
                                            
-                                           [frames sortUsingFunction:sortByIndex context:nil];
+                                           [self.frames sortUsingFunction:sortByIndex context:nil];
                                            
                                            [self startTimer];
                                        }
@@ -199,7 +199,7 @@
 
 - (void)singleTapOnFOF:(UIGestureRecognizer *)gestureRecognizer
 {
-    if(frames.count >=1){
+    if(self.frames.count >=1){
         
         [supportView setUserInteractionEnabled:NO];
         
@@ -207,7 +207,7 @@
         
         fullScreenController.hidesBottomBarWhenPushed = YES;
         
-        fullScreenController.frames = frames;
+        fullScreenController.frames = self.frames;
         
         [UIView beginAnimations:@"View Flip" context:nil];
         [UIView setAnimationDuration:0.80];
@@ -430,11 +430,11 @@
     [spinner stopAnimating];
     [spinner setHidden:YES];
     
-    if ([frames count] > 0) {
-        [imagebackFrame setImage: [frames objectAtIndex:0]];
+    if ([self.frames count] > 0) {
+        [imagebackFrame setImage: [self.frames objectAtIndex:0]];
         
-        if ([frames count] > 1) {
-            [imagefrontFrame setImage: [frames objectAtIndex:1]];
+        if ([self.frames count] > 1) {
+            [imagefrontFrame setImage: [self.frames objectAtIndex:1]];
         }
     }
     
@@ -476,14 +476,14 @@
                 
                 timerPause = TIMER_PAUSE;
                 
-                if (oldFrameIndex >= [frames count] - 1) {
+                if (oldFrameIndex >= [self.frames count] - 1) {
                     oldFrameIndex = 0;
                 } else {
                     oldFrameIndex += 1;
                 }
                 
-                if ([frames count] > 0)
-                    [imagebackFrame setImage:[frames objectAtIndex:oldFrameIndex]];
+                if ([self.frames count] > 0)
+                    [imagebackFrame setImage:[self.frames objectAtIndex:oldFrameIndex]];
                 
                 [imagebackFrame setNeedsDisplay];
                 
@@ -492,14 +492,14 @@
                 [imagefrontFrame setNeedsDisplay];
                 
                 int newIndex;
-                if (oldFrameIndex == [frames count] - 1) {
+                if (oldFrameIndex == [self.frames count] - 1) {
                     newIndex = 0;
                 } else {
                     newIndex = oldFrameIndex + 1;
                 }
                 
-                if ([frames count] > 0)
-                    [imagefrontFrame setImage: [frames objectAtIndex: newIndex]];
+                if ([self.frames count] > 0)
+                    [imagefrontFrame setImage: [self.frames objectAtIndex: newIndex]];
                 
             }
             
@@ -531,11 +531,8 @@
     
     imageUserPicture.tag = 0;
     
-    if (frames) {
-        [frames removeAllObjects];
-        
-        [frames release];
-        frames = nil;
+    if (self.frames && [self.frames count]!=0) {
+        [self.frames removeAllObjects];
     }
     
     [spinner setHidden:NO];
@@ -686,7 +683,7 @@
     }
     
     
-    if ((!frames || [frames count] == 0) && !spinner.isAnimating) {
+    if ((!self.frames || [self.frames count] == 0) && !spinner.isAnimating) {
         
         // Load frames
         if (!frames) {
@@ -695,13 +692,13 @@
         
         [spinner startAnimating];
         
-        [frames removeAllObjects];
+        [self.frames removeAllObjects];
         
-        for (NSString *frameUrl in fofUrls) {
+        for (NSString *frameUrl in self.fofUrls) {
             
             NSDyfocusURLRequest *request = [NSDyfocusURLRequest requestWithURL:[NSURL URLWithString:frameUrl]];
             
-            request.tag = [fofUrls indexOfObject:frameUrl];
+            request.tag = [self.fofUrls indexOfObject:frameUrl];
             request.id = self.fof.m_id;
             
             [self sendFrameRequest:request];
@@ -783,20 +780,19 @@
         [likesCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_likes] autorelease]];
         [commentsCountLabel setText:[[[NSString alloc] initWithFormat:@"%@", fof.m_comments] autorelease]];
         
-        if(!fofUrls) {
-            fofUrls = [[NSMutableArray alloc] init];
+        if(!self.fofUrls) {
+            self.fofUrls = [[NSMutableArray alloc] init];
         } else {
-            [fofUrls removeAllObjects];
+            [self.fofUrls removeAllObjects];
         }
         
-        for (NSDictionary *frame in fof.m_frames) {
-            NSLog([frame debugDescription]);
-            [fofUrls addObject:[frame objectForKey:@"frame_url"]];
+        for (NSDictionary *frame in self.fof.m_frames) {
+            NSLog(@"%@", [frame debugDescription]);
+            [self.fofUrls addObject:[frame objectForKey:@"frame_url"]];
         }
         
-        if (fof.m_liked) {
+        if (self.fof.m_liked) {
             [buttonLike setTitle:@"Liked" forState:UIControlStateNormal];
-            //buttonLike.titleLabel.font = [UIFont systemFontOfSize:11];
         }
     }
 }
@@ -948,7 +944,6 @@ static int sortByIndex(UIDyfocusImage *image1, UIDyfocusImage *image2, void *ign
     
     [spinner release];
     
-    [profilePictureUrl release];
     [frames release];
     [fofUrls release];
     [timer release];
