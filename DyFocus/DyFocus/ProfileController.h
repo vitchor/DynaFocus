@@ -30,6 +30,7 @@
     IBOutlet UIButton *notificationButton;
     IBOutlet UIButton *follow;
     IBOutlet UIButton *unfollow;
+    IBOutlet UIButton *goProButton;
     
     IBOutlet UILabel *followingLabel;
     IBOutlet UILabel *followersLabel;

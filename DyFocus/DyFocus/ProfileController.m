@@ -167,8 +167,8 @@
     
     [follow addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
     [unfollow addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
-    
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    [goProButton addTarget:self action:@selector(onClickGoProButton) forControlEvents:UIControlEventTouchUpInside];
     
 }
 
@@ -388,6 +388,11 @@
 - (void)logout {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     [appDelegate closeSession];
+}
+
+-(void)onClickGoProButton{
+     NSString *itunesLink = @"https://itunes.apple.com/us/app/dyfocus/id557266156";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:itunesLink]];
 }
 
 -(void)followUser{
