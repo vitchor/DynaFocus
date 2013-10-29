@@ -115,13 +115,14 @@
         [self hideSegmentedBar];
         [(FOFTableNavigationController*)self.navigationController enableSegmentedControl:NO];
     }
-
+    
+    [self resetNavigationControllerTransitionView];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     
-     [self resetNavigationControllerTransitionView];
+    [self resetNavigationControllerTransitionView];
 }
 
 -(void) refreshCellsImageSizes {
@@ -232,15 +233,32 @@
         tableView.backgroundColor = [UIColor clearColor];
         
         //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
-        cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell"];
+        //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell_free_ad", indexPath.row];
+
         
-        
-        if (cell == nil) {
-            NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell" owner:self options:nil];
+        if(FREE_AD_VERSION){
             
-            // Load the top-level objects from the custom cell XIB.
-            cell = [topLevelObjects objectAtIndex:0];
+            cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell_free_ad"];
+           
+            if (cell == nil) {
+                NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell_free_ad" owner:self options:nil];
+                
+                // Load the top-level objects from the custom cell XIB.
+                cell = [topLevelObjects objectAtIndex:0];
+                
+            }
+        }
+        else{
             
+            cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell"];
+            
+            if (cell == nil) {
+                NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell" owner:self options:nil];
+                
+                // Load the top-level objects from the custom cell XIB.
+                cell = [topLevelObjects objectAtIndex:0];
+                
+            }
         }
         
         //FOF *fof = (FOF *)[FOFArray objectAtIndex:indexPath.row];

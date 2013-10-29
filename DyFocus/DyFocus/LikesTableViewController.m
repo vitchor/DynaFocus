@@ -92,6 +92,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LikesTableViewCell *cell;
     
     //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
+    //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell_free_ad", indexPath.row];
     cell = [tableView dequeueReusableCellWithIdentifier:@"LikesTableViewCell"];
     
     if (cell == nil) {

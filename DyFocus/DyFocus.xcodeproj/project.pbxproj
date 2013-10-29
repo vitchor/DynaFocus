@@ -185,6 +185,7 @@
 		7B823BC8177D0AD000141490 /* DfShootInstructionsP04-i5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B823BC3177D0AD000141490 /* DfShootInstructionsP04-i5.png */; };
 		7B823BC9177D0AD000141490 /* DfShootInstructionsP05-i5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B823BC4177D0AD000141490 /* DfShootInstructionsP05-i5.png */; };
 		7B8A0B9C1788AA02002FD813 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8A0B9B1788AA02002FD813 /* CoreText.framework */; };
+		7BB3A9CC18202A9F007F204C /* FOFTableCell_free_ad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BB3A9CB18202A9F007F204C /* FOFTableCell_free_ad.xib */; };
 		7BBE360F17519BF60002DA95 /* Pause-Button-NoStroke.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BBE360B17519BF60002DA95 /* Pause-Button-NoStroke.png */; };
 		7BBE361017519BF60002DA95 /* Pause-Button-Orange-NoStroke.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BBE360C17519BF60002DA95 /* Pause-Button-Orange-NoStroke.png */; };
 		7BBE361117519BF60002DA95 /* Pause-Button-Orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BBE360D17519BF60002DA95 /* Pause-Button-Orange.png */; };
@@ -546,6 +547,7 @@
 		7B823BC3177D0AD000141490 /* DfShootInstructionsP04-i5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DfShootInstructionsP04-i5.png"; sourceTree = "<group>"; };
 		7B823BC4177D0AD000141490 /* DfShootInstructionsP05-i5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DfShootInstructionsP05-i5.png"; sourceTree = "<group>"; };
 		7B8A0B9B1788AA02002FD813 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		7BB3A9CB18202A9F007F204C /* FOFTableCell_free_ad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FOFTableCell_free_ad.xib; sourceTree = "<group>"; };
 		7BBE360B17519BF60002DA95 /* Pause-Button-NoStroke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pause-Button-NoStroke.png"; sourceTree = "<group>"; };
 		7BBE360C17519BF60002DA95 /* Pause-Button-Orange-NoStroke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pause-Button-Orange-NoStroke.png"; sourceTree = "<group>"; };
 		7BBE360D17519BF60002DA95 /* Pause-Button-Orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pause-Button-Orange.png"; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 				04292BE9169904AD009CF50B /* FOFTableCell.h */,
 				04292BEA169904AD009CF50B /* FOFTableCell.m */,
 				04292BEC169904C3009CF50B /* FOFTableCell.xib */,
+				7BB3A9CB18202A9F007F204C /* FOFTableCell_free_ad.xib */,
 				04D6A4EA16B5FABB00C4A71D /* FOFTableNavigationController.h */,
 				04D6A4EB16B5FABB00C4A71D /* FOFTableNavigationController.m */,
 			);
@@ -1729,6 +1732,7 @@
 				1F59C19D1707F1250070D3C4 /* InvitationController.xib in Resources */,
 				1F59C1A317080BB30070D3C4 /* FOFPreview_i5.xib in Resources */,
 				AC5FDBD317163F7E00348478 /* ProfileView@2x.png in Resources */,
+				7BB3A9CC18202A9F007F204C /* FOFTableCell_free_ad.xib in Resources */,
 				AC5FDBDF1716571200348478 /* ProfileView-i5@2x.png in Resources */,
 				046D3B0B17171C0700AA8A93 /* orange_gradient.png in Resources */,
 				042ECA721717452B00E823B4 /* Filter_Paint.jpg in Resources */,
@@ -1996,8 +2000,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Marcelo Salloum dos Santos (TCNHYHKFZG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Marcelo Salloum dos Santos (TCNHYHKFZG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -2025,8 +2029,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1CAAB896-0542-406B-9F83-96908DA467FB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1CAAB896-0542-406B-9F83-96908DA467FB";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos6.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -2039,8 +2043,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Marcelo Salloum dos Santos (TCNHYHKFZG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Marcelo Salloum dos Santos (TCNHYHKFZG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../FacebookSDK\"",
@@ -2068,8 +2072,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1CAAB896-0542-406B-9F83-96908DA467FB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1CAAB896-0542-406B-9F83-96908DA467FB";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos6.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;

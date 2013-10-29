@@ -14,7 +14,14 @@
 @synthesize row, descriptionFullText, descriptionPreviewText, fof, tableController;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
-    NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
+    
+    NSArray *objs;
+    
+    if(FREE_AD_VERSION)
+        objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell_free_ad" owner:nil options:nil];
+    else
+        objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
+    
     for ( id item in objs )
         if ( [item isKindOfClass:[FOFTableCell class]] ) {
             [self release];
@@ -26,7 +33,13 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
+    NSArray *objs;
+    
+    if(FREE_AD_VERSION)
+        objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell_free_ad" owner:nil options:nil];
+    else
+        objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
+    
     for ( id item in objs )
         if ( [item isKindOfClass:[FOFTableCell class]] ) {
             [self release];
@@ -835,27 +848,30 @@
 
 -(void) showBannerInCell{
     
-    // Create a view of the standard size at the top of the screen.
-    // Available AdSize constants are explained in GADAdSize.h.
-    if(!bannerView){
+    if(!FREE_AD_VERSION){
         
-        bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-    
-        // Specify the ad's "unit identifier". This is your AdMob Publisher ID.
-        bannerView.adUnitID = @"ca-app-pub-4922757350349330/6794918205";
+        // Create a view of the standard size at the top of the screen.
+        // Available AdSize constants are explained in GADAdSize.h.
+        if(!bannerView){
+            
+            bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
         
-        // Let the runtime know which UIViewController to restore after taking
-        // the user wherever the ad goes and add it to the view hierarchy.
-        bannerView.rootViewController = self.tableController;
+            // Specify the ad's "unit identifier". This is your AdMob Publisher ID.
+            bannerView.adUnitID = @"ca-app-pub-4922757350349330/6794918205";
+            
+            // Let the runtime know which UIViewController to restore after taking
+            // the user wherever the ad goes and add it to the view hierarchy.
+            bannerView.rootViewController = self.tableController;
+            
+            [bannerView setBackgroundColor: [UIColor colorWithRed:210.0/255.0 green:210.0/255.0 blue:210.0/255.0 alpha:1.0]];
+            
+            [self addSubview:bannerView];
+        }
         
-        [bannerView setBackgroundColor: [UIColor colorWithRed:210.0/255.0 green:210.0/255.0 blue:210.0/255.0 alpha:1.0]];
-        
-        [self addSubview:bannerView];
-    }
-    
-    [bannerView setHidden:NO];
+        [bannerView setHidden:NO];
 
-    [self loadBannerRequest];
+        [self loadBannerRequest];
+    }
     
 }
 
