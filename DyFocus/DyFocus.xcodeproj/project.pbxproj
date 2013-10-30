@@ -42,8 +42,7 @@
 		04C25F5B1767EE850073964B /* df_shoot_bw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C25F5A1767EE850073964B /* df_shoot_bw@2x.png */; };
 		04C25F5D1767EEA60073964B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C25F5C1767EEA60073964B /* Default@2x.png */; };
 		04C25F5F1767EEBD0073964B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C25F5E1767EEBD0073964B /* Default-568h@2x.png */; };
-		04C25F611767EEE20073964B /* dyfocus_2.0_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C25F601767EEE20073964B /* dyfocus_2.0_114x114.png */; };
-		04C25F631767EF670073964B /* dyfocus_2.0_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C25F621767EF670073964B /* dyfocus_2.0_57x57.png */; };
+		04C25F611767EEE20073964B /* dyfocus_icon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C25F601767EEE20073964B /* dyfocus_icon_114x114.png */; };
 		04C25F651767EF7B0073964B /* dyfocus_square_417x417.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C25F641767EF7B0073964B /* dyfocus_square_417x417.png */; };
 		04C5F82316BABB4800E8C289 /* fb_share_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C5F82216BABB4800E8C289 /* fb_share_button.png */; };
 		04CD4502175FC64A009E79FC /* LoginController_i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04CD4501175FC64A009E79FC /* LoginController_i5.xib */; };
@@ -153,10 +152,14 @@
 		7B0EC6FF16F3864C00606626 /* CameraView-RightButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F516F3864C00606626 /* CameraView-RightButton.png */; };
 		7B0EC70016F3864C00606626 /* CameraView-RightButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */; };
 		7B0EC70116F3864C00606626 /* CameraView-ShootButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */; };
-		7B18FA19176120D8005F3B22 /* dyfocus_icon_57x57b.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B18FA17176120D8005F3B22 /* dyfocus_icon_57x57b.png */; };
-		7B18FA1A176120D8005F3B22 /* dyfocus_icon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B18FA18176120D8005F3B22 /* dyfocus_icon_114x114.png */; };
 		7B22CA7E17791508007AD22D /* TutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B22CA7D17791508007AD22D /* TutorialView.m */; };
 		7B3AE3D1177D131D00726CCA /* Pattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3AE3D0177D131D00726CCA /* Pattern.m */; };
+		7B4D8B811821A27B006E0B7E /* dyfocus_icon_29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B4D8B7D1821A27B006E0B7E /* dyfocus_icon_29x29.png */; };
+		7B4D8B821821A27B006E0B7E /* dyfocus_icon_40x40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B4D8B7E1821A27B006E0B7E /* dyfocus_icon_40x40.png */; };
+		7B4D8B831821A27B006E0B7E /* dyfocus_icon_60x60.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B4D8B7F1821A27B006E0B7E /* dyfocus_icon_60x60.png */; };
+		7B4D8B841821A27B006E0B7E /* Dyfocus Logo FREE.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B4D8B801821A27B006E0B7E /* Dyfocus Logo FREE.png */; };
+		7B4D8B881821A314006E0B7E /* dyfocus_icon_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B4D8B871821A314006E0B7E /* dyfocus_icon_57x57.png */; };
+		7B4D8B8C1821A3BB006E0B7E /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B4D8B8B1821A3BB006E0B7E /* Images-2.xcassets */; };
 		7B673E8517E77C2500F7641C /* tuto5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B673E8017E77C2500F7641C /* tuto5.png */; };
 		7B673E8617E77C2500F7641C /* tuto4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B673E8117E77C2500F7641C /* tuto4.png */; };
 		7B673E8717E77C2500F7641C /* tuto3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B673E8217E77C2500F7641C /* tuto3.png */; };
@@ -356,8 +359,7 @@
 		04C25F5A1767EE850073964B /* df_shoot_bw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "df_shoot_bw@2x.png"; sourceTree = "<group>"; };
 		04C25F5C1767EEA60073964B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		04C25F5E1767EEBD0073964B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		04C25F601767EEE20073964B /* dyfocus_2.0_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_2.0_114x114.png; sourceTree = "<group>"; };
-		04C25F621767EF670073964B /* dyfocus_2.0_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_2.0_57x57.png; sourceTree = "<group>"; };
+		04C25F601767EEE20073964B /* dyfocus_icon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_114x114.png; sourceTree = "<group>"; };
 		04C25F641767EF7B0073964B /* dyfocus_square_417x417.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_square_417x417.png; sourceTree = "<group>"; };
 		04C5F82216BABB4800E8C289 /* fb_share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_share_button.png; sourceTree = "<group>"; };
 		04CD4501175FC64A009E79FC /* LoginController_i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginController_i5.xib; sourceTree = "<group>"; };
@@ -504,12 +506,16 @@
 		7B0EC6F516F3864C00606626 /* CameraView-RightButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButton.png"; sourceTree = "<group>"; };
 		7B0EC6F616F3864C00606626 /* CameraView-RightButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-RightButtonPressed.png"; sourceTree = "<group>"; };
 		7B0EC6F716F3864C00606626 /* CameraView-ShootButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CameraView-ShootButton.png"; sourceTree = "<group>"; };
-		7B18FA17176120D8005F3B22 /* dyfocus_icon_57x57b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_57x57b.png; sourceTree = "<group>"; };
-		7B18FA18176120D8005F3B22 /* dyfocus_icon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_114x114.png; sourceTree = "<group>"; };
 		7B22CA7C17791508007AD22D /* TutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialView.h; sourceTree = "<group>"; };
 		7B22CA7D17791508007AD22D /* TutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialView.m; sourceTree = "<group>"; };
 		7B3AE3CF177D131D00726CCA /* Pattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pattern.h; sourceTree = "<group>"; };
 		7B3AE3D0177D131D00726CCA /* Pattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pattern.m; sourceTree = "<group>"; };
+		7B4D8B7D1821A27B006E0B7E /* dyfocus_icon_29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_29x29.png; sourceTree = "<group>"; };
+		7B4D8B7E1821A27B006E0B7E /* dyfocus_icon_40x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_40x40.png; sourceTree = "<group>"; };
+		7B4D8B7F1821A27B006E0B7E /* dyfocus_icon_60x60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_60x60.png; sourceTree = "<group>"; };
+		7B4D8B801821A27B006E0B7E /* Dyfocus Logo FREE.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Dyfocus Logo FREE.png"; sourceTree = "<group>"; };
+		7B4D8B871821A314006E0B7E /* dyfocus_icon_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dyfocus_icon_57x57.png; sourceTree = "<group>"; };
+		7B4D8B8B1821A3BB006E0B7E /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "dyfocus/Images-2.xcassets"; sourceTree = "<group>"; };
 		7B673E8017E77C2500F7641C /* tuto5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tuto5.png; sourceTree = "<group>"; };
 		7B673E8117E77C2500F7641C /* tuto4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tuto4.png; sourceTree = "<group>"; };
 		7B673E8217E77C2500F7641C /* tuto3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tuto3.png; sourceTree = "<group>"; };
@@ -874,6 +880,7 @@
 		441BFFA015B131D200E204D7 = {
 			isa = PBXGroup;
 			children = (
+				7B4D8B8B1821A3BB006E0B7E /* Images-2.xcassets */,
 				441BFFB515B131D200E204D7 /* DyFocus */,
 				441BFFAE15B131D200E204D7 /* Frameworks */,
 				441BFFAC15B131D200E204D7 /* Products */,
@@ -1523,23 +1530,25 @@
 		AC8C262215DAA9BC0093FFD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7B3AE3C8177D0EE500726CCA /* CommentView */,
-				7B3AE3C6177D0E4A00726CCA /* FOFTableCell */,
-				7B3AE3C7177D0EB600726CCA /* SplashScreen */,
-				7B3AE3CA177D0F9D00726CCA /* LoginController */,
+				7B4D8B801821A27B006E0B7E /* Dyfocus Logo FREE.png */,
+				04C25F601767EEE20073964B /* dyfocus_icon_114x114.png */,
+				7B4D8B7D1821A27B006E0B7E /* dyfocus_icon_29x29.png */,
+				7B4D8B7E1821A27B006E0B7E /* dyfocus_icon_40x40.png */,
+				7B4D8B871821A314006E0B7E /* dyfocus_icon_57x57.png */,
+				7B4D8B7F1821A27B006E0B7E /* dyfocus_icon_60x60.png */,
+				04C25F641767EF7B0073964B /* dyfocus_square_417x417.png */,
+				44D8FC8D166676EC00E613DC /* gray_background.png */,
+				AC3116AF16BAAC9B00E18094 /* selected-black@2x.png */,
+				ACBAC90816B642F600AB85C0 /* selected@2x.png */,
 				7B823BCA177D0B9100141490 /* CameraView */,
+				7B3AE3C8177D0EE500726CCA /* CommentView */,
 				7B3AE3C9177D0F1D00726CCA /* DyfocusUITabBarController */,
 				7B3AE3CE177D11F300726CCA /* FOFPreview */,
-				7B3AE3C5177D0DE600726CCA /* ProfileController */,
+				7B3AE3C6177D0E4A00726CCA /* FOFTableCell */,
+				7B3AE3CA177D0F9D00726CCA /* LoginController */,
 				7B3AE3C2177D0D2600726CCA /* PlayPause */,
-				04C25F641767EF7B0073964B /* dyfocus_square_417x417.png */,
-				04C25F621767EF670073964B /* dyfocus_2.0_57x57.png */,
-				7B18FA17176120D8005F3B22 /* dyfocus_icon_57x57b.png */,
-				7B18FA18176120D8005F3B22 /* dyfocus_icon_114x114.png */,
-				04C25F601767EEE20073964B /* dyfocus_2.0_114x114.png */,
-				ACBAC90816B642F600AB85C0 /* selected@2x.png */,
-				AC3116AF16BAAC9B00E18094 /* selected-black@2x.png */,
-				44D8FC8D166676EC00E613DC /* gray_background.png */,
+				7B3AE3C5177D0DE600726CCA /* ProfileController */,
+				7B3AE3C7177D0EB600726CCA /* SplashScreen */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1677,12 +1686,14 @@
 				AC606B6215DBF24B008FDF8F /* df_feed_bw.png in Resources */,
 				AC606B6315DBF24B008FDF8F /* df_profile_bw.png in Resources */,
 				4495E69C15EEDFCF009C2B9F /* FacebookSDKResources.bundle in Resources */,
+				7B4D8B831821A27B006E0B7E /* dyfocus_icon_60x60.png in Resources */,
 				7B7FA8F117ECBC1300E4C5CC /* README.txt in Resources */,
 				44AA7C031657FCFC007D7F27 /* AvatarDefault.png in Resources */,
 				44F07658165E7FE100AE6A84 /* SharingController.xib in Resources */,
 				44D8FC8E166676EC00E613DC /* gray_background.png in Resources */,
 				44B4A0CF167E4D3E00956E0C /* facebook_connect_button.png in Resources */,
 				44362AFE167E8D730007944B /* SplashScreenController.xib in Resources */,
+				7B4D8B8C1821A3BB006E0B7E /* Images-2.xcassets in Resources */,
 				04989B721696232F003ECD93 /* close@2x.png in Resources */,
 				04989B7516964E18003ECD93 /* close.png in Resources */,
 				04292BE81699038F009CF50B /* FOFTableController.xib in Resources */,
@@ -1705,6 +1716,7 @@
 				AC3116B216BAAC9B00E18094 /* tabbar-back-divided@2x.png in Resources */,
 				04C5F82316BABB4800E8C289 /* fb_share_button.png in Resources */,
 				AC1949CF16E91EA5002CA27C /* 1st-focus.png in Resources */,
+				7B4D8B881821A314006E0B7E /* dyfocus_icon_57x57.png in Resources */,
 				AC1949D016E91EA5002CA27C /* 2nd-focus.png in Resources */,
 				04EEABEE16EA92F0001BCEE3 /* NotificationTableViewController.xib in Resources */,
 				04EEABF316EA938A001BCEE3 /* NotificationTableViewCell.xib in Resources */,
@@ -1735,12 +1747,15 @@
 				1F59C19D1707F1250070D3C4 /* InvitationController.xib in Resources */,
 				1F59C1A317080BB30070D3C4 /* FOFPreview_i5.xib in Resources */,
 				AC5FDBD317163F7E00348478 /* ProfileView@2x.png in Resources */,
+				7B4D8B841821A27B006E0B7E /* Dyfocus Logo FREE.png in Resources */,
 				7BB3A9CC18202A9F007F204C /* FOFTableCell_free_ad.xib in Resources */,
 				AC5FDBDF1716571200348478 /* ProfileView-i5@2x.png in Resources */,
 				046D3B0B17171C0700AA8A93 /* orange_gradient.png in Resources */,
 				042ECA721717452B00E823B4 /* Filter_Paint.jpg in Resources */,
+				7B4D8B811821A27B006E0B7E /* dyfocus_icon_29x29.png in Resources */,
 				042ECA731717452B00E823B4 /* Filter_B&W.jpg in Resources */,
 				04420089171B55EB003E3EF5 /* ProfileController_i5.xib in Resources */,
+				7B4D8B821821A27B006E0B7E /* dyfocus_icon_40x40.png in Resources */,
 				04B6027A171B6AE600CAE579 /* ProfileController.xib in Resources */,
 				7B7C2F3D171D052A00C2A022 /* FullscreenFOFViewController.xib in Resources */,
 				7BBE360F17519BF60002DA95 /* Pause-Button-NoStroke.png in Resources */,
@@ -1761,8 +1776,6 @@
 				04DE36FC172E1C93006CD4DE /* dyfocus_login.png in Resources */,
 				04DE36FD172E1C93006CD4DE /* dyfocus_signup.png in Resources */,
 				04CD4502175FC64A009E79FC /* LoginController_i5.xib in Resources */,
-				7B18FA19176120D8005F3B22 /* dyfocus_icon_57x57b.png in Resources */,
-				7B18FA1A176120D8005F3B22 /* dyfocus_icon_114x114.png in Resources */,
 				043988FA1763E46400E6E2FA /* fof_example_2_0.jpg in Resources */,
 				043988FB1763E46400E6E2FA /* fof_example_2_1.jpg in Resources */,
 				043988FD1763E46400E6E2FA /* fof_example_0_0.jpg in Resources */,
@@ -1779,8 +1792,7 @@
 				04C25F5B1767EE850073964B /* df_shoot_bw@2x.png in Resources */,
 				04C25F5D1767EEA60073964B /* Default@2x.png in Resources */,
 				04C25F5F1767EEBD0073964B /* Default-568h@2x.png in Resources */,
-				04C25F611767EEE20073964B /* dyfocus_2.0_114x114.png in Resources */,
-				04C25F631767EF670073964B /* dyfocus_2.0_57x57.png in Resources */,
+				04C25F611767EEE20073964B /* dyfocus_icon_114x114.png in Resources */,
 				04C25F651767EF7B0073964B /* dyfocus_square_417x417.png in Resources */,
 				7B823BBB177D0AC400141490 /* DfShootInstructionsP01.png in Resources */,
 				7B823BBC177D0AC400141490 /* DfShootInstructionsP02.png in Resources */,
@@ -2003,6 +2015,8 @@
 		441BFFC415B131D200E204D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2045,6 +2059,8 @@
 		441BFFC515B131D200E204D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
