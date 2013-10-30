@@ -168,7 +168,13 @@
     [follow addTarget:self action:@selector(followUser) forControlEvents:UIControlEventTouchUpInside];
     [unfollow addTarget:self action:@selector(unfollowUser) forControlEvents:UIControlEventTouchUpInside];
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-    [goProButton addTarget:self action:@selector(onClickGoProButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    if(!FREE_AD_VERSION){
+        [goProButton addTarget:self action:@selector(onClickGoProButton) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        goProButton.hidden = YES;
+        goProButton.userInteractionEnabled = NO;
+    }
     
 }
 
