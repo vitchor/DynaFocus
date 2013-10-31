@@ -24,6 +24,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    if(!AD_FREE_VERSION){
+        
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        
+        if (screenBounds.size.height == 568)
+            [splashImage setImage:[UIImage imageNamed:@"LaunchImage_640x1136_free.png"]];
+        else
+            [splashImage setImage:[UIImage imageNamed:@"LaunchImage_640x960_free.png"]];
+    }
 }
 
 - (void) viewDidAppear:(BOOL)animated {

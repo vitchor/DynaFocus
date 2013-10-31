@@ -233,15 +233,15 @@
         tableView.backgroundColor = [UIColor clearColor];
         
         //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell", indexPath.row];
-        //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell_free_ad", indexPath.row];
+        //NSString *cellId = [NSString stringWithFormat:@"FOFTableCell_free", indexPath.row];
 
         
-        if(FREE_AD_VERSION){
+        if(AD_FREE_VERSION){
             
-            cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell_free_ad"];
+            cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell"];
            
             if (cell == nil) {
-                NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell_free_ad" owner:self options:nil];
+                NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell" owner:self options:nil];
                 
                 // Load the top-level objects from the custom cell XIB.
                 cell = [topLevelObjects objectAtIndex:0];
@@ -250,10 +250,10 @@
         }
         else{
             
-            cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell"];
+            cell = [self.m_tableView dequeueReusableCellWithIdentifier:@"FOFTableCell_free"];
             
             if (cell == nil) {
-                NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell" owner:self options:nil];
+                NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"FOFTableCell_free" owner:self options:nil];
                 
                 // Load the top-level objects from the custom cell XIB.
                 cell = [topLevelObjects objectAtIndex:0];

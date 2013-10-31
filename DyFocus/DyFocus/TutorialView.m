@@ -139,15 +139,15 @@
 //        
 //        UIImageView* animatedImageView = [[UIImageView alloc] initWithFrame:screenBounds];
 //        animatedImageView.animationImages = [NSArray arrayWithObjects:
-//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-01"],
-//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-02"],
-//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-03"],
-//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-04"],
-//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-05"],
-//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-06"],
-//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-07"],
-//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-08"],
-//                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-09"],
+//                                             [UIImage imageNamed:@"Tela apresentação TUTORIAL"],
+////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-02"],
+////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-03"],
+////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-04"],
+////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-05"],
+////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-06"],
+////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-07"],
+////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-08"],
+////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-09"],
 //                                             nil];
 //        
 //        animatedImageView.animationDuration = 5.0f;

@@ -17,10 +17,10 @@
     
     NSArray *objs;
     
-    if(FREE_AD_VERSION)
-        objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell_free_ad" owner:nil options:nil];
-    else
+    if(AD_FREE_VERSION)
         objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
+    else
+        objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell_free" owner:nil options:nil];
     
     for ( id item in objs )
         if ( [item isKindOfClass:[FOFTableCell class]] ) {
@@ -35,10 +35,10 @@
 {
     NSArray *objs;
     
-    if(FREE_AD_VERSION)
-        objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell_free_ad" owner:nil options:nil];
-    else
+    if(AD_FREE_VERSION)
         objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell" owner:nil options:nil];
+    else
+        objs = [[NSBundle mainBundle] loadNibNamed:@"FOFTableCell_free" owner:nil options:nil];
     
     for ( id item in objs )
         if ( [item isKindOfClass:[FOFTableCell class]] ) {
@@ -844,7 +844,7 @@
 
 -(void) showBannerInCell{
     
-    if(!FREE_AD_VERSION){
+    if(!AD_FREE_VERSION){
         
         // Create a view of the standard size at the top of the screen.
         // Available AdSize constants are explained in GADAdSize.h.

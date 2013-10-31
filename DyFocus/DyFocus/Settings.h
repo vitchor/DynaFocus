@@ -22,8 +22,8 @@
 #define refresh_feed_url @"/uploader/user_json_feed/"
 #define refresh_trending_url @"/uploader/trending/"
 
-//#define FREE_AD_VERSION true
-#define FREE_AD_VERSION false
+//#define AD_FREE_VERSION true
+#define AD_FREE_VERSION false
 
 @interface Settings : NSObject
 

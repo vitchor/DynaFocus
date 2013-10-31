@@ -24,7 +24,7 @@
 #import "GADRequest.h"
 
 //Space occupied by the banner in the cell:
-#define BANNER_HEIGHT (FREE_AD_VERSION ? 0 : 50)
+#define BANNER_HEIGHT (AD_FREE_VERSION ? 0 : 50)
 
 //Space occupied by the header and footer in the cell:
 #define HEADER_AND_FOOTER_HEIGHT 122
