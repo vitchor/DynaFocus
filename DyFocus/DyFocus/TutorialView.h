@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-#define kNumberOfPages 3
+#define kNumberOfTutorialPages 5
+#define kGifPage 2
+#define fAnimationDuration 4.0
 
 @interface TutorialView : UIViewController  <UIScrollViewDelegate, MFMailComposeViewControllerDelegate>{
     
@@ -19,6 +21,8 @@
     IBOutlet UIView *pageController0;
     IBOutlet UIView *pageController1;
     IBOutlet UIView *pageController2;
+    IBOutlet UIView *pageController3;
+    IBOutlet UIView *pageController4;
     
     IBOutlet UIImageView *gifImageView;
     

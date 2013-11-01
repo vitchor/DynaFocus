@@ -21,18 +21,17 @@
     shadowView.layer.masksToBounds = YES;
     
     NSMutableArray *controllers = [[NSMutableArray alloc] init];
-    for (unsigned i = 0; i < kNumberOfPages; i++) {
+    for (unsigned i = 0; i < kNumberOfTutorialPages; i++) {
         [controllers addObject:[NSNull null]];
     }
     self.pageControllers = controllers;
     [controllers release];
 	
     // a page is the width of the scroll view
-    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * kNumberOfPages, scrollView.frame.size.height);
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * kNumberOfTutorialPages, scrollView.frame.size.height);
     scrollView.scrollsToTop = NO;
-    scrollView.delegate = self;
 	
-    pageControl.numberOfPages = kNumberOfPages;
+    pageControl.numberOfPages = kNumberOfTutorialPages;
     pageControl.currentPage = 0;
 	
     // pages are created on demand
@@ -53,7 +52,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController.navigationBar setTranslucent:YES];
     
-    if (pageControl.currentPage==1) {
+    if (pageControl.currentPage == kGifPage) {
         if (!gifImageView.isAnimating)
             [gifImageView startAnimating];
     }
@@ -76,7 +75,7 @@
 - (void)loadScrollViewWithPage:(int)page {
 	
     if (page < 0) return;
-    if (page >= kNumberOfPages) return;
+    if (page >= kNumberOfTutorialPages) return;
     
     // replace the placeholder if necessary
     UIView *controller = [self.pageControllers objectAtIndex:page];
@@ -84,14 +83,17 @@
         
         if (page==0)
             controller = pageController0;
-        
-        else if (page==1){
+        else if (page==1)
             controller = pageController1;
-            [self loadTutorialGif];
-        }
-        
         else if (page==2)
             controller = pageController2;
+        else if (page==3)
+            controller = pageController3;
+        else if (page==4)
+            controller = pageController4;
+        
+        if (page == kGifPage)
+            [self loadGifAnimation];
         
         [self.pageControllers replaceObjectAtIndex:page withObject:controller];
         
@@ -107,13 +109,13 @@
         [scrollView addSubview:controller];
     }
     
-    if (page==1) {
+    if (page == kGifPage) {
         if (!gifImageView.isAnimating)
             [gifImageView startAnimating];
     }
 }
 
--(void)loadTutorialGif
+-(void)loadGifAnimation
 {
     gifImageView.animationImages = [NSArray arrayWithObjects:
                                          [UIImage imageNamed:@"Tutorial Dyfocus teste1-01"],
@@ -126,7 +128,7 @@
                                          [UIImage imageNamed:@"Tutorial Dyfocus teste1-08"],
                                          nil];
     
-    gifImageView.animationDuration = 3.0f;
+    gifImageView.animationDuration = fAnimationDuration;
     [gifImageView startAnimating];
 }
 
@@ -209,6 +211,8 @@
     [pageController0 release];
     [pageController1 release];
     [pageController2 release];
+    [pageController3 release];
+    [pageController4 release];
     
     [gifImageView release];
     
