@@ -13,8 +13,7 @@
     AVCaptureDevice *mCaptureDevice;
 
     IBOutlet UIView *cameraView;
-    
-    IBOutlet TutorialView *tutorialView;
+
     IBOutlet PathView *pathView;
     
     IBOutlet UIButton *torchOneButton;
@@ -35,7 +34,9 @@
     bool isObserving;
     bool isTorchOn;
     
-    }
+    TutorialView *tutorialView;
+    
+}
 
 - (IBAction)cancelAction:(UIButton *)sender;
 - (IBAction)shootAction:(UIButton *)sender;

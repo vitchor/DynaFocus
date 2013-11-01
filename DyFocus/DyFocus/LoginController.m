@@ -108,10 +108,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    if(!AD_FREE_VERSION)
+        dyfocusIcon.image = [UIImage imageNamed:@"dyfocus_icon_LARGE_free"];
     
     borderView.layer.cornerRadius = 3.0;
     borderView.layer.masksToBounds = YES;
-    
 
     [facebookConnectButton addTarget:self action:@selector(connectWithFacebook) forControlEvents:UIControlEventTouchUpInside];
     //[leftButton addTarget:self action:@selector(showsPreviousFof) forControlEvents:UIControlEventTouchUpInside];
@@ -593,11 +595,15 @@
     [self loadScrollViewWithPage:page + 1];
 	
     // A possible optimization would be to unload the views+controllers which are no longer visible
+    
+        NSLog(@"LOOOG  3333333333333");
 }
 
 // At the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     pageControlUsed = NO;
+    
+        NSLog(@"LOOOG  22222222222222");
 }
 
 - (IBAction)changePage:(id)sender {
@@ -613,6 +619,12 @@
     [scrollView scrollRectToVisible:frame animated:YES];
     // Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
     pageControlUsed = YES;
+    
+    NSLog(@"LOOOG  11111111111");
 }
 
+- (void)dealloc {
+    [dyfocusIcon release];
+    [super dealloc];
+}
 @end

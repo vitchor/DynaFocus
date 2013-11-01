@@ -11,153 +11,123 @@
 
 @implementation TutorialView
 
-@synthesize cameraViewController, instructionsImagesEnumerator;
+@synthesize pageControllers;
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        // Initialization code
-        
-        [self setUserInteractionEnabled:YES];
-        
-        UITapGestureRecognizer *singleTapOnView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(nextInstruction)];
-        [self addGestureRecognizer:singleTapOnView];
-        [singleTapOnView release];
-        
-        UITapGestureRecognizer *singleTapOnLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendSupportEmail)];
-        [supportEmailLabel addGestureRecognizer:singleTapOnLabel];
-        [singleTapOnLabel release];
-        
-        CGRect screenBounds = [[UIScreen mainScreen] bounds];
-        
-        if (screenBounds.size.height == 568) {
-        
-            UIImage *instruction1 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP01-i5" ofType:@"png"]];
-            
-            UIImage *instruction2 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP02-i5" ofType:@"png"]];
-            
-            UIImage *instruction3 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP03-i5" ofType:@"png"]];
-            
-            UIImage *instruction4 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP04-i5" ofType:@"png"]];
-            
-            UIImage *instruction5 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP05-i5" ofType:@"png"]];
-            
-            instructionsImagesArray = [[NSMutableArray alloc] initWithObjects:instruction1, instruction2, instruction3, instruction4, instruction5, nil];
-        }else{
-            
-            UIImage *instruction1 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP01" ofType:@"png"]];
-            
-            UIImage *instruction2 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP02" ofType:@"png"]];
-            
-            UIImage *instruction3 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP03" ofType:@"png"]];
-            
-            UIImage *instruction4 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP04" ofType:@"png"]];
-            
-            UIImage *instruction5 = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"DfShootInstructionsP05" ofType:@"png"]];
-            
-            instructionsImagesArray = [[NSMutableArray alloc] initWithObjects:instruction1, instruction2, instruction3, instruction4, instruction5, nil];
-        }
-            
-        [self loadTutorial:NO];
-        
-        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-        [delegate logEvent:@"TutorialView initialized"];
-    }
-    return self;
-}
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
--(void)nextInstruction
-{    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    [delegate logEvent:@"TutorialView.nextInstruction"];
+-(void) viewDidLoad{
     
-    if(self.image == instructionsImagesArray.lastObject){
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            
-            self.alpha = 0.0;
-            supportEmailLabel.alpha = 0.0;
-            
-        }completion: ^(BOOL finished) {
-            
-            [self setImage:self.instructionsImagesEnumerator.nextObject];
-            [supportEmailLabel setHidden:YES];
-            [self setHidden:YES];
-            self.alpha = 1.0;
-            supportEmailLabel.alpha = 1.0;
-            [self.cameraViewController.shootButton setEnabled:YES];
-        }];
-
+    self.navigationItem.title = @"Tutorial";
+    
+    shadowView.layer.cornerRadius = 3.0;
+    shadowView.layer.masksToBounds = YES;
+    
+    NSMutableArray *controllers = [[NSMutableArray alloc] init];
+    for (unsigned i = 0; i < kNumberOfPages; i++) {
+        [controllers addObject:[NSNull null]];
     }
-    else
-    {
-        [self setImage:self.instructionsImagesEnumerator.nextObject];
-        
-        if(self.image == instructionsImagesArray.lastObject)
-            [supportEmailLabel setHidden:NO];
-        else
-            [supportEmailLabel setHidden:YES];
+    self.pageControllers = controllers;
+    [controllers release];
+	
+    // a page is the width of the scroll view
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * kNumberOfPages, scrollView.frame.size.height);
+    scrollView.scrollsToTop = NO;
+    scrollView.delegate = self;
+	
+    pageControl.numberOfPages = kNumberOfPages;
+    pageControl.currentPage = 0;
+	
+    // pages are created on demand
+    // load the visible page
+    // load the page on either side to avoid flashes when the user starts scrolling
+    [self loadScrollViewWithPage:0];
+    [self loadScrollViewWithPage:1];
+    
+    UITapGestureRecognizer *singleTapOnLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendSupportEmail)];
+    [supportEmailLabel addGestureRecognizer:singleTapOnLabel];
+    [singleTapOnLabel release];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"TutorialView initialized"];
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController.navigationBar setTranslucent:YES];
+    
+    if (pageControl.currentPage==1) {
+        if (!gifImageView.isAnimating)
+            [gifImageView startAnimating];
     }
 }
 
--(void)loadTutorial:(BOOL)shouldShowTutorial
-{
+-(void) viewDidAppear:(BOOL)animated{
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"TutorialView.showTutorial"];
-    
-    self.instructionsImagesEnumerator = [instructionsImagesArray objectEnumerator];
-    
-    [self setImage:self.instructionsImagesEnumerator.nextObject];
-    
-    [self setHidden:!shouldShowTutorial];
-    [self.cameraViewController.shootButton setEnabled:!shouldShowTutorial];
-    
-    [supportEmailLabel setHidden:YES];
-    
-//    if(shouldShowTutorial){
-//        
-//        CGRect screenBounds = [[UIScreen mainScreen] bounds];
-//        
-//        UIImageView* animatedImageView = [[UIImageView alloc] initWithFrame:screenBounds];
-//        animatedImageView.animationImages = [NSArray arrayWithObjects:
-//                                             [UIImage imageNamed:@"Tela apresentação TUTORIAL"],
-////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-02"],
-////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-03"],
-////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-04"],
-////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-05"],
-////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-06"],
-////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-07"],
-////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-08"],
-////                                             [UIImage imageNamed:@"Tutorial Dyfocus teste1-09"],
-//                                             nil];
-//        
-//        animatedImageView.animationDuration = 5.0f;
-//        animatedImageView.animationRepeatCount = 3;
-//        [animatedImageView startAnimating];
-//        [self addSubview: animatedImageView];
-//        [animatedImageView release];
-//        
-//    }
+}
 
+-(void) viewWillDisappear:(BOOL)animated{
+    [gifImageView stopAnimating];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+-(void) viewDidDisappear:(BOOL)animated{
+    [self.navigationController.navigationBar setTranslucent:NO];
+}
+
+- (void)loadScrollViewWithPage:(int)page {
+	
+    if (page < 0) return;
+    if (page >= kNumberOfPages) return;
+    
+    // replace the placeholder if necessary
+    UIView *controller = [self.pageControllers objectAtIndex:page];
+    if ((NSNull *)controller == [NSNull null]) {
+        
+        if (page==0)
+            controller = pageController0;
+        
+        else if (page==1){
+            controller = pageController1;
+            [self loadTutorialGif];
+        }
+        
+        else if (page==2)
+            controller = pageController2;
+        
+        [self.pageControllers replaceObjectAtIndex:page withObject:controller];
+        
+        [controller release];
+    }
+	
+    // add the controller's view to the scroll view
+    if (controller.superview == nil) {
+        CGRect frame = scrollView.frame;
+        frame.origin.x = frame.size.width * page;
+        frame.origin.y = 0;
+        controller.frame = frame;
+        [scrollView addSubview:controller];
+    }
+    
+    if (page==1) {
+        if (!gifImageView.isAnimating)
+            [gifImageView startAnimating];
+    }
+}
+
+-(void)loadTutorialGif
+{
+    gifImageView.animationImages = [NSArray arrayWithObjects:
+                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-01"],
+                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-02"],
+                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-03"],
+                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-04"],
+                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-05"],
+                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-06"],
+                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-07"],
+                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-08"],
+                                         nil];
+    
+    gifImageView.animationDuration = 3.0f;
+    [gifImageView startAnimating];
 }
 
 - (void)sendSupportEmail {
@@ -173,7 +143,7 @@
         [mailComposeController setToRecipients:supportEmail];
         
         if (mailComposeController)
-            [self.cameraViewController presentModalViewController:mailComposeController animated:YES];
+           [self presentViewController:mailComposeController animated:YES completion:nil];
         
         [mailComposeController release];
         
@@ -198,7 +168,7 @@
         [self showOkAlertWithMessage:@"There was an error sending your email. Please try again later." andTitle:@"Error"];
     }
     
-    [self.cameraViewController dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)showOkAlertWithMessage:(NSString *)message andTitle:(NSString *)title
@@ -211,13 +181,37 @@
     [alertButton release];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate logEvent:@"TutorialView.nextInstruction"];
+    
+    // Switch the indicator when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = scrollView.frame.size.width;
+    int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    pageControl.currentPage = page;
+	
+    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    [self loadScrollViewWithPage:page - 1];
+    [self loadScrollViewWithPage:page];
+    [self loadScrollViewWithPage:page + 1];
+}
 
 -(void)dealloc
 {
     [supportEmailLabel release];
-    [instructionsImagesArray release];
-    [instructionsImagesEnumerator release];
-    [cameraViewController release];
+    
+    [scrollView release];
+    [shadowView release];
+    [pageControl release];
+    [pageControllers release];
+    
+    [pageController0 release];
+    [pageController1 release];
+    [pageController2 release];
+    
+    [gifImageView release];
+    
     [super dealloc];
 }
 

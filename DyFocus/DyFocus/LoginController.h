@@ -12,6 +12,7 @@
 
 @interface LoginController : UIViewController <UIScrollViewDelegate, UITextFieldDelegate> {
     
+    IBOutlet UIImageView *dyfocusIcon;
     IBOutlet UIButton *facebookConnectButton;
     IBOutlet UIButton *leftButton;
     IBOutlet UIButton *rightButton;

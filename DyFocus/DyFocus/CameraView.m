@@ -42,37 +42,24 @@
     
     [self.infoButton setImage:[UIImage imageNamed:@"CameraView-RightButtonPressed.png"] forState:UIControlStateHighlighted];
     
-    tutorialView.cameraViewController = self;
-    [tutorialView init];
-    
     UITapGestureRecognizer *tapOnFirstFocus = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnFirstFocus)] autorelease];
     [pathView.firstFocusImageView addGestureRecognizer:tapOnFirstFocus];
     
     UITapGestureRecognizer *tapOnSecondFocus = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnSecondFocus)] autorelease];
     [pathView.secondFocusImageView addGestureRecognizer:tapOnSecondFocus];
 
+    tutorialView = [[TutorialView alloc] initWithNibName:@"TutorialView" bundle:nil];
     
     [super viewDidLoad];
 }
 
--(void)singleTapOnFirstFocus
-{
-    
-    NSLog(@"FIIIIIIIIRRRRRRRRRSSSSSSSSSTTTTTTTTTTTTT");
-}
-
--(void)singleTapOnSecondFocus
-{
-    NSLog(@"SEEEEEEEEEEEECOOOOOOOOOOOOONDDDDDDDDDDD");
-    
-}
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES animated:FALSE];
     
     DyfocusSettings *settings = [DyfocusSettings sharedSettings];
     if(settings.isFirstLogin){
-        [tutorialView setHidden:NO];
+        [self.navigationController pushViewController:tutorialView animated:YES];
         settings.isFirstLogin = NO;
     }
     
@@ -111,8 +98,6 @@
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"CameraView.viewDidAppear"];
-    
-    [self.shootButton setEnabled:tutorialView.isHidden];
     
     if (!captureSession) {
         [self startCaptureSession];
@@ -598,7 +583,7 @@
         mToastMessage = nil;
     }
     
-    [tutorialView loadTutorial:YES];
+    [self.navigationController pushViewController:tutorialView animated:YES];
 }
 
 -(void)goBackToLastController

@@ -9,18 +9,25 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-@class CameraView;
+#define kNumberOfPages 3
 
-@interface TutorialView : UIImageView  <MFMailComposeViewControllerDelegate>{
-
+@interface TutorialView : UIViewController  <UIScrollViewDelegate, MFMailComposeViewControllerDelegate>{
+    
     IBOutlet UILabel *supportEmailLabel;
     
-    NSMutableArray *instructionsImagesArray;
+    IBOutlet UIView *shadowView;
+    IBOutlet UIView *pageController0;
+    IBOutlet UIView *pageController1;
+    IBOutlet UIView *pageController2;
+    
+    IBOutlet UIImageView *gifImageView;
+    
+    IBOutlet UIPageControl *pageControl;
+    IBOutlet UIScrollView *scrollView;
+
+    NSMutableArray *pageControllers;
 }
 
-@property(nonatomic,retain) NSEnumerator *instructionsImagesEnumerator;
-@property(nonatomic,strong) CameraView *cameraViewController;
-
--(void)loadTutorial:(BOOL)shouldShowTutorial;
+@property (nonatomic, retain) NSMutableArray *pageControllers;
 
 @end
