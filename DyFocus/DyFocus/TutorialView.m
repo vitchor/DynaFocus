@@ -40,9 +40,13 @@
     [self loadScrollViewWithPage:0];
     [self loadScrollViewWithPage:1];
     
-    UITapGestureRecognizer *singleTapOnLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendSupportEmail)];
-    [supportEmailLabel addGestureRecognizer:singleTapOnLabel];
-    [singleTapOnLabel release];
+    UITapGestureRecognizer *singleTapOnEmailLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendSupportEmail)];
+    [supportEmailLabel addGestureRecognizer:singleTapOnEmailLabel];
+    [singleTapOnEmailLabel release];
+    
+    UITapGestureRecognizer *singleTapOnWebSiteLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebSite)];
+    [webSiteLabel addGestureRecognizer:singleTapOnWebSiteLabel];
+    [singleTapOnWebSiteLabel release];
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"TutorialView initialized"];
@@ -52,10 +56,13 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController.navigationBar setTranslucent:YES];
     
-    if (pageControl.currentPage == kGifPage) {
-        if (!gifImageView.isAnimating)
-            [gifImageView startAnimating];
-    }
+    pageControl.currentPage = 0;
+    
+    CGRect frame = scrollView.frame;
+    frame.origin.x = 0;
+    frame.origin.y = 0;
+    [scrollView scrollRectToVisible:frame animated:YES];
+    
 }
 
 -(void) viewDidAppear:(BOOL)animated{
@@ -89,8 +96,6 @@
             controller = pageController2;
         else if (page==3)
             controller = pageController3;
-        else if (page==4)
-            controller = pageController4;
         
         if (page == kGifPage)
             [self loadGifAnimation];
@@ -118,14 +123,14 @@
 -(void)loadGifAnimation
 {
     gifImageView.animationImages = [NSArray arrayWithObjects:
-                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-01"],
-                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-02"],
-                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-03"],
-                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-04"],
-                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-05"],
-                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-06"],
-                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-07"],
-                                         [UIImage imageNamed:@"Tutorial Dyfocus teste1-08"],
+                                        [UIImage imageNamed:@"secPage_gif-one.gif"],
+                                        [UIImage imageNamed:@"secPage_gif-two.gif"],
+                                        [UIImage imageNamed:@"secPage_gif-three.gif"],
+                                        [UIImage imageNamed:@"secPage_gif-four.gif"],
+                                        [UIImage imageNamed:@"secPage_gif-five.gif"],
+                                        [UIImage imageNamed:@"secPage_gif-six.gif"],
+                                        [UIImage imageNamed:@"secPage_gif-seven.gif"],
+                                        [UIImage imageNamed:@"secPage_gif-eight.gif"],
                                          nil];
     
     gifImageView.animationDuration = fAnimationDuration;
@@ -153,6 +158,16 @@
         [self showOkAlertWithMessage:@"Configure your device email app.\nGo to: \"Settings\" -> \"Mail, Contacts, Calendars\" -> Turn ON your Mail app." andTitle:@"Error"];
     }
 
+}
+
+-(void)openWebSite
+{
+    
+    NSLog(@"OPEEEEEEENNNNNNNNN");
+    
+    NSURL *url = [NSURL URLWithString:dyfocus_url];
+    
+    [[UIApplication sharedApplication] openURL:url];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller
@@ -202,6 +217,7 @@
 -(void)dealloc
 {
     [supportEmailLabel release];
+    [webSiteLabel release];
     
     [scrollView release];
     [shadowView release];
@@ -212,7 +228,6 @@
     [pageController1 release];
     [pageController2 release];
     [pageController3 release];
-    [pageController4 release];
     
     [gifImageView release];
     
