@@ -91,6 +91,12 @@
 		1F59C1B71708EB130070D3C4 /* LikesTableViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 1F59C1B11708CF840070D3C4 /* LikesTableViewController.xib */; };
 		1FA669501786123B00CAFD6E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6694E1786120C00CAFD6E /* opencv2.framework */; };
 		1FA669531786130A00CAFD6E /* libDyOpenCv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6694D178611E000CAFD6E /* libDyOpenCv.a */; };
+		1FDBD4C318280CDA00EEF3C7 /* dy_tutorial_shootBW.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDBD4C118280CDA00EEF3C7 /* dy_tutorial_shootBW.png */; };
+		1FDBD4C418280CDA00EEF3C7 /* dy_tutorial_antiShakeBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDBD4C218280CDA00EEF3C7 /* dy_tutorial_antiShakeBlack.png */; };
+		1FDBD4C81828192900EEF3C7 /* dy_tutorial_antiShakeBWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDBD4C71828192900EEF3C7 /* dy_tutorial_antiShakeBWhite.png */; };
+		1FDBD4CB182819E400EEF3C7 /* ArrowsNoVolume-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDBD4C9182819E400EEF3C7 /* ArrowsNoVolume-01.png */; };
+		1FDBD4CC182819E400EEF3C7 /* VolumeArrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDBD4CA182819E400EEF3C7 /* VolumeArrows.png */; };
+		1FDBD4CE18281FB200EEF3C7 /* Shake-BlackBG2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDBD4CD18281FB200EEF3C7 /* Shake-BlackBG2.png */; };
 		441BFFB015B131D200E204D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFAF15B131D200E204D7 /* UIKit.framework */; };
 		441BFFB215B131D200E204D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 441BFFB115B131D200E204D7 /* Foundation.framework */; };
 		441BFFBA15B131D200E204D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 441BFFB815B131D200E204D7 /* InfoPlist.strings */; };
@@ -421,6 +427,12 @@
 		1F59C1B11708CF840070D3C4 /* LikesTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikesTableViewController.xib; sourceTree = "<group>"; };
 		1FA66948178611DF00CAFD6E /* DyOpenCv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DyOpenCv.xcodeproj; path = DyOpenCv/DyOpenCv.xcodeproj; sourceTree = "<group>"; };
 		1FA6694E1786120C00CAFD6E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = DyOpenCv/opencv2.framework; sourceTree = "<group>"; };
+		1FDBD4C118280CDA00EEF3C7 /* dy_tutorial_shootBW.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dy_tutorial_shootBW.png; sourceTree = "<group>"; };
+		1FDBD4C218280CDA00EEF3C7 /* dy_tutorial_antiShakeBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dy_tutorial_antiShakeBlack.png; sourceTree = "<group>"; };
+		1FDBD4C71828192900EEF3C7 /* dy_tutorial_antiShakeBWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dy_tutorial_antiShakeBWhite.png; sourceTree = "<group>"; };
+		1FDBD4C9182819E400EEF3C7 /* ArrowsNoVolume-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowsNoVolume-01.png"; sourceTree = "<group>"; };
+		1FDBD4CA182819E400EEF3C7 /* VolumeArrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VolumeArrows.png; sourceTree = "<group>"; };
+		1FDBD4CD18281FB200EEF3C7 /* Shake-BlackBG2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shake-BlackBG2.png"; sourceTree = "<group>"; };
 		441BFFAB15B131D200E204D7 /* dyfocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dyfocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		441BFFAF15B131D200E204D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		441BFFB115B131D200E204D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1364,6 +1376,12 @@
 		7B3AE3C3177D0D5200726CCA /* TutorialView */ = {
 			isa = PBXGroup;
 			children = (
+				1FDBD4CD18281FB200EEF3C7 /* Shake-BlackBG2.png */,
+				1FDBD4C9182819E400EEF3C7 /* ArrowsNoVolume-01.png */,
+				1FDBD4CA182819E400EEF3C7 /* VolumeArrows.png */,
+				1FDBD4C71828192900EEF3C7 /* dy_tutorial_antiShakeBWhite.png */,
+				1FDBD4C118280CDA00EEF3C7 /* dy_tutorial_shootBW.png */,
+				1FDBD4C218280CDA00EEF3C7 /* dy_tutorial_antiShakeBlack.png */,
 				7BD1BC00182351F900AFB44D /* BackGroundTutorial.png */,
 				7BD1BC01182351F900AFB44D /* BlankPageTutorial.png */,
 				7B08EBD3182306E3003C86B8 /* BackGroundTutorialMix.png */,
@@ -1710,6 +1728,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FDBD4CB182819E400EEF3C7 /* ArrowsNoVolume-01.png in Resources */,
 				04D6A4EF16B6063200C4A71D /* CommentTableCell.xib in Resources */,
 				04D6A4EE16B605B400C4A71D /* CommentViewerController.xib in Resources */,
 				44C7B1D51607440000221C12 /* iToast.h in Resources */,
@@ -1758,6 +1777,8 @@
 				AC3116B116BAAC9B00E18094 /* selected-black@2x.png in Resources */,
 				AC3116B216BAAC9B00E18094 /* tabbar-back-divided@2x.png in Resources */,
 				04C5F82316BABB4800E8C289 /* fb_share_button.png in Resources */,
+				1FDBD4CC182819E400EEF3C7 /* VolumeArrows.png in Resources */,
+				1FDBD4CE18281FB200EEF3C7 /* Shake-BlackBG2.png in Resources */,
 				7B2330921822CC2300ECAF60 /* arrow.png in Resources */,
 				AC1949CF16E91EA5002CA27C /* 1st-focus.png in Resources */,
 				7BD1BC03182351F900AFB44D /* BlankPageTutorial.png in Resources */,
@@ -1767,6 +1788,7 @@
 				44DD4B0E16EEBF0A008E80E8 /* AvatarHighResolution.jpg in Resources */,
 				AC972C6D16F299A700ECD2F8 /* message-blue.png in Resources */,
 				AC972C6E16F299A700ECD2F8 /* heart-blue.png in Resources */,
+				1FDBD4C418280CDA00EEF3C7 /* dy_tutorial_antiShakeBlack.png in Resources */,
 				7B0EC6EE16F3861900606626 /* CameraView.xib in Resources */,
 				7B0EC6F916F3864C00606626 /* CameraView-CameraIcon.png in Resources */,
 				7B2330AC1822CF2300ECAF60 /* dyfocus_icon_114x114.png in Resources */,
@@ -1811,6 +1833,7 @@
 				04B6027A171B6AE600CAE579 /* ProfileController.xib in Resources */,
 				7B7C2F3D171D052A00C2A022 /* FullscreenFOFViewController.xib in Resources */,
 				7BBE360F17519BF60002DA95 /* Pause-Button-NoStroke.png in Resources */,
+				1FDBD4C318280CDA00EEF3C7 /* dy_tutorial_shootBW.png in Resources */,
 				7BBE361017519BF60002DA95 /* Pause-Button-Orange-NoStroke.png in Resources */,
 				7BBE361117519BF60002DA95 /* Pause-Button-Orange.png in Resources */,
 				7BBE361217519BF60002DA95 /* Pause-Button.png in Resources */,
@@ -1832,6 +1855,7 @@
 				04DE36FD172E1C93006CD4DE /* dyfocus_signup.png in Resources */,
 				04CD4502175FC64A009E79FC /* LoginController_i5.xib in Resources */,
 				043988FA1763E46400E6E2FA /* fof_example_2_0.jpg in Resources */,
+				1FDBD4C81828192900EEF3C7 /* dy_tutorial_antiShakeBWhite.png in Resources */,
 				043988FB1763E46400E6E2FA /* fof_example_2_1.jpg in Resources */,
 				7B3E53251822D83100DA4801 /* LaunchImage_320x480.png in Resources */,
 				043988FD1763E46400E6E2FA /* fof_example_0_0.jpg in Resources */,

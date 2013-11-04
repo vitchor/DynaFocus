@@ -50,6 +50,9 @@
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     [delegate logEvent:@"TutorialView initialized"];
+    
+    messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    messageLabel.numberOfLines = 0;
 }
 
 -(void) viewWillAppear:(BOOL)animated{

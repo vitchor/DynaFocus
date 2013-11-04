@@ -17,6 +17,7 @@
     
     IBOutlet UILabel *supportEmailLabel;
     IBOutlet UILabel *webSiteLabel;
+    IBOutlet UILabel *messageLabel;
     
     IBOutlet UIView *shadowView;
     IBOutlet UIView *pageController0;
