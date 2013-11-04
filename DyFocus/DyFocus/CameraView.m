@@ -48,7 +48,12 @@
     UITapGestureRecognizer *tapOnSecondFocus = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnSecondFocus)] autorelease];
     [pathView.secondFocusImageView addGestureRecognizer:tapOnSecondFocus];
 
-    tutorialView = [[TutorialView alloc] initWithNibName:@"TutorialView" bundle:nil];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568) {
+        tutorialView = [[TutorialView alloc] initWithNibName:@"TutorialView_i5" bundle:nil];
+    } else {
+        tutorialView = [[TutorialView alloc] initWithNibName:@"TutorialView" bundle:nil];
+    }
     
     [super viewDidLoad];
 }

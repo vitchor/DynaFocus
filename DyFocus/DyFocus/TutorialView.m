@@ -63,7 +63,7 @@
     
     CGRect frame = scrollView.frame;
     frame.origin.x = 0;
-    frame.origin.y = 0;
+    frame.origin.y = 13;
     [scrollView scrollRectToVisible:frame animated:YES];
     
 }
@@ -112,7 +112,7 @@
     if (controller.superview == nil) {
         CGRect frame = scrollView.frame;
         frame.origin.x = frame.size.width * page;
-        frame.origin.y = 0;
+        frame.origin.y = 10;
         controller.frame = frame;
         [scrollView addSubview:controller];
     }
