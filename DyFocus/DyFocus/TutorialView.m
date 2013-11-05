@@ -17,6 +17,8 @@
     
     self.navigationItem.title = @"Tutorial";
     
+    [self.navigationItem setRightBarButtonItem:nil];
+    
     shadowView.layer.cornerRadius = 3.0;
     shadowView.layer.masksToBounds = YES;
     
@@ -63,7 +65,7 @@
     
     CGRect frame = scrollView.frame;
     frame.origin.x = 0;
-    frame.origin.y = 13;
+    frame.origin.y = 0;
     [scrollView scrollRectToVisible:frame animated:YES];
     
 }
@@ -112,7 +114,7 @@
     if (controller.superview == nil) {
         CGRect frame = scrollView.frame;
         frame.origin.x = frame.size.width * page;
-        frame.origin.y = 10;
+        frame.origin.y = 0;
         controller.frame = frame;
         [scrollView addSubview:controller];
     }
@@ -163,16 +165,6 @@
 
 }
 
--(void)openWebSite
-{
-    
-    NSLog(@"OPEEEEEEENNNNNNNNN");
-    
-    NSURL *url = [NSURL URLWithString:dyfocus_url];
-    
-    [[UIApplication sharedApplication] openURL:url];
-}
-
 - (void)mailComposeController:(MFMailComposeViewController*)controller
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError*)error;
@@ -201,6 +193,28 @@
     [alertButton release];
 }
 
+-(void)openWebSite
+{
+    NSURL *url = [NSURL URLWithString:dyfocus_url];
+    
+    [[UIApplication sharedApplication] openURL:url];
+}
+
+-(void)loadDoneButton
+{
+    NSString *doneString = @"Done";
+	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:doneString style:UIBarButtonItemStylePlain target:self action:@selector(tutorialDone)];
+	self.navigationItem.rightBarButtonItem = doneButton;
+	[doneButton release];
+	[doneString release];
+}
+
+-(void)tutorialDone
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
@@ -215,6 +229,11 @@
     [self loadScrollViewWithPage:page - 1];
     [self loadScrollViewWithPage:page];
     [self loadScrollViewWithPage:page + 1];
+    
+    if(page==kNumberOfTutorialPages-1)
+        [self loadDoneButton];
+    else
+        [self.navigationItem setRightBarButtonItem:nil];
 }
 
 -(void)dealloc
