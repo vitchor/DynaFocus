@@ -22,8 +22,7 @@
 #define refresh_feed_url @"/uploader/user_json_feed/"
 #define refresh_trending_url @"/uploader/trending/"
 
-#define AD_FREE_VERSION true
-//#define AD_FREE_VERSION false
+#define AD_FREE_VERSION ([[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"] isEqualToString: @"dyfocus FREE"] ? NO : YES)
 
 @interface Settings : NSObject
 
