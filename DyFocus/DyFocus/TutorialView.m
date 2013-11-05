@@ -78,6 +78,7 @@
 -(void) viewWillDisappear:(BOOL)animated{
     [gifImageView stopAnimating];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController.navigationBar setTranslucent:NO];
 }
 
 -(void) viewDidDisappear:(BOOL)animated{

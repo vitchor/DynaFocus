@@ -15,15 +15,15 @@
 #define FILTER_BLUE_AND_RED_COLORS 3
 #define FILTER_INVERT_COLORS 4
 #define FILTER_TOON 5
-#define FILTER_SKETCH 6
-#define FILTER_PAINT 7
+#define FILTER_PAINT 6
+#define FILTER_SKETCH 7
 #define FILTER_EDGE_DETECTION 8
 
 @implementation FilterUtil 
 
 
 +(int) getFiltersSize {
-    return 9;
+    return 7;
 }
     
 + (NSString *) getFilterName: (int)filter {

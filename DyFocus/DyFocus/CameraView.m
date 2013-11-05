@@ -74,6 +74,7 @@
     [super viewWillAppear:animated];
     
     [self.infoButton setEnabled:true];
+    [self.shootButton setEnabled:true];
     [self.cancelButton setEnabled:true];
     
     if(mFocalPoints.count==1)
